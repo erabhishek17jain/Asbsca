@@ -22,10 +22,10 @@ export function UsersTable() {
         <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Reporters list
+              Members list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              See information about all reporters.
+              See information about all members.
             </Typography>
           </div>
           <div className="flex shrink-0 gap-2 md:w-max">

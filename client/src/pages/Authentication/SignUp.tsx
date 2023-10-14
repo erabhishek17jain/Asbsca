@@ -7,7 +7,7 @@ import { registerValidation } from '../../helper/validate';
 import convertToBase64 from '../../helper/convert';
 import { getUsername, registerUser } from '../../helper/helper';
 import { useEffect, useState } from 'react';
-import userSix from '../../assets/images/user/user-06.png';
+import userSix from '../../assets/images/logo/logo-dark.png';
 import { fetchCurrentUserAsync } from '../../slices/usersSlice';
 import { useDispatch } from 'react-redux';
 

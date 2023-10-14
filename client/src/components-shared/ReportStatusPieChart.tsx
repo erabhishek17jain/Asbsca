@@ -71,7 +71,7 @@ const ReportStatusPieChart: React.FC = () => {
               <option value="monthly">Last 30 Days</option>
               <option value="monthly">Last 90 Days</option>
             </select>
-            <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
+            <span className="absolute top-1/2 right-3 -translate-y-1/2">
               <svg
                 width="10"
                 height="6"

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UserOne from '../assets/images/user/user-01.png';
+import UserOne from '../assets/images/logo/logo-dark.png';
 
 const TopPerformers = () => {
   return (

@@ -19,11 +19,11 @@ export const USER_TABLE_HEAD = [
 ];
 
 export const REPORT_TABLE_HEAD = [
-  'Transaction',
-  'Amount',
-  'Date',
-  'Status',
-  'Account',
+  'Bank Name',
+  'Report Name',
+  'Client Name',
+  'Bussiness Type',
+  'Created At',
   '',
 ];
 

@@ -1,14 +1,11 @@
 import { PencilIcon } from '@heroicons/react/24/solid';
-import {
-  MagnifyingGlassIcon,
-} from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import {
   Card,
   CardHeader,
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
   Avatar,
   IconButton,
@@ -66,13 +63,11 @@ export function ReportsTable() {
               (
                 {
                   img,
-                  name,
-                  amount,
-                  joined,
-                  status,
-                  account,
-                  accountNumber,
-                  expiry,
+                  bankName,
+                  businessType,
+                  clientName,
+                  taskName,
+                  createdAt,
                 },
                 index,
               ) => {
@@ -82,12 +77,12 @@ export function ReportsTable() {
                   : 'p-4 border-b border-blue-gray-50';
 
                 return (
-                  <tr key={name}>
+                  <tr key={clientName}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Avatar
                           src={img}
-                          alt={name}
+                          alt={bankName}
                           size="md"
                           className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
                         />
@@ -96,7 +91,7 @@ export function ReportsTable() {
                           color="blue-gray"
                           className="font-bold"
                         >
-                          {name}
+                          {bankName}
                         </Typography>
                       </div>
                     </td>
@@ -106,7 +101,7 @@ export function ReportsTable() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {amount}
+                        {taskName}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -115,57 +110,26 @@ export function ReportsTable() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {joined}
+                        {clientName}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          size="sm"
-                          variant="ghost"
-                          value={status}
-                          color={
-                            status === 'paid'
-                              ? 'green'
-                              : status === 'pending'
-                              ? 'amber'
-                              : 'red'
-                          }
-                        />
-                      </div>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {businessType}
+                      </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div className="h-9 w-12 rounded-md border border-blue-gray-50 p-1">
-                          <Avatar
-                            src={
-                              account === 'visa'
-                                ? 'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/visa.png'
-                                : 'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/mastercard.png'
-                            }
-                            size="sm"
-                            alt={account}
-                            variant="square"
-                            className="h-full w-full object-contain p-1"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal capitalize"
-                          >
-                            {account.split('-').join(' ')} {accountNumber}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {expiry}
-                          </Typography>
-                        </div>
-                      </div>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {createdAt}
+                      </Typography>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Edit User">

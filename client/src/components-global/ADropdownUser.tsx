@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import UserOne from '../assets/images/user/user-01.png';
+import UserOne from '../assets/images/logo/logo-dark.png';
 import { useSelector } from 'react-redux';
 
 const ADropdownUser = () => {
@@ -82,7 +82,7 @@ const ADropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-13 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute top-13 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-lg bg-white text-gray-700 shadow-lg dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >

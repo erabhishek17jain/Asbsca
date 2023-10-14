@@ -1,7 +1,7 @@
 import ABreadcrumb from '../components-global/ABreadcrumb';
 import fireToast from '../hooks/fireToast';
 import { useState } from 'react';
-import userSix from '../assets/images/user/user-06.png';
+import userSix from '../assets/images/logo/logo-dark.png';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
