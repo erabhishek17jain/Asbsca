@@ -1,4 +1,4 @@
-import Breadcrumb from '../components/Breadcrumb';
+import ABreadcrumb from '../components-global/ABreadcrumb';
 import fireToast from '../hooks/fireToast';
 import { useState } from 'react';
 import userSix from '../assets/images/user/user-06.png';
@@ -10,7 +10,7 @@ const Profile = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Profile" />
+      <ABreadcrumb pageName="Profile" />
 
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 dark:border-strokedark dark:bg-boxdark">
         {!isEditProfile ? (

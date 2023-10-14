@@ -5,6 +5,7 @@ export const TASK_TABLE_HEAD = [
   'Status',
   'Assignee',
   'Reporter',
+  'createdAt',
   '',
 ];
 

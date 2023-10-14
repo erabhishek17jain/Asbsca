@@ -32,10 +32,10 @@
 
 /* third-party libraries CSS */
 
-.tableCheckbox:checked ~ div span {
+.tableACheckbox:checked ~ div span {
   @apply opacity-100;
 }
-.tableCheckbox:checked ~ div {
+.tableACheckbox:checked ~ div {
   @apply bg-[#02385e] border-primary;
 }
 
@@ -136,13 +136,13 @@ span.flatpickr-weekday,
   @apply left-10;
 }
 
-.taskCheckbox:checked ~ .box span {
+.taskACheckbox:checked ~ .box span {
   @apply opacity-100;
 }
-.taskCheckbox:checked ~ p {
+.taskACheckbox:checked ~ p {
   @apply line-through;
 }
-.taskCheckbox:checked ~ .box {
+.taskACheckbox:checked ~ .box {
   @apply bg-[#02385e] border-primary dark:border-primary;
 }
 

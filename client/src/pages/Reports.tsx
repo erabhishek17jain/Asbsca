@@ -1,10 +1,10 @@
-import Breadcrumb from '../components/Breadcrumb';
-import { ReportsTable } from '../components/ReportsTable';
+import ABreadcrumb from '../components-global/ABreadcrumb';
+import { ReportsTable } from '../components-shared/ReportsTable';
 
 const Reports = () => {
   return (
     <>
-      <Breadcrumb pageName="Reports" />
+      <ABreadcrumb pageName="Reports" />
       <div className="flex flex-col gap-10">
         <ReportsTable />
       </div>

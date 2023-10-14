@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Loader from './components/Loader/Loader';
+import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero';
 import { useDispatch } from 'react-redux';
@@ -50,7 +50,7 @@ function App() {
                 key={index}
                 path={path}
                 element={
-                  <Suspense fallback={<Loader />}>
+                  <Suspense fallback={<ALoader />}>
                     <Component />
                   </Suspense>
                 }

@@ -1,10 +1,10 @@
-import Breadcrumb from '../components/Breadcrumb';
-import TasksTable from '../components/TasksTable';
+import ABreadcrumb from '../components-global/ABreadcrumb';
+import TasksTable from '../components-shared/TasksTable';
 
 const Tasks = () => {
   return (
     <>
-      <Breadcrumb pageName="Tasks" />
+      <ABreadcrumb pageName="Tasks" />
       <div className="flex flex-col gap-10">
         <TasksTable />
       </div>

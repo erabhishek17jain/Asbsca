@@ -279,12 +279,12 @@ const SignIn = () => {
                 </div>
 
                 <div className="mt-5 mb-5.5 flex items-center justify-between">
-                  <label htmlFor="formCheckbox" className="flex cursor-pointer">
+                  <label htmlFor="formACheckbox" className="flex cursor-pointer">
                     <div className="relative pt-0.5">
                       <input
-                        type="checkbox"
-                        id="formCheckbox"
-                        className="taskCheckbox sr-only"
+                        type="ACheckbox"
+                        id="formACheckbox"
+                        className="taskACheckbox sr-only"
                       />
                       <div className="box mr-3 flex h-5 w-5 items-center justify-center rounded border border-stroke dark:border-strokedark">
                         <span className="text-white opacity-0">
