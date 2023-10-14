@@ -45,7 +45,7 @@ const DropdownUser = () => {
       <Link
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4"
+        className="flex items-center gap-2"
         to="#"
       >
         <span className="hidden text-right lg:block">
@@ -56,7 +56,7 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={userDetails?.profile || UserOne} alt="User" />
+          <img src={userDetails?.profile || UserOne} className='rounded-full' alt="User" />
         </span>
 
         <svg
@@ -82,11 +82,11 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute top-13 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4 dark:border-strokedark">
           <li>
             <Link
               to="/profile"

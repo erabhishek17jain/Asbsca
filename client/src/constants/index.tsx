@@ -1,3 +1,31 @@
+export const TASK_TABLE_HEAD = [
+  'Bank Name',
+  'Task Name',
+  'Business Type',
+  'Status',
+  'Assignee',
+  'Reporter',
+  '',
+];
+
+export const USER_TABLE_HEAD = [
+  'Member',
+  'Contact',
+  'Roles',
+  'Report Finished',
+  'Joined',
+  '',
+];
+
+export const REPORT_TABLE_HEAD = [
+  'Transaction',
+  'Amount',
+  'Date',
+  'Status',
+  'Account',
+  '',
+];
+
 export const statsCards = [
   {
     title: 'Total Reports',
@@ -79,7 +107,8 @@ export const statsCards = [
     title: 'Total Users',
     count: 51,
     percentage: 28,
-    icon: (<svg
+    icon: (
+      <svg
         className="fill-primary dark:fill-white"
         width="22"
         height="18"
@@ -103,18 +132,3 @@ export const statsCards = [
     ),
   },
 ];
-
-export const TASK_TABLE_HEAD = [
-  'Bank Icon',
-  'Bank Name',
-  'Task Name',
-  'Business Type',
-  'Assignee',
-  'Status',
-  'Reporter',
-  'Actions',
-];
-
-export const USER_TABLE_HEAD = ['Member', 'Function', 'Status', 'Employed', ''];
-
-export const REPORT_TABLE_HEAD = ['Transaction', 'Amount', 'Date', 'Status', 'Account', ''];

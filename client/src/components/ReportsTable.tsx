@@ -21,7 +21,7 @@ import { reportsTableColumn } from '../constants/mocks';
 
 export function ReportsTable() {
   return (
-    <Card className="h-full w-full">
+    <Card className="h-full w-full shadow-lg">
       <CardHeader floated={false} shadow={false} className="rounded-none pt-1">
         <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
           <div>

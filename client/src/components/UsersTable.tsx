@@ -18,7 +18,7 @@ import { usersTableColumn } from '../constants/mocks';
 
 export function UsersTable() {
   return (
-    <Card className="h-full w-full">
+    <Card className="h-full w-full shadow-lg">
       <CardHeader floated={false} shadow={false} className="rounded-none pt-1">
         <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
           <div>
@@ -61,7 +61,10 @@ export function UsersTable() {
           </thead>
           <tbody>
             {usersTableColumn.map(
-              ({ img, name, email, job, org, online, date }, index) => {
+              (
+                { img, name, email, contact, role, reportCount, joined },
+                index,
+              ) => {
                 const isLast = index === usersTableColumn.length - 1;
                 const classes = isLast
                   ? 'p-4'
@@ -71,7 +74,12 @@ export function UsersTable() {
                   <tr key={name}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
+                        <Avatar
+                          src={img}
+                          alt={name}
+                          size="sm"
+                          className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
+                        />
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -97,25 +105,30 @@ export function UsersTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {org}
+                          {contact}
                         </Typography>
                       </div>
                     </td>
                     <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? 'online' : 'offline'}
-                          color={online ? 'green' : 'blue-gray'}
-                        />
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {role}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-col text-center">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {reportCount}
+                        </Typography>
                       </div>
                     </td>
                     <td className={classes}>
@@ -124,7 +137,7 @@ export function UsersTable() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}
+                        {joined}
                       </Typography>
                     </td>
                     <td className={classes}>

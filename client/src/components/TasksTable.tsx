@@ -24,7 +24,7 @@ const TasksTable = () => {
 
   return (
     <>
-      <Card className="h-full w-full">
+      <Card className="h-full w-full shadow-lg">
         <CardHeader
           floated={false}
           shadow={false}
@@ -43,13 +43,12 @@ const TasksTable = () => {
             </div>
             {!pathname.includes('dashboard') && (
               <div className="flex shrink-0 gap-2 md:w-max">
-                <Button
-                  size="sm"
+                <button
                   onClick={() => setShowModal(true)}
-                  className="inline-flex items-center justify-center gap-2.5 rounded-lg bg-black py-4 px-6 text-center font-medium text-white hover:bg-opacity-90 flex items-center gap-3"
+                  className="flex justify-center rounded-lg bg-[#02385e] py-3 px-6 font-medium text-gray hover:shadow-1 gap-2"
                 >
-                  <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Task
-                </Button>
+                  <UserPlusIcon strokeWidth={2} className="h-5 w-5" /> Add Task
+                </button>
               </div>
             )}
           </div>
@@ -136,11 +135,11 @@ const TasksTable = () => {
                           <Chip
                             size="sm"
                             variant="ghost"
-                            value={assignee}
+                            value={status}
                             color={
-                              assignee === 'paid'
+                              status === 'completed'
                                 ? 'green'
-                                : assignee === 'pending'
+                                : status === 'inProgress'
                                 ? 'amber'
                                 : 'red'
                             }
@@ -149,33 +148,26 @@ const TasksTable = () => {
                       </td>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
-                          <div className="h-9 w-12 rounded-md border border-blue-gray-50 p-1">
-                            <Avatar
-                              src={
-                                status === 'visa'
-                                  ? 'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/visa.png'
-                                  : 'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/mastercard.png'
-                              }
-                              size="sm"
-                              alt={status}
-                              variant="square"
-                              className="h-full w-full object-contain p-1"
-                            />
-                          </div>
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal capitalize"
                             >
-                              {status.split('-').join(' ')} {reporter}
+                              {assignee}
                             </Typography>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal opacity-70"
+                              className="font-normal capitalize"
                             >
-                              {action}
+                              {reporter}
                             </Typography>
                           </div>
                         </div>
@@ -194,19 +186,25 @@ const TasksTable = () => {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
-          </div>
-        </CardFooter>
+        {!pathname.includes('dashboard') && (
+          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              Page 1 of 10
+            </Typography>
+            <div className="flex gap-2">
+              <Button variant="outlined" size="sm">
+                Previous
+              </Button>
+              <Button variant="outlined" size="sm">
+                Next
+              </Button>
+            </div>
+          </CardFooter>
+        )}
       </Card>
       {showModal && <AddTaskModal closeModal={() => setShowModal(false)} />}
     </>
