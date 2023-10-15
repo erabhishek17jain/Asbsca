@@ -23,7 +23,7 @@ function App() {
         .then((response:any) => {
           console.log(response);
           dispatch(fetchCurrentUserAsync(response?.username));
-          navigate('/dashboard');
+          navigate('/profile');
         })
         .catch(() => {
           navigate('/auth/signin');
