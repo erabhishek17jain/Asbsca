@@ -1,18 +1,19 @@
 import { useState } from 'react';
 
-const ASwitcher = () => {
+const ASwitcher = ({  id, label,  formik }: any) => {
   const [enabled, setEnabled] = useState(false);
 
   return (
-    <div>
+    <div className="w-full mb-5">
       <label
-        htmlFor="toggle3"
+        htmlFor={id}
         className="flex cursor-pointer select-none items-center"
       >
-        <div className="relative">
+        <div className="relative mr-4">
           <input
-            type="ACheckbox"
-            id="toggle3"
+            id={id}
+            {...formik}
+            type="checkbox"
             className="sr-only"
             onChange={() => {
               setEnabled(!enabled);
@@ -59,6 +60,7 @@ const ASwitcher = () => {
             </span>
           </div>
         </div>
+        {label}
       </label>
     </div>
   );

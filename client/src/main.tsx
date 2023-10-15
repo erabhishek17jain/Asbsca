@@ -5,7 +5,6 @@ import App from './App';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import './index.css';
-import './satoshi.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

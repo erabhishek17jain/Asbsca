@@ -1,17 +1,34 @@
 import ABreadcrumb from '../components-global/ABreadcrumb';
-import fireToast from '../hooks/fireToast';
 import { useState } from 'react';
-import userSix from '../assets/images/logo/logo-dark.png';
 import { useSelector } from 'react-redux';
+import fireToast from '../hooks/fireToast';
+import AInputField from '../components-global/AInputField';
+import ATextField from '../components-global/ATextField';
+import { useFormik } from 'formik';
+import AButton from '../components-global/AButton';
+import AProfileUpload from '../components-global/AProfileUpload';
+import userSix from '../assets/images/logo/logo-dark.png';
 
 const Profile = () => {
   const { userDetails } = useSelector((state: any) => state.users);
   const [isEditProfile, setIsEditProfile] = useState(false);
 
+  const formik = useFormik({
+    initialValues: {
+      fullName: 'abhishek',
+      phoneNo: 'adminn@123',
+      email: 'abhishek',
+      address: 'abhishek',
+    },
+    validate: () => {},
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async () => {},
+  });
+
   return (
     <>
       <ABreadcrumb pageName="Profile" />
-
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 dark:border-strokedark dark:bg-boxdark">
         {isEditProfile ? (
           <>
@@ -142,283 +159,89 @@ const Profile = () => {
         ) : (
           <div className="rounded-sm px-5 py-5 dark:border-strokedark dark:bg-boxdark">
             <form action="#">
-              <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
-                <div className="mb-4 flex items-center gap-3 justify-center">
-                  <div className="relative h-20 w-20 rounded-full">
-                    <img src={userSix} alt="profile" />
-                    <label
-                      htmlFor="profile"
-                      className="absolute bottom-0 right-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-[#02385e] text-white hover:bg-opacity-90"
-                    >
-                      <svg
-                        className="fill-current"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638ZM5.56219 2.33329L4.5687 3.82353C4.46051 3.98582 4.27837 4.08329 4.08333 4.08329H1.75C1.59529 4.08329 1.44692 4.14475 1.33752 4.25415C1.22812 4.36354 1.16667 4.51192 1.16667 4.66663V11.0833C1.16667 11.238 1.22812 11.3864 1.33752 11.4958C1.44692 11.6052 1.59529 11.6666 1.75 11.6666H12.25C12.4047 11.6666 12.5531 11.6052 12.6625 11.4958C12.7719 11.3864 12.8333 11.238 12.8333 11.0833V4.66663C12.8333 4.51192 12.7719 4.36354 12.6625 4.25415C12.5531 4.14475 12.4047 4.08329 12.25 4.08329H9.91667C9.72163 4.08329 9.53949 3.98582 9.4313 3.82353L8.43781 2.33329H5.56219Z"
-                          fill=""
-                        />
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M7.00004 5.83329C6.03354 5.83329 5.25004 6.61679 5.25004 7.58329C5.25004 8.54979 6.03354 9.33329 7.00004 9.33329C7.96654 9.33329 8.75004 8.54979 8.75004 7.58329C8.75004 6.61679 7.96654 5.83329 7.00004 5.83329ZM4.08337 7.58329C4.08337 5.97246 5.38921 4.66663 7.00004 4.66663C8.61087 4.66663 9.91671 5.97246 9.91671 7.58329C9.91671 9.19412 8.61087 10.5 7.00004 10.5C5.38921 10.5 4.08337 9.19412 4.08337 7.58329Z"
-                          fill=""
-                        />
-                      </svg>
-                      <input
-                        type="file"
-                        name="profile"
-                        id="profile"
-                        className="sr-only"
-                      />
-                    </label>
-                  </div>
-                </div>
-
-                <div className="w-full sm:w-1/2">
-                  <label
-                    className="mb-3 block text-sm font-medium text-black dark:text-white"
-                    htmlFor="fullName"
-                  >
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-3">
-                      <svg
-                        className="fill-current"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g opacity="0.8">
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M3.72039 12.887C4.50179 12.1056 5.5616 11.6666 6.66667 11.6666H13.3333C14.4384 11.6666 15.4982 12.1056 16.2796 12.887C17.061 13.6684 17.5 14.7282 17.5 15.8333V17.5C17.5 17.9602 17.1269 18.3333 16.6667 18.3333C16.2064 18.3333 15.8333 17.9602 15.8333 17.5V15.8333C15.8333 15.1703 15.5699 14.5344 15.1011 14.0655C14.6323 13.5967 13.9964 13.3333 13.3333 13.3333H6.66667C6.00363 13.3333 5.36774 13.5967 4.8989 14.0655C4.43006 14.5344 4.16667 15.1703 4.16667 15.8333V17.5C4.16667 17.9602 3.79357 18.3333 3.33333 18.3333C2.8731 18.3333 2.5 17.9602 2.5 17.5V15.8333C2.5 14.7282 2.93899 13.6684 3.72039 12.887Z"
-                            fill=""
-                          />
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M9.99967 3.33329C8.61896 3.33329 7.49967 4.45258 7.49967 5.83329C7.49967 7.214 8.61896 8.33329 9.99967 8.33329C11.3804 8.33329 12.4997 7.214 12.4997 5.83329C12.4997 4.45258 11.3804 3.33329 9.99967 3.33329ZM5.83301 5.83329C5.83301 3.53211 7.69849 1.66663 9.99967 1.66663C12.3009 1.66663 14.1663 3.53211 14.1663 5.83329C14.1663 8.13448 12.3009 9.99996 9.99967 9.99996C7.69849 9.99996 5.83301 8.13448 5.83301 5.83329Z"
-                            fill=""
-                          />
-                        </g>
-                      </svg>
-                    </span>
-                    <input
-                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 pl-9 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      type="text"
-                      name="fullName"
-                      id="fullName"
-                      placeholder="Enter Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="w-full sm:w-1/2">
-                  <label
-                    className="mb-3 block text-sm font-medium text-black dark:text-white"
-                    htmlFor="phoneNumber"
-                  >
-                    Phone Number
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-3">
-                      <svg
-                        className="fill-current"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g opacity="0.8">
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M3.72039 12.887C4.50179 12.1056 5.5616 11.6666 6.66667 11.6666H13.3333C14.4384 11.6666 15.4982 12.1056 16.2796 12.887C17.061 13.6684 17.5 14.7282 17.5 15.8333V17.5C17.5 17.9602 17.1269 18.3333 16.6667 18.3333C16.2064 18.3333 15.8333 17.9602 15.8333 17.5V15.8333C15.8333 15.1703 15.5699 14.5344 15.1011 14.0655C14.6323 13.5967 13.9964 13.3333 13.3333 13.3333H6.66667C6.00363 13.3333 5.36774 13.5967 4.8989 14.0655C4.43006 14.5344 4.16667 15.1703 4.16667 15.8333V17.5C4.16667 17.9602 3.79357 18.3333 3.33333 18.3333C2.8731 18.3333 2.5 17.9602 2.5 17.5V15.8333C2.5 14.7282 2.93899 13.6684 3.72039 12.887Z"
-                            fill=""
-                          />
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M9.99967 3.33329C8.61896 3.33329 7.49967 4.45258 7.49967 5.83329C7.49967 7.214 8.61896 8.33329 9.99967 8.33329C11.3804 8.33329 12.4997 7.214 12.4997 5.83329C12.4997 4.45258 11.3804 3.33329 9.99967 3.33329ZM5.83301 5.83329C5.83301 3.53211 7.69849 1.66663 9.99967 1.66663C12.3009 1.66663 14.1663 3.53211 14.1663 5.83329C14.1663 8.13448 12.3009 9.99996 9.99967 9.99996C7.69849 9.99996 5.83301 8.13448 5.83301 5.83329Z"
-                            fill=""
-                          />
-                        </g>
-                      </svg>
-                    </span>
-                    <input
-                      className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 pl-9 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      type="text"
-                      name="phoneNumber"
-                      id="phoneNumber"
-                      placeholder="Enter Phone"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-5.5">
-                <label
-                  className="mb-3 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="emailAddress"
-                >
-                  Email Address
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-3">
+              <div className="mb-4 flex items-center gap-3 justify-center">
+                <AProfileUpload />
+                <AInputField
+                  type={'text'}
+                  id={'fullName'}
+                  label={'Full Name'}
+                  formik={formik.getFieldProps('fullName')}
+                  icon={
                     <svg
                       className="fill-current"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <g opacity="0.8">
+                      <g opacity="0.5">
                         <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M3.33301 4.16667C2.87658 4.16667 2.49967 4.54357 2.49967 5V15C2.49967 15.4564 2.87658 15.8333 3.33301 15.8333H16.6663C17.1228 15.8333 17.4997 15.4564 17.4997 15V5C17.4997 4.54357 17.1228 4.16667 16.6663 4.16667H3.33301ZM0.833008 5C0.833008 3.6231 1.9561 2.5 3.33301 2.5H16.6663C18.0432 2.5 19.1663 3.6231 19.1663 5V15C19.1663 16.3769 18.0432 17.5 16.6663 17.5H3.33301C1.9561 17.5 0.833008 16.3769 0.833008 15V5Z"
-                          fill=""
-                        />
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M0.983719 4.52215C1.24765 4.1451 1.76726 4.05341 2.1443 4.31734L9.99975 9.81615L17.8552 4.31734C18.2322 4.05341 18.7518 4.1451 19.0158 4.52215C19.2797 4.89919 19.188 5.4188 18.811 5.68272L10.4776 11.5161C10.1907 11.7169 9.80879 11.7169 9.52186 11.5161L1.18853 5.68272C0.811486 5.4188 0.719791 4.89919 0.983719 4.52215Z"
+                          d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z"
                           fill=""
                         />
                       </g>
                     </svg>
-                  </span>
-                  <input
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 pl-9 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    type="email"
-                    name="emailAddress"
-                    id="emailAddress"
-                    placeholder="Enter E-Mail"
-                  />
-                </div>
-              </div>
-
-              <div className="mb-5.5">
-                <label
-                  className="mb-3 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="Username"
-                >
-                  Username
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-3">
+                  }
+                />
+                <AInputField
+                  type={'text'}
+                  id={'phoneNo'}
+                  label={'Phone Number'}
+                  formik={formik.getFieldProps('phoneNo')}
+                  icon={
                     <svg
                       className="fill-current"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <g opacity="0.8">
+                      <g opacity="0.5">
                         <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M3.72039 12.887C4.50179 12.1056 5.5616 11.6666 6.66667 11.6666H13.3333C14.4384 11.6666 15.4982 12.1056 16.2796 12.887C17.061 13.6684 17.5 14.7282 17.5 15.8333V17.5C17.5 17.9602 17.1269 18.3333 16.6667 18.3333C16.2064 18.3333 15.8333 17.9602 15.8333 17.5V15.8333C15.8333 15.1703 15.5699 14.5344 15.1011 14.0655C14.6323 13.5967 13.9964 13.3333 13.3333 13.3333H6.66667C6.00363 13.3333 5.36774 13.5967 4.8989 14.0655C4.43006 14.5344 4.16667 15.1703 4.16667 15.8333V17.5C4.16667 17.9602 3.79357 18.3333 3.33333 18.3333C2.8731 18.3333 2.5 17.9602 2.5 17.5V15.8333C2.5 14.7282 2.93899 13.6684 3.72039 12.887Z"
-                          fill=""
-                        />
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M9.99967 3.33329C8.61896 3.33329 7.49967 4.45258 7.49967 5.83329C7.49967 7.214 8.61896 8.33329 9.99967 8.33329C11.3804 8.33329 12.4997 7.214 12.4997 5.83329C12.4997 4.45258 11.3804 3.33329 9.99967 3.33329ZM5.83301 5.83329C5.83301 3.53211 7.69849 1.66663 9.99967 1.66663C12.3009 1.66663 14.1663 3.53211 14.1663 5.83329C14.1663 8.13448 12.3009 9.99996 9.99967 9.99996C7.69849 9.99996 5.83301 8.13448 5.83301 5.83329Z"
+                          d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z"
                           fill=""
                         />
                       </g>
                     </svg>
-                  </span>
-                  <input
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 pl-9 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    type="text"
-                    name="Username"
-                    id="Username"
-                    placeholder="devidjhon24"
-                  />
-                </div>
+                  }
+                />
               </div>
-
-              <div className="mb-5.5">
-                <label
-                  className="mb-3 block text-sm font-medium text-black dark:text-white"
-                  htmlFor="Username"
-                >
-                  BIO
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4.5 top-4">
-                    <svg
-                      className="fill-current"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g opacity="0.8" clipPath="url(#clip0_88_10224)">
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M1.56524 3.23223C2.03408 2.76339 2.66997 2.5 3.33301 2.5H9.16634C9.62658 2.5 9.99967 2.8731 9.99967 3.33333C9.99967 3.79357 9.62658 4.16667 9.16634 4.16667H3.33301C3.11199 4.16667 2.90003 4.25446 2.74375 4.41074C2.58747 4.56702 2.49967 4.77899 2.49967 5V16.6667C2.49967 16.8877 2.58747 17.0996 2.74375 17.2559C2.90003 17.4122 3.11199 17.5 3.33301 17.5H14.9997C15.2207 17.5 15.4326 17.4122 15.5889 17.2559C15.7452 17.0996 15.833 16.8877 15.833 16.6667V10.8333C15.833 10.3731 16.2061 10 16.6663 10C17.1266 10 17.4997 10.3731 17.4997 10.8333V16.6667C17.4997 17.3297 17.2363 17.9656 16.7674 18.4344C16.2986 18.9033 15.6627 19.1667 14.9997 19.1667H3.33301C2.66997 19.1667 2.03408 18.9033 1.56524 18.4344C1.0964 17.9656 0.833008 17.3297 0.833008 16.6667V5C0.833008 4.33696 1.0964 3.70107 1.56524 3.23223Z"
-                          fill=""
-                        />
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M16.6664 2.39884C16.4185 2.39884 16.1809 2.49729 16.0056 2.67253L8.25216 10.426L7.81167 12.188L9.57365 11.7475L17.3271 3.99402C17.5023 3.81878 17.6008 3.5811 17.6008 3.33328C17.6008 3.08545 17.5023 2.84777 17.3271 2.67253C17.1519 2.49729 16.9142 2.39884 16.6664 2.39884ZM14.8271 1.49402C15.3149 1.00622 15.9765 0.732178 16.6664 0.732178C17.3562 0.732178 18.0178 1.00622 18.5056 1.49402C18.9934 1.98182 19.2675 2.64342 19.2675 3.33328C19.2675 4.02313 18.9934 4.68473 18.5056 5.17253L10.5889 13.0892C10.4821 13.196 10.3483 13.2718 10.2018 13.3084L6.86847 14.1417C6.58449 14.2127 6.28409 14.1295 6.0771 13.9225C5.87012 13.7156 5.78691 13.4151 5.85791 13.1312L6.69124 9.79783C6.72787 9.65131 6.80364 9.51749 6.91044 9.41069L14.8271 1.49402Z"
-                          fill=""
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_88_10224">
-                          <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </span>
-
-                  <textarea
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 pl-12 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    name="bio"
-                    id="bio"
-                    rows={6}
-                    placeholder="Write your about here..."
-                  ></textarea>
-                </div>
-              </div>
-
+              <AInputField
+                type={'text'}
+                id={'email'}
+                label={'E-Mail'}
+                formik={formik.getFieldProps('email')}
+                icon={<></>}
+              />
+              <AInputField
+                type={'text'}
+                id={'username'}
+                label={'Username'}
+                formik={formik.getFieldProps('username')}
+                icon={<></>}
+              />
+              <ATextField
+                id={'aboutMe'}
+                label={'About Me'}
+                formik={formik.getFieldProps('aboutMe')}
+                icon={<></>}
+              />
               <div className="flex justify-end gap-4.5">
-                <button
-                  onClick={() => {
+                <AButton
+                  label={'Cancel'}
+                  variant={'secondary'}
+                  action={() => {
                     setIsEditProfile(false);
                   }}
-                  className="flex justify-center rounded-lg border border-[#02385e] py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                >
-                  Cancel
-                </button>
-                <button
-                  className="flex justify-center rounded-lg bg-[#02385e] py-2 px-6 font-medium text-gray hover:shadow-1"
-                  type="submit"
-                  onClick={fireToast}
-                >
-                  Save
-                </button>
+                />
+                <AButton
+                  label={'Save'}
+                  type={'submit'}
+                  variant={'primary'}
+                  action={fireToast}
+                />
               </div>
             </form>
           </div>
