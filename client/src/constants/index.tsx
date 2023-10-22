@@ -173,3 +173,21 @@ export const statsCards = [
     icon: <PaperAirplaneIcon className="h-5 w-5" />,
   },
 ];
+
+export const mastersCards = [
+  {
+    title: 'Clients',
+    count: 8,
+    icon: <Square3Stack3DIcon className="h-5 w-5" />,
+  },
+  {
+    title: 'Products',
+    count: 15,
+    icon: <UserIcon className="h-5 w-5" />,
+  },
+  {
+    title: 'Branches',
+    count: 45,
+    icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
+  },
+];

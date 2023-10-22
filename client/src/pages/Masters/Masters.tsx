@@ -1,10 +1,13 @@
 import ABreadcrumb from '../../components-global/ABreadcrumb';
+import MastersCard from '../../components-shared/MastersCard';
 
 const Masters = () => {
   return (
     <>
       <ABreadcrumb pageName="Masters" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5"></div>
+      <div className="flex justify-between">
+        <MastersCard />
+      </div>
     </>
   );
 };
