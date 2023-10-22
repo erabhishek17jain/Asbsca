@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Logo from '../assets/images/logo/logo.png';
-import Home from '../assets/images/icon/home.svg';
-import LogoDark from '../assets/images/logo/logo.png';
+import Logo from '../../assets/images/logo/logo.png';
+import HomeIcon from '../../assets/images/icon/home.svg';
+import LogoDark from '../../assets/images/logo/logo.png';
 
 const Hero = () => {
   return (
@@ -21,7 +21,7 @@ const Hero = () => {
               </p>
 
               <span className="flex justify-center w-full mt-10 inline-block">
-                <img src={Home} alt="Logo" />
+                <img src={HomeIcon} alt="Logo" />
               </span>
 
               <Link

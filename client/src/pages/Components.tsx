@@ -11,7 +11,7 @@ import ASwitcher from '../components-global/ASwitcher';
 import ATextField from '../components-global/ATextField';
 import ABreadcrumb from '../components-global/ABreadcrumb';
 
-const Fields = () => {
+const Components = () => {
   return (
     <>
       <ABreadcrumb pageName="Components" />
@@ -139,4 +139,4 @@ const Fields = () => {
   );
 };
 
-export default Fields;
+export default Components;

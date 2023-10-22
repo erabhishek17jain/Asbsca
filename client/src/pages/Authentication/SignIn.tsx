@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/logo/logo.png';
-import Home from '../../assets/images/icon/home.svg';
+import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { usernameValidate } from '../../helper/validate';
 import { useFormik } from 'formik';
@@ -75,7 +75,7 @@ const SignIn = () => {
               </p>
 
               <span className="mt-15 inline-block">
-                <img src={Home} alt="Logo" />
+                <img src={HomeIcon} alt="Logo" />
               </span>
             </div>
           </div>

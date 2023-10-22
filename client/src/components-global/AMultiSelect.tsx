@@ -39,7 +39,9 @@ const AMultiSelect = ({
           className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"
         >
           {options.map((item: any) => (
-            <option value={item.value}>{item.label}</option>
+            <option key={item?.value} value={item.value}>
+              {item.label}
+            </option>
           ))}
         </select>
         <span className="absolute top-1/2 right-2 z-10 -translate-y-1/2">

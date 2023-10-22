@@ -5,7 +5,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import ALoader from './components-global/ALoader';
 import routes from './routes';
-import Hero from './pages/Hero';
+import Hero from './pages/Hero/Hero';
 import { useDispatch } from 'react-redux';
 import { getUsername } from './helper/helper';
 import { fetchCurrentUserAsync } from './slices/usersSlice';

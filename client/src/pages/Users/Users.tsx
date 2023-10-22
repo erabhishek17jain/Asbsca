@@ -1,5 +1,5 @@
-import ABreadcrumb from '../components-global/ABreadcrumb';
-import { UsersTable } from '../components-shared/UsersTable';
+import ABreadcrumb from '../../components-global/ABreadcrumb';
+import { UsersTable } from '../../components-shared/UsersTable';
 
 const Users = () => {
   return (

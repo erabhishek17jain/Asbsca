@@ -29,7 +29,9 @@ const ASingleSelect = ({
         >
           <option value="">Select {label}</option>
           {options.map((item: any) => (
-            <option value={item?.value}>{item?.label}</option>
+            <option key={item?.value} value={item?.value}>
+              {item?.label}
+            </option>
           ))}
         </select>
         <span

@@ -1,13 +1,13 @@
-import ABreadcrumb from '../components-global/ABreadcrumb';
+import ABreadcrumb from '../../components-global/ABreadcrumb';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import fireToast from '../hooks/fireToast';
-import AInputField from '../components-global/AInputField';
-import ATextField from '../components-global/ATextField';
+import fireToast from '../../hooks/fireToast';
+import AInputField from '../../components-global/AInputField';
+import ATextField from '../../components-global/ATextField';
 import { useFormik } from 'formik';
-import AButton from '../components-global/AButton';
-import AProfileUpload from '../components-global/AProfileUpload';
-import userSix from '../assets/images/logo/logo-dark.png';
+import AButton from '../../components-global/AButton';
+import AProfileUpload from '../../components-global/AProfileUpload';
+import ProfileIcon from '../../assets/images/icon/profile.svg';
 import { CameraIcon, DevicePhoneMobileIcon, UserIcon } from '@heroicons/react/24/solid';
 
 const Profile = () => {
@@ -55,7 +55,10 @@ const Profile = () => {
             <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
               <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
                 <div className="relative drop-shadow-2">
-                  <img src={userDetails?.profile || userSix} alt="profile" />
+                  <img
+                    src={userDetails?.profile || ProfileIcon}
+                    alt="profile"
+                  />
                   <label
                     htmlFor="profile"
                     className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -81,9 +84,7 @@ const Profile = () => {
                 </p>
 
                 <div className="mx-auto max-w-180">
-                  <h4 className="font-semibold text-black">
-                    About Me
-                  </h4>
+                  <h4 className="font-semibold text-black">About Me</h4>
                   <p className="mt-4.5">
                     {userDetails?.aboutMe
                       ? userDetails?.aboutMe
@@ -91,26 +92,18 @@ const Profile = () => {
                   </p>
                 </div>
 
-                <h4 className="font-semibold text-black mt-6">
-                  PD Status
-                </h4>
+                <h4 className="font-semibold text-black mt-6">PD Status</h4>
                 <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
-                      259
-                    </span>
+                    <span className="font-semibold text-black">259</span>
                     <span className="text-sm">Completed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
-                      2
-                    </span>
+                    <span className="font-semibold text-black">2</span>
                     <span className="text-sm">In Progress</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
-                      89%
-                    </span>
+                    <span className="font-semibold text-black">89%</span>
                     <span className="text-sm">Accuracy</span>
                   </div>
                 </div>

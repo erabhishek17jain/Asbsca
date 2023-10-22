@@ -10,15 +10,75 @@ import {
   UsersIcon,
 } from '@heroicons/react/24/solid';
 
-export const TASK_TABLE_HEAD = [
-  'Bank Name',
-  'Task Name',
-  'Business Type',
-  'Status',
-  'Assignee',
-  'Reporter',
-  'createdAt',
+export const ALL_CASES_TABLE_HEAD = [
   '',
+  'Bank Name',
+  'Reference ID',
+  'Received Date',
+  "Applicant's Name",
+  'Mobile',
+  'City',
+  'Loan Amt (Lacs)',
+  'Case Type',
+  'Case Status',
+  'Appointment Status',
+  'Remark',
+  'Assigned to',
+  'Reviewer',
+  'Action',
+];
+
+export const ASSIGNED_CASES_TABLE_HEAD = [
+  '',
+  'Bank Name',
+  'Reference ID',
+  'Received Date',
+  "Applicant's Name",
+  'Mobile',
+  'Address',
+  'City',
+  'Loan Amt (Lacs)',
+  'Case Type',
+  'Case Status',
+  'Appointment Status',
+  'Remark',
+  'Reviewer',
+  'Action',
+];
+
+export const REVIEWING_CASES_TABLE_HEAD = [
+  '',
+  'Bank Name',
+  'Reference ID',
+  'Received Date',
+  "Applicant's Name",
+  'Mobile',
+  'Address',
+  'City',
+  'Loan Amt (Lacs)',
+  'Case Type',
+  'Case Status',
+  'Assigned to',
+  'Reviewer',
+  'Action',
+];
+
+export const COMPLETED_CASES_TABLE_HEAD = [
+  '',
+  'Bank Name',
+  'Reference ID',
+  'Received Date',
+  "Applicant's Name",
+  'Mobile',
+  'City',
+  'Branch',
+  'Local/OGL', // Local, OGL
+  'Case Type',
+  'Report By',
+  'Review By',
+  'Started Date',
+  'Completed date',
+  'Reports',
 ];
 
 export const USER_TABLE_HEAD = [
@@ -56,7 +116,7 @@ export const sidebarMenu = [
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
-    label: 'For Review',
+    label: 'Reviewing',
     path: 'review',
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
@@ -101,7 +161,7 @@ export const statsCards = [
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
-    title: 'For Review Cases',
+    title: 'Reviewing Cases',
     count: 47,
     percentage: -3,
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,

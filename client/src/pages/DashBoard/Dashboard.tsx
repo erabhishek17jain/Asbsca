@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import ReportStatusPie from '../../components-shared/ReportStatusPieChart.tsx';
 import TopPerformers from '../../components-shared/TopPerformers.tsx';
-import TasksTable from '../../components-shared/TasksTable.tsx';
+import TasksTable from '../../components-shared/CasesTable.tsx';
 import StatsCard from '../../components-shared/StatsCard.tsx';
 import ASingleSelect from "../../components-global/ASingleSelect.tsx"
 import { AModal } from '../../components-global/AModal.tsx';

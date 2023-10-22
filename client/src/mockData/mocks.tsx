@@ -1,65 +1,68 @@
 import Logo from '../assets/images/logo/logo-dark.png';
 
-export const tasksTableColumn = [
+export const casesTableColumn = [
   {
+    referenceId: 'AXIS2348',
     bankIcon: Logo,
     bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    status: 'inProgress',
-    assignee: 'Prabhat',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
+    appicantName: 'Aayush Jain',
+    mobileNo: '8817378978',
+    address: 'vijay nagar',
+    city: 'Mumbai',
+    loanAmt: 50,
+    branch: 'Indore',
+    locType: 'Local', // Local, OGL
+    caseType: 'PD', // PD, LIP
+    caseStatus: 'Unassigned', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
+    appointmentStatus: 'Not received', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    assignedTo: 'Arjun Singh',
+    reviewer: 'Seemit Jain',
+    recievedDate: '16/10/2023 10:54 am',
+    startedDate: '16/10/2023 10:54 am',
+    completedDate: '16/10/2023 10:54 am',
+    remark: '',
   },
   {
+    referenceId: 'AXIS2348',
     bankIcon: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 2',
-    businessType: 'Jewellary Shop',
-    status: 'completed',
-    assignee: 'Abhishek',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
+    bankName: 'HDFC Bank',
+    appicantName: 'Abhishek Jain',
+    mobileNo: '9770080125',
+    address: 'vijay nagar',
+    city: 'Sagar',
+    loanAmt: 25,
+    branch: 'Indore',
+    locType: 'OGL', // Local, OGL
+    caseType: 'PD', // PD, LIP
+    caseStatus: 'Assigned', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
+    appointmentStatus: 'Not yet scheduled', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    assignedTo: 'Arjun Singh',
+    reviewer: 'Seemit Jain',
+    recievedDate: '16/10/2023 10:54 am',
+    startedDate: '16/10/2023 10:54 am',
+    completedDate: '16/10/2023 10:54 am',
+    remark: '',
   },
   {
+    referenceId: 'AXIS2348',
     bankIcon: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 3',
-    businessType: 'Jewellary Shop',
-    status: 'open',
-    assignee: 'Abhishek',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
-  },
-  {
-    bankIcon: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 4',
-    businessType: 'Jewellary Shop',
-    status: 'inProgress',
-    assignee: 'Shweta',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
-  },
-  {
-    bankIcon: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 5',
-    businessType: 'Jewellary Shop',
-    status: 'open',
-    assignee: 'Palash',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
-  },
-  {
-    bankIcon: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 6',
-    businessType: 'Jewellary Shop',
-    status: 'completed',
-    assignee: 'Roshan',
-    reporter: 'Seemit',
-    createdAt: '06/2026',
+    bankName: 'ICICI Bank',
+    appicantName: 'Aman Jain',
+    mobileNo: '9876543210',
+    address: 'vijay nagar',
+    city: 'Indore',
+    loanAmt: 40,
+    branch: 'Indore',
+    locType: 'Local', // Local, OGL
+    caseType: 'LIP', // PD, LIP
+    caseStatus: 'Sent to Bank', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
+    appointmentStatus: 'Visited', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    assignedTo: 'Sunita Devi',
+    reviewer: 'Seemit Jain',
+    recievedDate: '16/10/2023 10:54 am',
+    startedDate: '16/10/2023 10:54 am',
+    completedDate: '16/10/2023 10:54 am',
+    remark: '',
   },
 ];
 
@@ -153,4 +156,3 @@ export const reportsTableColumn = [
     createdAt: '06/08/2026',
   },
 ];
-
