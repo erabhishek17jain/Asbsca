@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 
-const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Dashboard = lazy(() => import('../pages/DashBoard/Dashboard'));
+const AddNew = lazy(() => import('../pages/DashBoard/NewAdd'));
 const Tasks = lazy(() => import('../pages/Tasks'));
 const Users = lazy(() => import('../pages/Users'));
 const Reports = lazy(() => import('../pages/Reports'));
@@ -31,6 +32,11 @@ const coreRoutes = [
     path: '/profile',
     title: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/addNew',
+    title: 'AddNew',
+    component: AddNew,
   },
 ];
 

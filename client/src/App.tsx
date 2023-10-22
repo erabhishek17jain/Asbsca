@@ -21,15 +21,13 @@ function App() {
     if (token) {
       getUsername()
         .then((response:any) => {
-          console.log(response);
           dispatch(fetchCurrentUserAsync(response?.username));
-          navigate('/profile');
         })
         .catch(() => {
           navigate('/auth/signin');
         });
     } else{
-      navigate('/');
+      navigate('/auth/signin');
     }
   }, []);
 
@@ -61,7 +59,7 @@ function App() {
           })}
         </Route>
       </Routes>
-      
+
       {/* <ACheckbox name={'checkbox'} label={'CheckBox Text'} />
       <ASwitcher name={'switch'} label={'Switch Text'} />
       <AInputField type={'text'} name={'inputName'} label={'Input Text'} />
@@ -85,7 +83,12 @@ function App() {
       />
       <AFileUpload type={'file'} name={'fileUpload'} label={'File Text'} />
       <ADatePicker type={'date'} name={'datePicker'} label={'Date Text'} />
-      <ATextField name={'textarea'} label={'Text area Text'} /> */}
+      <ATextField name={'textarea'} label={'Text area Text'} />
+      <AFileDragAndUpload
+        type={'date'}
+        name={'datePicker'}
+        label={'Date Text'}
+      /> */}
     </>
   );
 }

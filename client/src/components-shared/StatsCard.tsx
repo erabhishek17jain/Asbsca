@@ -1,13 +1,13 @@
 import { statsCards } from '../constants';
 
-const StatsCard = ({ role }:any) => {
-  
+const StatsCard = ({ role }: any) => {
+
   let updatedCards = []
   if (role !== 'admin') {
     updatedCards = statsCards.filter(
       (item: any) => item.title !== 'Total Users',
     );
-  } else{
+  } else {
     updatedCards = [...statsCards];
   }
 
@@ -32,6 +32,10 @@ const StatsCard = ({ role }:any) => {
                 <span className="text-sm font-medium">{item.title}</span>
               </div>
             </div>
+            <button className="bg-gray-300 hover:text-gray-900 text-gray-500 font-bold py-1 rounded inline-flex items-center">
+              <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+              <span>Download</span>
+            </button>
           </div>
         );
       })}

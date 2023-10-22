@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@material-tailwind/react';
 import { tasksTableColumn } from '../mockData/mocks';
-import { AddTaskModal } from './AddTaskModal';
+import { AModal } from '../components-global/AModal';
 import { useState } from 'react';
 
 const TasksTable = () => {
@@ -219,7 +219,9 @@ const TasksTable = () => {
           </CardFooter>
         )}
       </Card>
-      {showModal && <AddTaskModal closeModal={() => setShowModal(false)} />}
+      {showModal && (
+        <AModal title={'Task'} closeModal={() => setShowModal(false)}></AModal>
+      )}
     </>
   );
 };

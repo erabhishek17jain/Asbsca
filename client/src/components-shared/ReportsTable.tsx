@@ -1,4 +1,4 @@
-import { PencilIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, Squares2X2Icon } from '@heroicons/react/24/solid';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import {
   Card,
