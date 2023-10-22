@@ -3,11 +3,11 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 const AMultiSelect = ({ id, label, icon, formik, selected, options }: any) => {
   return (
     <div className="w-full mb-5">
-      <label className="mb-3 block text-black dark:text-white">{label}</label>
-      <div className="relative z-20 w-full rounded-lg border-[1.5px] border-stroke py-1 px-1.5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
+      <label className="mb-3 block text-sm text-black">{label}</label>
+      <div className="relative z-20 w-full rounded-lg border-[1.5px] border-stroke py-1 px-1.5 font-medium outline-none transition focus:border-primary active:border-primary">
         <div className="flex flex-wrap items-center">
           {selected.map((item: any) => (
-            <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium dark:border-strokedark dark:bg-white/30">
+            <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium">
               {item.label}
               <span className="cursor-pointer pl-2 hover:text-danger">
                 <XMarkIcon className="h-3 w-3" />

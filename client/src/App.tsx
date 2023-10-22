@@ -59,36 +59,6 @@ function App() {
           })}
         </Route>
       </Routes>
-
-      {/* <ACheckbox name={'checkbox'} label={'CheckBox Text'} />
-      <ASwitcher name={'switch'} label={'Switch Text'} />
-      <AInputField type={'text'} name={'inputName'} label={'Input Text'} />
-      <ASingleSelect
-        name={'select'}
-        label={'Country'}
-        options={[
-          { label: 'India', value: 'india' },
-          { label: 'USA', value: 'usa' },
-        ]}
-      />
-      <AMultiSelect
-        name={'select'}
-        label={'Country'}
-        selected={[{ label: 'India', value: 'india' }]}
-        options={[
-          { label: 'India', value: 'india' },
-          { label: 'USA', value: 'usa' },
-          { label: 'UK', value: 'uk' },
-        ]}
-      />
-      <AFileUpload type={'file'} name={'fileUpload'} label={'File Text'} />
-      <ADatePicker type={'date'} name={'datePicker'} label={'Date Text'} />
-      <ATextField name={'textarea'} label={'Text area Text'} />
-      <AFileDragAndUpload
-        type={'date'}
-        name={'datePicker'}
-        label={'Date Text'}
-      /> */}
     </>
   );
 }

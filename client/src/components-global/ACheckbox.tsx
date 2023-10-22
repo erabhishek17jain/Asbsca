@@ -8,7 +8,7 @@ const ACheckbox = ({ id, label, formik }: any) => {
     <div className="w-full sm:w-1/2 mb-5">
       <label
         htmlFor={id}
-        className="flex cursor-pointer select-none items-center"
+        className="flex cursor-pointer select-none text-sm items-center"
       >
         <div className="relative">
           <input
@@ -22,7 +22,7 @@ const ACheckbox = ({ id, label, formik }: any) => {
           />
           <div
             className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-              isChecked && 'border-primary bg-gray dark:bg-transparent'
+              isChecked && 'border-primary bg-gray'
             }`}
           >
             <span className={`opacity-0 ${isChecked && '!opacity-100'}`}>

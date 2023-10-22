@@ -5,7 +5,7 @@ interface ABreadcrumbProps {
 const ABreadcrumb = ({ pageName }: ABreadcrumbProps) => {
   return (
     <div className="mb-5 flex flex-col gap-3 xsm:flex-row xsm:items-center xsm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
+      <h2 className="text-title-md2 font-semibold text-black">
         {pageName}
       </h2>
 
@@ -14,7 +14,7 @@ const ABreadcrumb = ({ pageName }: ABreadcrumbProps) => {
           <li>
             <Link to="/dashboard">Dashboard /</Link>
           </li>
-          <li className="text-[#02385e]">{pageName}</li>
+          <li className="text-main">{pageName}</li>
         </ol>
       </nav>
     </div>

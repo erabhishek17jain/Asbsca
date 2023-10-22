@@ -1,16 +1,16 @@
-const AButton = ({ type, action, label, variant }: any) => {
+const AButton = ({ type, action, label, variant, icon = '' }: any) => {
   return (
     <button
       type={type}
       onClick={action}
-      className={`flex justify-center items-center mb-5 rounded-lg py-2 font-medium hover:shadow-1 dark:border-strokedark dark:text-white 
-          ${variant === 'primary' && 'px-6 bg-[#02385e] text-gray'}
-          ${variant === 'full' && 'w-full px-6 bg-[#02385e] text-gray'}
+      className={`flex justify-center items-center gap-1 mb-5 rounded-lg py-2 font-medium hover:shadow-1  
+          ${variant === 'primary' && 'pl-4 pr-5 bg-main text-gray'}
+          ${variant === 'full' && 'w-full pl-4 pr-5 bg-main text-gray'}
           ${
-            variant === 'secondary' &&
-            'px-6 border border-[#02385e] text-[#02385e]'
+            variant === 'secondary' && 'pl-4 pr-5 border border-main text-main'
           }`}
     >
+      {icon}
       {label}
     </button>
   );

@@ -45,7 +45,7 @@ const TasksTable = () => {
               <div className="flex shrink-0 gap-2 md:w-max">
                 <button
                   onClick={() => setShowModal(true)}
-                  className="flex justify-center rounded-lg bg-[#02385e] py-3 px-6 font-medium text-gray hover:shadow-1 gap-2"
+                  className="flex justify-center rounded-lg bg-main py-3 px-6 font-medium text-gray hover:shadow-1 gap-2"
                 >
                   <UserPlusIcon strokeWidth={2} className="h-5 w-5" /> Add Task
                 </button>

@@ -6,6 +6,7 @@ const Tasks = lazy(() => import('../pages/Tasks'));
 const Users = lazy(() => import('../pages/Users'));
 const Reports = lazy(() => import('../pages/Reports'));
 const Profile = lazy(() => import('../pages/Profile'));
+const Fields = lazy(() => import('../pages/Fields'));
 
 const coreRoutes = [
   {
@@ -14,14 +15,29 @@ const coreRoutes = [
     component: Dashboard,
   },
   {
-    path: '/tasks',
-    title: 'Tasks',
+    path: '/addNew',
+    title: 'AddNew',
+    component: AddNew,
+  },
+  {
+    path: '/bullUpload',
+    title: 'Bulk Upload',
+    component: AddNew,
+  },
+  {
+    path: '/cases',
+    title: 'All Cases',
     component: Tasks,
   },
   {
-    path: '/users',
-    title: 'Users',
-    component: Users,
+    path: '/assigned',
+    title: 'Assigned Cases',
+    component: Tasks,
+  },
+  {
+    path: '/review',
+    title: 'For Review Cases',
+    component: Tasks,
   },
   {
     path: '/reports',
@@ -29,14 +45,24 @@ const coreRoutes = [
     component: Reports,
   },
   {
+    path: '/masters',
+    title: 'Masters',
+    component: Users,
+  },
+  {
+    path: '/users',
+    title: 'Users',
+    component: Users,
+  },
+  {
     path: '/profile',
     title: 'Profile',
     component: Profile,
   },
   {
-    path: '/addNew',
-    title: 'AddNew',
-    component: AddNew,
+    path: '/fields',
+    title: 'Fields',
+    component: Fields,
   },
 ];
 

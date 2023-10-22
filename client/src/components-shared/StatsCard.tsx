@@ -1,3 +1,4 @@
+import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
 import { statsCards } from '../constants';
 
 const StatsCard = ({ role }: any) => {
@@ -17,13 +18,13 @@ const StatsCard = ({ role }: any) => {
         return (
           <div
             key={item.title}
-            className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 shadow-default dark:border-strokedark dark:bg-boxdark"
+            className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 shadow-default"
           >
             <div className="flex justify-between">
-              <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+              <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta2">
                 <span>{item.icon}</span>
               </div>
-              <h4 className="text-title-lg font-bold text-black dark:text-white">
+              <h4 className="text-title-lg font-bold text-black">
                 {item.count}
               </h4>
             </div>
@@ -32,8 +33,8 @@ const StatsCard = ({ role }: any) => {
                 <span className="text-sm font-medium">{item.title}</span>
               </div>
             </div>
-            <button className="bg-gray-300 hover:text-gray-900 text-gray-500 font-bold py-1 rounded inline-flex items-center">
-              <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+            <button className="text-meta3 hover:text-graydark font-bold mt-2 py-1 bg-gray rounded flex items-center justify-center gap-1">
+              <ArrowDownTrayIcon className="h-5 w-5" />
               <span>Download</span>
             </button>
           </div>

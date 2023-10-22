@@ -50,7 +50,7 @@ const ADropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
+          <span className="block text-sm font-medium text-black">
             {userDetails?.fullname}
           </span>
           <span className="block text-xs">{userDetails?.email}</span>
@@ -74,15 +74,15 @@ const ADropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-13 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-lg bg-white text-gray-700 shadow-lg dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute top-13 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-lg bg-white text-gray-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4 dark:border-strokedark">
+        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4">
           <li>
             <Link
               to="/profile"
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-[#02385e] lg:text-base"
+              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
             >
               <UserIcon className="h-5 w-5" />
               My Profile
@@ -91,7 +91,7 @@ const ADropdownUser = () => {
         </ul>
         <button
           onClick={userLogout}
-          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-[#02385e] lg:text-base"
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
         >
           <ArrowLeftOnRectangleIcon className="h-5 w-5" />
           Log Out

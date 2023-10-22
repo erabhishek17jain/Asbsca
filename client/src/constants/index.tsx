@@ -80,6 +80,11 @@ export const sidebarMenu = [
     path: 'profile',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
+  {
+    label: 'Field Components',
+    path: 'fields',
+    icon: <Cog6ToothIcon className="h-5 w-5" />,
+  },
 ];
 
 export const statsCards = [

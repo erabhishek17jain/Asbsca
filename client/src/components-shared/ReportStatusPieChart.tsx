@@ -55,10 +55,10 @@ const ReportStatusPieChart: React.FC = () => {
   });
 
   return (
-    <div className="col-span-12 bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5">
+    <div className="col-span-12 bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 sm:px-7.5 xl:col-span-5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
-          <h5 className="text-xl font-semibold text-black dark:text-white">
+          <h5 className="text-xl font-semibold text-black">
             Report Status
           </h5>
         </div>

@@ -30,14 +30,14 @@ const Profile = () => {
   return (
     <>
       <ABreadcrumb pageName="Profile" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 dark:border-strokedark dark:bg-boxdark">
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5">
         {!isEditProfile ? (
           <>
             <div className="relative z-20 h-30">
               <div className="absolute top-4 right-4 z-10 xsm:bottom-4 xsm:right-4">
                 <label
                   htmlFor="cover"
-                  className="flex cursor-pointer items-center justify-center gap-2 rounded bg-[#02385e] py-1.5 px-3 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded bg-main py-1.5 px-3 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
                 >
                   <span>
                     <CameraIcon className="h-4 w-4" />
@@ -58,7 +58,7 @@ const Profile = () => {
                   <img src={userDetails?.profile || userSix} alt="profile" />
                   <label
                     htmlFor="profile"
-                    className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-[#02385e] text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
+                    className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
                   >
                     <CameraIcon className="h-4 w-4" />
                     <input
@@ -71,7 +71,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+                <h3 className="mb-1.5 text-2xl font-semibold text-black">
                   {userDetails?.fullname}
                 </h3>
                 <p className="flex justify-center gap-4 font-medium my-4">
@@ -81,7 +81,7 @@ const Profile = () => {
                 </p>
 
                 <div className="mx-auto max-w-180">
-                  <h4 className="font-semibold text-black dark:text-white">
+                  <h4 className="font-semibold text-black">
                     About Me
                   </h4>
                   <p className="mt-4.5">
@@ -91,24 +91,24 @@ const Profile = () => {
                   </p>
                 </div>
 
-                <h4 className="font-semibold text-black dark:text-white mt-6">
+                <h4 className="font-semibold text-black mt-6">
                   PD Status
                 </h4>
-                <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
-                  <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">
+                <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
+                  <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
+                    <span className="font-semibold text-black">
                       259
                     </span>
                     <span className="text-sm">Completed</span>
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">
+                  <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
+                    <span className="font-semibold text-black">
                       2
                     </span>
                     <span className="text-sm">In Progress</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
-                    <span className="font-semibold text-black dark:text-white">
+                    <span className="font-semibold text-black">
                       89%
                     </span>
                     <span className="text-sm">Accuracy</span>
@@ -118,7 +118,7 @@ const Profile = () => {
             </div>
           </>
         ) : (
-          <div className="rounded-sm px-5 py-5 dark:border-strokedark dark:bg-boxdark">
+          <div className="rounded-sm px-5 py-5">
             <form action="#">
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload />

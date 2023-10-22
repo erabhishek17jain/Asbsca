@@ -7,7 +7,7 @@ const AProfileUpload = ({}: any) => {
         <img src={userSix} alt="profile" />
         <label
           htmlFor="profile"
-          className="absolute bottom-0 right-0 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-[#02385e] text-white hover:bg-opacity-90"
+          className="absolute bottom-0 right-0 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90"
         >
           <CameraIcon className="h-4 w-4" />
           <input type="file" name="profile" id="profile" className="sr-only" />

@@ -1,10 +1,10 @@
 import ABreadcrumb from '../components-global/ABreadcrumb';
 import TasksTable from '../components-shared/TasksTable';
 
-const Tasks = () => {
+const Cases = () => {
   return (
     <>
-      <ABreadcrumb pageName="Tasks" />
+      <ABreadcrumb pageName="Cases" />
       <div className="flex flex-col gap-10">
         <TasksTable />
       </div>
@@ -12,4 +12,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default Cases;

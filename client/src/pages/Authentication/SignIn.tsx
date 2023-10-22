@@ -60,13 +60,13 @@ const SignIn = () => {
 
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white shadow-default">
         <div className="flex flex-wrap items-center h-screen">
           <div className="hidden w-full lg:block lg:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
-                <img className="hidden dark:block" src={Logo} alt="Logo" />
+                <img className="hidden" src={Logo} alt="Logo" />
               </Link>
 
               <p className="2xl:px-20">
@@ -80,17 +80,17 @@ const SignIn = () => {
             </div>
           </div>
 
-          <div className="w-full border-stroke dark:border-strokedark lg:w-1/2 lg:border-l-2">
+          <div className="w-full border-stroke lg:w-1/2 lg:border-l-2">
             <div className="w-full p-4 sm:p-12.5 lg:p-17.5">
               <Link
                 className="flex lg:hidden mb-5.5 inline-block text-center justify-center"
                 to="/"
               >
-                <img className="hidden dark:block" src={Logo} alt="Logo" />
+                <img className="hidden" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
 
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white xsm:text-title-xl2 text-center lg:text-left">
+              <h2 className="mb-9 text-2xl font-bold text-black xsm:text-title-xl2 text-center lg:text-left">
                 Sign In to Asbsca
               </h2>
 
@@ -112,7 +112,7 @@ const SignIn = () => {
 
                 <div className="flex justify-between">
                   <ACheckbox name={'rememberMe'} label={'Remember me'} />
-                  <a href="#" className="text-sm text-[#02385e]">
+                  <a href="#" className="text-sm text-main">
                     Forget password?
                   </a>
                 </div>
@@ -120,7 +120,7 @@ const SignIn = () => {
 
                 <p className="text-center">
                   Don’t have any account?{' '}
-                  <Link to="/auth/signup" className="text-[#02385e]">
+                  <Link to="/auth/signup" className="text-main">
                     Sign Up
                   </Link>
                 </p>
