@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { TASK_TABLE_HEAD } from '../constants';
-import { PencilIcon, UserPlusIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
 import {
   Card,
   CardHeader,
@@ -16,6 +16,7 @@ import {
 import { tasksTableColumn } from '../mockData/mocks';
 import { AModal } from '../components-global/AModal';
 import { useState } from 'react';
+import AButton from '../components-global/AButton';
 
 const TasksTable = () => {
   const location = useLocation();
@@ -43,12 +44,13 @@ const TasksTable = () => {
             </div>
             {!pathname.includes('dashboard') && (
               <div className="flex shrink-0 gap-2 md:w-max">
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="flex justify-center rounded-lg bg-main py-3 px-6 font-medium text-gray hover:shadow-1 gap-2"
-                >
-                  <UserPlusIcon strokeWidth={2} className="h-5 w-5" /> Add Task
-                </button>
+                <AButton
+                  type={'submit'}
+                  variant={'primary'}
+                  label={'New Case'}
+                  action={() => setShowModal(true)}
+                  icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+                />
               </div>
             )}
           </div>

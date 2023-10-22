@@ -8,6 +8,7 @@ import ASingleSelect from "../../components-global/ASingleSelect.tsx"
 import { AModal } from '../../components-global/AModal.tsx';
 import AButton from '../../components-global/AButton.tsx';
 import { useNavigate } from 'react-router-dom';
+import { PlusIcon } from '@heroicons/react/24/solid';
 
 const Dashboard = () => {
   const { userDetails } = useSelector((state: any) => state.users);
@@ -23,12 +24,18 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className='flex justify-between'>
-        <div className='w-[30%]'>
+      <div className="flex justify-between">
+        <div className="w-[30%]">
           <ASingleSelect label="Calender" options={calander} />
         </div>
         <div className="flex flex-col justify-end">
-          <AButton label="Add New" variant = 'primary' action={handleNavigate}/>
+          <AButton
+            type={'submit'}
+            variant={'primary'}
+            label={'New Case'}
+            action={handleNavigate}
+            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+          />
         </div>
       </div>
       <div className="flex gap-6 sm:flex-row flex-col">
@@ -39,7 +46,6 @@ const Dashboard = () => {
           <ReportStatusPie />
         </div>
       </div>
-
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <div
           className={
@@ -52,7 +58,8 @@ const Dashboard = () => {
         </div>
 
         {userDetails?.role === 'admin' && <TopPerformers />}
-      </div>,
+      </div>
+      ,
       {showModal && (
         <AModal title={'Task'} closeModal={() => setShowModal(false)}>
           <ASingleSelect
