@@ -1,10 +1,19 @@
-const ATextField = ({  id, label, icon, formik }: any) => {
+const ATextField = ({ id, label, variant = 'vertical', icon, formik }: any) => {
   return (
-    <div className="mb-5">
-      <label className="mb-3 block text-sm  text-black" htmlFor="Username">
+    <div
+      className={`flex gap-3 w-full mb-5 ${
+        variant === 'horizantal' ? 'items-center' : 'flex-col'
+      }`}
+    >
+      <label
+        className={`block text-black text-sm ${
+          variant === 'horizantal' ? 'min-w-[200px]' : ''
+        }`}
+        htmlFor={id}
+      >
         {label}
       </label>
-      <div className="relative">
+      <div className="relative w-full">
         <textarea
           id={id}
           rows={6}

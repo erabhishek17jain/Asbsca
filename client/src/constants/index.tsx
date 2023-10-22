@@ -81,8 +81,8 @@ export const sidebarMenu = [
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
   {
-    label: 'Field Components',
-    path: 'fields',
+    label: 'Components',
+    path: 'components',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
 ];

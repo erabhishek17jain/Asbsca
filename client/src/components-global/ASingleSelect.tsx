@@ -14,16 +14,20 @@ const ASingleSelect = ({
         variant === 'horizantal' ? 'items-center' : 'flex-col'
       }`}
     >
-      <label className="block text-sm text-black">
+      <label
+        className={`block text-black text-sm ${
+          variant === 'horizantal' ? 'min-w-[200px]' : ''
+        }`}
+      >
         Select {label}
       </label>
-      <div className="relative z-20 bg-white">
+      <div className="relative w-full z-20 bg-white">
         <select
           id={id}
           {...formik}
-          className="relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-3 outline-none transition focus:border-primary active:border-primary"
+          className="relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
         >
-          <option value="">Select {label}</option>;
+          <option value="">Select {label}</option>
           {options.map((item: any) => (
             <option value={item?.value}>{item?.label}</option>
           ))}

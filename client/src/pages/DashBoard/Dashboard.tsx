@@ -28,9 +28,14 @@ const Dashboard = () => {
         <div className="w-[30%]">
           <ASingleSelect label="Calender" options={calander} />
         </div>
-        <div className="flex flex-col justify-end">
+        <div className="flex gap-3">
           <AButton
-            type={'submit'}
+            variant={'secondary'}
+            label={'Bulk Upload'}
+            action={handleNavigate}
+            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+          />
+          <AButton
             variant={'primary'}
             label={'New Case'}
             action={handleNavigate}

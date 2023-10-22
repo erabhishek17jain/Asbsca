@@ -1,10 +1,28 @@
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
-const AMultiSelect = ({ id, label, icon, formik, selected, options }: any) => {
+const AMultiSelect = ({
+  id,
+  label,
+  icon,
+  variant = 'vertical',
+  formik,
+  selected,
+  options,
+}: any) => {
   return (
-    <div className="w-full mb-5">
-      <label className="mb-3 block text-sm text-black">{label}</label>
-      <div className="relative z-20 w-full rounded-lg border-[1.5px] border-stroke py-1 px-1.5 font-medium outline-none transition focus:border-primary active:border-primary">
+    <div
+      className={`flex gap-3 w-full mb-5 ${
+        variant === 'horizantal' ? 'items-center' : 'flex-col'
+      }`}
+    >
+      <label
+        className={`block text-black text-sm ${
+          variant === 'horizantal' ? 'min-w-[200px]' : ''
+        }`}
+      >
+        {label}
+      </label>
+      <div className="relative w-full z-20 w-full rounded-lg border-[1.5px] border-stroke py-1 px-1.5 font-medium outline-none transition focus:border-primary active:border-primary">
         <div className="flex flex-wrap items-center">
           {selected.map((item: any) => (
             <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium">

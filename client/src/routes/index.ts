@@ -60,8 +60,8 @@ const coreRoutes = [
     component: Profile,
   },
   {
-    path: '/fields',
-    title: 'Fields',
+    path: '/components',
+    title: 'Components',
     component: Fields,
   },
 ];
