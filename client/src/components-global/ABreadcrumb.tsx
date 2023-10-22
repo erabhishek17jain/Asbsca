@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 interface ABreadcrumbProps {
   pageName: string;
 }
+
 const ABreadcrumb = ({ pageName }: ABreadcrumbProps) => {
   return (
     <div className="mb-5 flex flex-col gap-3 xsm:flex-row xsm:items-center xsm:justify-between">

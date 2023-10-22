@@ -1,10 +1,9 @@
-import { PencilIcon, Squares2X2Icon } from '@heroicons/react/24/solid';
+import { PencilIcon } from '@heroicons/react/24/solid';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import {
   Card,
   CardHeader,
   Typography,
-  Button,
   CardBody,
   CardFooter,
   Avatar,
@@ -14,6 +13,7 @@ import {
 } from '@material-tailwind/react';
 import { REPORT_TABLE_HEAD } from '../constants';
 import { reportsTableColumn } from '../mockData/mocks';
+import APagination from '../components-global/APagination';
 
 export function ReportsTable() {
   return (
@@ -146,17 +146,7 @@ export function ReportsTable() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
+        <APagination />
       </CardFooter>
     </Card>
   );

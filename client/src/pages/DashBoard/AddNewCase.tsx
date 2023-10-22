@@ -2,10 +2,10 @@ import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
 import AInputField from '../../components-global/AInputField';
 
-const NewAdd = () => {
+const AddNewCase = () => {
   return (
     <>
-      <ABreadcrumb pageName="Add New" />
+      <ABreadcrumb pageName="Add New Case" />
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5">
         <div className="flex flex-col w-[70%]">
           <AInputField
@@ -45,4 +45,4 @@ const NewAdd = () => {
   );
 };
 
-export default NewAdd;
+export default AddNewCase;
