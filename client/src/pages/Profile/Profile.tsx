@@ -36,11 +36,11 @@ const Profile = () => {
   return (
     <>
       <ABreadcrumb pageName="Profile" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5">
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
         {!isEditProfile ? (
           <>
             <div className="relative z-20 h-30">
-              <div className="absolute top-4 right-4 z-10 xsm:bottom-4 xsm:right-4">
+              <div className="absolute top-4 right-4 xsm:bottom-4 xsm:right-4">
                 <label
                   htmlFor="cover"
                   className="flex cursor-pointer items-center justify-center gap-2 rounded bg-main py-1.5 px-3 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
@@ -174,9 +174,7 @@ const Profile = () => {
                 <AButton
                   label={'Cancel'}
                   variant={'secondary'}
-                  action={() => {
-                    setIsEditProfile(false);
-                  }}
+                  action={() => setIsEditProfile(false)}
                 />
                 <AButton
                   label={'Save'}

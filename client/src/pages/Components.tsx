@@ -15,7 +15,7 @@ const Components = () => {
   return (
     <>
       <ABreadcrumb pageName="Components" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5">
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
         <div className="flex items-center">
           <ACheckbox name={'checkbox'} label={'CheckBox Text'} />
           <ASwitcher name={'switch'} label={'Switch Text'} />

@@ -14,10 +14,9 @@ import AssignedCasesBody from '../AssignedCases/AssignedCasesBody.tsx';
 import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader.tsx';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   const [showModal, setShowModal] = useState(false);
-
-  const navigate = useNavigate();
 
   const calander = [{ label: "Last one week", value: "last_week" }, { label: "Last one Month", value: "last_month" }, { label: "Last one Year", value: "last_year" }, { label: "Custom", value: "custom" }]
   
@@ -33,7 +32,7 @@ const Dashboard = () => {
               variant={'secondary'}
               label={'Bulk Upload'}
               action={() => navigate('/bulkUpload')}
-              icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+              icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
             />
           </div>
           <div>
@@ -67,7 +66,7 @@ const Dashboard = () => {
           <ATable
             tableBody={<AssignedCasesBody />}
             tableHeader={ASSIGNED_CASES_TABLE_HEAD}
-            header={<AssignedCasesHeader role={userDetails?.role} />}
+            header={<AssignedCasesHeader />}
           />
         </div>
 

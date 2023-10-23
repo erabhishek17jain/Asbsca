@@ -25,7 +25,7 @@ const AssignedCasesBody = () => {
       index,
     ) => {
       const isLast = index === casesTableColumn.length - 1;
-      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
 
       return (
         <tr key={index}>
@@ -69,7 +69,7 @@ const AssignedCasesBody = () => {
           <TableColumn classes={classes} label={reviewer} />
           <td className={classes}>
             <Link
-              to="/auth/signup"
+              to="/generatePD"
               className="w-24 flex gap-1 text-base text-main"
             >
               <ArrowTopRightOnSquareIcon className="h-6 w-6" />

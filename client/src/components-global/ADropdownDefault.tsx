@@ -46,11 +46,11 @@ const DropdownDefault = () => {
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray">
+        <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-grey">
           <PencilSquareIcon className="h-5 w-5" />
           Edit
         </button>
-        <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray">
+        <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-grey">
           <TrashIcon className="h-5 w-5" />
           Delete
         </button>

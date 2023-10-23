@@ -23,7 +23,7 @@ const AddBulkCaseBody = () => {
       index,
     ) => {
       const isLast = index === bulkUploadTableColumn.length - 1;
-      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
 
       return (
         <tr key={bankName}>

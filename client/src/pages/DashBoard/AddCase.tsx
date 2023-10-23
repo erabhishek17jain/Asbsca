@@ -1,16 +1,26 @@
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
 import ADatePicker from '../../components-global/ADatePicker';
 import AInputField from '../../components-global/AInputField';
 import ASingleSelect from '../../components-global/ASingleSelect';
+import { useNavigate } from 'react-router-dom';
 
 const AddCase = () => {
+  const navigate = useNavigate();
+  
   return (
     <>
       <ABreadcrumb pageName="Add Case" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5">
-        <p className="block antialiased font-sans text-base leading-relaxed text-gray-700 mt-1 font-normal mb-5">
-          Fill below details to add new case.
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
+        <p className="flex justify-between items-center font-sans text-base leading-relaxed text-grey-700 mt-1 font-normal mb-5">
+          <span className="">Fill below details to add new case.</span>
+          <AButton
+            label={'Back'}
+            variant={'link'}
+            action={() => navigate(-1)}
+            icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
+          />
         </p>
         <div className="flex flex-col w-[70%]">
           <AInputField
@@ -28,7 +38,7 @@ const AddCase = () => {
           <AInputField type="text" label="Reference ID" variant="horizantal" />
           <ASingleSelect
             name={'select'}
-            label={'Local/OGL'}
+            label={'Type'}
             variant={'horizantal'}
             options={[
               { label: 'Local', value: 'local' },

@@ -75,7 +75,7 @@ export const COMPLETED_CASES_TABLE_HEAD = [
   'Mobile',
   'City',
   'Branch',
-  'Local/OGL', // Local, OGL
+  'Type', // Local, OGL
   'Case Type',
   'Report By',
   'Review By',
@@ -95,17 +95,20 @@ export const BULK_UPLOAD_TABLE_HEAD = [
   'City',
   'Loan Amt (Lacs)',
   'Branch',
-  'Local/OGL', // Local, OGL
+  'Type', // Local, OGL
   'Case Type',
   'Action',
 ];
 
 export const USER_TABLE_HEAD = [
-  'Member',
-  'Contact',
-  'Roles',
-  'Report Finished',
-  'Joined',
+  '',
+  'Name',
+  'Emp ID',
+  'Email ID',
+  'Mobile No',
+  'Location',
+  'Role',
+  'Status',
   '',
 ];
 

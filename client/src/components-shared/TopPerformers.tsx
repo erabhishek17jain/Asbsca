@@ -12,7 +12,7 @@ const TopPerformers = () => {
       <div>
         <Link
           to="/"
-          className="flex items-center gap-5 py-3 px-7.5 hover:bg-gray"
+          className="flex items-center gap-5 py-3 px-7.5 hover:bg-grey"
         >
           <div className="relative h-14 w-14 rounded-full">
             <img src={UserOne} alt="User" />

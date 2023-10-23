@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
-import { UsersTable } from '../../components-shared/UsersTable';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { AModal } from '../../components-global/AModal';
 import AInputField from '../../components-global/AInputField';
+import ATable from '../../components-global/ATable';
+import { USER_TABLE_HEAD } from '../../constants';
+import UsersBody from './UsersBody';
+import UsersHeader from './UsersHeader';
+import ASingleSelect from '../../components-global/ASingleSelect';
 
 const Users = () => {
   const [showModalRole, setShowModalRole] = useState(false);
@@ -18,7 +22,7 @@ const Users = () => {
           variant={'secondary'}
           label={'Add Role'}
           action={() => setShowModalRole(true)}
-          icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+          icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
         />
         <AButton
           variant={'primary'}
@@ -28,27 +32,46 @@ const Users = () => {
         />
       </div>
       <div className="flex flex-col gap-10">
-        <UsersTable />
+        <ATable
+          header={<UsersHeader />}
+          tableBody={<UsersBody />}
+          tableHeader={USER_TABLE_HEAD}
+        />
       </div>
       {showModalRole && (
-        <AModal title={'Task'} closeModal={() => setShowModalRole(false)}>
+        <AModal title={'Add Role'} closeModal={() => setShowModalRole(false)}>
           <div className="flex flex-col ">
-            <AInputField type="text" label="Role Name" variant="horizantal"/>
-            <AInputField type="text" label="Page Access*" variant="horizantal" />
-            <AInputField type="text" label="Status*" variant="horizantal" />
-          </div>  
+            <AInputField type="text" label="Role Name*" />
+            <AInputField type="text" label="Page Access*" />
+            <ASingleSelect
+              name={'select'}
+              label={'Status'}
+              options={[
+                { label: 'Active', value: 'active' },
+                { label: 'Inactive', value: 'inactive' },
+              ]}
+            />
+          </div>
         </AModal>
       )}
       {showModalUser && (
-        <AModal title={'Task'} closeModal={() => setShowModalUser(false)}>
+        <AModal title={'Add User'} closeModal={() => setShowModalUser(false)}>
           <div className="flex flex-col ">
-            <AInputField type="text" label="Name*" variant="horizantal"/>
-            <AInputField type="text" label="Emp ID*" variant="horizantal" />
-            <AInputField type="text" label="Email ID*" variant="horizantal" />
-            <AInputField type="text" label="Mobile No.**" variant="horizantal" />
-            <AInputField type="text" label="Location*" variant="horizantal" />
-            <AInputField type="text" label="Status*" variant="horizantal" />
-          </div>  
+            <AInputField type="text" label="Name*" />
+            <AInputField type="text" label="Emp ID*" />
+            <AInputField type="text" label="Email ID*" />
+            <AInputField type="text" label="Mobile No.**" />
+            <ASingleSelect name={'location'} label={'Location*'} options={[]} />
+            <ASingleSelect name={'roles'} label={'Roles*'} options={[]} />
+            <ASingleSelect
+              name={'status'}
+              label={'Status'}
+              options={[
+                { label: 'Active', value: 'active' },
+                { label: 'Inactive', value: 'inactive' },
+              ]}
+            />
+          </div>
         </AModal>
       )}
     </>

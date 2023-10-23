@@ -2,8 +2,11 @@ import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Tooltip } from '@material-tailwind/react';
 import { TableColumn } from '../../components-global/ATable';
 import { casesTableColumn } from '../../mockData/mocks';
+import { useNavigate } from 'react-router-dom';
 
 const AllCasesBody = ({ role }: any) => {
+  const navigate = useNavigate();
+  
   return casesTableColumn.map(
     (
       {
@@ -25,7 +28,7 @@ const AllCasesBody = ({ role }: any) => {
       index,
     ) => {
       const isLast = index === casesTableColumn.length - 1;
-      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
 
       return (
         <tr key={index}>
@@ -69,8 +72,12 @@ const AllCasesBody = ({ role }: any) => {
           <TableColumn classes={classes} label={reviewer} />
           <td className={classes}>
             {role === 'admin' && (
-              <Tooltip content="Edit User">
-                <PencilSquareIcon className="h-6 w-6" fill="#02385e" />
+              <Tooltip content="Edit Case">
+                <PencilSquareIcon
+                  className="h-6 w-6"
+                  fill="#02385e"
+                  onClick={() => navigate('/addCase')}
+                />
               </Tooltip>
             )}
           </td>

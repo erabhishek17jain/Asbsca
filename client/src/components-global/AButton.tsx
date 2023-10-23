@@ -3,11 +3,13 @@ const AButton = ({ type, action, label, variant, icon = '' }: any) => {
     <button
       type={type}
       onClick={action}
-      className={`flex justify-center items-center gap-1 rounded-lg py-2 font-medium hover:shadow-1  
-          ${variant === 'primary' && 'pl-4 pr-5 bg-main text-gray'}
-          ${variant === 'full' && 'w-full pl-4 pr-5 bg-main text-gray'}
+      className={`flex justify-center items-center gap-1 rounded-lg p-2 font-medium  
+          ${variant === 'primary' && 'px-4 bg-main text-grey'}
+          ${variant === 'link' && 'text-main px-4 text-grey'}
+          ${variant === 'full' && 'px-4 bg-main text-grey'}
           ${
-            variant === 'secondary' && 'pl-4 pr-5 border border-main text-main'
+            variant === 'secondary' &&
+            'px-4 border border-main text-main hover:bg-grey'
           }`}
     >
       {icon}

@@ -21,7 +21,7 @@ module.exports = withMT({
         body: '#64748B',
         primary: '#3C50E0',
         stroke: '#E2E8F0',
-        gray: '#EFF4FB',
+        grey: '#EFF4FB',
         graydark: '#333A48',
         whiter: '#F5F7FD',
         meta1: '#DC3545',

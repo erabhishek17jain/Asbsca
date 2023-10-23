@@ -1,6 +1,6 @@
 import { Typography } from "@material-tailwind/react";
 
-const AddBulkCaseHeader = () => {
+const UsersHeader = () => {
   return (
     <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
       <div>
@@ -12,4 +12,4 @@ const AddBulkCaseHeader = () => {
   );
 };
 
-export default AddBulkCaseHeader;
+export default UsersHeader;

@@ -99,49 +99,22 @@ export const casesTableColumn = [
 
 export const usersTableColumn = [
   {
-    img: Logo,
-    name: 'John Michael',
-    email: 'john@creative-tim.com',
-    contact: '+91 7047026537',
+    profile: Logo,
+    name: 'Arjun Singh',
+    empId: 'ASBS001',
+    email: 'arjun@gmail.com',
+    mobileNo: '+91 7047026537',
     role: 'Supervisor',
-    reportCount: 20,
-    joined: '23/04/18',
+    status: 'Active',
   },
   {
-    img: Logo,
-    name: 'Alexa Liras',
-    email: 'alexa@creative-tim.com',
-    contact: '+91 7047026537',
-    role: 'Reporter',
-    reportCount: 30,
-    joined: '23/04/18',
-  },
-  {
-    img: Logo,
-    name: 'Laurent Perrier',
-    email: 'laurent@creative-tim.com',
-    contact: '+91 7047026537',
-    role: 'Supervisor',
-    reportCount: 11,
-    joined: '19/09/17',
-  },
-  {
-    img: Logo,
-    name: 'Michael Levi',
-    email: 'michael@creative-tim.com',
-    contact: '+91 7047026537',
-    role: 'Reporter',
-    reportCount: 24,
-    joined: '24/12/08',
-  },
-  {
-    img: Logo,
-    name: 'Richard Gran',
-    email: 'richard@creative-tim.com',
-    contact: '+91 7047026537',
-    role: 'Reporter',
-    reportCount: 21,
-    joined: '04/10/21',
+    profile: Logo,
+    name: 'Aman Jain',
+    empId: 'ASBS002',
+    email: 'amanjain@gmail.com',
+    mobileNo: '+91 7047026537',
+    role: 'Coordinator',
+    status: 'Inactive',
   },
 ];
 
@@ -150,13 +123,13 @@ export const clientTableColumn = [
     clientName: 'Axis Bank',
     logo: Logo,
     branch: 'Indore',
-    status: 'Active', // Active, Unactive
+    status: 'Active', // Active, Inactive
   },
   {
     clientName: 'ICICI Bank',
     logo: Logo,
     branch: 'Mumbai',
-    status: 'Unactive', // Active, Unactive
+    status: 'Inactive', // Active, Inactive
   },
 ];
 
@@ -164,21 +137,22 @@ export const productTableColumn = [
   {
     clientName: 'Axis Bank',
     productName: 'Product 1',
-    status: 'Active', // Active, Unactive
+    status: 'Active', // Active, Inactive
   },
   {
     clientName: 'ICICI Bank',
     productName: 'Product 2',
-    status: 'Unactive', // Active, Unactive
+    status: 'Inactive', // Active, Inactive
   },
 ];
+
 export const branchTableColumn = [
   {
     branchName: 'Indore',
-    status: 'Active', // Active, Unactive
+    status: 'Active', // Active, Inactive
   },
   {
     branchName: 'Mumbai',
-    status: 'Unactive', // Active, Unactive
+    status: 'Inactive', // Active, Inactive
   },
 ];

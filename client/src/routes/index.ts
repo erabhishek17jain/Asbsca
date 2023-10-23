@@ -7,6 +7,7 @@ const AllCases = lazy(() => import('../pages/AllCases/AllCases'));
 const AssignedCases = lazy(
   () => import('../pages/AssignedCases/AssignedCases'),
 );
+const GeneratePD = lazy(() => import('../pages/GeneratePD/GeneratePD'));
 const ReviewCases = lazy(
   () => import('../pages/ReviewCases/ReviewCases'),
 );
@@ -41,6 +42,11 @@ const coreRoutes = [
     path: '/assigned',
     title: 'Assigned Cases',
     component: AssignedCases,
+  },
+  {
+    path: '/generatePD',
+    title: 'Assigned Cases',
+    component: GeneratePD,
   },
   {
     path: '/review',

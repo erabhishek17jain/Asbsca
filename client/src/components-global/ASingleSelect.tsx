@@ -19,7 +19,7 @@ const ASingleSelect = ({
           variant === 'horizantal' ? 'min-w-[25%]' : ''
         }`}
       >
-        Select {label}
+        {label}
       </label>
       <div className="relative w-full z-20 bg-white">
         <select
@@ -35,14 +35,14 @@ const ASingleSelect = ({
           ))}
         </select>
         <span
-          className={`absolute top-1/2 z-10 -translate-y-1/2 right-${
+          className={`absolute top-1/2 -translate-y-1/2 right-${
             icon ? '10' : '3'
           }`}
         >
           <ChevronDownIcon className="h-5 w-5" />
         </span>
         {icon && (
-          <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
+          <span className="absolute top-1/2 right-3 -translate-y-1/2">
             {icon}
           </span>
         )}

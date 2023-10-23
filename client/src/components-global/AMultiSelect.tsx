@@ -24,8 +24,8 @@ const AMultiSelect = ({
       </label>
       <div className="relative w-full z-20 w-full rounded-lg border-[1.5px] border-stroke py-1 px-1.5 font-medium outline-none transition focus:border-primary active:border-primary">
         <div className="flex flex-wrap items-center">
-          {selected.map((item: any) => (
-            <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1.5 px-2.5 text-sm font-medium">
+          {selected?.map((item: any) => (
+            <span className="m-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-grey py-1.5 px-2.5 text-sm font-medium">
               {item.label}
               <span className="cursor-pointer pl-2 hover:text-danger">
                 <XMarkIcon className="h-3 w-3" />
@@ -44,7 +44,7 @@ const AMultiSelect = ({
             </option>
           ))}
         </select>
-        <span className="absolute top-1/2 right-2 z-10 -translate-y-1/2">
+        <span className="absolute top-1/2 right-2 -translate-y-1/2">
           {icon}
         </span>
       </div>
