@@ -12,9 +12,7 @@ export const AModal = ({ closeModal, title, children }: any) => {
         <div className="relative w-full max-w-md px-4 h-full md:h-auto">
           <div className="bg-white py-3 px-5 rounded-lg shadow relative">
             <div className="flex justify-between">
-              <h3 className="text-xl font-medium text-graydark">
-                {title}
-              </h3>
+              <h3 className="text-xl font-medium text-graydark">{title}</h3>
               <AButton
                 label={<XMarkIcon className="h-5 w-5" />}
                 action={() => closeModal()}
@@ -25,7 +23,7 @@ export const AModal = ({ closeModal, title, children }: any) => {
               <AButton
                 label={'Cancel'}
                 variant={'secondary'}
-                action={() => {}}
+                action={() => closeModal()}
               />
               <AButton
                 label={'Save'}

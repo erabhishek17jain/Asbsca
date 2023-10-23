@@ -114,6 +114,44 @@ export const usersTableColumn = [
   },
 ];
 
+export const clientTableColumn = [
+  {
+    clientName: 'Axis Bank',
+    logo: Logo,
+    branch: 'Indore',
+    status: 'Active', // Active, Unactive
+  },
+  {
+    clientName: 'ICICI Bank',
+    logo: Logo,
+    branch: 'Mumbai',
+    status: 'Unactive', // Active, Unactive
+  },
+];
+
+export const productTableColumn = [
+  {
+    clientName: 'Axis Bank',
+    productName: 'Product 1',
+    status: 'Active', // Active, Unactive
+  },
+  {
+    clientName: 'ICICI Bank',
+    productName: 'Product 2',
+    status: 'Unactive', // Active, Unactive
+  },
+];
+export const branchTableColumn = [
+  {
+    branchName: 'Indore',
+    status: 'Active', // Active, Unactive
+  },
+  {
+    branchName: 'Mumbai',
+    status: 'Unactive', // Active, Unactive
+  },
+];
+
 export const reportsTableColumn = [
   {
     img: Logo,

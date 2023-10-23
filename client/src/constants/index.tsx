@@ -8,7 +8,10 @@ import {
   Squares2X2Icon,
   UserIcon,
   UsersIcon,
+  MapPinIcon,
+  BuildingLibraryIcon,
 } from '@heroicons/react/24/solid';
+import { MastersTable } from '../pages/Masters/MastersTable';
 
 export const ALL_CASES_TABLE_HEAD = [
   '',
@@ -90,14 +93,23 @@ export const USER_TABLE_HEAD = [
   '',
 ];
 
-export const REPORT_TABLE_HEAD = [
-  'Bank Name',
-  'Report Name',
-  'Client Name',
-  'Bussiness Type',
-  'Created At',
+export const CLIENT_TABLE_HEAD = [
   '',
+  'Cient Name',
+  'Branch',
+  'Status',
+  'Action',
 ];
+
+export const PRODUCT_TABLE_HEAD = [
+  '',
+  'Product Name',
+  'Client Name',
+  'Status',
+  'Action',
+];
+
+export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
 
 export const sidebarMenu = [
   {
@@ -174,20 +186,27 @@ export const statsCards = [
   },
 ];
 
+
 export const mastersCards = [
   {
-    title: 'Clients',
-    count: 8,
-    icon: <Square3Stack3DIcon className="h-5 w-5" />,
+    label: 'Client',
+    value: 'client',
+    count: 0,
+    icon: BuildingLibraryIcon,
+    component: <MastersTable type="Client" />,
   },
   {
-    title: 'Products',
-    count: 15,
-    icon: <UserIcon className="h-5 w-5" />,
+    label: 'Product',
+    value: 'product',
+    count: 0,
+    icon: UserIcon,
+    component: <MastersTable type="Product" />,
   },
   {
-    title: 'Branches',
-    count: 45,
-    icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
+    label: 'Branch',
+    value: 'branch',
+    count: 0,
+    icon: MapPinIcon,
+    component: <MastersTable type="Branch" />,
   },
 ];

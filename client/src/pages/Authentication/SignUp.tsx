@@ -8,10 +8,9 @@ import { registerValidation } from '../../helper/validate';
 import convertToBase64 from '../../helper/convert';
 import { getUsername, registerUser } from '../../helper/helper';
 import { useEffect, useState } from 'react';
-import userSix from '../../assets/images/logo/logo-dark.png';
 import { fetchCurrentUserAsync } from '../../slices/usersSlice';
 import { useDispatch } from 'react-redux';
-import { CameraIcon, EnvelopeIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/solid';
+import { CameraIcon, EnvelopeIcon, EyeSlashIcon, UserCircleIcon, UserIcon } from '@heroicons/react/24/solid';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -99,7 +98,15 @@ const SignUp = () => {
               <form onSubmit={formik.handleSubmit}>
                 <div className="flex gap-6 mb-4">
                   <div className="relative mt-4.5 h-20 w-20 rounded-full">
-                    <img src={file || userSix} alt="profile" />
+                    {file ? (
+                      <img
+                        src={file}
+                        alt="profile"
+                        className="w-20 h-20 rounded-full border-2 p-1"
+                      />
+                    ) : (
+                      <UserCircleIcon className="w-22 h-22" />
+                    )}
                     <label
                       htmlFor="profile"
                       className="absolute bottom-1.5 right-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90"

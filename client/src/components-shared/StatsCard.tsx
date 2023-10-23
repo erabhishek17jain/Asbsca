@@ -18,7 +18,7 @@ const StatsCard = ({ role }: any) => {
         return (
           <div
             key={item.title}
-            className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 pt-5 shadow-default"
+            className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg px-5 py-5 shadow-default"
           >
             <div className="flex justify-between">
               <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta2">

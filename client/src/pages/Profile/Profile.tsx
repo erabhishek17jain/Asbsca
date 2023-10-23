@@ -7,8 +7,14 @@ import ATextField from '../../components-global/ATextField';
 import { useFormik } from 'formik';
 import AButton from '../../components-global/AButton';
 import AProfileUpload from '../../components-global/AProfileUpload';
-import ProfileIcon from '../../assets/images/icon/profile.svg';
-import { CameraIcon, DevicePhoneMobileIcon, UserIcon } from '@heroicons/react/24/solid';
+import {
+  CameraIcon,
+  DevicePhoneMobileIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  UserCircleIcon,
+  UserIcon,
+} from '@heroicons/react/24/solid';
 
 const Profile = () => {
   const { userDetails } = useSelector((state: any) => state.users);
@@ -54,16 +60,21 @@ const Profile = () => {
             </div>
             <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
               <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-                <div className="relative drop-shadow-2">
-                  <img
-                    src={userDetails?.profile || ProfileIcon}
-                    alt="profile"
-                  />
+                <div className="relative drop-shadow-2 rounded-full">
+                  {userDetails?.profile ? (
+                    <img
+                      alt="profile"
+                      src={userDetails?.profile}
+                      className="w-40 h-36 rounded-full border-4 p-1"
+                    />
+                  ) : (
+                    <UserCircleIcon className="w-40 h-40" />
+                  )}
                   <label
                     htmlFor="profile"
-                    className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
+                    className="absolute bottom-3 right-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-main text-white hover:bg-opacity-90"
                   >
-                    <CameraIcon className="h-4 w-4" />
+                    <CameraIcon className="h-5 w-5" />
                     <input
                       type="file"
                       name="profile"
@@ -78,9 +89,18 @@ const Profile = () => {
                   {userDetails?.fullname}
                 </h3>
                 <p className="flex justify-center gap-4 font-medium my-4">
-                  <span>{userDetails?.username}</span>
-                  <span>{userDetails?.email}</span>
-                  <span>{userDetails?.mobileNo}</span>
+                  <span className="flex gap-2 items-center">
+                    <UserIcon className="h-5 w-5" />
+                    {userDetails?.username}
+                  </span>
+                  <span className="flex gap-2 items-center">
+                    <EnvelopeIcon className="h-5 w-5" />
+                    {userDetails?.email}
+                  </span>
+                  <span className="flex gap-2 items-center">
+                    <PhoneIcon className="h-5 w-5" />
+                    {userDetails?.mobileNo}
+                  </span>
                 </p>
 
                 <div className="mx-auto max-w-180">
@@ -93,14 +113,14 @@ const Profile = () => {
                 </div>
 
                 <h4 className="font-semibold text-black mt-6">PD Status</h4>
-                <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
+                <div className="mx-auto mt-4.5 mb-5.5 grid max-w-lg grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
                     <span className="font-semibold text-black">259</span>
-                    <span className="text-sm">Completed</span>
+                    <span className="text-sm">PD Completed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
                     <span className="font-semibold text-black">2</span>
-                    <span className="text-sm">In Progress</span>
+                    <span className="text-sm">PD Assigned</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                     <span className="font-semibold text-black">89%</span>

@@ -17,8 +17,9 @@ import {
 } from '@heroicons/react/24/solid';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import AButton from '../components-global/AButton';
+import { useSelector } from 'react-redux';
 
-const Header = () => {
+const Header = ({role}:any) => {
   const location = useLocation();
   const { pathname } = location;
   return (
@@ -33,20 +34,22 @@ const Header = () => {
       </div>
       {!pathname.includes('dashboard') && (
         <div className="flex shrink-0 gap-2 md:w-max">
-          <AButton
-            type={'submit'}
-            variant={'primary'}
-            label={'New Case'}
-            action={() => {}}
-            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
-          />
+          {role === 'admin' && (
+            <AButton
+              type={'submit'}
+              variant={'primary'}
+              label={'New Case'}
+              action={() => {}}
+              icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+            />
+          )}
         </div>
       )}
     </div>
   );
 };
 
-const Body = ({ status }: any) => {
+const Body = ({ status, role }: any) => {
   return casesTableColumn.map(
     (
       {
@@ -141,7 +144,7 @@ const Body = ({ status }: any) => {
             </>
           )}
           <td className={classes}>
-            {status === 'all' && (
+            {status === 'all' && role === 'admin' && (
               <Tooltip content="Edit User">
                 <PencilSquareIcon className="h-6 w-6" fill="#02385e" />
               </Tooltip>
@@ -184,6 +187,7 @@ const Body = ({ status }: any) => {
 };
 
 const CasesTable = ({ status }: any) => {
+  const { userDetails } = useSelector((state: any) => state.users);
   const [showModal, setShowModal] = useState(false);
   const [headers, setHeaders] = useState<any>([]);
 
@@ -202,8 +206,8 @@ const CasesTable = ({ status }: any) => {
   return (
     <>
       <ATable
-        header={<Header />}
-        tableBody={<Body status={status} />}
+        header={<Header role={userDetails?.role} />}
+        tableBody={<Body status={status} role={userDetails?.role} />}
         tableHeader={headers}
       />
       {showModal && (

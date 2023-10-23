@@ -8,9 +8,9 @@ import {
   CardFooter,
 } from '@material-tailwind/react';
 import APagination from './APagination';
-import ProfileIcon from '../assets/images/icon/profile.svg';
+import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
 
-const TableHeader = ({ label }: any) => {
+export const TableHeader = ({ label }: any) => {
   return (
     <th
       key={label}
@@ -36,7 +36,8 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
         </div>
       ) : (
         <div className="flex items-center gap-1">
-          {icon !== '' && <img src={ProfileIcon} alt="bank-name" className='w-8 h-8' />}
+          {/* {icon !== '' && <img src={ProfileIcon} alt="bank-name" className='w-8 h-8' />} */}
+          {icon !== '' && <BuildingLibraryIcon className='w-8 h-8' />}
           <Typography variant="small" color="blue-gray" className="font-normal">
             {label}
           </Typography>
