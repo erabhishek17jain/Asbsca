@@ -1,6 +1,6 @@
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid';
 
-const AFileDragAndUpload = ({ type, id, label, formik }: any) => {
+const AFileDragAndUpload = ({ type, id, label, fileTypeText, fileDesc, formik }: any) => {
   return (
     <div className="col-span-5 xl:col-span-2">
       <label className="mb-3 block text-sm text-black" htmlFor="Username">
@@ -26,8 +26,8 @@ const AFileDragAndUpload = ({ type, id, label, formik }: any) => {
             <span className="text-primary">Click to upload</span> or drag and
             drop
           </p>
-          <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-          <p>(max, 800 X 800px)</p>
+          <p className="mt-1.5">{fileTypeText}</p>
+          <p>({fileDesc})</p>
         </div>
       </div>
     </div>

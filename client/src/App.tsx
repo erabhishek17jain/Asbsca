@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
 import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero/Hero';
@@ -40,7 +39,7 @@ function App() {
       />
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
+        {/* <Route path="/auth/signup" element={<SignUp />} /> */}
         <Route index element={<Hero />} />
         <Route element={<DefaultLayout />}>
           {routes.map((routes, index) => {

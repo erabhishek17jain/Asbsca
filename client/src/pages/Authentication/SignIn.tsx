@@ -118,12 +118,12 @@ const SignIn = () => {
                 </div>
                 <AButton type={'submit'} label={'Save'} variant={'full'} />
 
-                <p className="text-center">
+                {/* <p className="text-center">
                   Don’t have any account?{' '}
                   <Link to="/auth/signup" className="text-main">
                     Sign Up
                   </Link>
-                </p>
+                </p> */}
               </form>
             </div>
           </div>

@@ -49,7 +49,7 @@ export const ASSIGNED_CASES_TABLE_HEAD = [
   'Action',
 ];
 
-export const REVIEWING_CASES_TABLE_HEAD = [
+export const REVIEW_CASES_TABLE_HEAD = [
   '',
   'Bank Name',
   'Reference ID',
@@ -82,6 +82,22 @@ export const COMPLETED_CASES_TABLE_HEAD = [
   'Started Date',
   'Completed date',
   'Reports',
+];
+
+export const BULK_UPLOAD_TABLE_HEAD = [
+  '',
+  'Bank Name',
+  'Reference ID',
+  'Received Date',
+  "Applicant's Name",
+  'Mobile',
+  'Address',
+  'City',
+  'Loan Amt (Lacs)',
+  'Branch',
+  'Local/OGL', // Local, OGL
+  'Case Type',
+  'Action',
 ];
 
 export const USER_TABLE_HEAD = [
@@ -128,7 +144,7 @@ export const sidebarMenu = [
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
-    label: 'Reviewing',
+    label: 'Review',
     path: 'review',
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
@@ -162,24 +178,28 @@ export const sidebarMenu = [
 export const statsCards = [
   {
     title: 'Total Cases Recieved',
+    path: '/cases',
     count: 3000,
     percentage: 34,
     icon: <Square3Stack3DIcon className="h-5 w-5" />,
   },
   {
     title: 'Assigned Cases',
+    path: '/assigned',
     count: 17,
     percentage: 76,
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
     title: 'Reviewing Cases',
+    path: '/review',
     count: 47,
     percentage: -3,
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
   {
     title: 'Sent To Bank',
+    path: '/reports',
     count: 51,
     percentage: 28,
     icon: <PaperAirplaneIcon className="h-5 w-5" />,

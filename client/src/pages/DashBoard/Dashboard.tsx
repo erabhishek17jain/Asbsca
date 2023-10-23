@@ -2,45 +2,50 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import ReportStatusPie from '../../components-shared/ReportStatusPieChart.tsx';
 import TopPerformers from '../../components-shared/TopPerformers.tsx';
-import TasksTable from '../../components-shared/CasesTable.tsx';
 import StatsCard from '../../components-shared/StatsCard.tsx';
 import ASingleSelect from "../../components-global/ASingleSelect.tsx"
 import { AModal } from '../../components-global/AModal.tsx';
 import AButton from '../../components-global/AButton.tsx';
 import { useNavigate } from 'react-router-dom';
 import { PlusIcon } from '@heroicons/react/24/solid';
+import ATable from '../../components-global/ATable.tsx';
+import { ASSIGNED_CASES_TABLE_HEAD } from '../../constants/index.tsx';
+import AssignedCasesBody from '../AssignedCases/AssignedCasesBody.tsx';
+import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader.tsx';
 
 const Dashboard = () => {
   const { userDetails } = useSelector((state: any) => state.users);
   const [showModal, setShowModal] = useState(false);
-  
+
   const navigate = useNavigate();
 
   const calander = [{ label: "Last one week", value: "last_week" }, { label: "Last one Month", value: "last_month" }, { label: "Last one Year", value: "last_year" }, { label: "Custom", value: "custom" }]
-
-  const handleNavigate = () => {
-    navigate('/addNew')
-  }
-
+  
   return (
     <>
       <div className="flex justify-between">
         <div className="w-[30%]">
           <ASingleSelect label="Calender" options={calander} />
         </div>
-        <div className="flex gap-3">
-          <AButton
-            variant={'secondary'}
-            label={'Bulk Upload'}
-            action={handleNavigate}
-            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
-          />
-          <AButton
-            variant={'primary'}
-            label={'New Case'}
-            action={handleNavigate}
-            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
-          />
+        <div className="flex items-end gap-3 mb-5">
+          <div>
+            <AButton
+              variant={'secondary'}
+              label={'Bulk Upload'}
+              action={() => navigate('/bulkUpload')}
+              icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+            />
+          </div>
+          <div>
+            <AButton
+              variant={'primary'}
+              label={'Add Case'}
+              action={() => {
+                navigate('/addCase');
+              }}
+              icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+            />
+          </div>
         </div>
       </div>
       <div className="flex gap-6 sm:flex-row flex-col">
@@ -59,7 +64,11 @@ const Dashboard = () => {
               : 'col-span-12 xl:col-span-12'
           }
         >
-          <TasksTable />
+          <ATable
+            tableBody={<AssignedCasesBody />}
+            tableHeader={ASSIGNED_CASES_TABLE_HEAD}
+            header={<AssignedCasesHeader role={userDetails?.role} />}
+          />
         </div>
 
         {userDetails?.role === 'admin' && <TopPerformers />}

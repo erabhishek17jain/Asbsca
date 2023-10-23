@@ -1,5 +1,36 @@
 import Logo from '../assets/images/logo/logo-dark.png';
 
+export const bulkUploadTableColumn = [
+  {
+    referenceId: 'AXIS2348',
+    bankIcon: Logo,
+    bankName: 'AXIS Bank',
+    appicantName: 'Aman Jain',
+    mobileNo: '9876543210',
+    address: 'vijay nagar',
+    city: 'Indore',
+    loanAmt: 40,
+    branch: 'Indore',
+    locType: 'Local', // Local, OGL
+    caseType: 'LIP', // PD, LIP
+    recievedDate: '16/10/2023 10:54 am',
+  },
+  {
+    referenceId: 'ICICI2348',
+    bankIcon: Logo,
+    bankName: 'ICICI Bank',
+    appicantName: 'Aayush Jain',
+    mobileNo: '9876543210',
+    address: 'vijay nagar',
+    city: 'Indore',
+    loanAmt: 40,
+    branch: 'Indore',
+    locType: 'Local', // Local, OGL
+    caseType: 'LIP', // PD, LIP
+    recievedDate: '16/10/2023 10:54 am',
+  },
+];
+
 export const casesTableColumn = [
   {
     referenceId: 'AXIS2348',
@@ -149,48 +180,5 @@ export const branchTableColumn = [
   {
     branchName: 'Mumbai',
     status: 'Unactive', // Active, Unactive
-  },
-];
-
-export const reportsTableColumn = [
-  {
-    img: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    clientName: 'Abhishek Jain',
-    createdAt: '09/06/2026',
-  },
-  {
-    img: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    clientName: 'Abhishek Jain',
-    createdAt: '06/08/2026',
-  },
-  {
-    img: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    clientName: 'Abhishek Jain',
-    createdAt: '06/08/2026',
-  },
-  {
-    img: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    clientName: 'Abhishek Jain',
-    createdAt: '06/08/2026',
-  },
-  {
-    img: Logo,
-    bankName: 'Axis Bank',
-    taskName: 'PD Loan 1',
-    businessType: 'Jewellary Shop',
-    clientName: 'Abhishek Jain',
-    createdAt: '06/08/2026',
   },
 ];
