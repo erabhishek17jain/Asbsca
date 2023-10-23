@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import AButton from './AButton';
 
-export const AModal = ({ closeModal, title, children }: any) => {
+export const AModal = ({ closeModal, onSave, title, children }: any) => {
   return (
     <>
       <div
@@ -12,7 +12,7 @@ export const AModal = ({ closeModal, title, children }: any) => {
         <div className="relative w-full max-w-lg px-4">
           <div className="bg-white p-5 rounded-lg shadow relative">
             <div className="flex justify-between items-center border-b-2 border-grey pb-2">
-              <h3 className="text-xl font-medium text-greydark">{title}</h3>
+              <h3 className="text-xl font-medium text-graydark">{title}</h3>
               <AButton
                 label={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
                 action={closeModal}
@@ -32,7 +32,7 @@ export const AModal = ({ closeModal, title, children }: any) => {
                 label={'Save'}
                 type={'submit'}
                 variant={'primary'}
-                action={() => {}}
+                action={onSave}
               />
             </div>
           </div>
@@ -40,7 +40,7 @@ export const AModal = ({ closeModal, title, children }: any) => {
       </div>
       <div
         modal-backdrop=""
-        className="bg-greydark bg-opacity-50 fixed inset-0 z-40"
+        className="bg-graydark bg-opacity-50 fixed inset-0 z-40"
       ></div>
     </>
   );

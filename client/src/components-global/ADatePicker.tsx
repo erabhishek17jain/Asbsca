@@ -24,7 +24,7 @@ const ADatePicker = ({
           id={id}
           type={type}
           {...formik}
-          className="custom-input-date text-sm custom-input-date-1 w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary"
+          className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />
         <span className="absolute top-1/2 right-3 -translate-y-1/2">
           {icon}

@@ -1,9 +1,9 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { Link } from 'react-router-dom';
 import { TableColumn } from '../../components-global/ATable';
 import { casesTableColumn } from '../../mockData/mocks';
+import AButton from '../../components-global/AButton';
 
-const AssignedCasesBody = () => {
+const AssignedCasesBody = ({ openModal }: any) => {
   return casesTableColumn.map(
     (
       {
@@ -25,7 +25,7 @@ const AssignedCasesBody = () => {
       index,
     ) => {
       const isLast = index === casesTableColumn.length - 1;
-      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
       return (
         <tr key={index}>
@@ -68,13 +68,12 @@ const AssignedCasesBody = () => {
           <TableColumn classes={classes} label={remark} />
           <TableColumn classes={classes} label={reviewer} />
           <td className={classes}>
-            <Link
-              to="/generatePD"
-              className="w-24 flex gap-1 text-base text-main"
-            >
-              <ArrowTopRightOnSquareIcon className="h-6 w-6" />
-              <span>Start PD</span>
-            </Link>
+            <AButton
+              variant={'link'}
+              label={'Start PD'}
+              action={openModal}
+              icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
+            />
           </td>
         </tr>
       );

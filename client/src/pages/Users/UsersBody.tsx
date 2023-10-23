@@ -7,7 +7,7 @@ const UsersBody = () => {
   return usersTableColumn.map(
     ({ profile, name, empId, email, mobileNo, role, status }, index) => {
       const isLast = index === usersTableColumn.length - 1;
-      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+      const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
       return (
         <tr key={name}>

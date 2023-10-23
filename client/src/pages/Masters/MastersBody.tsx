@@ -9,7 +9,7 @@ const MastersBody = ({ type, openModal }: any) => {
       {type === 'Client' &&
         clientTableColumn.map(({ clientName, logo, branch, status }, index) => {
           const isLast = index === clientTableColumn.length - 1;
-          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
           return (
             <tr key={clientName}>
@@ -36,7 +36,7 @@ const MastersBody = ({ type, openModal }: any) => {
       {type === 'Product' &&
         productTableColumn.map(({ clientName, productName, status }, index) => {
           const isLast = index === productTableColumn.length - 1;
-          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
           return (
             <tr key={clientName}>
@@ -63,7 +63,7 @@ const MastersBody = ({ type, openModal }: any) => {
       {type === 'Branch' &&
         branchTableColumn.map(({ branchName, status }, index) => {
           const isLast = index === branchTableColumn.length - 1;
-          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+          const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
           return (
             <tr key={branchName}>

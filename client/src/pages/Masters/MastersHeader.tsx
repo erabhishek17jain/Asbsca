@@ -6,7 +6,7 @@ const MastersHeader = ({ type, openModal }: any) => {
   return (
     <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
       <div>
-        <Typography variant="h5" color="blue-grey">
+        <Typography variant="h5" color="blue-gray">
           {type}s
         </Typography>
       </div>
