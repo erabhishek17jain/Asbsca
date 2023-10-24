@@ -1,4 +1,4 @@
-import { FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { BuildingLibraryIcon, CheckIcon, FunnelIcon, MagnifyingGlassIcon, TagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import AButton from '../components-global/AButton';
 import ASingleSelect from '../components-global/ASingleSelect';
 import ADropdown from '../components-global/ADropdown';
@@ -45,14 +45,30 @@ export const FilterCases = ({ showFilter, showHideFilters }: any) => {
         </span>
       </span>
       <span className="flex gap-3">
-        <ASingleSelect name={'bankName'} label={'Bank Name'} options={[]} />
+        <ASingleSelect
+          name={'bankName'}
+          label={'Bank Name'}
+          icon={<BuildingLibraryIcon className="h-4 w-4" />}
+          options={[]}
+        />
         <ASingleSelect
           name={'appointmentStatus'}
           label={'Appointment Status'}
+          icon={<CheckIcon className="h-4 w-4" />}
           options={[]}
         />
-        <ASingleSelect name={'caseType'} label={'Case Type'} options={[]} />
-        <ASingleSelect name={'assignedTo'} label={'Assigned To'} options={[]} />
+        <ASingleSelect
+          name={'caseType'}
+          label={'Case Type'}
+          icon={<TagIcon className="h-4 w-4" />}
+          options={[]}
+        />
+        <ASingleSelect
+          name={'assignedTo'}
+          label={'Assigned To'}
+          icon={<UserIcon className="h-4 w-4" />}
+          options={[]}
+        />
       </span>
     </div>
   );

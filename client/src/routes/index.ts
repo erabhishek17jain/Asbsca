@@ -15,7 +15,6 @@ const Reports = lazy(() => import('../pages/Reports/Reports'));
 const Users = lazy(() => import('../pages/Users/Users'));
 const Masters = lazy(() => import('../pages/Masters/Masters'));
 const Profile = lazy(() => import('../pages/Profile/Profile'));
-const Components = lazy(() => import('../pages/Components'));
 
 const coreRoutes = [
   {
@@ -72,11 +71,6 @@ const coreRoutes = [
     path: '/profile',
     title: 'Profile',
     component: Profile,
-  },
-  {
-    path: '/components',
-    title: 'Components',
-    component: Components,
   },
 ];
 

@@ -171,11 +171,6 @@ export const sidebarMenu = [
     path: 'profile',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
-  {
-    label: 'Components',
-    path: 'components',
-    icon: <Cog6ToothIcon className="h-5 w-5" />,
-  },
 ];
 
 export const statsCards = [

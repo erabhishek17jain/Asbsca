@@ -7,6 +7,7 @@ import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader';
 import { AModal } from '../../components-global/AModal';
 import ASingleSelect from '../../components-global/ASingleSelect';
 import { useNavigate } from 'react-router-dom';
+import { BuildingLibraryIcon, CurrencyRupeeIcon, MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
 
 const AssignedCases = () => {
   const navigate = useNavigate();
@@ -37,12 +38,14 @@ const AssignedCases = () => {
               name={'bankName'}
               label={'Bank Name'}
               variant={'horizantal'}
+              icon={<BuildingLibraryIcon className="h-4 w-4" />}
               options={[{ label: 'Axis Bank', value: 'axis' }]}
             />
             <ASingleSelect
               name={'applicants'}
               label={"Applicant's"}
               variant={'horizantal'}
+              icon={<UserIcon className="h-4 w-4" />}
               options={[
                 { label: '1 Applicant', value: 1 },
                 { label: '2 Applicant', value: 2 },
@@ -56,6 +59,7 @@ const AssignedCases = () => {
               name={'address'}
               label={'Address'}
               variant={'horizantal'}
+              icon={<MapPinIcon className="h-4 w-4" />}
               options={[
                 { label: '1 Address', value: 1 },
                 { label: '2 Address', value: 2 },
@@ -66,6 +70,7 @@ const AssignedCases = () => {
               name={'imcomeSource'}
               label={'Income Sources'}
               variant={'horizantal'}
+              icon={<CurrencyRupeeIcon className="h-4 w-4" />}
               options={[
                 { label: '1 Income Source', value: 1 },
                 { label: '2 Income Source', value: 2 },

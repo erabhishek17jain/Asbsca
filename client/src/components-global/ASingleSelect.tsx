@@ -35,8 +35,8 @@ const ASingleSelect = ({
           ))}
         </select>
         <span
-          className={`absolute top-1/2 -translate-y-1/2 right-${
-            icon ? '10' : '3'
+          className={`absolute top-1/2 -translate-y-1/2 ${
+            icon ? 'right-10' : 'right-3'
           }`}
         >
           <ChevronDownIcon className="h-5 w-5" />
