@@ -1,7 +1,5 @@
-import { CheckIcon } from '@heroicons/react/24/solid';
-
-const ACheckbox = ({
-  id,
+const ARadiobox = ({
+  name,
   title = '',
   label = '',
   formik = {},
@@ -15,25 +13,23 @@ const ACheckbox = ({
       )}
       <div className="w-full mr-3">
         <label
-          htmlFor={id}
+          htmlFor={name}
           className="flex cursor-pointer select-none text-sm items-center"
         >
           <div className="relative">
             <input
-              id={id}
+              name={name}
               {...formik}
               type="checkbox"
               className="sr-only"
               onChange={handleChecked}
             />
             <div
-              className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                checked && 'border-primary bg-gray'
+              className={`box mr-4 flex h-5 w-5 items-center justify-center rounded-full border border-primary ${
+                checked && '!border-4'
               }`}
             >
-              <span className={`opacity-0 ${checked && '!opacity-100'}`}>
-                <CheckIcon className="h-5 w-5" />
-              </span>
+              <span className="h-2.5 w-2.5 rounded-full bg-white dark:bg-transparent"></span>
             </div>
           </div>
           {label}
@@ -43,4 +39,4 @@ const ACheckbox = ({
   );
 };
 
-export default ACheckbox;
+export default ARadiobox;

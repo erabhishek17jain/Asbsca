@@ -8,11 +8,59 @@ const steps = [
   },
   {
     index: 1,
-    label: 'Personal Data',
+    label: 'Basic Personal Details & Experience',
   },
   {
     index: 2,
-    label: 'Existing Loan',
+    label: 'Existing Loan & Credit Facility',
+  },
+  {
+    index: 3,
+    label: 'Details of Property to be Mortgage',
+  },
+  {
+    index: 4,
+    label: 'Business Details',
+  },
+  {
+    index: 5,
+    label: 'Financials',
+  },
+  {
+    index: 6,
+    label: 'Comitments Summary & FOIR Ratio',
+  },
+  {
+    index: 7,
+    label: 'Turnover/Gross Receipts (April till now)',
+  },
+  {
+    index: 8,
+    label: 'Clients & Debtors',
+  },
+  {
+    index: 9,
+    label: 'Stocks',
+  },
+  {
+    index: 10,
+    label: 'Suppliers & Creditors',
+  },
+  {
+    index: 11,
+    label: 'Assets, Investment & Bank Details',
+  },
+  {
+    index: 12,
+    label: 'Other Observation',
+  },
+  {
+    index: 13,
+    label: 'Documents seen',
+  },
+  {
+    index: 14,
+    label: 'Business Process of',
   },
 ];
 

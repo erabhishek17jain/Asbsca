@@ -7,7 +7,7 @@ import AButton from '../../components-global/AButton.tsx';
 import { useNavigate } from 'react-router-dom';
 import { CalendarDaysIcon, PlusIcon } from '@heroicons/react/24/solid';
 import ATable from '../../components-global/ATable.tsx';
-import { ASSIGNED_CASES_TABLE_HEAD } from '../../constants/index.tsx';
+import { ASSIGNED_CASES_TABLE_HEAD, calander } from '../../constants/index.tsx';
 import AssignedCasesBody from '../AssignedCases/AssignedCasesBody.tsx';
 import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader.tsx';
 
@@ -15,14 +15,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   
-  const calander = [{ label: "Last one week", value: "last_week" }, { label: "Last one Month", value: "last_month" }, { label: "Last one Year", value: "last_year" }, { label: "Custom", value: "custom" }]
-  
   return (
     <>
       <div className="flex justify-between">
         <div className="w-[30%]">
           <ASingleSelect
-            label="Calender"
+            label="Filter"
             name={'calender'}
             icon={<CalendarDaysIcon className="h-4 w-4" />}
             options={calander}

@@ -1,8 +1,8 @@
-import ASingleSelect from '../../components-global/ASingleSelect';
+import ASingleSelect from '../../../components-global/ASingleSelect';
 
 const LoanDetails = () => {
   return (
-    <div className="flex flex-col w-[70%]">
+    <div className="flex flex-col w-[70%] py-4">
       <ASingleSelect
         name={'loan'}
         label={'Loan'}
