@@ -1,7 +1,17 @@
 import { useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
-import { PlusIcon } from '@heroicons/react/24/solid';
+import {
+  CheckIcon,
+  DevicePhoneMobileIcon,
+  EnvelopeIcon,
+  IdentificationIcon,
+  KeyIcon,
+  MapPinIcon,
+  PlusIcon,
+  UserIcon,
+  UsersIcon,
+} from '@heroicons/react/24/solid';
 import { AModal } from '../../components-global/AModal';
 import AInputField from '../../components-global/AInputField';
 import ATable from '../../components-global/ATable';
@@ -41,11 +51,20 @@ const Users = () => {
       {showModalRole && (
         <AModal title={'Add Role'} closeModal={() => setShowModalRole(false)}>
           <div className="flex flex-col ">
-            <AInputField type="text" label="Role Name*" />
-            <AInputField type="text" label="Page Access*" />
+            <AInputField
+              type="text"
+              label="Role Name*"
+              icon={<UsersIcon className="h-4 w-4" />}
+            />
+            <AInputField
+              type="text"
+              label="Page Access*"
+              icon={<KeyIcon className="h-4 w-4" />}
+            />
             <ASingleSelect
               name={'select'}
               label={'Status'}
+              icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },
                 { label: 'Inactive', value: 'inactive' },
@@ -57,15 +76,42 @@ const Users = () => {
       {showModalUser && (
         <AModal title={'Add User'} closeModal={() => setShowModalUser(false)}>
           <div className="flex flex-col ">
-            <AInputField type="text" label="Name*" />
-            <AInputField type="text" label="Emp ID*" />
-            <AInputField type="text" label="Email ID*" />
-            <AInputField type="text" label="Mobile No.**" />
-            <ASingleSelect name={'location'} label={'Location*'} options={[]} />
-            <ASingleSelect name={'roles'} label={'Roles*'} options={[]} />
+            <AInputField
+              type="text"
+              label="Name*"
+              icon={<UserIcon className="h-4 w-4" />}
+            />
+            <AInputField
+              type="text"
+              label="Emp ID*"
+              icon={<IdentificationIcon className="h-4 w-4" />}
+            />
+            <AInputField
+              type="text"
+              label="Email ID*"
+              icon={<EnvelopeIcon className="h-4 w-4" />}
+            />
+            <AInputField
+              type="text"
+              label="Mobile No.**"
+              icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
+            />
+            <ASingleSelect
+              name={'location'}
+              label={'Location*'}
+              icon={<MapPinIcon className="h-4 w-4" />}
+              options={[]}
+            />
+            <ASingleSelect
+              name={'roles'}
+              label={'Roles*'}
+              icon={<UsersIcon className="h-4 w-4" />}
+              options={[]}
+            />
             <ASingleSelect
               name={'status'}
               label={'Status'}
+              icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },
                 { label: 'Inactive', value: 'inactive' },

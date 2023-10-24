@@ -12,7 +12,6 @@ const MastersHeader = ({ type, openModal }: any) => {
       </div>
       <div className="flex shrink-0 gap-2 md:w-max">
         <AButton
-          type={'submit'}
           variant={'primary'}
           label={`New ${type}`}
           action={openModal}

@@ -1,14 +1,17 @@
 import { Typography } from '@material-tailwind/react';
-import SearchFilters from '../../components-shared/FilterCases';
-import { MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/solid';
+import { FilterButtons, FilterCases } from '../../components-shared/FilterCases';
 import { useState } from 'react';
-import AButton from '../../components-global/AButton';
-import ADropdown from '../../components-global/ADropdown';
-import AInputField from '../../components-global/AInputField';
+import { useLocation } from 'react-router-dom';
 
 const AssignedCasesHeader = () => {
+  const location = useLocation();
+  const { pathname } = location;
   const [showFilter, setShowFilter] = useState(false);
-  
+
+  const showHideFilters = (showFilter: boolean) => {
+    setShowFilter(!showFilter);
+  };
+
   return (
     <div className="flex flex-col justify-between gap-5">
       <div className="flex w-full justify-between items-end gap-2">
@@ -20,30 +23,21 @@ const AssignedCasesHeader = () => {
             These are the list of assigned cases.
           </Typography>
         </div>
-        <div className="flex justify-between items-center gap-3">
-          <div className="w-full md:w-72">
-            <AInputField
-              type={'text'}
-              name={'search'}
-              variant={'horizantal'}
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+        {!pathname.includes('dashboard') && (
+          <div className="flex justify-between items-center gap-3">
+            <FilterButtons
+              showFilter={showFilter}
+              showHideFilters={showHideFilters}
             />
           </div>
-          <div className="mb-5">
-            <AButton
-              type={'submit'}
-              variant={'primary'}
-              label={'Filter'}
-              action={() => setShowFilter(!showFilter)}
-              icon={<FunnelIcon className="h-5 w-5" />}
-            />
-          </div>
-          <div className="mb-5">
-            <ADropdown />
-          </div>
-        </div>
+        )}
       </div>
-      {showFilter && <SearchFilters closeFilter={() => setShowFilter(false)} />}
+      {showFilter && (
+        <FilterCases
+          showFilter={showFilter}
+          showHideFilters={showHideFilters}
+        />
+      )}
     </div>
   );
 };

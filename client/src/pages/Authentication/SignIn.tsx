@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
-import { EyeSlashIcon, UserIcon } from '@heroicons/react/24/solid';
+import { ArrowRightOnRectangleIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/solid';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -116,7 +116,12 @@ const SignIn = () => {
                     Forget password?
                   </a>
                 </div>
-                <AButton type={'submit'} label={'Save'} variant={'full'} />
+                <AButton
+                  type={'submit'}
+                  label={'Save'}
+                  variant={'full'}
+                  icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
+                />
 
                 {/* <p className="text-center">
                   Don’t have any account?{' '}

@@ -1,4 +1,16 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowLeftIcon,
+  BookmarkIcon,
+  BuildingLibraryIcon,
+  BuildingOfficeIcon,
+  CurrencyRupeeIcon,
+  DevicePhoneMobileIcon,
+  IdentificationIcon,
+  MapPinIcon,
+  TagIcon,
+  UserIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
 import ADatePicker from '../../components-global/ADatePicker';
@@ -8,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddCase = () => {
   const navigate = useNavigate();
-  
+
   return (
     <>
       <ABreadcrumb pageName="Add Case" />
@@ -27,36 +39,60 @@ const AddCase = () => {
             type="text"
             label="Applicant's Name"
             variant="horizantal"
+            icon={<UserIcon className="h-4 w-4" />}
           />
-          <AInputField type="text" label="Address" variant="horizantal" />
-          <AInputField type="text" label="Mobile" variant="horizantal" />
+          <AInputField
+            type="text"
+            label="Mobile"
+            variant="horizantal"
+            icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
+          />
           <AInputField
             type="text"
             label="Loan Amt (Lacs)"
             variant="horizantal"
+            icon={<CurrencyRupeeIcon className="h-4 w-4" />}
           />
-          <AInputField type="text" label="Reference ID" variant="horizantal" />
+          <AInputField
+            type="text"
+            label="Reference ID"
+            variant="horizantal"
+            icon={<IdentificationIcon className="h-4 w-4" />}
+          />
           <ASingleSelect
             name={'select'}
             label={'Type'}
             variant={'horizantal'}
+            icon={<TagIcon className="h-4 w-4" />}
             options={[
               { label: 'Local', value: 'local' },
               { label: 'OGL', value: 'ogl' },
             ]}
           />
-          <AInputField type="text" label="Address" variant="horizantal" />
-          <AInputField type="text" label="City" variant="horizantal" />
+          <AInputField
+            type="text"
+            label="Address"
+            variant="horizantal"
+            icon={<MapPinIcon className="h-4 w-4" />}
+          />
+          <AInputField
+            type="text"
+            label="City"
+            variant="horizantal"
+            icon={<MapPinIcon className="h-4 w-4" />}
+          />
           <ASingleSelect
             name={'branch'}
             label={'Branch'}
             variant={'horizantal'}
+            icon={<BuildingOfficeIcon className="h-4 w-4" />}
             options={[]}
           />
           <ASingleSelect
             name={'select'}
             label={'Case Type'}
             variant={'horizantal'}
+            icon={<TagIcon className="h-4 w-4" />}
             options={[
               { label: 'PD', value: 'pd' },
               { label: 'LIP', value: 'lip' },
@@ -66,6 +102,7 @@ const AddCase = () => {
             name={'local'}
             label={'Bank Name'}
             variant={'horizantal'}
+            icon={<BuildingLibraryIcon className="h-4 w-4" />}
             options={[{ label: 'Axis Bank', value: 'axis' }]}
           />
           <ADatePicker
@@ -75,8 +112,16 @@ const AddCase = () => {
             label={'Received Date'}
           />
           <div className="flex gap-2 justify-end">
-            <AButton variant="secondary" label="Cancel" />
-            <AButton variant="primary" label="Save" />
+            <AButton
+              variant="secondary"
+              label="Cancel"
+              icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
+            />
+            <AButton
+              variant="primary"
+              label="Save"
+              icon={<BookmarkIcon className="h-5 w-5" />}
+            />
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ const AssignedCases = () => {
       </div>
       {showModal && (
         <AModal
+          saveText={'Get Started'}
           title="Generate PD"
           onSave={() => navigate('/generatePD')}
           closeModal={() => setShowModal(false)}

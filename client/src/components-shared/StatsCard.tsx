@@ -17,7 +17,7 @@ const StatsCard = ({ role }: any) => {
     <>
       {updatedCards.map((item) => {
         return (
-          <div className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5 shadow-default">
+          <div className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5 shadow-default" key={item.title}>
             <Link to={item.path} key={item.title}>
               <div className="flex justify-between">
                 <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta2">

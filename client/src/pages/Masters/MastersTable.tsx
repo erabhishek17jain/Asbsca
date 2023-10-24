@@ -11,6 +11,7 @@ import MastersHeader from './MastersHeader';
 import ASingleSelect from '../../components-global/ASingleSelect';
 import AFileUpload from '../../components-global/AFileUpload';
 import AInputField from '../../components-global/AInputField';
+import { ArchiveBoxIcon, BuildingLibraryIcon, BuildingOfficeIcon, CheckIcon, LinkIcon, UserIcon } from '@heroicons/react/24/solid';
 
 export function MastersTable({ type }: any) {
   const [headers, setHeaders] = useState<any>([]);
@@ -41,17 +42,33 @@ export function MastersTable({ type }: any) {
         <AModal title={`Add ${type}`} closeModal={() => setShowModal(false)}>
           {type === 'Client' && (
             <div className="flex flex-col">
-              <AInputField type="text" label="Client Name*" />
-              <ASingleSelect name={'branch'} label={'Branch*'} options={[]} />
-              <AFileUpload type={'file'} name={'banklogo'} label={'Logo'} />
+              <AInputField
+                type="text"
+                label="Client Name*"
+                icon={<UserIcon className="h-4 w-4" />}
+              />
+              <ASingleSelect
+                name={'branch'}
+                label={'Branch*'}
+                options={[]}
+                icon={<BuildingOfficeIcon className="h-4 w-4" />}
+              />
               <AFileUpload
                 type={'file'}
                 name={'banklogo'}
+                label={'Logo'}
+                icon={<BuildingLibraryIcon className="h-4 w-4" />}
+              />
+              <AFileUpload
+                type={'file'}
+                name={'signature'}
                 label={'Signature'}
+                icon={<LinkIcon className="h-4 w-4" />}
               />
               <ASingleSelect
                 name={'status'}
                 label={'Status'}
+                icon={<CheckIcon className="h-4 w-4" />}
                 options={[
                   { label: 'Active', value: 'active' },
                   { label: 'Inactive', value: 'inactive' },
@@ -61,15 +78,21 @@ export function MastersTable({ type }: any) {
           )}
           {type === 'Product' && (
             <div className="flex flex-col">
-              <AInputField type="text" label="Product*" />
+              <AInputField
+                type="text"
+                label="Product*"
+                icon={<ArchiveBoxIcon className="h-4 w-4" />}
+              />
               <ASingleSelect
                 name={'clientName'}
                 label={'Client Name*'}
+                icon={<BuildingLibraryIcon className="h-4 w-4" />}
                 options={[]}
               />
               <ASingleSelect
                 name={'status'}
                 label={'Status'}
+                icon={<CheckIcon className="h-4 w-4" />}
                 options={[
                   { label: 'Active', value: 'active' },
                   { label: 'Inactive', value: 'inactive' },
@@ -79,10 +102,15 @@ export function MastersTable({ type }: any) {
           )}
           {type === 'Branch' && (
             <div className="flex flex-col">
-              <AInputField type="text" label="Branch Name" />
+              <AInputField
+                type="text"
+                label="Branch Name"
+                icon={<BuildingOfficeIcon className="h-4 w-4" />}
+              />
               <ASingleSelect
                 name={'status'}
                 label={'Status'}
+                icon={<CheckIcon className="h-4 w-4" />}
                 options={[
                   { label: 'Active', value: 'active' },
                   { label: 'Inactive', value: 'inactive' },

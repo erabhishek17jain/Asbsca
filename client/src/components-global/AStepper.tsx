@@ -3,6 +3,7 @@ import { Stepper, Step, Typography } from '@material-tailwind/react';
 import AButton from './AButton';
 import LoanDetails from '../pages/GeneratePD/LoanDetails';
 import PersonalDetails from '../pages/GeneratePD/PersonalDetails';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
 
 export function AStepper({ steps }: any) {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -52,12 +53,14 @@ export function AStepper({ steps }: any) {
           variant={'secondary'}
           action={handlePrev}
           disabled={isFirstStep}
+          icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
         />
         <AButton
           label={'Next'}
           variant={'secondary'}
           action={handleNext}
           disabled={isLastStep}
+          icon={<ArrowRightIcon className="h-5 w-5 stroke-main stroke-1" />}
         />
       </div>
     </div>

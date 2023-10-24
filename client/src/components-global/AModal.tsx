@@ -1,7 +1,13 @@
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import AButton from './AButton';
 
-export const AModal = ({ closeModal, onSave, title, children }: any) => {
+export const AModal = ({
+  closeModal,
+  onSave,
+  title,
+  children,
+  saveText = 'Save',
+}: any) => {
   return (
     <>
       <div
@@ -14,9 +20,10 @@ export const AModal = ({ closeModal, onSave, title, children }: any) => {
             <div className="flex justify-between items-center border-b-2 border-grey pb-2">
               <h3 className="text-xl font-medium text-graydark">{title}</h3>
               <AButton
-                label={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
+                label={''}
                 action={closeModal}
-                variant="secondary"
+                variant="link"
+                icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
               />
             </div>
             <div className="my-3 overflow-y-auto h-full max-h-[520px]">
@@ -27,12 +34,14 @@ export const AModal = ({ closeModal, onSave, title, children }: any) => {
                 label={'Cancel'}
                 variant={'secondary'}
                 action={closeModal}
+                icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
               />
               <AButton
-                label={'Save'}
+                label={saveText}
                 type={'submit'}
                 variant={'primary'}
                 action={onSave}
+                icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
               />
             </div>
           </div>

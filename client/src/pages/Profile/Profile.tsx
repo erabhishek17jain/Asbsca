@@ -8,12 +8,14 @@ import { useFormik } from 'formik';
 import AButton from '../../components-global/AButton';
 import AProfileUpload from '../../components-global/AProfileUpload';
 import {
+  BookmarkIcon,
   CameraIcon,
   DevicePhoneMobileIcon,
   EnvelopeIcon,
   PhoneIcon,
   UserCircleIcon,
   UserIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid';
 
 const Profile = () => {
@@ -175,12 +177,14 @@ const Profile = () => {
                   label={'Cancel'}
                   variant={'secondary'}
                   action={() => setIsEditProfile(false)}
+                  icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
                 />
                 <AButton
                   label={'Save'}
                   type={'submit'}
                   variant={'primary'}
                   action={fireToast}
+                  icon={<BookmarkIcon className="h-5 w-5" />}
                 />
               </div>
             </form>
