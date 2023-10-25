@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import AButton from './AButton';
 
 export const AModal = ({
@@ -41,7 +41,7 @@ export const AModal = ({
                 type={'submit'}
                 variant={'primary'}
                 action={onSave}
-                icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
+                icon={saveText === 'Add' ? <PlusIcon className="h-5 w-5 stroke-white stroke-1" /> : <ArrowTopRightOnSquareIcon className="h-5 w-5" />}
               />
             </div>
           </div>

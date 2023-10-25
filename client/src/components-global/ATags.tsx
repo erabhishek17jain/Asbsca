@@ -16,7 +16,7 @@ const ATags = ({ children }: any) => {
 
   return tags.map((item, index) => {
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4" key={item}>
         {children}
         <div className="w-7 mt-3">
           {tags.length !== 1 && (

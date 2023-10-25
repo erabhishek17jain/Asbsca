@@ -12,14 +12,16 @@ const AInputField = ({
         variant === 'horizantal' ? 'items-center' : 'flex-col'
       }`}
     >
-      <label
-        className={`block text-black text-sm ${
-          variant === 'horizantal' ? 'min-w-[25%]' : ''
-        }`}
-        htmlFor={id}
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          className={`block text-black text-sm ${
+            variant === 'horizantal' ? 'min-w-[25%]' : ''
+          }`}
+          htmlFor={id}
+        >
+          {label}
+        </label>
+      )}
       <div className="relative flex-1">
         <input
           id={id}

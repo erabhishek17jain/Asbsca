@@ -1,48 +1,13 @@
 import { useState } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
-import ARadiobox from '../../../components-global/ARadiobox';
 import ATags from '../../../components-global/ATags';
 import {
   Accordion,
   AccordionBody,
   AccordionHeader,
 } from '@material-tailwind/react';
-
-const CheckExistingLoanCredit = ({
-  title,
-  value,
-  handleLoanCreditType,
-}: any) => {
-  return (
-    <div className="flex items-center gap-4 py-4">
-      <div className="min-w-[25%]">{title}</div>
-      <div className="flex">
-        <ARadiobox
-          name={'yes'}
-          label={'Yes'}
-          variant={'horizantal'}
-          checked={value === 'yes'}
-          handleChecked={() => handleLoanCreditType('yes')}
-        />
-        <ARadiobox
-          name={'no'}
-          label={'No'}
-          variant={'horizantal'}
-          checked={value === 'no'}
-          handleChecked={() => handleLoanCreditType('on')}
-        />
-        <ARadiobox
-          variant={'horizantal'}
-          name={'noDetail'}
-          label={'Details Not Provided'}
-          checked={value === 'noDetail'}
-          handleChecked={() => handleLoanCreditType('noDetail')}
-        />
-      </div>
-    </div>
-  );
-};
+import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 
 const ExistingLoanInformation = () => {
   return (
@@ -70,6 +35,12 @@ const ExistingLoanInformation = () => {
   );
 };
 
+const radioValues = [
+  { name: 'yes', label: 'Yes' },
+  { name: 'no', label: 'No' },
+  { name: 'noDetail', label: 'Details Not Provided' },
+];
+
 const ExistingLoan = () => {
   const [existingLoan, setExistingLoan] = useState('yes');
 
@@ -79,10 +50,11 @@ const ExistingLoan = () => {
 
   return (
     <>
-      <CheckExistingLoanCredit
-        title={'Existing Loan'}
+      <ARadioButtonGroup
         value={existingLoan}
-        handleLoanCreditType={handleExistingLoan}
+        title={'Existing Loan'}
+        radioValues={radioValues}
+        handleChecked={handleExistingLoan}
       />
       {existingLoan === 'yes' && (
         <>
@@ -120,10 +92,11 @@ const CreditFacility = () => {
 
   return (
     <>
-      <CheckExistingLoanCredit
-        title={'Existing Loan'}
+      <ARadioButtonGroup
         value={creditFacility}
-        handleLoanCreditType={handleCreditFacility}
+        title={'Credit Facility'}
+        radioValues={radioValues}
+        handleChecked={handleCreditFacility}
       />
       {creditFacility === 'yes' && (
         <>
@@ -174,10 +147,11 @@ const OtherCommitments = () => {
 
   return (
     <>
-      <CheckExistingLoanCredit
-        title={'Existing Loan'}
+      <ARadioButtonGroup
         value={otherCommitments}
-        handleLoanCreditType={handleOtherCommitments}
+        title={'Other Commitments'}
+        radioValues={radioValues}
+        handleChecked={handleOtherCommitments}
       />
       {otherCommitments === 'yes' && (
         <>
@@ -233,7 +207,7 @@ const ExistingLoanCredit = () => {
     <>
       {existingLoanInfo.map((item, index) => {
         return (
-          <Accordion open={open === index + 1}>
+          <Accordion open={open === index + 1} key={item.title}>
             <AccordionHeader onClick={() => handleOpen(index + 1)}>
               {item.title}
             </AccordionHeader>

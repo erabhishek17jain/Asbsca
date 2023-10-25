@@ -41,11 +41,11 @@ export function AStepper({ steps }: any) {
           return item.index === 0 ||
             item.index === activeStep ||
             item.index === steps.length - 1 ? (
-            <Step onClick={() => setActiveStep(item.index)}>
+            <Step key={item.index} onClick={() => setActiveStep(item.index)}>
               {item.index + 1}
             </Step>
           ) : (
-            <div className="w-3 sm:w-10"></div>
+            <div className="w-3 sm:w-10" key={item.index}></div>
           );
         })}
       </Stepper>

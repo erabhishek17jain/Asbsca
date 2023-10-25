@@ -20,7 +20,7 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
     <>
       {new Array(noOfAppicants).fill('').map((item, index) => {
         return (
-          <Accordion open={open === index + 1}>
+          <Accordion open={open === index + 1} key={index}>
             <AccordionHeader onClick={() => handleOpen(index + 1)}>
               {index === 0 ? 'Applicant' : `Co-Appicant ${index}`}
             </AccordionHeader>
@@ -30,10 +30,7 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
                 <ASingleSelect
                   name={'select'}
                   label={'Qualification'}
-                  options={[
-                    { label: 'India', value: 'india' },
-                    { label: 'USA', value: 'usa' },
-                  ]}
+                  options={[{ label: 'India', value: 'india' }]}
                 />
                 <AInputField
                   type={'text'}
@@ -53,10 +50,7 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
                 <ASingleSelect
                   name={'select'}
                   label={'Nature of Business'}
-                  options={[
-                    { label: 'India', value: 'india' },
-                    { label: 'USA', value: 'usa' },
-                  ]}
+                  options={[{ label: 'India', value: 'india' }]}
                 />
                 <AInputField
                   type={'text'}
@@ -96,7 +90,6 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
               label={'Residence Status '}
               options={[
                 { label: 'India', value: 'india' },
-                { label: 'USA', value: 'usa' },
               ]}
             />
           </div>
@@ -147,7 +140,6 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
                 label={'Reation'}
                 options={[
                   { label: 'India', value: 'india' },
-                  { label: 'USA', value: 'usa' },
                 ]}
               />
               <ASingleSelect
@@ -155,7 +147,6 @@ const PersonalDetails = ({ noOfAppicants }: any) => {
                 label={'Earning Status'}
                 options={[
                   { label: 'India', value: 'india' },
-                  { label: 'USA', value: 'usa' },
                 ]}
               />
             </div>
