@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import env from '../config.js';
+import env from '../config';
 
 async function connect() {
     mongoose.set('strictQuery', true);
