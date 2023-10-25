@@ -22,7 +22,7 @@ import OtherObservation from '../pages/GeneratePD/compoments/OtherObservation';
 import DocumentsSeen from '../pages/GeneratePD/compoments/DocumentsSeen';
 import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf';
 
-export function AStepper({ steps }: any) {
+export function AStepper({ steps, generateReport }: any) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -82,7 +82,7 @@ export function AStepper({ steps }: any) {
         <AButton
           label={activeStep === steps.length - 1 ? 'Generate Report' : 'Next'}
           variant={'secondary'}
-          action={handleNext}
+          action={activeStep === steps.length - 1 ? generateReport : handleNext}
           disabled={isLastStep}
           icon={
             activeStep === steps.length - 1 ? (

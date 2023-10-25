@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
-import AButton from '../../components-global/AButton';
 import {
   CheckIcon,
   DevicePhoneMobileIcon,
@@ -8,7 +7,6 @@ import {
   IdentificationIcon,
   KeyIcon,
   MapPinIcon,
-  PlusIcon,
   UserIcon,
   UsersIcon,
 } from '@heroicons/react/24/solid';
@@ -26,24 +24,15 @@ const Users = () => {
 
   return (
     <>
-      <ABreadcrumb pageName="Members" />
-      <div className="flex justify-end items-center gap-3">
-        <AButton
-          variant={'secondary'}
-          label={'Add Role'}
-          action={() => setShowModalRole(true)}
-          icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
-        />
-        <AButton
-          variant={'primary'}
-          label={'Add User'}
-          action={() => setShowModalUser(true)}
-          icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
-        />
-      </div>
+      <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
         <ATable
-          header={<UsersHeader />}
+          header={
+            <UsersHeader
+              openRoleModal={() => setShowModalRole(true)}
+              openUserModal={() => setShowModalUser(true)}
+            />
+          }
           tableBody={<UsersBody />}
           tableHeader={USER_TABLE_HEAD}
         />

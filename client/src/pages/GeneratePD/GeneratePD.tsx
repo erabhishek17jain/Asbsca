@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import { AStepper } from '../../components-global/AStepper';
 
@@ -65,11 +66,17 @@ const steps = [
 ];
 
 const GeneratePD = () => {
+  const navigate = useNavigate();
+
+  const generateReport = () => {
+    navigate('/finalReport');
+  };
+
   return (
     <>
       <ABreadcrumb pageName="Generate PD" />
       <div className="overflow-hidden relative h-[80vh] bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
-        <AStepper steps={steps} />
+        <AStepper steps={steps} generateReport={generateReport} />
       </div>
     </>
   );

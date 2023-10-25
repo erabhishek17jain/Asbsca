@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronDownIcon,
+  DocumentChartBarIcon,
   ShareIcon,
-  UserIcon,
 } from '@heroicons/react/24/solid';
 
-const ADropdown = () => {
+const ADropdown = ({ dropdownPDF, dropdownWord }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -66,22 +66,22 @@ const ADropdown = () => {
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4">
           <li>
-            <Link
-              to="/profile"
+            <button
+              onClick={dropdownPDF}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
             >
-              <UserIcon className="h-5 w-5" />
-              My Profile
-            </Link>
+              <DocumentChartBarIcon className="h-5 w-5" />
+              PDF
+            </button>
           </li>
           <li>
-            <Link
-              to="/profile"
+            <button
+              onClick={dropdownWord}
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
             >
-              <UserIcon className="h-5 w-5" />
-              My Profile
-            </Link>
+              <DocumentChartBarIcon className="h-5 w-5" />
+              Word
+            </button>
           </li>
         </ul>
       </div>
