@@ -4,11 +4,14 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import connect from './database/conn';
 import UserRouter from 'apis/users/router';
+import mongoSanitize from 'express-mongo-sanitize';
 
 const app = express();
 
 /** middlewares */
 app.use(express.json({ limit: '50mb' }));
+// mongo sanitize to prevent nosql injection attacks
+app.use(mongoSanitize());
 app.use(
     cors({
         origin: ['http://localhost:3000', 'http://localhost:5173'],
