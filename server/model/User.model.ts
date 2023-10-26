@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Roles from "./Roles.model";
+import JWT from "modules/jwt";
+import Password from "modules/password"
 
 export interface IUser extends mongoose.Document {
     _id: string;
@@ -13,10 +15,11 @@ export interface IUser extends mongoose.Document {
     profile: string;
     createdAt: Date;
     updatedAt: Date;
+    getToken: () => string;
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     fullName: { type: String, required: true },
     role: { type: mongoose.Schema.Types.ObjectId, required: true, ref: Roles },
@@ -25,6 +28,22 @@ const UserSchema = new mongoose.Schema<IUser>({
     profile: { type: String, required: true },
     email: { type: String, required: true },
 }, { timestamps: true });
+
+UserSchema.methods.getToken = function (): string {
+  const payload = {
+    id: this._id,
+    email: this.email,
+    role: this.role,
+  };
+  return JWT.fn.getToken(payload).accessToken;
+};
+
+UserSchema.pre<IUser>('save', function (next) {
+  if (this.isModified('password')) {
+    this.password = Password.fn.generateHash(this.password);
+  }
+  next();
+});
 
 const User = mongoose.model<IUser>('user', UserSchema);
 export default User;

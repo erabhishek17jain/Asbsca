@@ -2,13 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import connect from './database/conn.js';
-import router from './router/route.js';
+import connect from './database/conn';
+import UserRouter from 'apis/users/router';
+import mongoSanitize from 'express-mongo-sanitize';
 
 const app = express();
 
 /** middlewares */
 app.use(express.json({ limit: '50mb' }));
+// mongo sanitize to prevent nosql injection attacks
+app.use(mongoSanitize());
 app.use(
     cors({
         origin: ['http://localhost:3000', 'http://localhost:5173'],
@@ -25,12 +28,11 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 const port = 8080;
 
 /** HTTP GET Request */
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     res.status(201).json("Home GET Request");
 });
 
-/** api routes */
-app.use('/api', router)
+app.use("/api/v1/users", UserRouter.router)
 
 /** start server only when we have valid connection */
 connect().then(() => {
@@ -41,7 +43,7 @@ connect().then(() => {
     } catch (error) {
         console.log('Cannot connect to the server')
     }
-}).catch(error => {
+}).catch(() => {
     console.log("Invalid database connection...!");
 })
 

@@ -19,9 +19,9 @@
     "strictPropertyInitialization": false /* Enable strict checking of property initialization in classes. */,
     "lib": [
       "ESNext", "DOM"
-    ]
+    ],
   },
-  "exclude": ["node_modules", "build", "cron.ts", "jest.config.js", "tests", "coverage", "reporting-api", "ig_*"],
+  "exclude": ["node_modules", "build"],
   "ts-node": {
     "transpileOnly": true,
     "files": true,
