@@ -34,5 +34,14 @@ export default class JWT implements IJWT {
     const payload = jwt.verify(token, this.secretKey);
     return payload as Payload;
   }
+
+  public getEmailVerificationToken(email: string): string {
+    return jwt.sign({ email }, this.secretKey, { expiresIn: '1d' });
+  }
+
+  public verifyEmailVerificationToken(token: string): { email: string } {
+    const payload = jwt.verify(token, this.secretKey);
+    return payload as { email: string };
+  }
 }
 
