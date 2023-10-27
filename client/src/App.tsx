@@ -16,18 +16,18 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      getUsername()
-        .then((response:any) => {
-          dispatch(fetchCurrentUserAsync(response?.username));
-        })
-        .catch(() => {
-          navigate('/auth/signin');
-        });
-    } else{
-      navigate('/auth/signin');
-    }
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   getUsername()
+    //     .then((response:any) => {
+    //       dispatch(fetchCurrentUserAsync(response?.username));
+    //     })
+    //     .catch(() => {
+    //       navigate('/auth/signin');
+    //     });
+    // } else{
+    //   navigate('/auth/signin');
+    // }
   }, []);
 
   return (

@@ -58,10 +58,13 @@ export async function registerUser(credentials: any) {
 }
 
 /** login function */
-export async function verifyPassword({ username, password }:any) {
+export async function login({ username, password }:any) {
     try {
         if (username) {
-            const { data } = await axios.post('/api/login', { username, password });
+            const { data } = await axios.post('/api/v1/users/login', {
+              username,
+              password,
+            });
             return Promise.resolve({ data });
         }
     } catch (error) {

@@ -2,10 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/logo/logo.png';
 import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
-import { usernameValidate } from '../../helper/validate';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { getUsername, verifyPassword } from '../../helper/helper';
+import { getUsername, login } from '../../helper/helper';
 import { useEffect } from 'react';
 import { fetchCurrentUserAsync } from '../../slices/usersSlice';
 import { useDispatch } from 'react-redux';
@@ -23,11 +22,10 @@ const SignIn = () => {
       username: 'abhishek',
       password: 'adminn@123',
     },
-    validate: usernameValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      let loginPromise = verifyPassword({
+      let loginPromise = login({
         username: values.username,
         password: values.password,
       });
@@ -110,7 +108,7 @@ const SignIn = () => {
                   icon={<EyeSlashIcon className="h-4 w-4" />}
                 />
 
-                <div className="flex justify-between">
+                <div className="flex justify-between mb-5">
                   <ACheckbox name={'rememberMe'} label={'Remember me'} />
                   <a href="#" className="text-sm text-main">
                     Forget password?
