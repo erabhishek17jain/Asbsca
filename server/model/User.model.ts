@@ -12,6 +12,7 @@ export interface IUser extends mongoose.Document {
     role: mongoose.Types.ObjectId;
     mobile: number;
     address: string;
+    isVerified: boolean;
     profile: string;
     createdAt: Date;
     updatedAt: Date;
@@ -19,14 +20,23 @@ export interface IUser extends mongoose.Document {
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
-    username: { type: String, required: true, unique: true },
+    username: { 
+      type: String, 
+      required: [true, "Username is required"], 
+      unique: [true, "Username already exists"], 
+    },
     password: { type: String, required: true },
     fullName: { type: String, required: true },
     role: { type: mongoose.Schema.Types.ObjectId, required: true, ref: Roles },
     mobile: { type: Number, required: true },
     address: { type: String, required: true },
-    profile: { type: String, required: true },
-    email: { type: String, required: true },
+    profile: { type: String, required: false },
+    email: { 
+      type: String, 
+      required: [true, "Email is required"],
+      unique: [true, "Email already exists"],
+    },
+    isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
 
 UserSchema.methods.getToken = function (): string {
