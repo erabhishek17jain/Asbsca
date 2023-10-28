@@ -1,34 +1,16 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import SignIn from './pages/Authentication/SignIn';
+import SignIn from './pages/SignIn/SignIn';
 import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero/Hero';
-import { useDispatch } from 'react-redux';
-import { getUsername } from './helper/helper';
-import { fetchCurrentUserAsync } from './slices/usersSlice';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      getUsername()
-        .then((response:any) => {
-          dispatch(fetchCurrentUserAsync(response?.username));
-        })
-        .catch(() => {
-          navigate('/auth/signin');
-        });
-    } else{
-      navigate('/auth/signin');
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -38,8 +20,8 @@ function App() {
         containerClassName="overflow-auto"
       />
       <Routes>
-        <Route path="/auth/signin" element={<SignIn />} />
-        {/* <Route path="/auth/signup" element={<SignUp />} /> */}
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/resetPassword" element={<ResetPassword />} />
         <Route index element={<Hero />} />
         <Route element={<DefaultLayout />}>
           {routes.map((routes, index) => {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../assets/images/logo/logo.png';
 import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid';
-import { sidebarMenu } from '../constants';
+import { pages } from '../constants';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -82,12 +82,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-5 py-4 px-4 lg:mt-5 lg:px-6">
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-              {sidebarMenu.map((item: any) => (
-                <li key={item.path}>
+              {pages.map((item: any) => (
+                <li key={item.value}>
                   <NavLink
-                    to={`/${item.path}`}
+                    to={`/${item.value}`}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-dark duration-300 ease-in-out hover:bg-grey ${
-                      pathname.includes(item.path) && 'bg-grey'
+                      pathname.includes(item.value) && 'bg-grey'
                     }`}
                   >
                     {item.icon}

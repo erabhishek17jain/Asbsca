@@ -1,7 +1,8 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { Link } from 'react-router-dom';
+import { ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import { casesTableColumn } from '../../mockData/mocks';
+import { Tooltip } from '@material-tailwind/react';
+import { Link } from 'react-router-dom';
 
 const ReviewCasesBody = () => {
   return casesTableColumn.map(
@@ -54,13 +55,27 @@ const ReviewCasesBody = () => {
           <TableColumn classes={classes} label={assignedTo} />
           <TableColumn classes={classes} label={reviewer} />
           <td className={classes}>
-            <Link
-              to="/auth/signup"
-              className="w-24 flex gap-1 text-base text-main"
-            >
-              <ArrowTopRightOnSquareIcon className="h-6 w-6" />
-              <span>Review</span>
-            </Link>
+            <div className="flex items-center gap-1">
+              <Link
+                to="/generatePD"
+                className="w-24 flex gap-1 text-base text-main"
+              >
+                <ArrowTopRightOnSquareIcon className="h-6 w-6" />
+                <span>Review</span>
+              </Link>
+              <Tooltip content="Preview">
+                <div className="w-20 flex gap-1 text-base text-main">
+                  <EyeIcon className="h-6 w-6" />
+                  <span>Word</span>
+                </div>
+              </Tooltip>
+              <Tooltip content="Preview">
+                <div className="w-20 flex gap-1 text-base text-main">
+                  <EyeIcon className="h-6 w-6" />
+                  <span>PDF</span>
+                </div>
+              </Tooltip>
+            </div>
           </td>
         </tr>
       );
