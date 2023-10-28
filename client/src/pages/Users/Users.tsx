@@ -13,14 +13,64 @@ import {
 import { AModal } from '../../components-global/AModal';
 import AInputField from '../../components-global/AInputField';
 import ATable from '../../components-global/ATable';
-import { USER_TABLE_HEAD } from '../../constants';
+import { USER_TABLE_HEAD, pages } from '../../constants';
 import UsersBody from './UsersBody';
 import UsersHeader from './UsersHeader';
 import ASingleSelect from '../../components-global/ASingleSelect';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import toast from 'react-hot-toast';
+import { addRole } from '../../services';
 
 const Users = () => {
   const [showModalRole, setShowModalRole] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
+
+  const initialValues = {
+    name: '',
+    status: '',
+    pageAccess: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('This field is required'),
+    status: Yup.string().required('This field is required'),
+    pageAccess: Yup.string().required('This field is required'),
+  });
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmit = async (values: any) => {
+    values = await Object.assign(values);
+    let signinPromise = addRole(values);
+    toast.promise(signinPromise, {
+      loading: 'Checking...',
+      success: <b>Role addes successfully.</b>,
+      error: <b>Something went wrong!</b>,
+    });
+    signinPromise.then((res: any) => {
+      console.log(res.data)
+      closeRoleModal()
+    });
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmit,
+  });
+
+  const closeRoleModal = () => {
+    formik.resetForm();
+    setShowModalRole(false);
+  };
 
   return (
     <>
@@ -38,21 +88,43 @@ const Users = () => {
         />
       </div>
       {showModalRole && (
-        <AModal title={'Add Role'} closeModal={() => setShowModalRole(false)}>
+        <AModal
+          saveText={'Add'}
+          title={'Add Role'}
+          onSave={formik.handleSubmit}
+          closeModal={closeRoleModal}
+        >
           <div className="flex flex-col ">
             <AInputField
+              id="name"
               type="text"
               label="Role Name*"
+              error={formik.errors.name}
+              formik={formik.getFieldProps('name')}
               icon={<UsersIcon className="h-4 w-4" />}
             />
-            <AInputField
-              type="text"
-              label="Page Access*"
+            {/* <AMultiSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formik.errors.pageAccess}
+              selected={formik.values.pageAccess}
               icon={<KeyIcon className="h-4 w-4" />}
+              {...formik.getFieldProps('pageAccess')}
+            /> */}
+            <ASingleSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formik.errors.pageAccess}
+              icon={<KeyIcon className="h-4 w-4" />}
+              formik={formik.getFieldProps('pageAccess')}
             />
             <ASingleSelect
-              name={'select'}
+              id="status"
               label={'Status'}
+              error={formik.errors.status}
+              formik={formik.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },

@@ -4,13 +4,14 @@ const ASingleSelect = ({
   id,
   label,
   icon,
+  error = '',
   variant = 'vertical',
   formik,
   options,
 }: any) => {
   return (
     <div
-      className={`flex gap-3 w-full mb-5 ${
+      className={`flex gap-2 w-full ${error ? 'mb-2' : 'mb-8'} ${
         variant === 'horizantal' ? 'items-center' : 'flex-col'
       }`}
     >
@@ -47,6 +48,7 @@ const ASingleSelect = ({
           </span>
         )}
       </div>
+      {error && <span className="ml-1 text-xs text-meta1">{error}</span>}
     </div>
   );
 };

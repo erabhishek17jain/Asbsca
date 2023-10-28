@@ -38,7 +38,7 @@ const ADropdownUser = () => {
 
   function userLogout() {
     localStorage.removeItem('token');
-    navigate('/auth/signin');
+    navigate('/signin');
   }
 
   return (

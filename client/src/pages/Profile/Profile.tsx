@@ -181,7 +181,6 @@ const Profile = () => {
                 />
                 <AButton
                   label={'Save'}
-                  type={'submit'}
                   variant={'primary'}
                   action={fireToast}
                   icon={<BookmarkIcon className="h-5 w-5" />}

@@ -13,45 +13,47 @@ import {
 } from '@heroicons/react/24/solid';
 import { MastersTable } from '../pages/Masters/MastersTable';
 
-export const sidebarMenu = [
+export const baseAPI = '/api/v1';
+
+export const pages = [
   {
     label: 'Dashboard',
-    path: 'dashboard',
+    value: 'dashboard',
     icon: <Squares2X2Icon className="h-5 w-5" />,
   },
   {
     label: 'Total Cases',
-    path: 'cases',
+    value: 'cases',
     icon: <Square3Stack3DIcon className="h-5 w-5" />,
   },
   {
     label: 'Assigned',
-    path: 'assigned',
+    value: 'assigned',
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
     label: 'Review',
-    path: 'review',
+    value: 'review',
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
   {
     label: 'Reports',
-    path: 'reports',
+    value: 'reports',
     icon: <NewspaperIcon className="h-5 w-5" />,
   },
   {
     label: 'Users',
-    path: 'users',
+    value: 'users',
     icon: <UsersIcon className="h-5 w-5" />,
   },
   {
     label: 'Masters',
-    path: 'masters',
+    value: 'masters',
     icon: <QueueListIcon className="h-5 w-5" />,
   },
   {
     label: 'Profile',
-    path: 'profile',
+    value: 'profile',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
 ];
@@ -59,28 +61,28 @@ export const sidebarMenu = [
 export const statsCards = [
   {
     title: 'Total Cases Recieved',
-    path: '/cases',
+    value: '/cases',
     count: 3000,
     percentage: 34,
     icon: <Square3Stack3DIcon className="h-5 w-5" />,
   },
   {
     title: 'Assigned Cases',
-    path: '/assigned',
+    value: '/assigned',
     count: 17,
     percentage: 76,
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
     title: 'Reviewing Cases',
-    path: '/review',
+    value: '/review',
     count: 47,
     percentage: -3,
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
   {
     title: 'Sent To Bank',
-    path: '/reports',
+    value: '/reports',
     count: 51,
     percentage: 28,
     icon: <PaperAirplaneIcon className="h-5 w-5" />,
