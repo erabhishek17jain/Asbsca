@@ -7,7 +7,7 @@ interface IPassword {
 
 export default class Password implements IPassword {
     private static instance: Password = new this();
-    private SECRET_KEY: string = process.env.SECRET_KEY!;
+    private SECRET_KEY: string = process.env.SECRET_KEY || `secret`;
 
     private constructor() {}
     public static get fn(): Password {

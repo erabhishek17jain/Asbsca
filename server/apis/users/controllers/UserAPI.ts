@@ -15,7 +15,7 @@ interface IUserAPI {
 export default class UserAPI implements IUserAPI {
   private static instance: UserAPI = new this();
   private constructor() {}
-  public static get views(): UserAPI {
+  public static get view(): UserAPI {
     return this.instance;
   }
 
