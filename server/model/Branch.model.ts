@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface IBranch extends mongoose.Document {
+export interface IBranch extends mongoose.Document {
     _id?: string;
     name: string;
     address: string;

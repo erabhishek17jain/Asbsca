@@ -1,4 +1,5 @@
 import Roles, {IRoles} from "model/Roles.model";
+import { Types } from "mongoose";
 
 
 export default class RoleRepository implements Repository<IRoles> {
@@ -22,7 +23,11 @@ export default class RoleRepository implements Repository<IRoles> {
   }
 
   public async update(role: IRoles): Promise<IRoles> {
-    const existingRole = await this.model.findByIdAndUpdate(role._id, role);
+    const id = role._id;
+    delete role._id;
+    const existingRole = await this.model.findByIdAndUpdate(new Types.ObjectId(id), {
+      $set: role
+    }, { new: true });
     if (!existingRole) throw new Error("Role not found");
     return existingRole;
   }

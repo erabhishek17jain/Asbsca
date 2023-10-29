@@ -1,7 +1,7 @@
 import { Router } from "express";
 import RolesAPI from "./controllers/RolesAPI";
 import LoginAPI from "./controllers/LoginAPI";
-
+import UserAPI from "./controllers/UserAPI";
 
 export default class UserRouter {
   private router: Router = Router({
@@ -20,10 +20,14 @@ export default class UserRouter {
     this.router.post("/login", LoginAPI.view.login);
     this.router.get("/roles/list", RolesAPI.view.get);
     this.router.post("/roles/create", RolesAPI.view.create);
-    this.router.post("/roles/update", RolesAPI.view.update);
-    this.router.post("/roles/delete", RolesAPI.view.delete);
-  };
-  
+    this.router.put("/roles/update", RolesAPI.view.update);
+    this.router.delete("/roles/delete", RolesAPI.view.delete);
+
+    this.router.get("/list", UserAPI.view.getUsers);
+    this.router.post("/create", UserAPI.view.addUser);
+    this.router.put("/update", UserAPI.view.updateUser);
+    this.router.delete("/delete/:id", UserAPI.view.deleteUser);
+  }
 }
 
 
