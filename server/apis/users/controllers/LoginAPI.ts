@@ -6,13 +6,6 @@ interface Body {
   password: string;
 }
 
-/** POST: http://localhost:8080/api/register 
- * @param : {
-  "username" : "asbsca",
-  "password" : "admin123",
-}
-*/
-
 export default class LoginAPI {
   private static _instance: LoginAPI = new this();
   private constructor() {}

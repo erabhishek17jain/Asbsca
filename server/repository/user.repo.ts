@@ -1,5 +1,6 @@
 import User, {IUser} from "model/User.model";
 import Password from "modules/password";
+import { Types } from "mongoose";
 
 
 interface IUserRepository extends Repository<IUser> {
@@ -29,11 +30,21 @@ export default class UserRepository implements IUserRepository {
   public async create(user: IUser): Promise<IUser> {
     const existingUser = await this.model.findOne({ email: user.email });
     if (existingUser) throw new Error("User already exists");
+    user.role = new Types.ObjectId(user.role);
     return await this.model.create(user);
   }
 
   public async update(user: IUser): Promise<IUser> {
-    const existingUser = await this.model.findByIdAndUpdate(user._id, user);
+    const id = user._id;
+    delete user._id;
+    delete user.password;
+    delete user.isVerified;
+    user.role = new Types.ObjectId(user.role);
+    const existingUser = await this.model.findByIdAndUpdate(
+      new Types.ObjectId(id),
+      { $set: user },
+      { new: true }
+    );
     if (!existingUser) throw new Error("User not found");
     return existingUser;
   }
@@ -49,7 +60,7 @@ export default class UserRepository implements IUserRepository {
     if (!user) throw new Error("User not found");
     if (!user.isVerified) throw new Error("User not verified");
     if (!user.role) throw new Error("Role not found");
-    const isMatch = Password.fn.validateHash(password, user.password);
+    const isMatch = Password.fn.validateHash(password, user.password!);
     if (!isMatch) throw new Error("Invalid password");
     const token = user.getToken();
     return { user, token };

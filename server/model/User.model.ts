@@ -4,26 +4,26 @@ import JWT from "modules/jwt";
 import Password from "modules/password"
 
 export interface IUser extends mongoose.Document {
-    _id: string;
+    _id?: mongoose.Types.ObjectId;
     username: string;
-    password: string;
+    password?: string;
     email: string;
     fullName: string;
     role: mongoose.Types.ObjectId;
     mobile: number;
     address: string;
-    isVerified: boolean;
+    isVerified?: boolean;
     profile: string;
     createdAt: Date;
     updatedAt: Date;
     getToken: () => string;
 }
-
+ 
 const UserSchema = new mongoose.Schema<IUser>({
     username: { 
       type: String, 
-      required: [true, "Username is required"], 
-      unique: [true, "Username already exists"], 
+      required: true, 
+      unique: true, 
     },
     password: { type: String, required: true },
     fullName: { type: String, required: true },
@@ -33,8 +33,8 @@ const UserSchema = new mongoose.Schema<IUser>({
     profile: { type: String, required: false },
     email: { 
       type: String, 
-      required: [true, "Email is required"],
-      unique: [true, "Email already exists"],
+      required: true,
+      unique: true,
     },
     isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
@@ -50,7 +50,7 @@ UserSchema.methods.getToken = function (): string {
 
 UserSchema.pre<IUser>('save', function (next) {
   if (this.isModified('password')) {
-    this.password = Password.fn.generateHash(this.password);
+    this.password = Password.fn.generateHash(this.password || "Secret@123");
   }
   next();
 });
