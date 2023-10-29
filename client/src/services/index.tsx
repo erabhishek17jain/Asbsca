@@ -5,11 +5,11 @@ axios.defaults.baseURL = 'http://localhost:8080';
 
 /** Make API Requests */
 /** login function */
-export async function signin({ username, password }: any) {
+export async function signin({ email, password }: any) {
   try {
-    if (username) {
+    if (email) {
       const { data } = await axios.post(`${baseAPI}/users/login`, {
-        username,
+        email,
         password,
       });
       return Promise.resolve({ data });
@@ -20,11 +20,11 @@ export async function signin({ username, password }: any) {
 }
 
 /** login function */
-export async function resetPassword({ username, password }: any) {
+export async function resetPassword({ email, password }: any) {
   try {
-    if (username) {
+    if (email) {
       const { data } = await axios.post(`${baseAPI}/users/resetPassword`, {
-        username,
+        email,
         password,
       });
       return Promise.resolve({ data });

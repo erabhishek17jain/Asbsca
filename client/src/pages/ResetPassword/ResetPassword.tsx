@@ -4,11 +4,11 @@ import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { signin } from '../../services';
 import { useEffect } from 'react';
 import AInputField from '../../components-global/AInputField';
 import AButton from '../../components-global/AButton';
-import { ArrowRightOnRectangleIcon,  KeyIcon } from '@heroicons/react/24/solid';
+import { ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/24/solid';
+import { resetPassword } from '../../services';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -21,20 +21,18 @@ const ResetPassword = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      let resetPromise = signin({
+      let resetPromise = resetPassword({
         username: values.username,
         password: values.password,
       });
-      toast.promise(resetPromise, {
-        loading: 'Checking...',
-        success: <b>Login Successfully...!</b>,
-        error: <b>Password Not Match!</b>,
-      });
-      resetPromise.then((res: any) => {
-        let { token } = res.data;
-        localStorage.setItem('token', token);
-        navigate('/signin');
-      });
+      resetPromise
+        .then(() => {
+          navigate('/signin');
+          toast.success(<b>Password Saved Successfully...!</b>);
+        })
+        .catch((e) => {
+          toast.error(<b>{e.error.response.data.message}</b>);
+        });
     },
   });
 
