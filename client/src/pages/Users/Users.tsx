@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import {
   CheckIcon,
@@ -20,11 +20,19 @@ import ASingleSelect from '../../components-global/ASingleSelect';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { addRole } from '../../services';
+import { addRole, deleteUserById } from '../../services';
+import store from '../../store/store';
+import { fetchAllUsersAsync } from '../../slices/usersSlice';
+import { fetchAllRolesAsync } from '../../slices/rolesSlice';
+import { useSelector } from 'react-redux';
 
 const Users = () => {
-  const [showModalRole, setShowModalRole] = useState(false);
-  const [showModalUser, setShowModalUser] = useState(false);
+  const { allRoles } = useSelector((state: any) => state.roles);
+  const [showAddRole, setShowAddRole] = useState(false);
+  const [showDeleteUser, setShowDeleteUser] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState('');
+  const [showAddEditUser, setShowAddEditUser] = useState(false);
+  const [roleOptions, setRoleOptions] = useState([]);
 
   const initialValues = {
     name: '',
@@ -46,19 +54,19 @@ const Users = () => {
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let signinPromise = addRole(values);
-    toast.promise(signinPromise, {
-      loading: 'Checking...',
-      success: <b>Role addes successfully.</b>,
-      error: <b>Something went wrong!</b>,
-    });
-    signinPromise.then((res: any) => {
-      console.log(res.data)
-      closeRoleModal()
-    });
+    let addRolePromise = addRole(values);
+    addRolePromise
+      .then((res: any) => {
+        console.log(res.data);
+        closeRoleModal();
+        toast.success(<b>Role addes successfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
   };
 
-  const formik = useFormik({
+  const formikRole = useFormik({
     initialValues: initialValues,
     validate: validateFunction,
     validationSchema: validationSchema,
@@ -68,9 +76,46 @@ const Users = () => {
   });
 
   const closeRoleModal = () => {
-    formik.resetForm();
-    setShowModalRole(false);
+    formikRole.resetForm();
+    setShowAddRole(false);
   };
+
+  const closeDeleteUserModal = () => {
+    setShowDeleteUser(false);
+  };
+
+  const handleOpenDeleteModal = (id: string) => {
+    setDeleteUserId(id);
+    setShowDeleteUser(true);
+  };
+
+  const deleteUser = (id: any) => {
+    let deleteUserPromise = deleteUserById(id);
+    deleteUserPromise
+      .then((res: any) => {
+        console.log(res.data);
+        closeDeleteUserModal();
+        store.dispatch(fetchAllUsersAsync());
+        toast.success(<b>User Deleted successfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
+  };
+  useEffect(() => {
+    if (allRoles.length > 0) {
+      const roleOptions: any = [];
+      allRoles.map((item: any) => {
+        roleOptions.push({ label: item.name, value: item.name });
+      });
+      setRoleOptions(roleOptions);
+    }
+  }, [allRoles]);
+
+  useEffect(() => {
+    store.dispatch(fetchAllRolesAsync());
+    store.dispatch(fetchAllUsersAsync());
+  }, []);
 
   return (
     <>
@@ -79,19 +124,24 @@ const Users = () => {
         <ATable
           header={
             <UsersHeader
-              openRoleModal={() => setShowModalRole(true)}
-              openUserModal={() => setShowModalUser(true)}
+              openRoleModal={() => setShowAddRole(true)}
+              openUserModal={() => setShowAddEditUser(true)}
             />
           }
-          tableBody={<UsersBody />}
+          tableBody={
+            <UsersBody
+              openUserDeleteModal={handleOpenDeleteModal}
+              openUserAddEditModal={() => setShowAddEditUser(true)}
+            />
+          }
           tableHeader={USER_TABLE_HEAD}
         />
       </div>
-      {showModalRole && (
+      {showAddRole && (
         <AModal
           saveText={'Add'}
           title={'Add Role'}
-          onSave={formik.handleSubmit}
+          onSave={formikRole.handleSubmit}
           closeModal={closeRoleModal}
         >
           <div className="flex flex-col ">
@@ -99,43 +149,43 @@ const Users = () => {
               id="name"
               type="text"
               label="Role Name*"
-              error={formik.errors.name}
-              formik={formik.getFieldProps('name')}
+              error={formikRole.errors.name}
+              formik={formikRole.getFieldProps('name')}
               icon={<UsersIcon className="h-4 w-4" />}
-            />
-            {/* <AMultiSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formik.errors.pageAccess}
-              selected={formik.values.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              {...formik.getFieldProps('pageAccess')}
-            /> */}
-            <ASingleSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formik.errors.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              formik={formik.getFieldProps('pageAccess')}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
-              error={formik.errors.status}
-              formik={formik.getFieldProps('status')}
+              error={formikRole.errors.status}
+              formik={formikRole.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },
                 { label: 'Inactive', value: 'inactive' },
               ]}
             />
+            {/* <AMultiSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formikRole.errors.pageAccess}
+              selected={formikRole.values.pageAccess}
+              icon={<KeyIcon className="h-4 w-4" />}
+              {...formikRole.getFieldProps('pageAccess')}
+            /> */}
+            <ASingleSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formikRole.errors.pageAccess}
+              icon={<KeyIcon className="h-4 w-4" />}
+              formik={formikRole.getFieldProps('pageAccess')}
+            />
           </div>
         </AModal>
       )}
-      {showModalUser && (
-        <AModal title={'Add User'} closeModal={() => setShowModalUser(false)}>
+      {showAddEditUser && (
+        <AModal title={'Add User'} closeModal={() => setShowAddEditUser(false)}>
           <div className="flex flex-col ">
             <AInputField
               type="text"
@@ -167,7 +217,7 @@ const Users = () => {
               name={'roles'}
               label={'Roles*'}
               icon={<UsersIcon className="h-4 w-4" />}
-              options={[]}
+              options={roleOptions}
             />
             <ASingleSelect
               name={'status'}
@@ -178,6 +228,18 @@ const Users = () => {
                 { label: 'Inactive', value: 'inactive' },
               ]}
             />
+          </div>
+        </AModal>
+      )}
+      {showDeleteUser && (
+        <AModal
+          saveText={'Delete'}
+          title={'Delete User'}
+          onSave={() => deleteUser(deleteUserId)}
+          closeModal={closeDeleteUserModal}
+        >
+          <div className="flex flex-col ">
+            Are you sure want to delete thi user?
           </div>
         </AModal>
       )}

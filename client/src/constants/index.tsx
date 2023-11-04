@@ -209,7 +209,7 @@ export const USER_TABLE_HEAD = [
   'Location',
   'Role',
   'Status',
-  '',
+  'Action',
 ];
 
 export const CLIENT_TABLE_HEAD = [

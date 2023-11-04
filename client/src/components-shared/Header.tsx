@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom';
-import Logo from '../assets/images/logo/logo-dark.png';
 import ADropdownUser from '../components-global/ADropdownUser';
 import ADropdownNotification from '../components-global/ADropdownNotification';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import {
+  Bars3Icon,
+  UserCircleIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
+import { useSelector } from 'react-redux';
 
 const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
+  const { userDetails } = useSelector((state: any) => state.users);
   return (
     <header className="sticky top-0 z-10 flex w-full bg-white drop-shadow-1">
       <div className="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
@@ -37,14 +42,18 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
           </button>
 
           <Link className="block flex-shrink-0 w-14 lg:hidden" to="/">
-            <img className="" src={Logo} alt="Logo" />
+            {userDetails?.profile ? (
+              <img alt="profile" src={userDetails?.profile} />
+            ) : (
+              <UserCircleIcon className="w-40 h-40" />
+            )}
           </Link>
         </div>
 
         <div className="hidden sm:block"></div>
 
-        <div className="flex items-center gap-3 2xsm:gap-7">
-          <ul className="flex items-center gap-2 2xsm:gap-4">
+        <div className="flex items-center gap-3">
+          <ul className="flex items-center gap-2">
             <ADropdownNotification />
           </ul>
           <ADropdownUser />

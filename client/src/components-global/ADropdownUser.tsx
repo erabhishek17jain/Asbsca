@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import UserOne from '../assets/images/logo/logo-dark.png';
 import { useSelector } from 'react-redux';
-import { ArrowLeftOnRectangleIcon, ChevronDownIcon, UserIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowLeftOnRectangleIcon,
+  ChevronDownIcon,
+  UserCircleIcon,
+  UserIcon,
+} from '@heroicons/react/24/solid';
 
 const ADropdownUser = () => {
   const navigate = useNavigate();
@@ -46,7 +50,7 @@ const ADropdownUser = () => {
       <Link
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-2"
+        className="flex items-center gap-1"
         to="#"
       >
         <span className="hidden text-right lg:block">
@@ -57,11 +61,15 @@ const ADropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img
-            src={userDetails?.profile || UserOne}
-            className="rounded-full"
-            alt="User"
-          />
+          {userDetails?.profile ? (
+            <img
+              src={userDetails?.profile}
+              className="h-12 w-12 rounded-full"
+              alt="User"
+            />
+          ) : (
+            <UserCircleIcon className="h-12 w-12 rounded-full" />
+          )}
         </span>
         <ChevronDownIcon
           className={`hidden h-5 w-5 fill-current sm:block ${

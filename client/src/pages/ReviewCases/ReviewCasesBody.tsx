@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
+import { ArrowDownTrayIcon, ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import { casesTableColumn } from '../../mockData/mocks';
 import { Tooltip } from '@material-tailwind/react';
@@ -55,25 +55,27 @@ const ReviewCasesBody = () => {
           <TableColumn classes={classes} label={assignedTo} />
           <TableColumn classes={classes} label={reviewer} />
           <td className={classes}>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-3">
               <Link
                 to="/generatePD"
-                className="w-24 flex gap-1 text-base text-main"
+                className="flex gap-1 text-base text-main"
               >
                 <ArrowTopRightOnSquareIcon className="h-6 w-6" />
                 <span>Review</span>
               </Link>
               <Tooltip content="Preview">
-                <div className="w-20 flex gap-1 text-base text-main">
-                  <EyeIcon className="h-6 w-6" />
-                  <span>Word</span>
-                </div>
+                <EyeIcon
+                  className="h-6 w-6 pointer"
+                  fill="#02385e"
+                  onClick={() => {}}
+                />
               </Tooltip>
-              <Tooltip content="Preview">
-                <div className="w-20 flex gap-1 text-base text-main">
-                  <EyeIcon className="h-6 w-6" />
-                  <span>PDF</span>
-                </div>
+              <Tooltip content="Download">
+                <ArrowDownTrayIcon
+                  className="h-6 w-6 pointer"
+                  fill="#02385e"
+                  onClick={() => {}}
+                />
               </Tooltip>
             </div>
           </td>

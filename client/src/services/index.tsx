@@ -38,7 +38,19 @@ export async function resetPassword({ email, password }: any) {
 export async function addRole(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/roles/create`, values);
+      const { data } = await axios.post(`${baseAPI}/users/roles/create`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** delete user */
+export async function deleteUserById(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.delete(`${baseAPI}/users/delete/${values}`);
       return Promise.resolve({ data });
     }
   } catch (error) {

@@ -103,7 +103,7 @@ const SignIn = () => {
                 </div>
                 <AButton
                   type={'submit'}
-                  label={'Save'}
+                  label={'Sign In'}
                   variant={'full'}
                   icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
                 />
