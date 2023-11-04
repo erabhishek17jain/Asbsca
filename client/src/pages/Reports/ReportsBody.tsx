@@ -1,6 +1,7 @@
-import { EyeIcon } from '@heroicons/react/24/solid';
+import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import { casesTableColumn } from '../../mockData/mocks';
+import { Tooltip } from '@material-tailwind/react';
 
 const ReportsBody = () => {
   return casesTableColumn.map(
@@ -55,15 +56,21 @@ const ReportsBody = () => {
           <TableColumn classes={classes} label={startedDate} />
           <TableColumn classes={classes} label={completedDate} />
           <td className={classes}>
-            <div className="flex gap-1">
-              <div className="w-20 flex gap-1 text-base text-main">
-                <EyeIcon className="h-6 w-6" />
-                <span>Word</span>
-              </div>
-              <div className="w-20 flex gap-1 text-base text-main">
-                <EyeIcon className="h-6 w-6" />
-                <span>PDF</span>
-              </div>
+            <div className="flex gap-3">
+              <Tooltip content="Preview">
+                <EyeIcon
+                  className="h-6 w-6 pointer"
+                  fill="#02385e"
+                  onClick={() => {}}
+                />
+              </Tooltip>
+              <Tooltip content="Download">
+                <ArrowDownTrayIcon
+                  className="h-6 w-6 pointer"
+                  fill="#02385e"
+                  onClick={() => {}}
+                />
+              </Tooltip>
             </div>
           </td>
         </tr>

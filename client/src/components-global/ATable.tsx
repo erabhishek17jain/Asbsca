@@ -36,8 +36,12 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
         </div>
       ) : (
         <div className="flex items-center gap-1">
-          {/* {icon !== '' && <img src={ProfileIcon} alt="bank-name" className='w-8 h-8' />} */}
-          {icon !== '' && <BuildingLibraryIcon className='w-8 h-8' />}
+          {icon !== '' && (
+            <BuildingLibraryIcon className="w-10 h-10 mr-1" />
+          )}
+          {/* {icon !== '' && (
+            <img src={icon} alt="" className="w-10 h-10 border rounded-full" />
+          )} */}
           <Typography variant="small" color="blue-gray" className="font-normal">
             {label}
           </Typography>

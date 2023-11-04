@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { baseAPI } from '../constants';
 
-export interface IUser {
+export interface IRole {
   fullName: string;
   username: string;
   email: string;
@@ -12,11 +12,11 @@ export interface IUser {
   profile: any;
 }
 
-export const fetchAllUsersAsync = createAsyncThunk(
-  '/users/allUsers',
+export const fetchAllRolesAsync = createAsyncThunk(
+  '/roles/allRoles',
   async () => {
     try {
-      const response = await axios.get(`${baseAPI}/users/list`);
+      const response = await axios.get(`${baseAPI}/users/roles/list`);
       return response?.data;
     } catch (err) {
       return console.log(err);
@@ -25,40 +25,38 @@ export const fetchAllUsersAsync = createAsyncThunk(
 );
 
 export interface IUsersState {
-  userDetails: {};
-  allUsers: IUser[];
+  allRoles: IRole[];
   loading: boolean;
   error: any;
 }
 
 const initialState: IUsersState = {
-  userDetails: {},
-  allUsers: [],
+  allRoles: [],
   loading: false,
   error: null,
 };
 
-export const usersSlice = createSlice({
-  name: 'users',
+export const rolesSlice = createSlice({
+  name: 'roles',
   initialState,
   reducers: {
-    allUsers: (state: any, payload: any) => {
-      state.allUsers = payload;
+    allRoles: (state: any, payload: any) => {
+      state.allRoles = payload;
     },
   },
   extraReducers: {
-    [fetchAllUsersAsync.pending.type]: (state) => {
+    [fetchAllRolesAsync.pending.type]: (state) => {
       if (!state.loading) {
         state.loading = true;
       }
     },
-    [fetchAllUsersAsync.fulfilled.type]: (state, action) => {
+    [fetchAllRolesAsync.fulfilled.type]: (state, action) => {
       if (state.loading) {
         state.loading = false;
-        state.allUsers = action.payload;
+        state.allRoles = action.payload;
       }
     },
-    [fetchAllUsersAsync.rejected.type]: (state, action) => {
+    [fetchAllRolesAsync.rejected.type]: (state, action) => {
       if (state.loading) {
         state.loading = false;
         state.error = action.error;
@@ -67,6 +65,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const users = (state: RootState) => state.users;
-export const { allUsers } = usersSlice.actions;
-export default usersSlice.reducer;
+export const roles = (state: RootState) => state.roles;
+export const { allRoles } = rolesSlice.actions;
+export default rolesSlice.reducer;

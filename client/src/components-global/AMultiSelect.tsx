@@ -39,6 +39,7 @@ const AMultiSelect = ({
           )}
         </div>
         <select
+          multiple
           id={id}
           {...formik}
           className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"

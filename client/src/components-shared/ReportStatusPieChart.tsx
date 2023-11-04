@@ -11,8 +11,8 @@ const options: ApexOptions = {
   chart: {
     type: 'donut',
   },
-  colors: ['#10B981', '#375E83', '#259AE6', '#FFA70B', '#8FD0EF'],
-  labels: ['Open', 'In-Progress', 'Done', 'Re-Generate', 'Completed'],
+  colors: ['#10B981', '#375E83', '#FFA70B', '#8FD0EF'],
+  labels: ['Recieved', 'Assigned', 'Reviewing', 'Sent to Bank'],
   legend: {
     show: true,
     position: 'bottom',
@@ -51,7 +51,7 @@ const options: ApexOptions = {
 
 const ReportStatusPieChart: React.FC = () => {
   const [state, ] = useState<ChartThreeState>({
-    series: [13, 19, 12, 28, 40],
+    series: [13, 19, 12, 28],
   });
 
   return (

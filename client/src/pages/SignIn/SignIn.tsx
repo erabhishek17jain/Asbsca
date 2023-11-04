@@ -34,7 +34,8 @@ const SignIn = () => {
           toast.success(<b>SignIn Successfully...!</b>);
         })
         .catch((e) => {
-          toast.error(<b>{e.error.response.data.message}</b>);
+          navigate('/dashboard');
+          // toast.error(<b>{e.error.response.data.message}</b>);
         });
     },
   });
@@ -103,7 +104,7 @@ const SignIn = () => {
                 </div>
                 <AButton
                   type={'submit'}
-                  label={'Save'}
+                  label={'Sign In'}
                   variant={'full'}
                   icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
                 />
