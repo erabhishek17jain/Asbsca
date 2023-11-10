@@ -4,44 +4,45 @@ import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { resetPassword } from '../../services';
-import { useEffect } from 'react';
+import { signin } from '../../services';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
-import { ArrowRightOnRectangleIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowRightOnRectangleIcon,
+  EyeSlashIcon,
+  UserIcon,
+} from '@heroicons/react/24/solid';
 
-const SignIn = () => {
+const SignIn = ({ setCookie }: any) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      username: 'abhishek',
+      email: 'erabhishek17jain@gmail.com',
       password: 'adminn@123',
     },
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      let signinPromise = resetPassword({
-        username: values.username,
+      let signinPromise = signin({
+        email: values.email,
         password: values.password,
       });
-      toast.promise(signinPromise, {
-        loading: 'Checking...',
-        success: <b>Password Saved Successfully...!</b>,
-        error: <b>Password Not Match!</b>,
-      });
-      signinPromise.then((res: any) => {
-        let { token } = res.data;
-        localStorage.setItem('token', token);
-        navigate('/dashboard');
-      });
+      signinPromise
+        .then((res: any) => {
+          toast.success(<b>SignIn Successfully...!</b>);
+          let { token, user } = res.data;
+          setCookie('token', token);
+          setCookie('user', JSON.stringify(user));
+          navigate('/dashboard');
+        })
+        .catch((e) => {
+          navigate('/dashboard'); //remove
+          toast.error(<b>{e.error.response.data.message}</b>);
+        });
     },
   });
-
-  useEffect(() => {
-    
-  }, []);
 
   return (
     <>
@@ -82,9 +83,9 @@ const SignIn = () => {
               <form onSubmit={formik.handleSubmit}>
                 <AInputField
                   type={'text'}
-                  id={'username'}
-                  label={'Username'}
-                  formik={formik.getFieldProps('username')}
+                  id={'email'}
+                  label={'email'}
+                  formik={formik.getFieldProps('email')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
@@ -103,7 +104,7 @@ const SignIn = () => {
                 </div>
                 <AButton
                   type={'submit'}
-                  label={'Save'}
+                  label={'Sign In'}
                   variant={'full'}
                   icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
                 />

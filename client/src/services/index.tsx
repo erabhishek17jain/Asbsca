@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { baseAPI } from '../constants';
+import { casesData } from '../mockData/mocks';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
 /** Make API Requests */
 /** login function */
-export async function signin({ username, password }: any) {
+export async function signin({ email, password }: any) {
   try {
-    if (username) {
+    if (email) {
       const { data } = await axios.post(`${baseAPI}/users/login`, {
-        username,
+        email,
         password,
       });
       return Promise.resolve({ data });
@@ -20,11 +21,11 @@ export async function signin({ username, password }: any) {
 }
 
 /** login function */
-export async function resetPassword({ username, password }: any) {
+export async function resetPassword({ email, password }: any) {
   try {
-    if (username) {
+    if (email) {
       const { data } = await axios.post(`${baseAPI}/users/resetPassword`, {
-        username,
+        email,
         password,
       });
       return Promise.resolve({ data });
@@ -38,10 +39,101 @@ export async function resetPassword({ username, password }: any) {
 export async function addRole(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/roles/create`, values);
+      const { data } = await axios.post(
+        `${baseAPI}/users/roles/create`,
+        values,
+      );
       return Promise.resolve({ data });
     }
   } catch (error) {
     return Promise.reject({ error: error });
+  }
+}
+
+/** add user */
+export async function addUser(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/users/create`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** update user */
+export async function updateUser(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/users/update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** delete user */
+export async function deleteUserById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(`${baseAPI}/users/delete/${id}`);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** delete user */
+export async function deleteClientById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(`${baseAPI}/clients/delete/${id}`);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** delete user */
+export async function deleteBranchById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(
+        `${baseAPI}/users/clients/branch/delete/${id}`,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+/** delete user */
+export async function deleteProductById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(
+        `${baseAPI}/users/clients/product/delete/${id}`,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+export async function fetchCasesByFilter(values: any) {
+  try {
+    const response = await axios.post(`${baseAPI}/cases/list`, {
+      filters: values,
+    });
+    return response?.data;
+  } catch (err) {
+    return casesData; //remove
+    return console.log(err);
   }
 }

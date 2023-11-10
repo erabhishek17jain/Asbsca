@@ -31,7 +31,7 @@ export const bulkUploadTableColumn = [
   },
 ];
 
-export const casesTableColumn = [
+export const casesData = [
   {
     referenceId: 'AXIS2348',
     bankIcon: Logo,
@@ -97,62 +97,119 @@ export const casesTableColumn = [
   },
 ];
 
-export const usersTableColumn = [
+// sorted by last created/updated date
+export const casesAnalyticsData = {
+  allcases: [...casesData],
+  assigned: [...casesData],
+  reviewed: [...casesData],
+  sentToBank: [...casesData],
+} as any;
+
+// list of top 5 users who complete min 5 task in current month
+export const topPerformerData = [
   {
-    profile: Logo,
-    name: 'Arjun Singh',
-    empId: 'ASBS001',
-    email: 'arjun@gmail.com',
-    mobileNo: '+91 7047026537',
-    role: 'Supervisor',
-    status: 'Active',
+    fullName: 'Seemit Jain',
+    lastReportTime: '1 hr 30 mins', // diff between start & end time of last report
+    lastMonthReportCount: 20, // count of completed cases in current month
   },
   {
-    profile: Logo,
-    name: 'Aman Jain',
-    empId: 'ASBS002',
-    email: 'amanjain@gmail.com',
-    mobileNo: '+91 7047026537',
-    role: 'Coordinator',
-    status: 'Inactive',
+    fullName: 'Abhishek Jain',
+    lastReportTime: '1 hr 52 mins', 
+    lastMonthReportCount: 15, 
   },
 ];
 
-export const clientTableColumn = [
+export const usersData = [
+  {
+    username: 'SEEM0101',
+    password: 'admin@123',
+    email: 'seemit@gmail.com',
+    fullName: 'Seemit Jain',
+    role: 'admin',
+    mobile: 9770080418,
+    address: 'Mumbai',
+    status: 'active',
+    profile: '',
+    about: 'Seemit is a consistent reporter',
+    completedPD: 25,
+    assignedPD: 5,
+    accuracy: '91%',
+  },
+  {
+    username: 'ABHI0101',
+    password: 'admin@123',
+    email: 'abhishek@gmail.com',
+    fullName: 'Abhishek Jain',
+    role: 'admin',
+    mobile: 7047026537,
+    address: 'Indore',
+    status: 'inactive',
+    profile: '',
+    about: 'Abhishek is a consistent reporter',
+    completedPD: 20,
+    assignedPD: 4,
+    accuracy: '80%',
+  },
+];
+
+// get user details in authentication response or make call to get user details in with below data
+export const userData = {
+  username: 'ABHI0101',
+  password: 'admin@123',
+  email: 'abhishek@gmail.com',
+  fullName: 'Abhishek Jain',
+  role: 'admin',
+  mobile: 7047026537,
+  address: 'Indore',
+  status: 'active',
+  profile: '',
+  about: 'Abhishek is a consistent reporter',
+  completedPD: 20,
+  assignedPD: 4,
+  accuracy: '80%',
+} as any;
+
+export const clientData = [
   {
     clientName: 'Axis Bank',
     logo: Logo,
     branch: 'Indore',
-    status: 'Active', // Active, Inactive
+    status: 'active', // active, inactive
   },
   {
     clientName: 'ICICI Bank',
     logo: Logo,
     branch: 'Mumbai',
-    status: 'Inactive', // Active, Inactive
+    status: 'inactive', // active, inactive
   },
 ];
 
-export const productTableColumn = [
+export const productData = [
   {
     clientName: 'Axis Bank',
+    logo: Logo,
     productName: 'Product 1',
-    status: 'Active', // Active, Inactive
+    status: 'active', // active, inactive
   },
   {
     clientName: 'ICICI Bank',
+    logo: Logo,
     productName: 'Product 2',
-    status: 'Inactive', // Active, Inactive
+    status: 'inactive', // active, inactive
   },
 ];
 
-export const branchTableColumn = [
+export const branchData = [
   {
+    clientName: 'Axis Bank',
+    logo: Logo,
     branchName: 'Indore',
-    status: 'Active', // Active, Inactive
+    status: 'active', // active, inactive
   },
   {
+    clientName: 'ICICI Bank',
+    logo: Logo,
     branchName: 'Mumbai',
-    status: 'Inactive', // Active, Inactive
+    status: 'inactive', // active, inactive
   },
 ];

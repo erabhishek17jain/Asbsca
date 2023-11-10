@@ -6,7 +6,7 @@ export default {
     CLIENT_ID: '857985018804-abl6p7nrbrn3cmq6hsijilr3ajppetpa.apps.googleusercontent.com',
     CLIENT_SECRET: '',
     email: {
-      user: "",
-      pass: ""
-    }
+        user: 'erabhishek17jain@gmail.com',
+        pass: 'zularurktxjctzqb',
+    },
 };

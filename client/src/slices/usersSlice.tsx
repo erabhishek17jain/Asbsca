@@ -1,39 +1,73 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
+import { baseAPI } from '../constants';
+import { topPerformerData, userData, usersData } from '../mockData/mocks';
 
 export interface IUser {
-  fullName: string;
   username: string;
+  password: string;
   email: string;
-  mobileNo: string;
-  aboutMe: string;
-  profile: any;
+  fullName: string;
+  role: string;
+  mobile: number;
+  address: string;
+  status: string;
+  profile: string;
 }
 
-export const fetchCurrentUserAsync = createAsyncThunk(
+export const fetchUserAsync = createAsyncThunk(
   '/users/userDetails',
-  async (username) => {
+  async (id: any) => {
     try {
-      const response = await axios.get(`/api/user/${username}`);
+      const response = await axios.get(`${baseAPI}/users/user/${id}`);
       return response?.data;
+    } catch (err) {
+      return userData; //remove
+      return console.log(err);
+    }
+  },
+);
+
+export const fetchAllUsersAsync = createAsyncThunk(
+  '/users/allUsers',
+  async () => {
+    try {
+      const response = await axios.get(`${baseAPI}/users/list`);
+      // return response?.data;
+      return usersData; //remove
     } catch (err) {
       return console.log(err);
     }
   },
 );
 
+export const fetchTopPerformersAsync = createAsyncThunk(
+  '/users/topPerformers',
+  async () => {
+    try {
+      const response = await axios.get(`${baseAPI}/users/topPerformers`);
+      return response?.data;
+    } catch (err) {
+      return topPerformerData;
+      return console.log(err);
+    }
+  },
+);
+
 export interface IUsersState {
-  userDetails: {};
+  userDetails: any;
   allUsers: IUser[];
-  loading: 'idle' | 'pending';
+  topPerformers: IUser[];
+  loading: boolean;
   error: any;
 }
 
 const initialState: IUsersState = {
-  userDetails: {},
+  userDetails: null,
   allUsers: [],
-  loading: 'idle',
+  topPerformers: [],
+  loading: false,
   error: null,
 };
 
@@ -41,25 +75,65 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    userDetails: (state, payload) => {
+    userDetails: (state: any, payload: any) => {
       state.userDetails = payload;
+    },
+    allUsers: (state: any, payload: any) => {
+      state.allUsers = payload;
+    },
+    topPerformers: (state: any, payload: any) => {
+      state.topPerformers = payload;
     },
   },
   extraReducers: {
-    [fetchCurrentUserAsync.pending.type]: (state) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
+    [fetchUserAsync.pending.type]: (state) => {
+      if (!state.loading) {
+        state.loading = true;
       }
     },
-    [fetchCurrentUserAsync.fulfilled.type]: (state, action) => {
-      if (state.loading === 'pending') {
-        state.loading = 'idle';
+    [fetchUserAsync.fulfilled.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
         state.userDetails = action.payload;
       }
     },
-    [fetchCurrentUserAsync.rejected.type]: (state, action) => {
-      if (state.loading === 'pending') {
-        state.loading = 'idle';
+    [fetchUserAsync.rejected.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.error;
+      }
+    },
+    [fetchAllUsersAsync.pending.type]: (state) => {
+      if (!state.loading) {
+        state.loading = true;
+      }
+    },
+    [fetchAllUsersAsync.fulfilled.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.allUsers = action.payload;
+      }
+    },
+    [fetchAllUsersAsync.rejected.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.error;
+      }
+    },
+    [fetchTopPerformersAsync.pending.type]: (state) => {
+      if (!state.loading) {
+        state.loading = true;
+      }
+    },
+    [fetchTopPerformersAsync.fulfilled.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.topPerformers = action.payload;
+      }
+    },
+    [fetchTopPerformersAsync.rejected.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
         state.error = action.error;
       }
     },
@@ -67,5 +141,5 @@ export const usersSlice = createSlice({
 });
 
 export const users = (state: RootState) => state.users;
-export const { userDetails } = usersSlice.actions;
+export const { userDetails, allUsers, topPerformers } = usersSlice.actions;
 export default usersSlice.reducer;

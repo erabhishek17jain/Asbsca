@@ -36,8 +36,10 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
         </div>
       ) : (
         <div className="flex items-center gap-1">
-          {/* {icon !== '' && <img src={ProfileIcon} alt="bank-name" className='w-8 h-8' />} */}
-          {icon !== '' && <BuildingLibraryIcon className='w-8 h-8' />}
+          {icon !== '' && <BuildingLibraryIcon className="w-10 h-10 mr-1" />}
+          {/* {icon !== '' && (
+            <img src={icon} alt="" className="w-10 h-10 border rounded-full" />
+          )} */}
           <Typography variant="small" color="blue-gray" className="font-normal">
             {label}
           </Typography>
@@ -47,7 +49,7 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
   );
 };
 
-const ATable = ({ header, tableHeader, tableBody }: any) => {
+const ATable = ({ header, tableHeader, tableBody, data }: any) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -65,9 +67,14 @@ const ATable = ({ header, tableHeader, tableBody }: any) => {
               ))}
             </tr>
           </thead>
-          <tbody>{tableBody}</tbody>
+          {data?.length > 0 && <tbody>{tableBody}</tbody>}
         </table>
       </CardBody>
+      {(data === undefined || data?.length === 0) && (
+        <div className="w-full h-12 pb-6 flex items-center justify-center">
+          No Record found.
+        </div>
+      )}
       {!pathname.includes('dashboard') && (
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <APagination />

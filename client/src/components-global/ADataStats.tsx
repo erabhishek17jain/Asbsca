@@ -1,6 +1,6 @@
 import { ArrowSmallDownIcon, ArrowSmallUpIcon } from "@heroicons/react/24/solid";
 
-const DataStats = () => {
+const ADataStats = () => {
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 xl:gap-0">
@@ -57,4 +57,4 @@ const DataStats = () => {
   );
 };
 
-export default DataStats;
+export default ADataStats;

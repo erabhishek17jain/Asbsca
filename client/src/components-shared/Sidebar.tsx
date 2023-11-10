@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../assets/images/logo/logo.png';
 import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid';
 import { pages } from '../constants';
+import { useSelector } from 'react-redux';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -12,6 +13,8 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  const { userDetails } = useSelector((state: any) => state.users);
+  const [sideBarPages, setSideBarPages] = useState<any>([...pages]);
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -55,12 +58,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
+  useEffect(() => {
+    if (userDetails && userDetails?.role !== 'admin') {
+      const menu = pages.filter(
+        (item) => !['cases', 'users', 'masters'].includes(item.value),
+      );
+      setSideBarPages(menu);
+    }
+  }, [userDetails]);
+
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-10 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      } ${pathname.includes('masters') ? 'z-2' : 'z-30'}`}
     >
       <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-5">
         <NavLink to="/">
@@ -82,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-5 py-4 px-4 lg:mt-5 lg:px-6">
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-              {pages.map((item: any) => (
+              {sideBarPages.map((item: any) => (
                 <li key={item.value}>
                   <NavLink
                     to={`/${item.value}`}

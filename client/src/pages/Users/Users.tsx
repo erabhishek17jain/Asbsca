@@ -1,183 +1,304 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import {
   CheckIcon,
   DevicePhoneMobileIcon,
   EnvelopeIcon,
   IdentificationIcon,
-  KeyIcon,
   MapPinIcon,
-  UserIcon,
   UsersIcon,
 } from '@heroicons/react/24/solid';
 import { AModal } from '../../components-global/AModal';
 import AInputField from '../../components-global/AInputField';
 import ATable from '../../components-global/ATable';
-import { USER_TABLE_HEAD, pages } from '../../constants';
+import {
+  USER_TABLE_HEAD,
+  branchsList,
+  rolesList,
+  statusList,
+} from '../../constants';
 import UsersBody from './UsersBody';
 import UsersHeader from './UsersHeader';
 import ASingleSelect from '../../components-global/ASingleSelect';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { addRole } from '../../services';
+import { addUser, deleteUserById } from '../../services';
+import store from '../../store/store';
+import { fetchAllUsersAsync } from '../../slices/usersSlice';
+import { fetchAllRolesAsync } from '../../slices/rolesSlice';
+import { useSelector } from 'react-redux';
+import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
 
 const Users = () => {
-  const [showModalRole, setShowModalRole] = useState(false);
-  const [showModalUser, setShowModalUser] = useState(false);
+  const { allRoles } = useSelector((state: any) => state.roles);
+  const { allBranchs } = useSelector((state: any) => state.branchs);
+  const { allUsers } = useSelector((state: any) => state.users);
+  const [showAddRole, setShowAddRole] = useState(false);
+  const [showDeleteUser, setShowDeleteUser] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [showAddEditUser, setShowAddEditUser] = useState(false);
+  const [roleOptions, setRoleOptions] = useState<any>([]);
+  const [branchOptions, setBranchOptions] = useState<any>([]);
 
-  const initialValues = {
-    name: '',
+  const initialValuesUser = {
+    fullName: '',
+    username: '',
+    password: 'admin@123',
+    email: '',
+    mobile: 0,
+    address: '',
+    role: '',
     status: '',
-    pageAccess: '',
+    profile: '',
+    about: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required('This field is required'),
+  const validationSchemaUser = Yup.object().shape({
+    fullName: Yup.string().required('This field is required'),
+    username: Yup.string().required('This field is required'),
+    password: Yup.string().required('This field is required'),
+    email: Yup.string().required('This field is required'),
+    mobile: Yup.number().required('This field is required'),
+    address: Yup.string().required('This field is required'),
+    role: Yup.string().required('This field is required'),
     status: Yup.string().required('This field is required'),
-    pageAccess: Yup.string().required('This field is required'),
   });
 
-  const validateFunction = async (values: any) => {
+  const validateFunctionUser = async (values: any) => {
     console.log(values);
     const errors = {};
     return errors;
   };
 
-  const onSubmit = async (values: any) => {
+  const onSubmitUser = async (values: any) => {
     values = await Object.assign(values);
-    let signinPromise = addRole(values);
-    toast.promise(signinPromise, {
-      loading: 'Checking...',
-      success: <b>Role addes successfully.</b>,
-      error: <b>Something went wrong!</b>,
-    });
-    signinPromise.then((res: any) => {
-      console.log(res.data)
-      closeRoleModal()
-    });
+    let addUserPromise = addUser(values);
+    addUserPromise
+      .then((res: any) => {
+        console.log(res.data);
+        closeUserModal();
+        toast.success(<b>User added sucessfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
   };
 
-  const formik = useFormik({
-    initialValues: initialValues,
-    validate: validateFunction,
-    validationSchema: validationSchema,
+  const formikUser = useFormik({
+    initialValues: initialValuesUser,
+    validate: validateFunctionUser,
+    validationSchema: validationSchemaUser,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: onSubmit,
+    onSubmit: onSubmitUser,
   });
 
-  const closeRoleModal = () => {
-    formik.resetForm();
-    setShowModalRole(false);
+  const closeUserModal = () => {
+    formikUser.resetForm();
+    setShowAddEditUser(false);
   };
+
+  const closeDeleteUserModal = () => {
+    setShowDeleteUser(false);
+  };
+
+  const handleOpenDeleteModal = (user: any) => {
+    setUser(user);
+    setShowDeleteUser(true);
+  };
+
+  const deleteUser = (id: any) => {
+    let deleteUserPromise = deleteUserById(id);
+    deleteUserPromise
+      .then((res: any) => {
+        console.log(res?.data);
+        closeDeleteUserModal();
+        store.dispatch(fetchAllUsersAsync());
+        toast.success(<b>User Deleted successfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
+  };
+
+  useEffect(() => {
+    if (allRoles?.length > 0) {
+      const roleOptions: any = [];
+      allRoles.map((item: any) => {
+        roleOptions.push({ label: item.name, value: item.name });
+      });
+      setRoleOptions(roleOptions);
+    } else {
+      setRoleOptions(rolesList);
+    }
+  }, [allRoles]);
+
+  useEffect(() => {
+    if (allBranchs?.length > 0) {
+      const branchOptions: any = [];
+      allBranchs.map((item: any) => {
+        branchOptions.push({ label: item.name, value: item.name });
+      });
+      setBranchOptions(branchOptions);
+    } else {
+      setBranchOptions(branchsList);
+    }
+  }, [allBranchs]);
+
+  useEffect(() => {
+    store.dispatch(fetchAllUsersAsync());
+    store.dispatch(fetchAllRolesAsync());
+    store.dispatch(fetchAllBranchsAsync());
+  }, []);
 
   return (
     <>
       <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
         <ATable
+          data={allUsers}
           header={
             <UsersHeader
-              openRoleModal={() => setShowModalRole(true)}
-              openUserModal={() => setShowModalUser(true)}
+              openRoleModal={() => setShowAddRole(true)}
+              openUserModal={() => setShowAddEditUser(true)}
             />
           }
-          tableBody={<UsersBody />}
+          tableBody={
+            <UsersBody
+              openUserDeleteModal={handleOpenDeleteModal}
+              openUserAddEditModal={() => setShowAddEditUser(true)}
+            />
+          }
           tableHeader={USER_TABLE_HEAD}
         />
       </div>
-      {showModalRole && (
+      {showAddEditUser && (
         <AModal
           saveText={'Add'}
-          title={'Add Role'}
-          onSave={formik.handleSubmit}
-          closeModal={closeRoleModal}
+          title={'Add User'}
+          onSave={formikUser.handleSubmit}
+          closeModal={closeUserModal}
         >
-          <div className="flex flex-col ">
-            <AInputField
-              id="name"
-              type="text"
-              label="Role Name*"
-              error={formik.errors.name}
-              formik={formik.getFieldProps('name')}
-              icon={<UsersIcon className="h-4 w-4" />}
-            />
-            {/* <AMultiSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formik.errors.pageAccess}
-              selected={formik.values.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              {...formik.getFieldProps('pageAccess')}
-            /> */}
-            <ASingleSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formik.errors.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              formik={formik.getFieldProps('pageAccess')}
-            />
-            <ASingleSelect
-              id="status"
-              label={'Status'}
-              error={formik.errors.status}
-              formik={formik.getFieldProps('status')}
-              icon={<CheckIcon className="h-4 w-4" />}
-              options={[
-                { label: 'Active', value: 'active' },
-                { label: 'Inactive', value: 'inactive' },
-              ]}
-            />
-          </div>
-        </AModal>
-      )}
-      {showModalUser && (
-        <AModal title={'Add User'} closeModal={() => setShowModalUser(false)}>
           <div className="flex flex-col ">
             <AInputField
               type="text"
               label="Name*"
-              icon={<UserIcon className="h-4 w-4" />}
+              id="fullName"
+              error={formikUser.errors.fullName}
+              formik={formikUser.getFieldProps('fullName')}
+              icon={<UsersIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
               label="Emp ID*"
+              id="username"
+              error={formikUser.errors.username}
+              formik={formikUser.getFieldProps('username')}
               icon={<IdentificationIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
               label="Email ID*"
+              id="email"
+              error={formikUser.errors.email}
+              formik={formikUser.getFieldProps('email')}
               icon={<EnvelopeIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
-              label="Mobile No.**"
+              label="Mobile No.*"
+              id="mobile"
+              error={formikUser.errors.mobile}
+              formik={formikUser.getFieldProps('mobile')}
               icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'location'}
+              name={'address'}
               label={'Location*'}
+              id="address"
+              error={formikUser.errors.address}
+              formik={formikUser.getFieldProps('address')}
               icon={<MapPinIcon className="h-4 w-4" />}
-              options={[]}
+              options={branchOptions}
             />
             <ASingleSelect
-              name={'roles'}
-              label={'Roles*'}
+              name={'role'}
+              label={'Role*'}
+              id="role"
+              error={formikUser.errors.role}
+              formik={formikUser.getFieldProps('role')}
               icon={<UsersIcon className="h-4 w-4" />}
-              options={[]}
+              options={roleOptions}
             />
             <ASingleSelect
               name={'status'}
               label={'Status'}
+              id="status"
+              error={formikUser.errors.status}
+              formik={formikUser.getFieldProps('status')}
+              icon={<CheckIcon className="h-4 w-4" />}
+              options={statusList}
+            />
+          </div>
+        </AModal>
+      )}
+      {showDeleteUser && (
+        <AModal
+          saveText={'Delete'}
+          title={'Delete User'}
+          onSave={() => deleteUser(user?._id)}
+          closeModal={closeDeleteUserModal}
+        >
+          <div className="flex gap-1">
+            Are you sure want to delete this <b> {user?.fullName}</b>?
+          </div>
+        </AModal>
+      )}
+      {showAddRole && (
+        <AModal
+          saveText={'Add'}
+          title={'Add Role'}
+          onSave={formikUser.handleSubmit}
+          closeModal={closeUserModal}
+        >
+          <div className="flex flex-col ">
+            {/* <AInputField
+              id="name"
+              type="text"
+              label="Role Name*"
+              error={formikUser.errors.name}
+              formik={formikUser.getFieldProps('name')}
+              icon={<UsersIcon className="h-4 w-4" />}
+            />
+            <ASingleSelect
+              id="status"
+              label={'Status'}
+              error={formikUser.errors.status}
+              formik={formikUser.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },
                 { label: 'Inactive', value: 'inactive' },
               ]}
             />
+            <ASingleSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formikUser.errors.pageAccess}
+              selected={formikUser.values.pageAccess}
+              icon={<KeyIcon className="h-4 w-4" />}
+              {...formikUser.getFieldProps('pageAccess')}
+            />
+            <ASingleSelect
+              id="pageAccess"
+              label={'Page Access'}
+              options={pages}
+              error={formikUser.errors.pageAccess}
+              icon={<KeyIcon className="h-4 w-4" />}
+              formik={formikUser.getFieldProps('pageAccess')}
+            /> */}
           </div>
         </AModal>
       )}
