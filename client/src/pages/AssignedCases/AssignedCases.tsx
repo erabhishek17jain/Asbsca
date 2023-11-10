@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import ATable from '../../components-global/ATable';
 import { ASSIGNED_CASES_TABLE_HEAD } from '../../constants';
@@ -8,19 +8,51 @@ import { AModal } from '../../components-global/AModal';
 import ASingleSelect from '../../components-global/ASingleSelect';
 import { useNavigate } from 'react-router-dom';
 import { BuildingLibraryIcon, CurrencyRupeeIcon, MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
+import { useSelector } from 'react-redux';
+import { fetchAssignedAsync } from '../../slices/casesSlice';
+import { fetchCasesByFilter } from '../../services';
+import store from '../../store/store';
 
 const AssignedCases = () => {
   const navigate = useNavigate();
+  const { assignedCases } = useSelector((state: any) => state.cases);
   const [showModal, setShowModal] = useState(false);
+  const [cases, setCases] = useState<any>([]);
+  const [filters, setFilters] = useState({});
+
+  useEffect(() => {
+    fetchCasesByFilter(filters)
+      .then((res: any) => {
+        store.dispatch(fetchAssignedAsync(res));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [filters]);
+
+  useEffect(() => {
+    if (assignedCases.length) {
+      setCases([...assignedCases]);
+    }
+  }, [assignedCases]);
+
 
   return (
     <>
       <ABreadcrumb pageName="Assigned Cases" />
       <div className="flex flex-col gap-10">
         <ATable
-          header={<AssignedCasesHeader />}
+          data={cases}
           tableHeader={ASSIGNED_CASES_TABLE_HEAD}
-          tableBody={<AssignedCasesBody openModal={() => setShowModal(true)} />}
+          header={
+            <AssignedCasesHeader filters={filters} setFilters={setFilters} />
+          }
+          tableBody={
+            <AssignedCasesBody
+              openModal={() => setShowModal(true)}
+              assigned={cases}
+            />
+          }
         />
       </div>
       {showModal && (

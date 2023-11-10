@@ -1,10 +1,21 @@
-import { BuildingLibraryIcon, CheckIcon, FunnelIcon, MagnifyingGlassIcon, TagIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowDownTrayIcon,
+  BuildingLibraryIcon,
+  CheckIcon,
+  FunnelIcon,
+  MagnifyingGlassIcon,
+  TagIcon,
+  UserIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
 import AButton from '../components-global/AButton';
 import ASingleSelect from '../components-global/ASingleSelect';
 import ADropdown from '../components-global/ADropdown';
 import AInputField from '../components-global/AInputField';
+import { useSelector } from 'react-redux';
 
 export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
+  const { userDetails } = useSelector((state: any) => state.users);
   return (
     <>
       <div className="w-full md:w-72">
@@ -15,17 +26,20 @@ export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
           icon={<MagnifyingGlassIcon className="h-5 w-5" />}
         />
       </div>
-      <div className="mb-5">
+      {userDetails?.role === 'admin' && (
         <AButton
-          label={'Filter'}
-          variant={'primary'}
-          action={() => showHideFilters(showFilter)}
-          icon={<FunnelIcon className="h-5 w-5" />}
+          label={'Download'}
+          variant={'secondary'}
+          action={() => {}}
+          icon={<ArrowDownTrayIcon className="h-5 w-5 stroke-main" />}
         />
-      </div>
-      <div className="mb-5">
-        <ADropdown />
-      </div>
+      )}
+      <AButton
+        label={'Filter'}
+        variant={'primary'}
+        action={() => showHideFilters(showFilter)}
+        icon={<FunnelIcon className="h-5 w-5" />}
+      />
     </>
   );
 };

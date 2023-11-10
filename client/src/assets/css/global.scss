@@ -1,0 +1,30 @@
+#masters {
+  ul {
+    z-index: 0;
+  }
+}
+
+.react-select {
+  .css-13cymwt-control,
+  .css-13cymwt-control:hover {
+    border-width: 1.5px;
+    border-color: #e2e8f0;
+    border-radius: 8px;
+  }
+  .css-t3ipsp-control,
+  .css-t3ipsp-control:hover {
+    border-width: 1.5px;
+    box-shadow: none;
+    border-color: #3c50e0;
+  }
+  .css-1nmdiq5-menu,
+  .css-14h4o58-menu {
+    margin: 8px 2px;
+    width: calc(100% - 4px);
+  }
+  .css-1p3m7a8-multiValue {
+    border-radius: 4px;
+    margin: 2px 4px;
+    background-color: #ddebff;
+  }
+}

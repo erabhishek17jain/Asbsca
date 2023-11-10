@@ -5,13 +5,16 @@ import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { signin } from '../../services';
-import { useEffect } from 'react';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
-import { ArrowRightOnRectangleIcon, EyeSlashIcon, UserIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowRightOnRectangleIcon,
+  EyeSlashIcon,
+  UserIcon,
+} from '@heroicons/react/24/solid';
 
-const SignIn = () => {
+const SignIn = ({ setCookie }: any) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -28,21 +31,18 @@ const SignIn = () => {
       });
       signinPromise
         .then((res: any) => {
-          let { token } = res.data;
-          localStorage.setItem('token', token);
-          navigate('/dashboard');
           toast.success(<b>SignIn Successfully...!</b>);
+          let { token, user } = res.data;
+          setCookie('token', token);
+          setCookie('user', JSON.stringify(user));
+          navigate('/dashboard');
         })
         .catch((e) => {
-          navigate('/dashboard');
-          // toast.error(<b>{e.error.response.data.message}</b>);
+          navigate('/dashboard'); //remove
+          toast.error(<b>{e.error.response.data.message}</b>);
         });
     },
   });
-
-  useEffect(() => {
-    
-  }, []);
 
   return (
     <>

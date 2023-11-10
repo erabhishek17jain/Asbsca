@@ -8,14 +8,14 @@ import {
   TabsHeader,
 } from '@material-tailwind/react';
 import { mastersCards } from '../../constants';
-
+import '../../assets/css/global.scss'
 const Masters = () => {
   let updatedCards = [...mastersCards];
 
   return (
     <>
       <ABreadcrumb pageName="Masters" />
-      <div className="w-full mb-4">
+      <div className="w-full mb-4" id="masters">
         <Tabs value="client">
           <TabsHeader>
             {updatedCards.map(({ label, value, count, icon }: any) => (
