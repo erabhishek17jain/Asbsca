@@ -2,7 +2,6 @@ import {
   Cog6ToothIcon,
   DocumentMagnifyingGlassIcon,
   NewspaperIcon,
-  PaperAirplaneIcon,
   QueueListIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
@@ -22,7 +21,7 @@ export const pages = [
     icon: <Squares2X2Icon className="h-5 w-5" />,
   },
   {
-    label: 'Total Cases',
+    label: 'All Cases',
     value: 'cases',
     icon: <Square3Stack3DIcon className="h-5 w-5" />,
   },
@@ -55,37 +54,6 @@ export const pages = [
     label: 'Profile',
     value: 'profile',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
-  },
-];
-
-export const statsCards = [
-  {
-    title: 'Total Cases Recieved',
-    value: '/cases',
-    count: 3000,
-    percentage: 34,
-    icon: <Square3Stack3DIcon className="h-5 w-5" />,
-  },
-  {
-    title: 'Assigned Cases',
-    value: '/assigned',
-    count: 17,
-    percentage: 76,
-    icon: <UserIcon className="h-5 w-5" />,
-  },
-  {
-    title: 'Reviewing Cases',
-    value: '/review',
-    count: 47,
-    percentage: -3,
-    icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
-  },
-  {
-    title: 'Sent To Bank',
-    value: '/reports',
-    count: 51,
-    percentage: 28,
-    icon: <PaperAirplaneIcon className="h-5 w-5" />,
   },
 ];
 
@@ -212,27 +180,39 @@ export const USER_TABLE_HEAD = [
   'Action',
 ];
 
-export const CLIENT_TABLE_HEAD = [
-  '',
-  'Cient Name',
-  'Branch',
-  'Status',
-  'Action',
-];
+export const CLIENT_TABLE_HEAD = ['', 'Cient Name', 'Status', 'Action'];
 
 export const PRODUCT_TABLE_HEAD = [
   '',
-  'Product Name',
   'Client Name',
+  'Product Name',
   'Status',
   'Action',
 ];
 
-export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
+export const BRAND_TABLE_HEAD = ['', 'Client Name', 'Branch Name', 'Status', 'Action'];
 
 export const calander = [
-  { label: 'Last one week', value: 'last_week' },
-  { label: 'Last one Month', value: 'last_month' },
-  { label: 'Last one Year', value: 'last_year' },
-  { label: 'Custom', value: 'custom' },
+  { label: 'Last 7 Days', value: '7days' },
+  { label: 'Last 30 Days', value: '30days' },
+  { label: 'Last 90 Days', value: '90days' },
+  { label: 'Last 180 Days', value: '180days' },
+  { label: 'Last 365 Days', value: '365days' },
+  { label: 'Max', value: 'max' },
+];
+
+export const rolesList = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'Reporter', value: 'reporter' },
+  { label: 'Reviewer', value: 'reviewer' },
+];
+
+export const branchsList = [
+  { label: 'Indore', value: 'indore' },
+  { label: 'Mumbai', value: 'mumbai' },
+];
+
+export const statusList = [
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' },
 ];

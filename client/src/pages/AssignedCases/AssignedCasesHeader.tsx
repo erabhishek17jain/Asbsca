@@ -3,7 +3,7 @@ import { FilterButtons, FilterCases } from '../../components-shared/FilterCases'
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const AssignedCasesHeader = () => {
+const AssignedCasesHeader = ({ filters, setFilters }: any) => {
   const location = useLocation();
   const { pathname } = location;
   const [showFilter, setShowFilter] = useState(false);
@@ -14,7 +14,7 @@ const AssignedCasesHeader = () => {
 
   return (
     <div className="flex flex-col justify-between gap-5">
-      <div className="flex w-full justify-between items-end gap-2">
+      <div className="flex w-full justify-between gap-2">
         <div>
           <Typography variant="h5" color="blue-gray">
             Assigned Cases
@@ -24,8 +24,10 @@ const AssignedCasesHeader = () => {
           </Typography>
         </div>
         {!pathname.includes('dashboard') && (
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex justify-between items-start gap-3">
             <FilterButtons
+              filters={filters}
+              setFilters={setFilters}
               showFilter={showFilter}
               showHideFilters={showHideFilters}
             />

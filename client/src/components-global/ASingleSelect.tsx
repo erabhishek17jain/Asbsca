@@ -28,7 +28,7 @@ const ASingleSelect = ({
           {...formik}
           className="relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
         >
-          <option value="">Select {label}</option>
+          <option value="" key={id}>Select {label}</option>
           {options.map((item: any) => (
             <option key={item?.value} value={item?.value}>
               {item?.label}
@@ -40,7 +40,7 @@ const ASingleSelect = ({
             icon ? 'right-10' : 'right-3'
           }`}
         >
-          <ChevronDownIcon className="h-5 w-5" />
+          <ChevronDownIcon className="h-4 w-4 stroke-main stroke-1" />
         </span>
         {icon && (
           <span className="absolute top-1/2 right-3 -translate-y-1/2">

@@ -4,6 +4,7 @@ const AInputField = ({
   label = '',
   icon = '',
   error = '',
+  disabled = false,
   variant = 'vertical',
   formik = {},
 }: any) => {
@@ -28,6 +29,7 @@ const AInputField = ({
           id={id}
           type={type}
           {...formik}
+          disabled={disabled}
           placeholder={`Enter ${label}`}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />

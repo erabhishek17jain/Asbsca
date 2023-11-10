@@ -55,24 +55,24 @@ const ADropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black">
-            {userDetails?.fullname}
+            {userDetails?.fullName}
           </span>
           <span className="block text-xs">{userDetails?.email}</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
+        <span className="h-10 w-10 rounded-full">
           {userDetails?.profile ? (
             <img
               src={userDetails?.profile}
-              className="h-12 w-12 rounded-full"
+              className="h-10 w-10 rounded-full"
               alt="User"
             />
           ) : (
-            <UserCircleIcon className="h-12 w-12 rounded-full" />
+            <UserCircleIcon className="h-10 w-10 rounded-full" />
           )}
         </span>
         <ChevronDownIcon
-          className={`hidden h-5 w-5 fill-current sm:block ${
+          className={`hidden h-5 w-5 fill-current stroke-main stroke-1 sm:block ${
             dropdownOpen ? 'rotate-180' : ''
           }`}
         />

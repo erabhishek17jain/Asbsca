@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { baseAPI } from '../constants';
+import { branchData } from '../mockData/mocks';
 
 export interface IBranch {}
 
@@ -10,8 +11,10 @@ export const fetchAllBranchsAsync = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${baseAPI}/clients/branch/list`);
-      return response?.data;
+      // return response?.data;
+      return branchData; //remove
     } catch (err) {
+      return branchData; //remove
       return console.log(err);
     }
   },
