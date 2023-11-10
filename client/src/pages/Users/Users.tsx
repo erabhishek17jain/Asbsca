@@ -140,7 +140,7 @@ const Users = () => {
       allBranchs.map((item: any) => {
         branchOptions.push({ label: item.name, value: item.name });
       });
-      setBranchOptions(branchOptions);
+      setBranchOptions(branchsList);
     } else {
       setBranchOptions(branchsList);
     }

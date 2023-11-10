@@ -152,7 +152,7 @@ export const usersData = [
   },
 ];
 
-// get user details in authentication response or make call to get user details in with below data
+// get user details to make call to get user details in with below data
 export const userData = {
   username: 'ABHI0101',
   password: 'admin@123',

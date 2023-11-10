@@ -32,9 +32,9 @@ const SignIn = ({ setCookie }: any) => {
       signinPromise
         .then((res: any) => {
           toast.success(<b>SignIn Successfully...!</b>);
-          let { token, user } = res.data;
+          let { token, userId } = res.data;
           setCookie('token', token);
-          setCookie('user', JSON.stringify(user));
+          setCookie('userId', JSON.stringify(userId));
           navigate('/dashboard');
         })
         .catch((e) => {
