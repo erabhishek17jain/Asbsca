@@ -6,6 +6,7 @@ import {
   EnvelopeIcon,
   IdentificationIcon,
   MapPinIcon,
+  UserCircleIcon,
   UsersIcon,
 } from '@heroicons/react/24/solid';
 import { AModal } from '../../components-global/AModal';
@@ -29,6 +30,7 @@ import { fetchAllUsersAsync } from '../../slices/usersSlice';
 import { fetchAllRolesAsync } from '../../slices/rolesSlice';
 import { useSelector } from 'react-redux';
 import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
+import AFileUpload from '../../components-global/AFileUpload';
 
 const Users = () => {
   const { allRoles } = useSelector((state: any) => state.roles);
@@ -239,6 +241,12 @@ const Users = () => {
               formik={formikUser.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={statusList}
+            />
+            <AFileUpload
+              id={'profile'}
+              label={'Profile'}
+              formik={formikUser}
+              icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
             />
           </div>
         </AModal>

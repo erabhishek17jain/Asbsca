@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-const Dashboard = lazy(() => import('../pages/Dashboard/Dashboard'));
+const Dashboard = lazy(() => import('../pages/DashBoard/Dashboard'));
 const AddCase = lazy(() => import('../pages/Dashboard/AddCase'));
 const AddBulkCase = lazy(() => import('../pages/Dashboard/AddBulkCase/AddBulkCase'));
 const AllCases = lazy(() => import('../pages/AllCases/AllCases'));
