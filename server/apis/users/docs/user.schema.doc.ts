@@ -12,6 +12,7 @@
  *         - role
  *         - mobile
  *         - address
+ *         - about
  *       properties:
  *         username:
  *           type: string
@@ -29,4 +30,6 @@
  *           type: string
  *         profile:
  *           type: string
+ *         about:
+ *          type: string
  */

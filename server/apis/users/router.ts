@@ -2,6 +2,7 @@ import { Router } from "express";
 import RolesAPI from "./controllers/RolesAPI";
 import LoginAPI from "./controllers/LoginAPI";
 import UserAPI from "./controllers/UserAPI";
+import authMiddleware from "middleware/auth.middleware";
 
 export default class UserRouter {
   private router: Router = Router({
@@ -27,6 +28,8 @@ export default class UserRouter {
     this.router.post("/create", UserAPI.view.addUser);
     this.router.put("/update", UserAPI.view.updateUser);
     this.router.delete("/delete/:id", UserAPI.view.deleteUser);
+
+    this.router.get("/self-detail", authMiddleware, UserAPI.view.selfDetails);
   }
 }
 

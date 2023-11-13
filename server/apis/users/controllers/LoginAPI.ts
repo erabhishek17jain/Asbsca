@@ -22,7 +22,7 @@ export default class LoginAPI {
           email,
           password
         );
-        return res.status(200).json({ user, token });
+        return res.status(200).json({ userId: user._id?.toString(), token });
       } catch (error: any) {
         console.log(error);
         return res.status(401).json({ message: error.message });

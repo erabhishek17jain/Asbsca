@@ -10,6 +10,7 @@ export interface IUser extends mongoose.Document {
     email: string;
     fullName: string;
     role: mongoose.Types.ObjectId;
+    about: string;
     mobile: number;
     address: string;
     isVerified?: boolean;
@@ -31,6 +32,7 @@ const UserSchema = new mongoose.Schema<IUser>({
     mobile: { type: Number, required: true },
     address: { type: String, required: true },
     profile: { type: String, required: false },
+    about: { type: String, required: false },
     email: { 
       type: String, 
       required: true,
