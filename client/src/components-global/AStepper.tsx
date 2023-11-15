@@ -49,49 +49,53 @@ export function AStepper({ steps, generateReport }: any) {
           );
         })}
       </Stepper>
-      <div className="relative top-5 mb-4 overflow-x-scroll h-[548px]">
-        {activeStep === steps[activeStep].index && (
-          <div className="w-max text-lg font-bold text-black text-center">
-            {steps[activeStep].label}
-          </div>
-        )}
-        {activeStep === 0 && <LoanDetails />}
-        {activeStep === 1 && <PersonalDetails noOfAppicants={3} />}
-        {activeStep === 2 && <ExistingLoanCredit />}
-        {activeStep === 3 && <DetailsOfProperty />}
-        {activeStep === 4 && <BusinessDetails />}
-        {activeStep === 5 && <Financials />}
-        {activeStep === 6 && <ComitmentsSummaryFOIR />}
-        {activeStep === 7 && <TurnoverGrossReceipts />}
-        {activeStep === 8 && <ClientsDebtors />}
-        {activeStep === 9 && <Stocks />}
-        {activeStep === 10 && <SuppliersCreditors />}
-        {activeStep === 11 && <AssetsInvestmentBankDetails />}
-        {activeStep === 12 && <OtherObservation />}
-        {activeStep === 13 && <DocumentsSeen />}
-        {activeStep === 15 && <BusinessProcessOf />}
-      </div>
-      <div className="relative top-6 flex justify-between">
-        <AButton
-          label={'Previous'}
-          variant={'secondary'}
-          action={handlePrev}
-          disabled={isFirstStep}
-          icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
-        />
-        <AButton
-          label={activeStep === steps.length - 1 ? 'Generate Report' : 'Next'}
-          variant={'secondary'}
-          action={activeStep === steps.length - 1 ? generateReport : handleNext}
-          disabled={isLastStep}
-          icon={
-            activeStep === steps.length - 1 ? (
-              <DocumentChartBarIcon className="h-5 w-5" />
-            ) : (
-              <ArrowRightIcon className="h-5 w-5 stroke-main stroke-1" />
-            )
-          }
-        />
+      <div className="absolute top-16 bottom-0 w-[calc(100%-40px)] mb-4 overflow-x-scroll flex flex-col justify-between">
+        <div className="flex flex-col gap-4 mt-2">
+          {activeStep === steps[activeStep].index && (
+            <div className="w-max text-lg font-bold text-black text-center">
+              {steps[activeStep].label}
+            </div>
+          )}
+          {activeStep === 0 && <ClientsDebtors />}
+          {activeStep === 1 && <PersonalDetails />}
+          {activeStep === 2 && <ExistingLoanCredit />}
+          {activeStep === 3 && <DetailsOfProperty />}
+          {activeStep === 4 && <BusinessDetails />}
+          {activeStep === 5 && <Financials />}
+          {activeStep === 6 && <ComitmentsSummaryFOIR />}
+          {activeStep === 7 && <TurnoverGrossReceipts />}
+          {activeStep === 8 && <ClientsDebtors />}
+          {activeStep === 9 && <Stocks />}
+          {activeStep === 10 && <SuppliersCreditors />}
+          {activeStep === 11 && <AssetsInvestmentBankDetails />}
+          {activeStep === 12 && <OtherObservation />}
+          {activeStep === 13 && <DocumentsSeen />}
+          {activeStep === 15 && <BusinessProcessOf />}
+        </div>
+        <div className="flex justify-between mt-4">
+          <AButton
+            label={'Previous'}
+            variant={'secondary'}
+            action={handlePrev}
+            disabled={isFirstStep}
+            icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
+          />
+          <AButton
+            label={activeStep === steps.length - 1 ? 'Generate Report' : 'Next'}
+            variant={'secondary'}
+            action={
+              activeStep === steps.length - 1 ? generateReport : handleNext
+            }
+            disabled={isLastStep}
+            icon={
+              activeStep === steps.length - 1 ? (
+                <DocumentChartBarIcon className="h-5 w-5" />
+              ) : (
+                <ArrowRightIcon className="h-5 w-5 stroke-main stroke-1" />
+              )
+            }
+          />
+        </div>
       </div>
     </div>
   );

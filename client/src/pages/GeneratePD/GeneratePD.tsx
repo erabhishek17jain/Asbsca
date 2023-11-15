@@ -75,7 +75,7 @@ const GeneratePD = () => {
   return (
     <>
       <ABreadcrumb pageName="Generate PD" />
-      <div className="overflow-hidden relative h-[80vh] bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
+      <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
         <AStepper steps={steps} generateReport={generateReport} />
       </div>
     </>

@@ -1,8 +1,16 @@
+import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 
 const LoanDetails = () => {
   return (
     <div className="flex flex-col w-[70%] py-4">
+      <ASingleSelect
+        name={'bankName'}
+        label={'Bank Name'}
+        variant={'horizantal'}
+        icon={<BuildingLibraryIcon className="h-4 w-4" />}
+        options={[{ label: 'Axis Bank', value: 'axis' }]}
+      />
       <ASingleSelect
         name={'loan'}
         label={'Loan'}
