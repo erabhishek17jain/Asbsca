@@ -60,7 +60,7 @@ const ADropdown = ({ dropdownPDF, dropdownWord }: any) => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-6 right-0 mt-4 flex flex-col w-50 bg-clip-border rounded-lg bg-white text-grey-700 shadow-lg ${
+        className={`absolute top-6 right-0 mt-4 flex flex-col w-50 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >

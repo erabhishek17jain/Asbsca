@@ -190,7 +190,7 @@ export const PRODUCT_TABLE_HEAD = [
   'Action',
 ];
 
-export const BRAND_TABLE_HEAD = ['', 'Client Name', 'Branch Name', 'Status', 'Action'];
+export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
 
 export const calander = [
   { label: 'Last 7 Days', value: '7days' },

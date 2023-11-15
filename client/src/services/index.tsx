@@ -50,6 +50,53 @@ export async function addRole(values: any) {
   }
 }
 
+/** add client */
+export async function addClient(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(
+        `${baseAPI}/clients/create`,
+        values,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+
+/** add role */
+export async function addProduct(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(
+        `${baseAPI}/clients/product/create`,
+        values,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
+
+/** add role */
+export async function addBranch(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(
+        `${baseAPI}/clients/branch/create`,
+        values,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    return Promise.reject({ error: error });
+  }
+}
+
 /** add user */
 export async function addUser(values: any) {
   try {

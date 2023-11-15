@@ -2,16 +2,35 @@ import { useState } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
 import ATags from '../../../components-global/ATags';
-import {
-  Accordion,
-  AccordionBody,
-  AccordionHeader,
-} from '@material-tailwind/react';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
+
+const radioValues = [
+  { name: 'yes', label: 'Yes' },
+  { name: 'no', label: 'No' },
+  { name: 'noDetail', label: 'Details Not Provided' },
+];
+const balanceTransferInfo = {
+  id: 'app1',
+  title: 'Applicant',
+  isOpen: true,
+  data: [],
+};
+const existingLoanInfo = {
+  id: 'res1',
+  title: 'Residential & Ownership Details',
+  isOpen: true,
+  data: [],
+};
+const existingLoanEMIInfo = {
+  id: 'fam1',
+  title: 'Applicant',
+  isOpen: true,
+  data: [],
+};
 
 const ExistingLoanInformation = () => {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 mt-3">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
       <ASingleSelect
         name={'typeOfLoan'}
         label={'Type of Loan'}
@@ -35,48 +54,95 @@ const ExistingLoanInformation = () => {
   );
 };
 
-const radioValues = [
-  { name: 'yes', label: 'Yes' },
-  { name: 'no', label: 'No' },
-  { name: 'noDetail', label: 'Details Not Provided' },
-];
+const SectionFooter = () => {
+  return (
+    <>
+      <div className="flex items-center bg-grey py-5 px-4">
+        <p className="flex gap-4 w-full">
+          <span>Total Loan Amt. PA: 36</span>
+        </p>
+        <p className="flex gap-4 w-full">
+          <span>Total EMI Amt: 60%</span>
+        </p>
+        <p className="flex gap-4 w-full">
+          <span>Total Outstanding Amt: 60%</span>
+        </p>
+      </div>
+    </>
+  );
+};
+
+const Section = ({ title, children }: any) => {
+  return (
+    <div className="border-2 rounded-lg mb-4">
+      <p className="w-full pt-3 px-4">{title}</p>
+      {children && <div className="pt-3 px-4">{children}</div>}
+      <SectionFooter />
+    </div>
+  );
+};
 
 const ExistingLoan = () => {
-  const [existingLoan, setExistingLoan] = useState('yes');
+  const [isExistingLoan, setIsExistingLoan] = useState('yes');
+  const [existingLoan, setExistingLoan] = useState([{ ...existingLoanInfo }]);
+  const [existingLoanEMI, setExistingLoanEMI] = useState([
+    { ...existingLoanEMIInfo },
+  ]);
+  const [balanceTransfer, setBalanceTransfer] = useState([
+    { ...balanceTransferInfo },
+  ]);
 
   const handleExistingLoan = (val: string) => {
-    setExistingLoan(val);
+    setIsExistingLoan(val);
   };
 
   return (
     <>
       <ARadioButtonGroup
-        value={existingLoan}
+        value={isExistingLoan}
         title={'Existing Loan'}
         radioValues={radioValues}
         handleChecked={handleExistingLoan}
       />
-      {existingLoan === 'yes' && (
+      {isExistingLoan === 'yes' && (
         <>
-          <p className="w-full mt-1">Balance Transfer Loans (If Any)</p>
-          <ATags>
-            <ExistingLoanInformation />
-          </ATags>
+          <Section title={'Balance Transfer Loans (If Any)'}>
+            <ATags
+              tags={balanceTransfer}
+              setTags={setBalanceTransfer}
+              defaultTag={{}}
+            >
+              <ExistingLoanInformation />
+            </ATags>
+          </Section>
 
-          <p className="w-full mt-4">
-            Existing Loan- Loan which will be closed from Current Applied Loan
-            Amt or which are to be closed within 12 months. (If Any)
-          </p>
-          <ATags>
-            <ExistingLoanInformation />
-          </ATags>
+          <Section
+            title={
+              'Existing Loan- Loan which will be closed from Current Applied Loan Amt or which are to be closed within 12 months. (If Any)'
+            }
+          >
+            <ATags
+              tags={existingLoan}
+              setTags={setExistingLoan}
+              defaultTag={{}}
+            >
+              <ExistingLoanInformation />
+            </ATags>
+          </Section>
 
-          <p className="w-full mt-4">
-            Existing Loan (These EMI will be added in FOIR Ratio calculation)
-          </p>
-          <ATags>
-            <ExistingLoanInformation />
-          </ATags>
+          <Section
+            title={
+              'Existing Loan (These EMI will be added in FOIR Ratio calculation)'
+            }
+          >
+            <ATags
+              tags={existingLoanEMI}
+              setTags={setExistingLoanEMI}
+              defaultTag={{}}
+            >
+              <ExistingLoanInformation />
+            </ATags>
+          </Section>
         </>
       )}
     </>
@@ -84,25 +150,31 @@ const ExistingLoan = () => {
 };
 
 const CreditFacility = () => {
-  const [creditFacility, setCreditFacility] = useState('yes');
+  const [isCreditFacility, setIsCreditFacility] = useState('yes');
+  const [creditFacility, setCreditFacility] = useState([
+    { ...existingLoanInfo },
+  ]);
 
   const handleCreditFacility = (val: string) => {
-    setCreditFacility(val);
+    setIsCreditFacility(val);
   };
 
   return (
     <>
       <ARadioButtonGroup
-        value={creditFacility}
+        value={isCreditFacility}
         title={'Credit Facility'}
         radioValues={radioValues}
         handleChecked={handleCreditFacility}
       />
-      {creditFacility === 'yes' && (
-        <>
-          <p className="w-full mt-1">Balance Transfer Loans (If Any)</p>
-          <ATags>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 mt-3">
+      {isCreditFacility === 'yes' && (
+        <Section title={'Existing Credit Details'}>
+          <ATags
+            tags={creditFacility}
+            setTags={setCreditFacility}
+            defaultTag={{}}
+          >
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               <ASingleSelect
                 name={'typeOfFacility'}
                 label={'Type of Facility'}
@@ -132,32 +204,38 @@ const CreditFacility = () => {
               />
             </div>
           </ATags>
-        </>
+        </Section>
       )}
     </>
   );
 };
 
 const OtherCommitments = () => {
-  const [otherCommitments, setOtherCommitments] = useState('yes');
+  const [isOtherCommitments, setIsOtherCommitments] = useState('yes');
+  const [otherCommitments, setOtherCommitments] = useState([
+    { ...existingLoanInfo },
+  ]);
 
   const handleOtherCommitments = (val: string) => {
-    setOtherCommitments(val);
+    setIsOtherCommitments(val);
   };
 
   return (
     <>
       <ARadioButtonGroup
-        value={otherCommitments}
+        value={isOtherCommitments}
         title={'Other Commitments'}
         radioValues={radioValues}
         handleChecked={handleOtherCommitments}
       />
-      {otherCommitments === 'yes' && (
-        <>
-          <p className="w-full mt-1">Balance Transfer Loans (If Any)</p>
-          <ATags>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 mt-3">
+      {isOtherCommitments === 'yes' && (
+        <Section title={'Existing Credit Details'}>
+          <ATags
+            tags={otherCommitments}
+            setTags={setOtherCommitments}
+            defaultTag={{}}
+          >
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               <ASingleSelect
                 name={'particulars'}
                 label={'Particulars'}
@@ -171,51 +249,23 @@ const OtherCommitments = () => {
               <AInputField
                 type={'text'}
                 name={'sumAssured'}
-                label={'Sum Assured/Maturity Value (Rs.)				'}
+                label={'Sum Assured/Maturity Value (Rs.)'}
               />
             </div>
           </ATags>
-        </>
+        </Section>
       )}
     </>
   );
 };
 
-const existingLoanInfo = [
-  {
-    title: 'Existing Loan',
-    component: <ExistingLoan />,
-  },
-  {
-    title: 'Credit Facility',
-    component: <CreditFacility />,
-  },
-  {
-    title: 'Other Commitments',
-    component: <OtherCommitments />,
-  },
-];
-
 const ExistingLoanCredit = () => {
-  const [open, setOpen] = useState(1);
-
-  const handleOpen = (value: any) => {
-    setOpen(open === value ? 0 : value);
-  };
-
   return (
-    <>
-      {existingLoanInfo.map((item, index) => {
-        return (
-          <Accordion open={open === index + 1} key={item.title}>
-            <AccordionHeader onClick={() => handleOpen(index + 1)}>
-              {item.title}
-            </AccordionHeader>
-            <AccordionBody>{item.component}</AccordionBody>
-          </Accordion>
-        );
-      })}
-    </>
+    <div>
+      <ExistingLoan />
+      <CreditFacility />
+      <OtherCommitments />
+    </div>
   );
 };
 
