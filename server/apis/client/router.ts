@@ -1,6 +1,7 @@
 import { Router } from "express";
 import BranchAPI from "./controllers/BranchAPI";
-import ClientAPI from "./controllers/ClientAPI"
+import ClientAPI from "./controllers/ClientAPI";
+import ProductAPI from "./controllers/ProductAPI";
 
 
 export default class ClientRouter {
@@ -27,6 +28,11 @@ export default class ClientRouter {
     this.router.put("/branch/update", BranchAPI.view.update);
     this.router.delete("/branch/delete/:id", BranchAPI.view.delete);
 
+    this.router.get("/product/list", ProductAPI.view.list);
+    this.router.post("/product/create", ProductAPI.view.create);
+    this.router.put("/product/update", ProductAPI.view.update);
+    this.router.delete("/product/delete/:id", ProductAPI.view.delete);
+    
   }
 }
 

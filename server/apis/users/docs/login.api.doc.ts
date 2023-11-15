@@ -36,8 +36,8 @@
    *             schema:
    *               type: object
    *               properties:
-   *                 user:
-   *                   type: object
+   *                 userId:
+   *                   type: string
    *                   description: User details
    *                 token:
    *                   type: string

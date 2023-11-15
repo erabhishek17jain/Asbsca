@@ -94,3 +94,22 @@
    *         description: Server error
    */
 
+
+/**
+ * @openapi
+ * /api/v1/users/self-detail:
+ *  get:
+ *   tags: [Users]
+ *   description: Get self details
+ *   security:
+ *     - bearerAuth: []
+ *   responses:
+ *    200:
+ *     description: User data
+ *     content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
+ *    500:
+ *     description: Server error
+ */
