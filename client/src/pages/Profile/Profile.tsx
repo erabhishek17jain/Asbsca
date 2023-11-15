@@ -22,14 +22,15 @@ import { updateUser } from '../../services';
 const Profile = () => {
   const { userDetails } = useSelector((state: any) => state.users);
   const [isEditProfile, setIsEditProfile] = useState(false);
+  const [profile, setProfile] = useState<any>(userDetails?.profile);
 
-  const initialValuesUser = {
+  const initialValues = {
     ...userDetails,
     profile: null,
     about: '',
   };
 
-  const onSubmitUser = async (values: any) => {
+  const onSubmit = async (values: any) => {
     values = await Object.assign(values);
     let updateUserPromise = updateUser(values);
     updateUserPromise
@@ -43,14 +44,17 @@ const Profile = () => {
   };
 
   const formikUser = useFormik({
-    initialValues: initialValuesUser,
+    initialValues: initialValues,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: onSubmitUser,
+    onSubmit: onSubmit,
   });
 
-  const setProfile = (e:any) => {
+  const setProfiles = (e:any) => {
+    if (e.target.files && e.target.files[0]) {
     formikUser.setFieldValue('profile', e.target.files[0]);
+      setProfile(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
@@ -155,14 +159,14 @@ const Profile = () => {
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
-                  onChange={setProfile}
-                  profile={userDetails?.profile}
+                  onChange={setProfiles}
+                  profile={profile}
                 />
                 <AInputField
                   type={'text'}
                   id={'fullName'}
                   label={'Full Name'}
-                  disabled={userDetails?.role !== 'admin'}
+                  disabled={true}
                   formik={formikUser.getFieldProps('fullName')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
@@ -170,7 +174,7 @@ const Profile = () => {
                   type={'text'}
                   id={'mobile'}
                   label={'Mobile No'}
-                  disabled={userDetails?.role !== 'admin'}
+                  disabled={true}
                   formik={formikUser.getFieldProps('mobile')}
                   icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
                 />
@@ -180,7 +184,7 @@ const Profile = () => {
                   type={'text'}
                   id={'email'}
                   label={'E-Mail'}
-                  disabled={userDetails?.role !== 'admin'}
+                  disabled={true}
                   formik={formikUser.getFieldProps('email')}
                   icon={<></>}
                 />
@@ -188,7 +192,7 @@ const Profile = () => {
                   type={'text'}
                   id={'username'}
                   label={'Employee ID'}
-                  disabled={userDetails?.role !== 'admin'}
+                  disabled={true}
                   formik={formikUser.getFieldProps('username')}
                   icon={<></>}
                 />

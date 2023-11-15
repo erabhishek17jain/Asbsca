@@ -2,8 +2,10 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import { casesData } from '../../mockData/mocks';
 import AButton from '../../components-global/AButton';
+import { useNavigate } from 'react-router-dom';
 
-const AssignedCasesBody = ({ openModal, assigned }: any) => {
+const AssignedCasesBody = ({ assigned }: any) => {
+  const navigate = useNavigate();
   return (
     assigned &&
     assigned?.map((item: any, index: number) => {
@@ -13,7 +15,11 @@ const AssignedCasesBody = ({ openModal, assigned }: any) => {
       return (
         <tr key={index}>
           <TableColumn classes={classes} label={index + 1} />
-          <TableColumn classes={classes} label={item?.bankName} icon={item?.bankIcon} />
+          <TableColumn
+            classes={classes}
+            label={item?.bankName}
+            icon={item?.bankIcon}
+          />
           <TableColumn classes={classes} label={item?.referenceId} />
           <TableColumn classes={classes} label={item?.recievedDate} />
           <TableColumn classes={classes} label={item?.appicantName} />
@@ -28,7 +34,8 @@ const AssignedCasesBody = ({ openModal, assigned }: any) => {
             color={
               item?.caseStatus === 'Assigned' || item?.caseStatus === 'Query'
                 ? 'amber'
-                : item?.caseStatus === 'Completed' || item?.caseStatus === 'Sent to Bank'
+                : item?.caseStatus === 'Completed' ||
+                  item?.caseStatus === 'Sent to Bank'
                 ? 'green'
                 : item?.caseStatus === 'Reviewing'
                 ? 'blue'
@@ -54,7 +61,7 @@ const AssignedCasesBody = ({ openModal, assigned }: any) => {
             <AButton
               variant={'link'}
               label={'Start PD'}
-              action={openModal}
+              action={() => navigate('/generatePD')}
               icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
             />
           </td>

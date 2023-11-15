@@ -201,14 +201,10 @@ export const productData = [
 
 export const branchData = [
   {
-    clientName: 'Axis Bank',
-    logo: Logo,
     branchName: 'Indore',
     status: 'active', // active, inactive
   },
   {
-    clientName: 'ICICI Bank',
-    logo: Logo,
     branchName: 'Mumbai',
     status: 'inactive', // active, inactive
   },

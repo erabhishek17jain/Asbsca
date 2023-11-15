@@ -10,12 +10,34 @@ import {
 } from '@heroicons/react/24/solid';
 import AButton from '../components-global/AButton';
 import ASingleSelect from '../components-global/ASingleSelect';
-import ADropdown from '../components-global/ADropdown';
 import AInputField from '../components-global/AInputField';
 import { useSelector } from 'react-redux';
+import { CSVLink } from 'react-csv';
+import { Tooltip } from '@material-tailwind/react';
 
 export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
   const { userDetails } = useSelector((state: any) => state.users);
+  const rows = [
+    { Dessert: 'Cupcake', Calories: 305, Fat: 3.7, Carbs: 67, Protein: 4.3 },
+    { Dessert: 'Donut', Calories: 452, Fat: 25.0, Carbs: 51, Protein: 4.9 },
+    { Dessert: 'Eclair', Calories: 262, Fat: 16.0, Carbs: 24, Protein: 6.0 },
+    {
+      Dessert: 'Frozen Yoghurt',
+      Calories: 159,
+      Fat: 6.0,
+      Carbs: 24,
+      Protein: 4.0,
+    },
+    {
+      Dessert: 'Gingerbread',
+      Calories: 356,
+      Fat: 16.0,
+      Carbs: 49,
+      Protein: 3.9,
+    },
+    { Dessert: 'Honeycomb', Calories: 408, Fat: 3.2, Carbs: 87, Protein: 6.5 },
+    { Dessert: 'Ice Cream', Calories: 237, Fat: 9.0, Carbs: 37, Protein: 4.3 },
+  ];
   return (
     <>
       <div className="w-full md:w-72">
@@ -27,12 +49,16 @@ export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
         />
       </div>
       {userDetails?.role === 'admin' && (
-        <AButton
-          label={'Download'}
-          variant={'secondary'}
-          action={() => {}}
-          icon={<ArrowDownTrayIcon className="h-5 w-5 stroke-main" />}
-        />
+        <Tooltip content="Edit Case">
+          <CSVLink data={rows} filename={'Reports'}>
+            <div
+              className={`flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey`}
+            >
+              <ArrowDownTrayIcon className="h-5 w-5 stroke-main" />
+              Download
+            </div>
+          </CSVLink>
+        </Tooltip>
       )}
       <AButton
         label={'Filter'}
