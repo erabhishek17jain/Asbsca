@@ -82,5 +82,14 @@ export default class UserAPI implements IUserAPI {
       return res.status(500).json(e);
     }
   }
+
+  public selfDetails = async (req: Request, res: Response) : Promise<Response> => {
+    try {
+      const user = await this.repo.get(res.locals.user.id);
+      return res.status(200).json(user);
+    } catch (e) {
+      return res.status(500).json(e);
+    }
+  }
 }
 

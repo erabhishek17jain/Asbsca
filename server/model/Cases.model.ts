@@ -34,10 +34,10 @@ const CasesSchema = new mongoose.Schema<ICases>({
     branch: { type: String, required: true },
     type: { type: String, required: true },
     bankName: { type: String, required: true },
-    status: { type: String, required: true },
-    receivedDate: { type: Date, required: true },
-    reviewer: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true },
-    assignTo: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true },
+    status: { type: String, default: CaseStatus.Pending },
+    receivedDate: { type: Date, default: Date.now },
+    reviewer: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
+    assignTo: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
 }, { timestamps: true });
 
 const Cases = mongoose.model<ICases>('cases', CasesSchema);
