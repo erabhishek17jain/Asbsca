@@ -32,7 +32,7 @@ const AllCases = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (allCases.length) {
+    if (allCases?.length) {
       setCases([...allCases]);
     }
   }, [allCases]);

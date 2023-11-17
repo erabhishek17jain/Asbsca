@@ -29,7 +29,7 @@ const ASingleSelect = ({
           className="relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
         >
           <option value="" key={id}>Select {label}</option>
-          {options.map((item: any) => (
+          {options?.map((item: any) => (
             <option key={item?.value} value={item?.value}>
               {item?.label}
             </option>

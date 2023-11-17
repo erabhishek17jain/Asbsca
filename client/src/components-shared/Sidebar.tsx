@@ -70,9 +70,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 flex h-screen w-72.5 flex-col overflow-y-hidden bg-white shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 flex h-screen w-72.5 flex-col z-30 lg:z-[2] overflow-y-hidden bg-white shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } ${pathname.includes('masters') ? 'z-2' : 'z-30'}`}
+      }`}
     >
       <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-5">
         <NavLink to="/">
@@ -94,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-5 py-4 px-4 lg:mt-5 lg:px-6">
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-              {sideBarPages.map((item: any) => (
+              {sideBarPages?.map((item: any) => (
                 <li key={item.value}>
                   <NavLink
                     to={`/${item.value}`}

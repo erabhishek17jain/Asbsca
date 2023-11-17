@@ -25,7 +25,7 @@ const ReviewCases = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (reviewedCases.length) {
+    if (reviewedCases?.length) {
       setCases([...reviewedCases]);
     }
   }, [reviewedCases]);

@@ -44,7 +44,7 @@ const AMultiSelect = ({
           {...formik}
           className="absolute top-0 left-0 z-20 h-full w-full bg-transparent opacity-0"
         >
-          {options.map((item: any) => (
+          {options?.map((item: any) => (
             <option key={item?.value} value={item.value}>
               {item.label}
             </option>

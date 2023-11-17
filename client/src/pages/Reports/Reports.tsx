@@ -25,7 +25,7 @@ const Reports = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (completedCases.length) {
+    if (completedCases?.length) {
       setCases([...completedCases]);
     }
   }, [completedCases]);

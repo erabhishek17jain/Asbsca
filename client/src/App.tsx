@@ -1,5 +1,5 @@
-import { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './pages/SignIn/SignIn';
 import ALoader from './components-global/ALoader';
@@ -7,11 +7,25 @@ import routes from './routes';
 import Hero from './pages/Hero/Hero';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import { CookiesProvider, useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
+import { fetchUserAsync } from './slices/usersSlice';
+import store from './store/store';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
-  const [cookies, setCookie] = useCookies(['user']);
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies<any>(['user']);
+  const { userDetails } = useSelector((state: any) => state.users);
+
+  useEffect(() => {
+    if (cookies?.userId && userDetails === null) {
+      store.dispatch(fetchUserAsync(cookies.userId));
+      navigate('/dashboard');
+    } else {
+      navigate('/signin');
+    }
+  }, []);
 
   return (
     <>
@@ -25,7 +39,7 @@ function App() {
           <Route path="/signin" element={<SignIn setCookie={setCookie} />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route index element={<Hero />} />
-          <Route element={<DefaultLayout cookies={cookies} />}>
+          <Route element={<DefaultLayout />}>
             {routes.map((routes, index) => {
               const { path, component: Component } = routes;
               return (

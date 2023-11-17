@@ -7,10 +7,6 @@ import ATable from '../../components-global/ATable';
 import { useState, useEffect } from 'react';
 import MastersBody from './MastersBody';
 import MastersHeader from './MastersHeader';
-import store from '../../store/store';
-import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
-import { fetchAllClientsAsync } from '../../slices/clientsSlice';
-import { fetchAllProductsAsync } from '../../slices/productsSlice';
 import { useSelector } from 'react-redux';
 import { AddEditDeleteClient } from './components/AddEditDeleteClient';
 import { AddEditDeleteProduct } from './components/AddEditDeleteProduct';
@@ -56,12 +52,6 @@ export function MastersTable({ type }: any) {
       setHeaders(PRODUCT_TABLE_HEAD);
     }
   }, [allClients, allBranchs, allProducts]);
-
-  useEffect(() => {
-    store.dispatch(fetchAllClientsAsync());
-    store.dispatch(fetchAllBranchsAsync());
-    store.dispatch(fetchAllProductsAsync());
-  }, []);
 
   return (
     <>

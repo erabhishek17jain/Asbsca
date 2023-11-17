@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { baseAPI } from '../constants';
-import { topPerformerData, userData, usersData } from '../mockData/mocks';
 
 export interface IUser {
   username: string;
@@ -20,10 +19,11 @@ export const fetchUserAsync = createAsyncThunk(
   '/users/userDetails',
   async (id: any) => {
     try {
-      const response = await axios.get(`${baseAPI}/users/user/${id}`);
+      const response = await axios.get(`${baseAPI}/users/self-detail`, {
+        withCredentials: true,
+      });
       return response?.data;
     } catch (err) {
-      return userData; //remove
       return console.log(err);
     }
   },
@@ -34,8 +34,7 @@ export const fetchAllUsersAsync = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${baseAPI}/users/list`);
-      // return response?.data;
-      return usersData; //remove
+      return response?.data;
     } catch (err) {
       return console.log(err);
     }
@@ -49,7 +48,6 @@ export const fetchTopPerformersAsync = createAsyncThunk(
       const response = await axios.get(`${baseAPI}/users/topPerformers`);
       return response?.data;
     } catch (err) {
-      return topPerformerData;
       return console.log(err);
     }
   },

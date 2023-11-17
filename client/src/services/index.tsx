@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { baseAPI } from '../constants';
-import { casesData } from '../mockData/mocks';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
@@ -180,7 +179,6 @@ export async function fetchCasesByFilter(values: any) {
     });
     return response?.data;
   } catch (err) {
-    return casesData; //remove
     return console.log(err);
   }
 }
@@ -192,7 +190,6 @@ export async function generatePDReport(values: any) {
     });
     return response?.data;
   } catch (err) {
-    return casesData; //remove
     return console.log(err);
   }
 }

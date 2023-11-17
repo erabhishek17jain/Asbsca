@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const UsersBody = ({ openUserDeleteModal, openUserAddEditModal }: any) => {
   const { allUsers } = useSelector((state: any) => state.users);
 
-  return allUsers.map((item: any, index: number) => {
+  return allUsers?.map((item: any, index: number) => {
     const isLast = index === usersData.length - 1;
     const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 

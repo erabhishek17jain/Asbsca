@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import {
   Tab,
@@ -9,8 +9,18 @@ import {
 } from '@material-tailwind/react';
 import { mastersCards } from '../../constants';
 import '../../assets/css/global.scss'
+import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
+import { fetchAllClientsAsync } from '../../slices/clientsSlice';
+import { fetchAllProductsAsync } from '../../slices/productsSlice';
+import store from '../../store/store';
 const Masters = () => {
   let updatedCards = [...mastersCards];
+
+  useEffect(() => {
+    store.dispatch(fetchAllClientsAsync());
+    store.dispatch(fetchAllBranchsAsync());
+    store.dispatch(fetchAllProductsAsync());
+  }, []);
 
   return (
     <>

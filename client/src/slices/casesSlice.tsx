@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { baseAPI } from '../constants';
-import { casesAnalyticsData } from '../mockData/mocks';
 
 export interface ICase {}
 
@@ -15,7 +14,6 @@ export const fetchCasesAnalyticsAsync = createAsyncThunk(
       });
       return response?.data;
     } catch (err) {
-      return casesAnalyticsData; //remove
       return console.log(err);
     }
   },

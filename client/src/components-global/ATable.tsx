@@ -37,9 +37,6 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
       ) : (
         <div className="flex items-center gap-1">
           {icon !== '' && <BuildingLibraryIcon className="w-10 h-10 mr-1" />}
-          {/* {icon !== '' && (
-            <img src={icon} alt="" className="w-10 h-10 border rounded-full" />
-          )} */}
           <Typography variant="small" color="blue-gray" className="font-normal">
             {label}
           </Typography>
@@ -62,7 +59,7 @@ const ATable = ({ header, tableHeader, tableBody, data }: any) => {
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
-              {tableHeader.map((head: any) => (
+              {tableHeader?.map((head: any) => (
                 <TableHeader key={head} label={head} />
               ))}
             </tr>
@@ -75,7 +72,7 @@ const ATable = ({ header, tableHeader, tableBody, data }: any) => {
           No Record found.
         </div>
       )}
-      {!pathname.includes('dashboard') && (
+      {!pathname.includes('dashboard') && data?.length > 9 && (
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <APagination />
         </CardFooter>

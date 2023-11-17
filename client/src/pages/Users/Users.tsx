@@ -24,7 +24,7 @@ import ASingleSelect from '../../components-global/ASingleSelect';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { addUser, deleteUserById } from '../../services';
+import { addRole, addUser, deleteUserById } from '../../services';
 import store from '../../store/store';
 import { fetchAllUsersAsync } from '../../slices/usersSlice';
 import { fetchAllRolesAsync } from '../../slices/rolesSlice';
@@ -42,6 +42,46 @@ const Users = () => {
   const [showAddEditUser, setShowAddEditUser] = useState(false);
   const [roleOptions, setRoleOptions] = useState<any>([]);
   const [branchOptions, setBranchOptions] = useState<any>([]);
+
+  const initialValuesRole = {
+    name: '',
+    permissions: [],
+    status: '',
+  };
+
+  const validationSchemaRole = Yup.object().shape({
+    name: Yup.string().required('This field is required'),
+    status: Yup.string().required('This field is required'),
+  });
+
+  const validateFunctionRole = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmitRole = async (values: any) => {
+    values = await Object.assign(values);
+    let addRolePromise = addRole(values);
+    addRolePromise
+      .then((res: any) => {
+        console.log(res.data);
+        closeRoleModal();
+        toast.success(<b>Role added sucessfully.</b>);
+      })
+      .catch((e: any) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
+  };
+
+  const formikRole = useFormik({
+    initialValues: initialValuesRole,
+    validate: validateFunctionRole,
+    validationSchema: validationSchemaRole,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmitRole,
+  });
 
   const initialValuesUser = {
     fullName: '',
@@ -101,6 +141,11 @@ const Users = () => {
     setShowAddEditUser(false);
   };
 
+  const closeRoleModal = () => {
+    formikRole.resetForm();
+    setShowAddRole(false);
+  };
+
   const closeDeleteUserModal = () => {
     setShowDeleteUser(false);
   };
@@ -139,7 +184,7 @@ const Users = () => {
   useEffect(() => {
     if (allBranchs?.length > 0) {
       const branchOptions: any = [];
-      allBranchs.map((item: any) => {
+      allBranchs?.map((item: any) => {
         branchOptions.push({ label: item.name, value: item.name });
       });
       setBranchOptions(branchsList);
@@ -267,46 +312,29 @@ const Users = () => {
         <AModal
           saveText={'Add'}
           title={'Add Role'}
-          onSave={formikUser.handleSubmit}
-          closeModal={closeUserModal}
+          onSave={formikRole.handleSubmit}
+          closeModal={closeRoleModal}
         >
           <div className="flex flex-col ">
-            {/* <AInputField
+            <AInputField
               id="name"
               type="text"
               label="Role Name*"
-              error={formikUser.errors.name}
-              formik={formikUser.getFieldProps('name')}
+              error={formikRole.errors.name}
+              formik={formikRole.getFieldProps('name')}
               icon={<UsersIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
-              error={formikUser.errors.status}
-              formik={formikUser.getFieldProps('status')}
+              error={formikRole.errors.status}
+              formik={formikRole.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={[
                 { label: 'Active', value: 'active' },
                 { label: 'Inactive', value: 'inactive' },
               ]}
             />
-            <ASingleSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formikUser.errors.pageAccess}
-              selected={formikUser.values.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              {...formikUser.getFieldProps('pageAccess')}
-            />
-            <ASingleSelect
-              id="pageAccess"
-              label={'Page Access'}
-              options={pages}
-              error={formikUser.errors.pageAccess}
-              icon={<KeyIcon className="h-4 w-4" />}
-              formik={formikUser.getFieldProps('pageAccess')}
-            /> */}
           </div>
         </AModal>
       )}

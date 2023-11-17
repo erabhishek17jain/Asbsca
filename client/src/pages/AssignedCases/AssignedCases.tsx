@@ -25,7 +25,7 @@ const AssignedCases = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (assignedCases.length) {
+    if (assignedCases?.length) {
       setCases([...assignedCases]);
     }
   }, [assignedCases]);

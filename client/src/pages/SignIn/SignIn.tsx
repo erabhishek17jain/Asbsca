@@ -20,7 +20,7 @@ const SignIn = ({ setCookie }: any) => {
   const formik = useFormik({
     initialValues: {
       email: 'erabhishek17jain@gmail.com',
-      password: 'adminn@123',
+      password: 'admin@123',
     },
     validateOnBlur: false,
     validateOnChange: false,
@@ -34,11 +34,10 @@ const SignIn = ({ setCookie }: any) => {
           toast.success(<b>SignIn Successfully...!</b>);
           let { token, userId } = res.data;
           setCookie('token', token);
-          setCookie('userId', JSON.stringify(userId));
+          setCookie('userId', userId);
           navigate('/dashboard');
         })
         .catch((e) => {
-          navigate('/dashboard'); //remove
           toast.error(<b>{e.error.response.data.message}</b>);
         });
     },

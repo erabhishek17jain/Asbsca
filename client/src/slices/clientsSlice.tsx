@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { baseAPI } from '../constants';
-import { clientData } from '../mockData/mocks';
 
 export interface IClient {}
 
@@ -11,10 +10,8 @@ export const fetchAllClientsAsync = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${baseAPI}/clients/list`);
-      // return response?.data;
-      return clientData; //remove
+      return response?.data;
     } catch (err) {
-      return clientData; //remove
       return console.log(err);
     }
   },
