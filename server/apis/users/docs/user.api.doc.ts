@@ -11,6 +11,8 @@
    *   get:
    *     tags: [Users]
    *     description: Get all users
+   *     security:
+   *      - bearerAuth: []
    *     responses:
    *       200:
    *         description: List of users
@@ -30,6 +32,8 @@
    *   post:
    *     tags: [Users]
    *     description: Add a new user
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -53,6 +57,8 @@
    *   put:
    *     tags: [Users]
    *     description: Update a user
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -76,6 +82,8 @@
    *   delete:
    *     tags: [Users]
    *     description: Delete a user by ID
+   *     security:
+   *      - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id
@@ -112,4 +120,36 @@
  *            $ref: '#/components/schemas/User'
  *    500:
  *     description: Server error
+ */
+
+/**
+ * @openapi
+ * paths:
+ *  /api/v1/user/self-update:
+ *   put:
+ *    summary: Update self
+ *    description: Update the current user's details.
+ *    tags: [Users]
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *     required: true
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         about:
+ *          type: string
+ *         profile:
+ *          type: string
+ *    responses:
+ *     200:
+ *      description: The updated user.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         $ref: '#/components/schemas/User'
+ *     500:
+ *      description: An error occurred.
  */

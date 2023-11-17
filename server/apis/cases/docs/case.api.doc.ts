@@ -12,6 +12,8 @@
  *   get:
  *    summary: List cases
  *    tags: [Cases]
+ *    security:
+ *      - bearerAuth: []
  *    description: Retrieve a list of cases.
  *    parameters:
  *     - in: query
@@ -78,6 +80,8 @@
  *    summary: Create cases
  *    description: Create new cases.
  *    tags: [Cases]
+ *    security:
+ *      - bearerAuth: []
  *    requestBody:
  *     required: true
  *     content:
@@ -129,4 +133,104 @@
  *           type: string
  *     500:
  *      description: An error occurred.
+ */
+
+/**
+ * @openapi
+ * paths:
+ *  /api/v1/cases/assign:
+ *   post:
+ *    summary: Assign case
+ *    description: Assign a case to a user.
+ *    tags: [Cases]
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *     required: true
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         caseId:
+ *          type: string
+ *         userId:
+ *          type: string
+ *         userType:
+ *          type: string
+ *          enum: [reviewer, user]
+ *    responses:
+ *     200:
+ *      description: The updated case.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         $ref: '#/components/schemas/Cases'
+ *     500:
+ *      description: An error occurred.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         type: object
+ *         properties:
+ *          error:
+ *           type: string
+ */
+
+/**
+ * @openapi
+ * paths:
+ *  /api/v1/cases/analytics:
+ *   get:
+ *    summary: Get analytics
+ *    description: Retrieve analytics data.
+ *    tags: [Cases]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *     - in: query
+ *       name: startDate
+ *       schema:
+ *        type: string
+ *        format: date
+ *       description: The start date for the analytics data.
+ *     - in: query
+ *       name: endDate
+ *       schema:
+ *        type: string
+ *        format: date
+ *       description: The end date for the analytics data.
+ *    responses:
+ *     200:
+ *      description: The analytics data.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         type: object
+ *         properties:
+ *          cases:
+ *           type: integer
+ *          assignedCases:
+ *           type: integer
+ *          reviewedCases:
+ *           type: integer
+ *          sentToBank:
+ *           type: integer
+ *          topFiveCases:
+ *           type: array
+ *           items:
+ *            $ref: '#/components/schemas/Cases'
+ *          productiveUsers:
+ *           type: array
+ *           items:
+ *            type: string
+ *     500:
+ *      description: An error occurred.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         type: object
+ *         properties:
+ *          message:
+ *           type: string
  */

@@ -45,7 +45,7 @@ UserSchema.methods.getToken = function (): string {
   const payload = {
     id: this._id,
     email: this.email,
-    role: this.role,
+    role: this.role._id,
   };
   return JWT.fn.getToken(payload).accessToken;
 };

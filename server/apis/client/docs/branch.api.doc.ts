@@ -11,6 +11,8 @@
    *   get:
    *     tags: [Branches]
    *     description: Fetch all branches
+   *     security:
+   *      - bearerAuth: []
    *     responses:
    *       200:
    *         description: List of branches
@@ -30,6 +32,8 @@
    *   post:
    *     tags: [Branches]
    *     description: Create a new branch
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -53,6 +57,8 @@
    *   put:
    *     tags: [Branches]
    *     description: Update a branch
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -76,6 +82,8 @@
    *   delete:
    *     tags: [Branches]
    *     description: Delete a branch
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:

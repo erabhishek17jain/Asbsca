@@ -11,6 +11,8 @@
    *   get:
    *     tags: [Clients]
    *     description: Fetch all clients
+   *     security:
+   *      - bearerAuth: []
    *     responses:
    *       200:
    *         description: List of clients
@@ -30,6 +32,8 @@
    *   post:
    *     tags: [Clients]
    *     description: Create a new client
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -53,6 +57,8 @@
    *   put:
    *     tags: [Clients]
    *     description: Update a client
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -76,6 +82,8 @@
    *   delete:
    *     tags: [Clients]
    *     description: Delete a client
+   *     security:
+   *      - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id
