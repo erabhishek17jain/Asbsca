@@ -1,11 +1,11 @@
 import ASingleSelect from "../../../components-global/ASingleSelect";
 
-const BusinessProcessOf = () => {
+const BusinessProcessOf = ({ formik }: any) => {
   return (
-    <div className="flex flex-col w-[70%] py-4">
+    <div className="flex flex-col w-[60%] py-4">
       <ASingleSelect
-        name={'Business Process of'}
-        label={'bussinessProcess'}
+        name={'bussinessProcess'}
+        label={'Business Process of'}
         variant={'horizantal'}
         options={[{ label: 'Trading (B2B)', value: 'trading' }]}
       />

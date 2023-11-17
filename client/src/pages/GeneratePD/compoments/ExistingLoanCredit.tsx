@@ -1,36 +1,78 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
-import ATags from '../../../components-global/ATags';
+import ATags, { AddTagButton } from '../../../components-global/ATags';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
+import ASection from '../../../components-global/ASection';
+import { useSelector } from 'react-redux';
+import { getOptions } from '../../../utils';
+import { yesNoOptions } from '../constants';
+import AGroupFields from '../../../components-global/AGroupFields';
 
-const radioValues = [
-  { name: 'yes', label: 'Yes' },
-  { name: 'no', label: 'No' },
-  { name: 'noDetail', label: 'Details Not Provided' },
+const existingLoanFooter = [
+  {
+    label: 'Total Loan Amt',
+    value: '0',
+  },
+  {
+    label: 'Total EMI Amt',
+    value: '0',
+  },
+  {
+    label: 'Total Outstanding Amt',
+    value: '0',
+  },
 ];
+
+const creditFacilityFooter = [
+  {
+    label: 'Total Loan Amt',
+    value: '0',
+  },
+  {
+    label: 'Total Limit',
+    value: '0',
+  },
+  {
+    label: 'Average Utilization',
+    value: '0',
+  },
+];
+
+const commitmentsFooter = [
+  {
+    label: 'Total Contribution',
+    value: '0',
+  },
+  {
+    label: 'Total Sum Assured/Maturity',
+    value: '0',
+  },
+];
+
 const balanceTransferInfo = {
-  id: 'app1',
-  title: 'Applicant',
-  isOpen: true,
-  data: [],
-};
-const existingLoanInfo = {
-  id: 'res1',
-  title: 'Residential & Ownership Details',
-  isOpen: true,
-  data: [],
-};
-const existingLoanEMIInfo = {
-  id: 'fam1',
-  title: 'Applicant',
   isOpen: true,
   data: [],
 };
 
-const ExistingLoanInformation = () => {
+const existingLoanInfo = {
+  isOpen: true,
+  data: [],
+};
+
+const existingLoanEMIInfo = {
+  isOpen: true,
+  data: [],
+};
+
+const LoanInformation = () => {
+  const { allClients } = useSelector((state: any) => state.clients);
+  const [clientOptions, setClientOptions] = useState<any>([]);
+  useEffect(() => {
+    setClientOptions(getOptions(allClients));
+  }, [allClients]);
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+    <AGroupFields>
       <ASingleSelect
         name={'typeOfLoan'}
         label={'Type of Loan'}
@@ -39,61 +81,60 @@ const ExistingLoanInformation = () => {
       <ASingleSelect
         name={'bankName'}
         label={'Bank Name'}
-        options={[{ label: 'India', value: 'india' }]}
+        options={clientOptions}
       />
-      <AInputField type={'text'} name={'loanAmount'} label={'Loan Amount'} />
-      <AInputField type={'text'} name={'tenure'} label={'Tenure (Months)'} />
-      <AInputField type={'text'} name={'emi'} label={'EMI'} />
+      <AInputField
+        type={'number'}
+        name={'loanAmount'}
+        label={'Loan Amount (Lakhs)'}
+      />
+      <AInputField type={'number'} name={'tenure'} label={'Tenure (Months)'} />
+      <AInputField type={'number'} name={'emi'} label={'EMI'} />
       <AInputField type={'text'} name={'outstanding'} label={'Outstanding'} />
       <ASingleSelect
         name={'remark'}
         label={'Remark'}
         options={[{ label: 'India', value: 'india' }]}
       />
-    </div>
-  );
-};
-
-const SectionFooter = () => {
-  return (
-    <>
-      <div className="flex items-center bg-grey py-5 px-4">
-        <p className="flex gap-4 w-full">
-          <span>Total Loan Amt. PA: 36</span>
-        </p>
-        <p className="flex gap-4 w-full">
-          <span>Total EMI Amt: 60%</span>
-        </p>
-        <p className="flex gap-4 w-full">
-          <span>Total Outstanding Amt: 60%</span>
-        </p>
-      </div>
-    </>
-  );
-};
-
-const Section = ({ title, children }: any) => {
-  return (
-    <div className="border-2 rounded-lg mb-4">
-      <p className="w-full pt-3 px-4">{title}</p>
-      {children && <div className="pt-3 px-4">{children}</div>}
-      <SectionFooter />
-    </div>
+    </AGroupFields>
   );
 };
 
 const ExistingLoan = () => {
   const [isExistingLoan, setIsExistingLoan] = useState('yes');
-  const [existingLoan, setExistingLoan] = useState([{ ...existingLoanInfo }]);
-  const [existingLoanEMI, setExistingLoanEMI] = useState([
-    { ...existingLoanEMIInfo },
-  ]);
-  const [balanceTransfer, setBalanceTransfer] = useState([
-    { ...balanceTransferInfo },
-  ]);
+  const [existingLoan, setExistingLoan] = useState<any>([]);
+  const [existingLoanEMI, setExistingLoanEMI] = useState<any>([]);
+  const [balanceTransfer, setBalanceTransfer] = useState<any>([]);
 
   const handleExistingLoan = (val: string) => {
     setIsExistingLoan(val);
+  };
+
+  const addBussinessLoan = (tags: any) => {
+    tags.push({
+      ...balanceTransferInfo,
+      id: `app${tags.length + 1}`,
+      title: `Balance Transfer ${tags.length + 1}`,
+    });
+    setBalanceTransfer([...tags]);
+  };
+
+  const addExistingLoan = (tags: any) => {
+    tags.push({
+      ...existingLoanInfo,
+      id: `loan${tags.length + 1}`,
+      title: `Loan ${tags.length + 1}`,
+    });
+    setExistingLoan([...tags]);
+  };
+
+  const addExistingLoanEMI = (tags: any) => {
+    tags.push({
+      ...existingLoanEMIInfo,
+      id: `loanEmi${tags.length + 1}`,
+      title: `Loan ${tags.length + 1}`,
+    });
+    setExistingLoanEMI([...tags]);
   };
 
   return (
@@ -101,62 +142,98 @@ const ExistingLoan = () => {
       <ARadioButtonGroup
         value={isExistingLoan}
         title={'Existing Loan'}
-        radioValues={radioValues}
+        radioValues={yesNoOptions}
         handleChecked={handleExistingLoan}
       />
       {isExistingLoan === 'yes' && (
         <>
-          <Section title={'Balance Transfer Loans (If Any)'}>
-            <ATags
-              tags={balanceTransfer}
-              setTags={setBalanceTransfer}
-              defaultTag={{}}
-            >
-              <ExistingLoanInformation />
-            </ATags>
-          </Section>
-
-          <Section
+          <ASection
+            footers={existingLoanFooter}
+            title={'Balance Transfer Loans (If Any)'}
+          >
+            {balanceTransfer.length > 0 ? (
+              <ATags
+                tags={balanceTransfer}
+                addTag={addBussinessLoan}
+                setTags={setBalanceTransfer}
+              >
+                <LoanInformation />
+              </ATags>
+            ) : (
+              <AddTagButton
+                title={'Add Bussiness Loan'}
+                addLoan={() => addBussinessLoan(balanceTransfer)}
+              />
+            )}
+          </ASection>
+          <ASection
+            footers={existingLoanFooter}
             title={
               'Existing Loan- Loan which will be closed from Current Applied Loan Amt or which are to be closed within 12 months. (If Any)'
             }
           >
-            <ATags
-              tags={existingLoan}
-              setTags={setExistingLoan}
-              defaultTag={{}}
-            >
-              <ExistingLoanInformation />
-            </ATags>
-          </Section>
-
-          <Section
+            {existingLoan.length > 0 ? (
+              <ATags
+                tags={existingLoan}
+                addTag={addExistingLoan}
+                setTags={setExistingLoan}
+              >
+                <LoanInformation />
+              </ATags>
+            ) : (
+              <AddTagButton
+                title={'Add Existing Loan'}
+                addLoan={() => addExistingLoan(existingLoan)}
+              />
+            )}
+          </ASection>
+          <ASection
+            footers={existingLoanFooter}
             title={
               'Existing Loan (These EMI will be added in FOIR Ratio calculation)'
             }
           >
-            <ATags
-              tags={existingLoanEMI}
-              setTags={setExistingLoanEMI}
-              defaultTag={{}}
-            >
-              <ExistingLoanInformation />
-            </ATags>
-          </Section>
+            {existingLoanEMI.length > 0 ? (
+              <ATags
+                tags={existingLoanEMI}
+                addTag={addExistingLoanEMI}
+                setTags={setExistingLoanEMI}
+              >
+                <LoanInformation />
+              </ATags>
+            ) : (
+              <AddTagButton
+                title={'Add Existing Loan'}
+                addLoan={() => addExistingLoanEMI(existingLoanEMI)}
+              />
+            )}
+          </ASection>
         </>
       )}
     </>
   );
 };
 
+const ceditFacilityInfo = {
+  isOpen: true,
+  data: [],
+};
+
 const CreditFacility = () => {
   const [isCreditFacility, setIsCreditFacility] = useState('yes');
-  const [creditFacility, setCreditFacility] = useState([
-    { ...existingLoanInfo },
-  ]);
+  const [creditFacility, setCreditFacility] = useState<any>([]);
 
   const handleCreditFacility = (val: string) => {
     setIsCreditFacility(val);
+  };
+
+  const addCreditFacility = (tags: any) => {
+    tags.push({
+      ...ceditFacilityInfo,
+      id: `cred${tags.length + 1}`,
+      title: `Credit Details ${tags.length + 1}`,
+    });
+    setCreditFacility([...tags]);
   };
 
   return (
@@ -164,104 +241,137 @@ const CreditFacility = () => {
       <ARadioButtonGroup
         value={isCreditFacility}
         title={'Credit Facility'}
-        radioValues={radioValues}
+        radioValues={yesNoOptions}
         handleChecked={handleCreditFacility}
       />
       {isCreditFacility === 'yes' && (
-        <Section title={'Existing Credit Details'}>
-          <ATags
-            tags={creditFacility}
-            setTags={setCreditFacility}
-            defaultTag={{}}
-          >
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-              <ASingleSelect
-                name={'typeOfFacility'}
-                label={'Type of Facility'}
-                options={[{ label: 'India', value: 'india' }]}
-              />
-              <ASingleSelect
-                name={'bankName'}
-                label={'Bank Name'}
-                options={[{ label: 'India', value: 'india' }]}
-              />
-              <AInputField type={'text'} name={'limit'} label={'Limit'} />
-              <AInputField
-                type={'text'}
-                name={'averageUtilization'}
-                label={'Average Utilization'}
-              />
-              <AInputField type={'text'} name={'emi'} label={'EMI'} />
-              <AInputField
-                type={'text'}
-                name={'interestRate'}
-                label={'Interest Rate (%)'}
-              />
-              <ASingleSelect
-                name={'remark'}
-                label={'Remark'}
-                options={[{ label: 'India', value: 'india' }]}
-              />
-            </div>
-          </ATags>
-        </Section>
+        <ASection
+          footers={creditFacilityFooter}
+          title={'Credit Facility Details'}
+        >
+          {creditFacility.length > 0 ? (
+            <ATags
+              tags={creditFacility}
+              addTag={addCreditFacility}
+              setTags={setCreditFacility}
+            >
+              <AGroupFields>
+                <ASingleSelect
+                  name={'typeOfFacility'}
+                  label={'Type of Facility'}
+                  options={[{ label: 'India', value: 'india' }]}
+                />
+                <ASingleSelect
+                  name={'bankName'}
+                  label={'Bank Name'}
+                  options={[{ label: 'India', value: 'india' }]}
+                />
+                <AInputField type={'text'} name={'limit'} label={'Limit'} />
+                <AInputField
+                  type={'text'}
+                  name={'averageUtilization'}
+                  label={'Average Utilization'}
+                />
+                <AInputField type={'text'} name={'emi'} label={'EMI'} />
+                <AInputField
+                  type={'text'}
+                  name={'interestRate'}
+                  label={'Interest Rate (%)'}
+                />
+                <ASingleSelect
+                  name={'remark'}
+                  label={'Remark'}
+                  options={[{ label: 'India', value: 'india' }]}
+                />
+              </AGroupFields>
+            </ATags>
+          ) : (
+            <AddTagButton
+              title={'Add Credit Facility'}
+              addLoan={() => addCreditFacility(creditFacility)}
+            />
+          )}
+        </ASection>
       )}
     </>
   );
 };
 
+const commitmentsInfo = {
+  isOpen: true,
+  data: [],
+};
+
 const OtherCommitments = () => {
   const [isOtherCommitments, setIsOtherCommitments] = useState('yes');
-  const [otherCommitments, setOtherCommitments] = useState([
-    { ...existingLoanInfo },
-  ]);
+  const [otherCommitments, setOtherCommitments] = useState<any>([]);
 
   const handleOtherCommitments = (val: string) => {
     setIsOtherCommitments(val);
   };
+  
+  const addOtherCommitments = (tags: any) => {
+    tags.push({
+      ...commitmentsInfo,
+      id: `com${tags.length + 1}`,
+      title: `Comitment Details ${tags.length + 1}`,
+    });
+    setOtherCommitments([...tags]);
+  };
+
 
   return (
     <>
       <ARadioButtonGroup
         value={isOtherCommitments}
         title={'Other Commitments'}
-        radioValues={radioValues}
+        radioValues={yesNoOptions}
         handleChecked={handleOtherCommitments}
       />
       {isOtherCommitments === 'yes' && (
-        <Section title={'Existing Credit Details'}>
-          <ATags
-            tags={otherCommitments}
-            setTags={setOtherCommitments}
-            defaultTag={{}}
-          >
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-              <ASingleSelect
-                name={'particulars'}
-                label={'Particulars'}
-                options={[{ label: 'India', value: 'india' }]}
-              />
-              <AInputField
-                type={'text'}
-                name={'contribution'}
-                label={'Contribution P.A.'}
-              />
-              <AInputField
-                type={'text'}
-                name={'sumAssured'}
-                label={'Sum Assured/Maturity Value (Rs.)'}
-              />
-            </div>
-          </ATags>
-        </Section>
+        <ASection
+          footers={commitmentsFooter}
+          title={'Other Commitments Details'}
+        >
+          {otherCommitments.length > 0 ? (
+            <ATags
+              tags={otherCommitments}
+              addTag={addOtherCommitments}
+              setTags={setOtherCommitments}
+            >
+              <AGroupFields col={3}>
+                <ASingleSelect
+                  name={'particulars'}
+                  label={'Particulars'}
+                  options={[{ label: 'India', value: 'india' }]}
+                />
+                <AInputField
+                  type={'text'}
+                  name={'contribution'}
+                  label={'Contribution P.A.'}
+                />
+                <AInputField
+                  type={'text'}
+                  name={'sumAssured'}
+                  label={'Sum Assured/Maturity Value (Rs.)'}
+                />
+              </AGroupFields>
+            </ATags>
+          ) : (
+            <AddTagButton
+              title={'Add Commitments'}
+              addLoan={() => addOtherCommitments(otherCommitments)}
+            />
+          )}
+        </ASection>
       )}
     </>
   );
 };
 
-const ExistingLoanCredit = () => {
+const ExistingLoanCredit = ({ formik }: any) => {
   return (
-    <div>
+    <div className="flex flex-col w-full">
       <ExistingLoan />
       <CreditFacility />
       <OtherCommitments />

@@ -22,7 +22,7 @@ import OtherObservation from '../pages/GeneratePD/compoments/OtherObservation';
 import DocumentsSeen from '../pages/GeneratePD/compoments/DocumentsSeen';
 import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf';
 
-export function AStepper({ steps, generateReport }: any) {
+export function AStepper({ steps, formikReport, generateReport }: any) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -50,27 +50,31 @@ export function AStepper({ steps, generateReport }: any) {
         })}
       </Stepper>
       <div className="absolute top-16 bottom-0 w-[calc(100%-40px)] mb-4 overflow-x-scroll flex flex-col justify-between">
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="flex flex-col gap-3 mt-2">
           {activeStep === steps[activeStep].index && (
             <div className="w-max text-lg font-bold text-black text-center">
               {steps[activeStep].label}
             </div>
           )}
-          {activeStep === 0 && <ClientsDebtors />}
-          {activeStep === 1 && <PersonalDetails />}
-          {activeStep === 2 && <ExistingLoanCredit />}
-          {activeStep === 3 && <DetailsOfProperty />}
-          {activeStep === 4 && <BusinessDetails />}
-          {activeStep === 5 && <Financials />}
-          {activeStep === 6 && <ComitmentsSummaryFOIR />}
-          {activeStep === 7 && <TurnoverGrossReceipts />}
-          {activeStep === 8 && <ClientsDebtors />}
-          {activeStep === 9 && <Stocks />}
-          {activeStep === 10 && <SuppliersCreditors />}
-          {activeStep === 11 && <AssetsInvestmentBankDetails />}
-          {activeStep === 12 && <OtherObservation />}
-          {activeStep === 13 && <DocumentsSeen />}
-          {activeStep === 15 && <BusinessProcessOf />}
+          {activeStep === 0 && (
+            <AssetsInvestmentBankDetails formik={formikReport} />
+          )}
+          {activeStep === 1 && <PersonalDetails formik={formikReport} />}
+          {activeStep === 2 && <ExistingLoanCredit formik={formikReport} />}
+          {activeStep === 3 && <DetailsOfProperty formik={formikReport} />}
+          {activeStep === 4 && <BusinessDetails formik={formikReport} />}
+          {activeStep === 5 && <Financials formik={formikReport} />}
+          {activeStep === 6 && <ComitmentsSummaryFOIR formik={formikReport} />}
+          {activeStep === 7 && <TurnoverGrossReceipts formik={formikReport} />}
+          {activeStep === 8 && <ClientsDebtors formik={formikReport} />}
+          {activeStep === 9 && <Stocks formik={formikReport} />}
+          {activeStep === 10 && <SuppliersCreditors formik={formikReport} />}
+          {activeStep === 11 && (
+            <AssetsInvestmentBankDetails formik={formikReport} />
+          )}
+          {activeStep === 12 && <OtherObservation formik={formikReport} />}
+          {activeStep === 13 && <DocumentsSeen formik={formikReport} />}
+          {activeStep === 14 && <BusinessProcessOf formik={formikReport} />}
         </div>
         <div className="flex justify-between mt-4">
           <AButton

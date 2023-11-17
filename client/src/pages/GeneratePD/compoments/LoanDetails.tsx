@@ -1,39 +1,40 @@
-import { BuildingLibraryIcon } from '@heroicons/react/24/solid';
 import ASingleSelect from '../../../components-global/ASingleSelect';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getOptions } from '../../../utils';
+import { loanTypes, loans } from '../constants';
 
-const LoanDetails = () => {
+const LoanDetails = ({ formik }: any) => {
+  const { allClients } = useSelector((state: any) => state.clients);
+  const [clientOptions, setClientOptions] = useState<any>([]);
+  useEffect(() => {
+    setClientOptions(getOptions(allClients));
+  }, [allClients]);
   return (
-    <div className="flex flex-col w-[70%] py-4">
+    <div className="flex flex-col w-[60%] py-4">
       <ASingleSelect
         name={'bankName'}
-        label={'Bank Name'}
+        label={'Bank Name*'}
+        options={clientOptions}
         variant={'horizantal'}
-        icon={<BuildingLibraryIcon className="h-4 w-4" />}
-        options={[{ label: 'Axis Bank', value: 'axis' }]}
+        error={formik.errors.loanDetails}
+        formik={formik.getFieldProps('loanDetails')}
       />
       <ASingleSelect
         name={'loan'}
         label={'Loan'}
+        options={loans}
         variant={'horizantal'}
-        options={[
-          { label: 'Home Loan', value: 'homeloan' },
-          { label: 'LAP', value: 'lap' },
-          { label: 'LAP: Existing Property', value: 'lapexist' },
-        ]}
+        error={formik.errors.loanDetails}
+        formik={formik.getFieldProps('loanDetails')}
       />
       <ASingleSelect
         name={'loanType'}
         label={'Loan Type'}
+        options={loanTypes}
         variant={'horizantal'}
-        options={[
-          { label: 'Fresh', value: 'fresh' },
-          { label: 'Balance Transfer', value: 'bt' },
-          { label: 'Top-up', value: 'topup' },
-          { label: 'BT + Top-up', value: 'bttopup' },
-          { label: 'Overdraft', value: 'overdraft' },
-          { label: 'Interest Subvention', value: 'subvention' },
-          { label: 'Other', value: 'other' },
-        ]}
+        error={formik.errors.loanDetails}
+        formik={formik.getFieldProps('loanDetails')}
       />
     </div>
   );

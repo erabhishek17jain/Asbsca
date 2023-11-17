@@ -12,7 +12,7 @@ const AMultiSelect = ({
 }: any) => {
   return (
     <div
-      className={`flex gap-2 w-full mb-5 ${
+      className={`flex gap-2 w-full ${error ? 'mb-2' : 'mb-8'} ${
         variant === 'horizantal' ? 'items-center' : 'flex-col'
       }`}
     >

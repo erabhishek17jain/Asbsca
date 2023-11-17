@@ -1,72 +1,63 @@
 import { useNavigate } from 'react-router-dom';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import { AStepper } from '../../components-global/AStepper';
-
-const steps = [
-  {
-    index: 0,
-    label: 'Loan Heading',
-  },
-  {
-    index: 1,
-    label: 'Basic Personal Details & Experience',
-  },
-  {
-    index: 2,
-    label: 'Existing Loan & Credit Facility',
-  },
-  {
-    index: 3,
-    label: 'Details of Property to be Mortgage',
-  },
-  {
-    index: 4,
-    label: 'Business Details',
-  },
-  {
-    index: 5,
-    label: 'Financials',
-  },
-  {
-    index: 6,
-    label: 'Comitments Summary & FOIR Ratio',
-  },
-  {
-    index: 7,
-    label: 'Turnover/Gross Receipts (April till now)',
-  },
-  {
-    index: 8,
-    label: 'Clients & Debtors',
-  },
-  {
-    index: 9,
-    label: 'Stocks',
-  },
-  {
-    index: 10,
-    label: 'Suppliers & Creditors',
-  },
-  {
-    index: 11,
-    label: 'Assets, Investment & Bank Details',
-  },
-  {
-    index: 12,
-    label: 'Other Observation',
-  },
-  {
-    index: 13,
-    label: 'Documents seen',
-  },
-  {
-    index: 14,
-    label: 'Business Process of',
-  },
-];
+import toast from 'react-hot-toast';
+import { generatePDReport } from '../../services';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { reportSteps } from './constants';
 
 const GeneratePD = () => {
   const navigate = useNavigate();
+
+  const initialValues = {
+    loanDetails: {},
+    personalDetails: {},
+    existingLoan: {},
+    propertyDetails: {},
+    bussinessDetails: {},
+    financialDetails: {},
+    comitmentsDetails: {},
+    turnoverReceipts: {},
+    clientsAndDebtors: {},
+    StocksDetails: {},
+    suppliersAndCreditors: {},
+    assetsInvestmentBank: {},
+    observationDetails: {},
+    documentsSeen: {},
+    bussinessProcessOf: {},
+  };
+
+  const validationSchema = Yup.object().shape({});
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmit = async (values: any) => {
+    values = await Object.assign(values);
+    let generatePDPromise = generatePDReport(values);
+    generatePDPromise
+      .then((res: any) => {
+        if (res) {
+          toast.success(<b>Report generated sucessfully.</b>);
+        }
+      })
+      .catch((e) => {
+        toast.error(<b>{e.error.response.data.message}</b>);
+      });
+  };
+
+  const formikReport = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmit,
+  });
 
   const generateReport = () => {
     navigate('/finalReport');
@@ -76,7 +67,11 @@ const GeneratePD = () => {
     <>
       <ABreadcrumb pageName="Generate PD" />
       <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
-        <AStepper steps={steps} generateReport={generateReport} />
+        <AStepper
+          steps={reportSteps}
+          formikReport={formikReport}
+          generateReport={generateReport}
+        />
       </div>
     </>
   );

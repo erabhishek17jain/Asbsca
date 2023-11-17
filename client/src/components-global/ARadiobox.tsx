@@ -1,5 +1,5 @@
 const ARadiobox = ({
-  name,
+  id,
   title = '',
   label = '',
   formik = {},
@@ -13,14 +13,15 @@ const ARadiobox = ({
       )}
       <div className="w-full mr-3">
         <label
-          htmlFor={name}
+          htmlFor={id}
           className="flex cursor-pointer select-none text-sm items-center"
         >
           <div className="relative">
             <input
-              name={name}
+              id={id}
               {...formik}
               type="checkbox"
+              checked={checked}
               className="sr-only"
               onChange={handleChecked}
             />

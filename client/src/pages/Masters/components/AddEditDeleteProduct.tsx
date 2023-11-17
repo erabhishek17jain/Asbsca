@@ -1,4 +1,4 @@
-import { branchsList, statusList } from '../../../constants';
+import { statusList } from '../../../constants';
 import { useState, useEffect } from 'react';
 import { AModal } from '../../../components-global/AModal';
 import ASingleSelect from '../../../components-global/ASingleSelect';
@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { fetchAllProductsAsync } from '../../../slices/productsSlice';
+import { getOptions } from '../../../utils';
 
 export function AddEditDeleteProduct({
   activeItem,
@@ -85,8 +86,7 @@ export function AddEditDeleteProduct({
   };
 
   useEffect(() => {
-    // setClientOptions(getOptions(allClients));
-    setClientOptions(branchsList);
+    setClientOptions(getOptions(allClients));
   }, [allClients]);
 
   return (
