@@ -17,14 +17,14 @@ export interface IUser {
 
 export const fetchUserAsync = createAsyncThunk(
   '/users/userDetails',
-  async (id: any) => {
+  async () => {
     try {
       const response = await axios.get(`${baseAPI}/users/self-detail`, {
         withCredentials: true,
       });
       return response?.data;
-    } catch (err) {
-      return console.log(err);
+    } catch (err:any) {
+      return console.log(err?.response?.data?.message);
     }
   },
 );

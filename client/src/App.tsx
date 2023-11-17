@@ -16,12 +16,17 @@ const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 function App() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies<any>(['user']);
-  const { userDetails } = useSelector((state: any) => state.users);
+  const { userDetails, error } = useSelector((state: any) => state.users);
+
+  useEffect(() => {
+    if (userDetails || error) {
+      navigate('/dashboard');
+    }
+  }, [userDetails]);
 
   useEffect(() => {
     if (cookies?.userId && userDetails === null) {
-      store.dispatch(fetchUserAsync(cookies.userId));
-      navigate('/dashboard');
+      store.dispatch(fetchUserAsync());
     } else {
       navigate('/signin');
     }

@@ -185,7 +185,7 @@ export async function fetchCasesByFilter(values: any) {
 
 export async function generatePDReport(values: any) {
   try {
-    const response = await axios.post(`${baseAPI}/cases/list`, {
+    const response = await axios.post(`${baseAPI}/cases/generateReport`, {
       filters: values,
     });
     return response?.data;
