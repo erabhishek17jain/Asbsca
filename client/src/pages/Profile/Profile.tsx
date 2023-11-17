@@ -105,7 +105,7 @@ const Profile = () => {
                 <h3 className="mb-1.5 text-2xl font-semibold text-black">
                   {userDetails?.fullName}
                 </h3>
-                <p className="flex justify-center gap-4 font-medium my-4">
+                <p className="flex justify-center gap-3 font-medium my-4">
                   <span className="flex gap-2 items-center">
                     <UserIcon className="h-5 w-5" />
                     {userDetails?.username}
@@ -203,7 +203,7 @@ const Profile = () => {
                 formik={formikUser.getFieldProps('aboutMe')}
                 icon={<></>}
               />
-              <div className="flex justify-end gap-4.5">
+              <div className="flex justify-end gap-3.5">
                 <AButton
                   label={'Cancel'}
                   variant={'secondary'}

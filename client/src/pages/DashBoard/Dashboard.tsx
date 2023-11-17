@@ -88,14 +88,14 @@ const Dashboard = ({ cookies }: any) => {
         </div>
       </div>
       <div className="flex gap-6 sm:flex-row flex-col">
-        <div className="w-full sm:1/2 grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
+        <div className="w-full sm:1/2 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
           <StatsCard />
         </div>
         <div className="w-full sm:1/2 ">
           <ReportStatusPie />
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-12 gap-3 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <div
           className={
             userDetails?.role === 'admin'

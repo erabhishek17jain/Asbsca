@@ -184,3 +184,15 @@ export async function fetchCasesByFilter(values: any) {
     return console.log(err);
   }
 }
+
+export async function generatePDReport(values: any) {
+  try {
+    const response = await axios.post(`${baseAPI}/cases/list`, {
+      filters: values,
+    });
+    return response?.data;
+  } catch (err) {
+    return casesData; //remove
+    return console.log(err);
+  }
+}

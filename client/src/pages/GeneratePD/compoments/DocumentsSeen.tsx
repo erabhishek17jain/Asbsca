@@ -36,11 +36,11 @@ const documents = [
   { title: 'Financials in Tally' },
 ];
 
-const DocumentsSeen = () => {
+const DocumentsSeen = ({ formik }: any) => {
   const [showModal, setShowModal] = useState(false);
   const [documentList, setDocumentList] = useState<any>([...documents]);
 
-  const formik = useFormik({
+  const formikDocumentSeen = useFormik({
     initialValues: {
       docName: '',
     },
@@ -63,7 +63,7 @@ const DocumentsSeen = () => {
           handleChecked={() => {}}
         />
       ))}
-      <div className="flex items-start gap-4 my-4">
+      <div className="flex items-start my-4">
         <AButton
           label={'Add More'}
           variant="small"
@@ -75,14 +75,14 @@ const DocumentsSeen = () => {
         <AModal
           saveText={'Add'}
           title={'Add More Expenses'}
-          onSave={formik.handleSubmit}
+          onSave={formikDocumentSeen.handleSubmit}
           closeModal={() => setShowModal(false)}
         >
           <AInputField
             type={'text'}
             name={'docName'}
             label="Document Name"
-            formik={formik.getFieldProps('docName')}
+            formik={formikDocumentSeen.getFieldProps('docName')}
           />
         </AModal>
       )}

@@ -14,7 +14,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
       }`}
     >
       <div className="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
-        <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
+        <div className="flex items-center gap-2 sm:gap-3 lg:hidden">
           <button
             aria-controls="sidebar"
             onClick={(e) => {
