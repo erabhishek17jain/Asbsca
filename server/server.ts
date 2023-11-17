@@ -8,6 +8,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import swaggerUi from "swagger-ui-express";
 import docs from "api.doc"
 import ClientRouter from 'apis/client/router';
+import CasesRouter from 'apis/cases/router';
 
 
 const app = express();
@@ -48,6 +49,7 @@ app.use(
 
 app.use("/api/v1/users", UserRouter.router)
 app.use("/api/v1/clients", ClientRouter.router)
+app.use("/api/v1/cases", CasesRouter.router)
 
 /** start server only when we have valid connection */
 connect().then(() => {

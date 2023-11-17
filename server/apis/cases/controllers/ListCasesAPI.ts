@@ -15,8 +15,10 @@ export default class ListCasesAPI implements IListAPI {
   public get = async (req: Request, res: Response): Promise<Response> => {
     try {
       const { query } = req;
-      const cases = await CaseRepository.repo.list(query);
-      const count = await CaseRepository.repo.count(query);
+      const role = res.locals.user.role;
+      const userId = res.locals.user.id;
+      const cases = await CaseRepository.repo.list(query, userId, role);
+      const count = await CaseRepository.repo.count(query, userId, role);
       return res.status(200).json({
         cases,
         meta: {

@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import User from "./User.model";
 
+enum CaseStatus {
+    Pending = "Pending",
+    Approved = "Approved",
+    Rejected = "Rejected"
+}
 
 export interface ICases extends mongoose.Document {
     name: string;
@@ -18,6 +23,8 @@ export interface ICases extends mongoose.Document {
     visitStatus: VisitStatus;
     reportStatus: ReportStatus;
     reviewer: mongoose.Types.ObjectId;
+    isReviewed: boolean;
+    isSentToBank: boolean;
     assignTo: mongoose.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
@@ -37,6 +44,8 @@ const CasesSchema = new mongoose.Schema<ICases>({
     status: { type: String, default: CaseStatus.Pending },
     receivedDate: { type: Date, default: Date.now },
     reviewer: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
+    isReviewed: { type: Boolean, default: false },
+    isSentToBank: { type: Boolean, default: false },
     assignTo: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
 }, { timestamps: true });
 

@@ -1,5 +1,6 @@
+import CONFIG from "config";
 import Cases, {ICases} from "model/Cases.model";
-import { SortOrder } from "mongoose";
+import { SortOrder, Types } from "mongoose";
 
 
 export default class CaseRepository {
@@ -11,7 +12,7 @@ export default class CaseRepository {
 
     protected model = Cases;
 
-    public list = async (query: ListQuery): Promise<ICases[]> => {
+    public list = async (query: ListQuery, userId: string, role: string): Promise<ICases[]> => {
         try {
             const { limit, skip, sort, order, filterBy, filterValue, q } = query;
             const limitNum = limit ? parseInt(limit.toString()) : 10;
@@ -19,6 +20,15 @@ export default class CaseRepository {
             let filterObj: { [key: string]: any; } = {};
             if (filterBy && filterValue) {
                 filterObj[filterBy] = filterValue;
+            }
+            if (role !== CONFIG.ADMIN_ROLE_ID) {
+                filterObj = {
+                    ...filterObj,
+                    $or: [
+                        { assignTo: new Types.ObjectId(userId) },
+                        { reviewer: new Types.ObjectId(userId) },
+                    ],
+                };
             }
             if (q) {
                 const regex = new RegExp(q, "i");
@@ -50,12 +60,21 @@ export default class CaseRepository {
         }
     }
 
-    public count = async (query: ListQuery): Promise<number> => {
+    public count = async (query: ListQuery, userId: string, role: string): Promise<number> => {
         try {
             const { filterBy, filterValue, q } = query;
             let filterObj: { [key: string]: any; } = {};
             if (filterBy && filterValue) {
                 filterObj[filterBy] = filterValue;
+            }
+            if (role !== CONFIG.ADMIN_ROLE_ID) {
+                filterObj = {
+                    ...filterObj,
+                    $or: [
+                        { assignTo: new Types.ObjectId(userId) },
+                        { reviewer: new Types.ObjectId(userId) },
+                    ],
+                };
             }
             if (q) {
                 const regex = new RegExp(q, "i");
@@ -93,6 +112,23 @@ export default class CaseRepository {
         } catch (error) {
             throw error;
         }
+    }
+
+    public assignCase = async (id: string, assignTo: string, userType: string): Promise<ICases | null> => {
+        let updateParams: { [key: string]: any; } = {};
+        switch (userType) {
+            case "reviewer":
+                updateParams = {reviewer: new Types.ObjectId(assignTo)};
+                break;
+            case "user":
+                updateParams = {assignTo: new Types.ObjectId(assignTo)};
+                break;
+            default:
+                return null;
+        }
+
+        const updatedCase = await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {$set: updateParams}, {new: true});
+        return updatedCase;
     }
 }
 

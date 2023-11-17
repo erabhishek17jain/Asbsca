@@ -11,6 +11,8 @@
    *   get:
    *     tags: [Roles]
    *     description: Fetch all roles
+   *     security:
+   *      - bearerAuth: []
    *     responses:
    *       200:
    *         description: List of roles
@@ -30,6 +32,8 @@
    *   post:
    *     tags: [Roles]
    *     description: Create a new role
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -53,6 +57,8 @@
    *   post:
    *     tags: [Roles]
    *     description: Update a role
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -76,6 +82,8 @@
    *   post:
    *     tags: [Roles]
    *     description: Delete a role by ID
+   *     security:
+   *      - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id

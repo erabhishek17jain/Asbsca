@@ -91,5 +91,19 @@ export default class UserAPI implements IUserAPI {
       return res.status(500).json(e);
     }
   }
+
+  public selfUpdate = async (req: Request, res: Response) : Promise<Response> => {
+    try {
+      const { id } = res.locals.user;
+      const {about, profile} = req.body;
+      let payload: {_id: string, about?: string, profile?: string} = {_id: id};
+      if (about) payload.about = about;
+      if (profile) payload.profile = profile;
+      const user = await this.repo.update(payload as any);
+      return res.status(200).json(user);
+    } catch (e) {
+      return res.status(500).json(e);
+    }
+  }
 }
 

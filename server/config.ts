@@ -1,4 +1,4 @@
-export default {
+const CONFIG = {
     JWT_SECRET: 'asbsca-app',
     EMAIL: 'mateo.jerde@ethereal.email',
     PASSWORD: 'C2gF9hDN7CQe1H5BUZ',
@@ -9,4 +9,7 @@ export default {
         user: 'erabhishek17jain@gmail.com',
         pass: 'zularurktxjctzqb',
     },
+    ADMIN_ROLE_ID: "654e7db499e3242d43db55ef"
 };
+
+export default CONFIG;

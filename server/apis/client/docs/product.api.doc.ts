@@ -11,6 +11,8 @@
  *  get:
  *   tags: [Products]
  *   description: Fetch all products
+ *   security:
+ *      - bearerAuth: []
  *   responses:
  *    200:
  *      description: List of products
@@ -30,6 +32,8 @@
    *   post:
    *     tags: [Products]
    *     description: Create a new product
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -53,6 +57,8 @@
    *   put:
    *     tags: [Products]
    *     description: Update a product
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:
@@ -76,6 +82,8 @@
    *   delete:
    *     tags: [Products]
    *     description: Delete a product
+   *     security:
+   *      - bearerAuth: []
    *     requestBody:
    *       required: true
    *       content:

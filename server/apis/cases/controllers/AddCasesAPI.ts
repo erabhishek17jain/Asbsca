@@ -12,6 +12,9 @@ export default class AddCasesAPI {
 
     private validate = (req: Request): boolean => {
         const { body } = req;
+        if (!Array.isArray(body)) {
+            return false;
+        }
         for ( let data of body ) {
             const { name, address, mobile, loanAmount, referenceId, localOrOGL, city, branch, type, bankName } = data;
             if (!name || !address || !mobile || !loanAmount || !referenceId || !localOrOGL || !city || !branch || !type || !bankName) {
