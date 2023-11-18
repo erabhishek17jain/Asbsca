@@ -261,27 +261,24 @@ const Users = () => {
               icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'address'}
-              label={'Location*'}
               id="address"
+              label={'Location*'}
               error={formikUser.errors.address}
               formik={formikUser.getFieldProps('address')}
               icon={<MapPinIcon className="h-4 w-4" />}
               options={branchOptions}
             />
             <ASingleSelect
-              name={'role'}
-              label={'Role*'}
               id="role"
+              label={'Role*'}
               error={formikUser.errors.role}
               formik={formikUser.getFieldProps('role')}
               icon={<UsersIcon className="h-4 w-4" />}
               options={roleOptions}
             />
             <ASingleSelect
-              name={'status'}
-              label={'Status'}
               id="status"
+              label={'Status'}
               error={formikUser.errors.status}
               formik={formikUser.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}

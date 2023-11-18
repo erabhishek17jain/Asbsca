@@ -93,7 +93,7 @@ const AssetInformation = () => {
   );
 };
 
-const AssetsInvestmentBankDetails = ({ formik }: any) => {
+const AssetsInvestmentBank = ({ formik }: any) => {
   const [isBusinessAssets, setIsBusinessAssets] = useState('yes');
   const [businessAssets, setBusinessAssets] = useState<any>([]);
 
@@ -298,4 +298,4 @@ const AssetsInvestmentBankDetails = ({ formik }: any) => {
   );
 };
 
-export default AssetsInvestmentBankDetails;
+export default AssetsInvestmentBank;
