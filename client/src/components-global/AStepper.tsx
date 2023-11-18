@@ -17,7 +17,7 @@ import TurnoverGrossReceipts from '../pages/GeneratePD/compoments/TurnoverGrossR
 import ClientsDebtors from '../pages/GeneratePD/compoments/ClientsDebtors';
 import Stocks from '../pages/GeneratePD/compoments/Stocks';
 import SuppliersCreditors from '../pages/GeneratePD/compoments/SuppliersCreditors';
-import AssetsInvestmentBankDetails from '../pages/GeneratePD/compoments/AssetsInvestmentBankDetails';
+import AssetsInvestmentBank from '../pages/GeneratePD/compoments/AssetsInvestmentBank';
 import OtherObservation from '../pages/GeneratePD/compoments/OtherObservation';
 import DocumentsSeen from '../pages/GeneratePD/compoments/DocumentsSeen';
 import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf';
@@ -56,9 +56,7 @@ export function AStepper({ steps, formikReport, generateReport }: any) {
               {steps[activeStep].label}
             </div>
           )}
-          {activeStep === 0 && (
-            <AssetsInvestmentBankDetails formik={formikReport} />
-          )}
+          {activeStep === 0 && <LoanDetails formik={formikReport} />}
           {activeStep === 1 && <PersonalDetails formik={formikReport} />}
           {activeStep === 2 && <ExistingLoanCredit formik={formikReport} />}
           {activeStep === 3 && <DetailsOfProperty formik={formikReport} />}
@@ -69,9 +67,7 @@ export function AStepper({ steps, formikReport, generateReport }: any) {
           {activeStep === 8 && <ClientsDebtors formik={formikReport} />}
           {activeStep === 9 && <Stocks formik={formikReport} />}
           {activeStep === 10 && <SuppliersCreditors formik={formikReport} />}
-          {activeStep === 11 && (
-            <AssetsInvestmentBankDetails formik={formikReport} />
-          )}
+          {activeStep === 11 && <AssetsInvestmentBank formik={formikReport} />}
           {activeStep === 12 && <OtherObservation formik={formikReport} />}
           {activeStep === 13 && <DocumentsSeen formik={formikReport} />}
           {activeStep === 14 && <BusinessProcessOf formik={formikReport} />}
