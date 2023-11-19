@@ -1,4 +1,4 @@
-import { branchsList, statusList } from '../../../constants';
+import { statusList } from '../../../constants';
 import { useState, useEffect } from 'react';
 import { AModal } from '../../../components-global/AModal';
 import ASingleSelect from '../../../components-global/ASingleSelect';
@@ -59,12 +59,13 @@ export function AddEditDeleteClient({
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
-          store.dispatch(fetchAllClientsAsync());
+          formikClient.resetForm();
+          store.dispatch(fetchAllClientsAsync(''));
           toast.success(<b>Client added sucessfully.</b>);
         }
       })
       .catch((e) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -83,18 +84,17 @@ export function AddEditDeleteClient({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllClientsAsync());
+          store.dispatch(fetchAllClientsAsync(''));
           toast.success(<b>Client deleted successfully.</b>);
         }
       })
       .catch((e: any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
   useEffect(() => {
-    // setBranchs(getOptions(allBranchs));
-    setBranchs(branchsList);
+    setBranchs(getOptions(allBranchs));
   }, [allBranchs]);
 
   return (
@@ -103,7 +103,10 @@ export function AddEditDeleteClient({
         <AModal
           title={`Add Client`}
           onSave={formikClient.handleSubmit}
-          closeModal={() => closeAddEditModal()}
+          closeModal={() => {
+            closeAddEditModal();
+            formikClient.resetForm();
+          }}
         >
           <div className="flex flex-col">
             <AInputField
@@ -125,14 +128,12 @@ export function AddEditDeleteClient({
               id={'logo'}
               label={'Client Logo'}
               formik={formikClient}
-              error={formikClient.errors.logo}
               icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
             />
             <AFileUpload
               id={'signature'}
               label={'Signature'}
               formik={formikClient}
-              error={formikClient.errors.signature}
               icon={<LinkIcon className="h-4 w-4" />}
             />
             <ASingleSelect
@@ -152,7 +153,7 @@ export function AddEditDeleteClient({
         <AModal
           saveText={'Delete'}
           title={`Delete Client`}
-          onSave={() => deleteClient(activeItem?.id)}
+          onSave={() => deleteClient(activeItem?._id)}
           closeModal={() => closeDeleteModal()}
         >
           <div className="flex flex-col">Are you sure want to delete?</div>

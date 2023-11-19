@@ -193,11 +193,11 @@ export const PRODUCT_TABLE_HEAD = [
 export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
 
 export const calander = [
-  { label: 'Last 7 Days', value: '7days' },
-  { label: 'Last 30 Days', value: '30days' },
-  { label: 'Last 90 Days', value: '90days' },
-  { label: 'Last 180 Days', value: '180days' },
-  { label: 'Last 365 Days', value: '365days' },
+  { label: 'Last 7 Days', value: 7 },
+  { label: 'Last 30 Days', value: 30 },
+  { label: 'Last 90 Days', value: 90 },
+  { label: 'Last 180 Days', value: 180 },
+  { label: 'Last 365 Days', value: 365 },
   { label: 'Max', value: 'max' },
 ];
 

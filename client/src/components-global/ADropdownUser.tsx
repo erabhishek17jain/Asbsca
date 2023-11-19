@@ -8,7 +8,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid';
 
-const ADropdownUser = () => {
+const ADropdownUser = ({ setCookies }: any) => {
   const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -41,8 +41,9 @@ const ADropdownUser = () => {
   });
 
   function userLogout() {
-    localStorage.removeItem('token');
-    navigate('/signin');
+     setCookies('token', '');
+     setCookies('userId', '');
+     navigate('/signin');
   }
 
   return (

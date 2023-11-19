@@ -16,18 +16,25 @@ export const TableHeader = ({ label }: any) => {
       key={label}
       className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
     >
-      <Typography
-        variant="small"
-        color="blue-gray"
-        className="font-normal leading-none opacity-70"
-      >
-        {label}
-      </Typography>
+      {label !== '' && (
+        <Typography
+          variant="small"
+          color="blue-gray"
+          className="font-normal leading-none opacity-70"
+        >
+          {label}
+        </Typography>
+      )}
     </th>
   );
 };
 
-export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
+export const TableColumn = ({
+  classes,
+  label = '',
+  color = '',
+  icon = '',
+}: any) => {
   return (
     <td className={classes}>
       {color !== '' ? (
@@ -37,9 +44,15 @@ export const TableColumn = ({ classes, label, color = '', icon = '' }: any) => {
       ) : (
         <div className="flex items-center gap-1">
           {icon !== '' && <BuildingLibraryIcon className="w-10 h-10 mr-1" />}
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            {label}
-          </Typography>
+          {label !== '' && (
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal"
+            >
+              {label}
+            </Typography>
+          )}
         </div>
       )}
     </td>

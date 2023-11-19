@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { allUsersList, selfDetails } from '../services';
 
 export interface IUser {
   username: string;
@@ -17,46 +16,16 @@ export interface IUser {
 
 export const fetchUserAsync = createAsyncThunk(
   '/users/userDetails',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/users/self-detail`, {
-        withCredentials: true,
-      });
-      return response?.data;
-    } catch (err:any) {
-      return console.log(err?.response?.data?.message);
-    }
-  },
+  selfDetails,
 );
-
 export const fetchAllUsersAsync = createAsyncThunk(
   '/users/allUsers',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/users/list`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
-);
-
-export const fetchTopPerformersAsync = createAsyncThunk(
-  '/users/topPerformers',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/users/topPerformers`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+  allUsersList,
 );
 
 export interface IUsersState {
   userDetails: any;
   allUsers: IUser[];
-  topPerformers: IUser[];
   loading: boolean;
   error: any;
 }
@@ -64,7 +33,6 @@ export interface IUsersState {
 const initialState: IUsersState = {
   userDetails: null,
   allUsers: [],
-  topPerformers: [],
   loading: false,
   error: null,
 };
@@ -79,9 +47,6 @@ export const usersSlice = createSlice({
     allUsers: (state: any, payload: any) => {
       state.allUsers = payload;
     },
-    topPerformers: (state: any, payload: any) => {
-      state.topPerformers = payload;
-    },
   },
   extraReducers: {
     [fetchUserAsync.pending.type]: (state) => {
@@ -92,13 +57,15 @@ export const usersSlice = createSlice({
     [fetchUserAsync.fulfilled.type]: (state, action) => {
       if (state.loading) {
         state.loading = false;
+        state.error = null;
         state.userDetails = action.payload;
       }
     },
     [fetchUserAsync.rejected.type]: (state, action) => {
       if (state.loading) {
         state.loading = false;
-        state.error = action.error;
+        state.userDetails = null;
+        state.error = action.error?.message;
       }
     },
     [fetchAllUsersAsync.pending.type]: (state) => {
@@ -118,26 +85,9 @@ export const usersSlice = createSlice({
         state.error = action.error;
       }
     },
-    [fetchTopPerformersAsync.pending.type]: (state) => {
-      if (!state.loading) {
-        state.loading = true;
-      }
-    },
-    [fetchTopPerformersAsync.fulfilled.type]: (state, action) => {
-      if (state.loading) {
-        state.loading = false;
-        state.topPerformers = action.payload;
-      }
-    },
-    [fetchTopPerformersAsync.rejected.type]: (state, action) => {
-      if (state.loading) {
-        state.loading = false;
-        state.error = action.error;
-      }
-    },
   },
 });
 
 export const users = (state: RootState) => state.users;
-export const { userDetails, allUsers, topPerformers } = usersSlice.actions;
+export const { userDetails, allUsers } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -67,10 +67,12 @@ const Users = () => {
       .then((res: any) => {
         console.log(res.data);
         closeRoleModal();
+        formikRole.resetForm();
+        store.dispatch(fetchAllRolesAsync(''));
         toast.success(<b>Role added sucessfully.</b>);
       })
       .catch((e: any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -120,10 +122,12 @@ const Users = () => {
       .then((res: any) => {
         console.log(res.data);
         closeUserModal();
+        formikUser.resetForm();
+        store.dispatch(fetchAllUsersAsync(''));
         toast.success(<b>User added sucessfully.</b>);
       })
       .catch((e) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -161,11 +165,11 @@ const Users = () => {
       .then((res: any) => {
         console.log(res?.data);
         closeDeleteUserModal();
-        store.dispatch(fetchAllUsersAsync());
+        store.dispatch(fetchAllUsersAsync(''));
         toast.success(<b>User Deleted successfully.</b>);
       })
       .catch((e) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -194,9 +198,9 @@ const Users = () => {
   }, [allBranchs]);
 
   useEffect(() => {
-    store.dispatch(fetchAllUsersAsync());
-    store.dispatch(fetchAllRolesAsync());
-    store.dispatch(fetchAllBranchsAsync());
+    store.dispatch(fetchAllUsersAsync(''));
+    store.dispatch(fetchAllRolesAsync(''));
+    store.dispatch(fetchAllBranchsAsync(''));
   }, []);
 
   return (

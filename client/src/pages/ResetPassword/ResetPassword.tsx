@@ -21,17 +21,14 @@ const ResetPassword = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      let resetPromise = resetPassword({
-        username: values.username,
-        password: values.password,
-      });
+      let resetPromise = resetPassword('');
       resetPromise
         .then(() => {
           navigate('/signin');
           toast.success(<b>Password Saved Successfully...!</b>);
         })
         .catch((e) => {
-          toast.error(<b>{e.error.response.data.message}</b>);
+          toast.error(<b>{e?.error?.response?.data?.message}</b>);
         });
     },
   });

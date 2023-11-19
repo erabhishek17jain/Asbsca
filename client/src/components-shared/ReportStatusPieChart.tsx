@@ -1,6 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 
 interface ChartThreeState {
   series: number[];
@@ -49,8 +50,14 @@ const options: ApexOptions = {
 };
 
 const ReportStatusPieChart: React.FC = () => {
-  const [state, ] = useState<ChartThreeState>({
-    series: [13, 19, 12, 28],
+  const { analytics } = useSelector((state: any) => state.cases);
+  const [state] = useState<ChartThreeState>({
+    series: [
+      analytics?.cases ? analytics?.cases : 0,
+      analytics?.assignedCases ? analytics?.assignedCases : 0,
+      analytics?.reviewedCases ? analytics?.reviewedCases : 0,
+      analytics?.sentToBank ? analytics?.sentToBank : 0,
+    ],
   });
 
   return (

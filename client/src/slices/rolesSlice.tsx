@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { getRoles } from '../services';
 
 export interface IRole {
   fullName: string;
@@ -12,17 +11,7 @@ export interface IRole {
   profile: any;
 }
 
-export const fetchAllRolesAsync = createAsyncThunk(
-  '/roles/allRoles',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/users/roles/list`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
-);
+export const fetchAllRolesAsync = createAsyncThunk('/roles/allRoles', getRoles);
 
 export interface IUsersState {
   allRoles: IRole[];

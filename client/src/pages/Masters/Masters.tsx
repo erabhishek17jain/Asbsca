@@ -17,9 +17,9 @@ const Masters = () => {
   let updatedCards = [...mastersCards];
 
   useEffect(() => {
-    store.dispatch(fetchAllClientsAsync());
-    store.dispatch(fetchAllBranchsAsync());
-    store.dispatch(fetchAllProductsAsync());
+    store.dispatch(fetchAllClientsAsync(''));
+    store.dispatch(fetchAllBranchsAsync(''));
+    store.dispatch(fetchAllProductsAsync(''));
   }, []);
 
   return (

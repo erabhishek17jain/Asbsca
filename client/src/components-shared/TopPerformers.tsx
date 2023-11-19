@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
-const TopPerformers = () => {
-  const { topPerformers } = useSelector((state: any) => state.users);
+const TopPerformers = ({ topPerfomers }: any) => {
   return (
     <div className="col-span-12 rounded-xl bg-clip-border shadow-lg py-6 bg-white xl:col-span-4">
       <h4 className="mb-6 px-7.5 text-xl font-semibold text-black">
         Top Performers of the Month
       </h4>
-      {topPerformers?.map((user: any) => (
+      {topPerfomers?.map((user: any) => (
         <Link
           to="/"
           key={user.fullName}
@@ -29,13 +27,13 @@ const TopPerformers = () => {
               <h5 className="font-medium text-black">{user?.fullName}</h5>
               <p>
                 <span className="text-sm">Last report timing </span>
-                <span className="text-xs">
-                  {user?.lastReportTime}
-                </span>
+                <span className="text-xs">{user?.lastReportTime}</span>
               </p>
             </div>
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-main">
-              <span className="text-sm font-medium text-white">{user?.lastMonthReportCount}</span>
+              <span className="text-sm font-medium text-white">
+                {user?.lastMonthReportCount}
+              </span>
             </div>
           </div>
         </Link>

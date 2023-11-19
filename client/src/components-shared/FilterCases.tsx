@@ -48,7 +48,7 @@ export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
           icon={<MagnifyingGlassIcon className="h-5 w-5" />}
         />
       </div>
-      {userDetails?.role === 'admin' && (
+      {userDetails?.role?.name === 'admin' && (
         <Tooltip content="Edit Case">
           <CSVLink data={rows} filename={'Reports'}>
             <div

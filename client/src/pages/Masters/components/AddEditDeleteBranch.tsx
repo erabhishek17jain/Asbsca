@@ -2,16 +2,14 @@ import { statusList } from '../../../constants';
 import { AModal } from '../../../components-global/AModal';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
-import {
-  CheckIcon,
-  UserIcon,
-} from '@heroicons/react/24/solid';
+import { CheckIcon, UserIcon } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
 import { deleteBranchById, addBranch } from '../../../services';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { fetchAllBranchsAsync } from '../../../slices/branchsSlice';
+import { useEffect } from 'react';
 
 export function AddEditDeleteBranch({
   activeItem,
@@ -22,12 +20,12 @@ export function AddEditDeleteBranch({
 }: any) {
   const initialValues = {
     name: '',
-    status: '',
+    address: '',
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
-    status: Yup.string().required('This field is required'),
+    address: Yup.string().required('This field is required'),
   });
 
   const validateFunction = async (values: any) => {
@@ -43,12 +41,13 @@ export function AddEditDeleteBranch({
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
-          store.dispatch(fetchAllBranchsAsync());
+          formikBranch.resetForm();
+          store.dispatch(fetchAllBranchsAsync(''));
           toast.success(<b>Branch added sucessfully.</b>);
         }
       })
-      .catch((e:any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+      .catch((e: any) => {
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -67,14 +66,20 @@ export function AddEditDeleteBranch({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllBranchsAsync());
+          store.dispatch(fetchAllBranchsAsync(''));
           toast.success(<b>Branch deleted successfully.</b>);
         }
       })
       .catch((e: any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
+
+  useEffect(() => {
+    if (activeItem) {
+      console.log(activeItem);
+    }
+  }, [activeItem]);
 
   return (
     <>
@@ -82,7 +87,10 @@ export function AddEditDeleteBranch({
         <AModal
           title={`Add Branch`}
           onSave={formikBranch.handleSubmit}
-          closeModal={() => closeAddEditModal()}
+          closeModal={() => {
+            closeAddEditModal();
+            formikBranch.resetForm();
+          }}
         >
           <div className="flex flex-col">
             <AInputField
@@ -93,12 +101,12 @@ export function AddEditDeleteBranch({
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'status'}
+              name={'address'}
               label={'Status'}
-              id="status"
+              id="address"
               options={statusList}
-              error={formikBranch.errors.status}
-              formik={formikBranch.getFieldProps('status')}
+              error={formikBranch.errors.address}
+              formik={formikBranch.getFieldProps('address')}
               icon={<CheckIcon className="h-4 w-4" />}
             />
           </div>
@@ -109,7 +117,7 @@ export function AddEditDeleteBranch({
         <AModal
           saveText={'Delete'}
           title={`Delete Branch`}
-          onSave={() => deleteBranch(activeItem?.id)}
+          onSave={() => deleteBranch(activeItem?._id)}
           closeModal={() => closeDeleteModal()}
         >
           <div className="flex flex-col">Are you sure want to delete?</div>

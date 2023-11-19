@@ -4,7 +4,7 @@ import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { signin } from '../../services';
+import { setToken, authentication } from '../../services';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
@@ -13,8 +13,9 @@ import {
   EyeSlashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
+import { useEffect } from 'react';
 
-const SignIn = ({ setCookie }: any) => {
+const SignIn = ({ cookies, setCookies }: any) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -25,23 +26,42 @@ const SignIn = ({ setCookie }: any) => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      let signinPromise = signin({
-        email: values.email,
-        password: values.password,
-      });
+      let signinPromise = authentication(
+        {
+          email: values.email,
+          password: values.password,
+        },
+        '',
+      );
       signinPromise
         .then((res: any) => {
           toast.success(<b>SignIn Successfully...!</b>);
           let { token, userId } = res.data;
-          setCookie('token', token);
-          setCookie('userId', userId);
+          setToken(token);
+          setCookies('token', token);
+          setCookies('userId', userId);
           navigate('/dashboard');
         })
         .catch((e) => {
-          toast.error(<b>{e.error.response.data.message}</b>);
+          toast.error(
+            <b>
+              {e?.error?.response?.data === ''
+                ? 'Something Went Wrong!'
+                : e?.error?.response?.data?.message}
+            </b>,
+          );
         });
     },
   });
+
+  useEffect(() => {
+    if (cookies?.token) {
+      setToken(cookies.token);
+      navigate('/dashboard');
+    } else {
+      setToken('');
+    }
+  }, [cookies]);
 
   return (
     <>

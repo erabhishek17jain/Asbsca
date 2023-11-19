@@ -1,20 +1,12 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { getBranchs } from '../services';
 
 export interface IBranch {}
 
 export const fetchAllBranchsAsync = createAsyncThunk(
   '/branchs/allBranchs',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/clients/branch/list`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+  getBranchs,
 );
 
 export interface IUsersState {

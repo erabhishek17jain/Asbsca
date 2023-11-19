@@ -1,20 +1,12 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { getProducts } from '../services';
 
 export interface IProduct {}
 
 export const fetchAllProductsAsync = createAsyncThunk(
   '/products/allProducts',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/clients/product/list`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+  getProducts,
 );
 
 export interface IUsersState {

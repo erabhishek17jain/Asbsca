@@ -12,34 +12,36 @@ import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader.tsx';
 import { fetchCasesAnalyticsAsync } from '../../slices/casesSlice.tsx';
 import { useEffect, useState } from 'react';
 import store from '../../store/store.tsx';
-import { fetchTopPerformersAsync } from '../../slices/usersSlice.tsx';
+import moment from 'moment';
 
-const Dashboard = ({ cookies }: any) => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { analytics } = useSelector((state: any) => state.cases);
   const { userDetails } = useSelector((state: any) => state.users);
-  const [filterBy, setFilterBy] = useState('30days');
+  const [filterBy, setFilterBy] = useState(30);
   const [topAssignedCases, setTopAssignedCases] = useState<any>([]);
+  const [topPerfomers, setTopPerfomers] = useState<any>([]);
 
   const filterByDays = (e: any) => {
     setFilterBy(e.target.value);
   };
 
   useEffect(() => {
-    store.dispatch(fetchCasesAnalyticsAsync(filterBy));
+    const payload = {
+      startDate: moment(new Date()).format('YYYY-MM-DD'),
+      endDate: moment(new Date()).subtract(filterBy, 'd').format('YYYY-MM-DD'),
+    };
+    store.dispatch(fetchCasesAnalyticsAsync(payload));
   }, [filterBy]);
 
   useEffect(() => {
-    if (analytics?.assigned?.length) {
-      setTopAssignedCases([...analytics.assigned.slice(0, 5)]);
+    if (analytics?.topFiveCases?.length) {
+      setTopAssignedCases([...analytics.topFiveCases]);
+    }
+    if (analytics?.productiveUsers?.length) {
+      setTopPerfomers([...analytics.productiveUsers]);
     }
   }, [analytics]);
-
-  useEffect(() => {
-    store.dispatch(fetchTopPerformersAsync());
-  }, []);
-
-  console.log(cookies);
 
   return (
     <>
@@ -65,7 +67,7 @@ const Dashboard = ({ cookies }: any) => {
           </div>
         </div>
         <div className="w-8/12 flex gap-3">
-          {userDetails?.role === 'admin' && (
+          {userDetails?.role?.name === 'admin' && (
             <div className="flex gap-2 w-full flex-col">
               <div className="flex justify-end gap-3">
                 <AButton
@@ -96,21 +98,25 @@ const Dashboard = ({ cookies }: any) => {
         </div>
       </div>
       <div className="mt-4 grid grid-cols-12 gap-3 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <div
-          className={
-            userDetails?.role === 'admin'
-              ? 'col-span-12 xl:col-span-8'
-              : 'col-span-12 xl:col-span-12'
-          }
-        >
-          <ATable
-            data={topAssignedCases}
-            header={<AssignedCasesHeader />}
-            tableHeader={ASSIGNED_CASES_TABLE_HEAD}
-            tableBody={<AssignedCasesBody assigned={topAssignedCases} />}
-          />
-        </div>
-        {userDetails?.role === 'admin' && <TopPerformers />}
+        {topAssignedCases.length > 0 && (
+          <div
+            className={
+              userDetails?.role?.name === 'admin'
+                ? 'col-span-12 xl:col-span-8'
+                : 'col-span-12 xl:col-span-12'
+            }
+          >
+            <ATable
+              data={topAssignedCases}
+              header={<AssignedCasesHeader />}
+              tableHeader={ASSIGNED_CASES_TABLE_HEAD}
+              tableBody={<AssignedCasesBody assigned={topAssignedCases} />}
+            />
+          </div>
+        )}
+        {userDetails?.role?.name === 'admin' && topPerfomers.length > 0 && (
+          <TopPerformers topPerfomers={topPerfomers} />
+        )}
       </div>
     </>
   );

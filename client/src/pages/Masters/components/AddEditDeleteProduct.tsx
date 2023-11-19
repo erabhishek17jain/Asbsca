@@ -52,12 +52,13 @@ export function AddEditDeleteProduct({
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
-          store.dispatch(fetchAllProductsAsync());
+          formikProduct.resetForm();
+          store.dispatch(fetchAllProductsAsync(''));
           toast.success(<b>Product added sucessfully.</b>);
         }
       })
       .catch((e) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -76,12 +77,12 @@ export function AddEditDeleteProduct({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllProductsAsync());
+          store.dispatch(fetchAllProductsAsync(''));
           toast.success(<b>Product deleted successfully.</b>);
         }
       })
       .catch((e: any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -95,7 +96,10 @@ export function AddEditDeleteProduct({
         <AModal
           title={`Add Product`}
           onSave={formikProduct.handleSubmit}
-          closeModal={() => closeAddEditModal()}
+          closeModal={() => {
+            closeAddEditModal();
+            formikProduct.resetForm();
+          }}
         >
           <div className="flex flex-col">
             <AInputField
@@ -130,7 +134,7 @@ export function AddEditDeleteProduct({
         <AModal
           saveText={'Delete'}
           title={`Delete Product`}
-          onSave={() => deleteProduct(activeItem?.id)}
+          onSave={() => deleteProduct(activeItem?._id)}
           closeModal={() => closeDeleteModal()}
         >
           <div className="flex flex-col">Are you sure want to delete?</div>

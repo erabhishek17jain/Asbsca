@@ -1,22 +1,12 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { getAanalytics } from '../services';
 
 export interface ICase {}
 
 export const fetchCasesAnalyticsAsync = createAsyncThunk(
   '/cases/analytics',
-  async (filterBy: string) => {
-    try {
-      const response = await axios.post(`${baseAPI}/cases/analytics`, {
-        range: filterBy,
-      });
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+  getAanalytics,
 );
 
 export const fetchAllCasesAsync = createAsyncThunk(

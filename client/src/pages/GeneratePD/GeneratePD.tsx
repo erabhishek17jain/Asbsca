@@ -46,7 +46,7 @@ const GeneratePD = () => {
         }
       })
       .catch((e) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 

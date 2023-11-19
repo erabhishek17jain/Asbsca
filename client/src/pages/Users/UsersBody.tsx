@@ -10,7 +10,6 @@ const UsersBody = ({ openUserDeleteModal, openUserAddEditModal }: any) => {
   return allUsers?.map((item: any, index: number) => {
     const isLast = index === usersData.length - 1;
     const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
-
     return (
       <tr key={item?.email}>
         <TableColumn classes={classes} label={index + 1} />
@@ -23,7 +22,7 @@ const UsersBody = ({ openUserDeleteModal, openUserAddEditModal }: any) => {
         <TableColumn classes={classes} label={item?.email} />
         <TableColumn classes={classes} label={item?.mobile} />
         <TableColumn classes={classes} label={item?.address} />
-        <TableColumn classes={classes} label={item?.role} />
+        <TableColumn classes={classes} label={item?.role?.name} />
         <TableColumn
           classes={classes}
           label={item?.status}

@@ -4,7 +4,12 @@ import ADropdownNotification from '../components-global/ADropdownNotification';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import Logo from '../assets/images/logo/logo-dark.png';
 
-const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
+const Header = ({
+  sidebarOpen,
+  setSidebarOpen,
+  cookies,
+  setCookies,
+}: any) => {
   const location = useLocation();
   const { pathname } = location;
   return (
@@ -53,7 +58,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
           <ul className="flex items-center gap-2">
             <ADropdownNotification />
           </ul>
-          <ADropdownUser />
+          <ADropdownUser cookies={cookies} setCookies={setCookies} />
         </div>
       </div>
     </header>

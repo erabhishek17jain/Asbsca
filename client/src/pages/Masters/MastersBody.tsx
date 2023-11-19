@@ -9,21 +9,23 @@ const MastersBody = ({ type, data, openAddEditModal, openDeleteModal }: any) => 
     return (
       <tr key={item?.clientName}>
         <TableColumn classes={classes} label={index + 1} />
-        {type !== 'Branch' && (<TableColumn
-          classes={classes}
-          label={item?.clientName}
-          icon={item?.logo}
-        />)}
+        {type !== 'Branch' && (
+          <TableColumn
+            classes={classes}
+            label={item?.clientName}
+            icon={item?.logo}
+          />
+        )}
         {type === 'Product' && (
           <TableColumn classes={classes} label={item?.productName} />
         )}
         {type === 'Branch' && (
-          <TableColumn classes={classes} label={item?.branchName} />
+          <TableColumn classes={classes} label={item?.name} />
         )}
         <TableColumn
           classes={classes}
-          label={item?.status}
-          color={item?.status === 'active' ? 'green' : 'red'}
+          label={item?.address}
+          color={item?.address === 'active' ? 'green' : 'red'}
         />
         <td className={classes}>
           <div className="flex gap-3">

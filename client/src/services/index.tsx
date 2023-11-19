@@ -1,11 +1,28 @@
 import axios from 'axios';
 import { baseAPI } from '../constants';
+import toast from 'react-hot-toast';
 
-axios.defaults.baseURL = 'http://localhost:8080';
+/** services */
+export function setToken(token: string) {
+  axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.headers.common = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+}
 
-/** Make API Requests */
-/** login function */
-export async function signin({ email, password }: any) {
+export function showError(error: any) {
+  if (error.response.data.includes('TokenExpiredError')) {
+    toast.error(<b>Login Expired!</b>);
+  }
+}
+
+/** authentication */
+export async function authentication(
+  { email, password }: any,
+  { rejectWithValue }: any,
+) {
   try {
     if (email) {
       const { data } = await axios.post(`${baseAPI}/users/login`, {
@@ -14,19 +31,120 @@ export async function signin({ email, password }: any) {
       });
       return Promise.resolve({ data });
     }
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** reset password */
+export async function resetPassword({ rejectWithValue }: any) {
+  try {
+    const { data } = await axios.post(`${baseAPI}/users/resetPassword`);
+    return Promise.resolve({ data });
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** Get API Call */
+/** logged user details */
+export async function selfDetails(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/users/self-detail`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all user list */
+export async function allCasesList(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/cases/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all user list */
+export async function allUsersList(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/users/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all analytics for dashboard */
+export async function getAanalytics(payload: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/cases/analytics`, payload);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all roles list */
+export async function getRoles(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/users/roles/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all clients list */
+export async function getClients(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/clients/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all products list */
+export async function getProducts(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/clients/product/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** all branches list */
+export async function getBranchs(_: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/clients/branch/list`);
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+}
+
+/** Add API Calls */
+/** add user */
+export async function addCase(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/cases/create`, values);
+      return Promise.resolve({ data });
+    }
   } catch (error) {
     return Promise.reject({ error: error });
   }
 }
 
-/** login function */
-export async function resetPassword({ email, password }: any) {
+/** add user */
+export async function addUser(values: any) {
   try {
-    if (email) {
-      const { data } = await axios.post(`${baseAPI}/users/resetPassword`, {
-        email,
-        password,
-      });
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/users/create`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -53,10 +171,7 @@ export async function addRole(values: any) {
 export async function addClient(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(
-        `${baseAPI}/clients/create`,
-        values,
-      );
+      const { data } = await axios.post(`${baseAPI}/clients/create`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -64,8 +179,7 @@ export async function addClient(values: any) {
   }
 }
 
-
-/** add role */
+/** add product */
 export async function addProduct(values: any) {
   try {
     if (values) {
@@ -80,8 +194,7 @@ export async function addProduct(values: any) {
   }
 }
 
-
-/** add role */
+/** add branch */
 export async function addBranch(values: any) {
   try {
     if (values) {
@@ -96,11 +209,35 @@ export async function addBranch(values: any) {
   }
 }
 
-/** add user */
-export async function addUser(values: any) {
+/** Update API Calls */
+/** update user */
+export async function selfUpdateUser(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/create`, values);
+      const { data } = await axios.post(`${baseAPI}/users/self-update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+export async function updateUser(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/users/update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** add case */
+export async function assignCase(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -109,17 +246,54 @@ export async function addUser(values: any) {
 }
 
 /** update user */
-export async function updateUser(values: any) {
+export async function updateRole(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/update`, values);
+      const { data } = await axios.post(`${baseAPI}/users/roles/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
+/** update user */
+export async function updateClient(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/clients/update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update user */
+export async function updateProduct(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/clients/product/update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update user */
+export async function updateBranch(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/clients/branch/update`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** Delete API Calls */
 /** delete user */
 export async function deleteUserById(id: any) {
   try {
@@ -128,11 +302,23 @@ export async function deleteUserById(id: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
-/** delete user */
+/** delete role */
+export async function deleteRoleById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(`${baseAPI}/users/roles/delete/${id}`);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** delete client */
 export async function deleteClientById(id: any) {
   try {
     if (id) {
@@ -140,35 +326,35 @@ export async function deleteClientById(id: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
-/** delete user */
-export async function deleteBranchById(id: any) {
-  try {
-    if (id) {
-      const { data } = await axios.delete(
-        `${baseAPI}/users/clients/branch/delete/${id}`,
-      );
-      return Promise.resolve({ data });
-    }
-  } catch (error) {
-    return Promise.reject({ error: error });
-  }
-}
-
-/** delete user */
+/** delete product */
 export async function deleteProductById(id: any) {
   try {
     if (id) {
       const { data } = await axios.delete(
-        `${baseAPI}/users/clients/product/delete/${id}`,
+        `${baseAPI}/clients/product/delete/${id}`,
       );
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
+  }
+}
+
+/** delete branch */
+export async function deleteBranchById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(
+        `${baseAPI}/clients/branch/delete/${id}`,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
   }
 }
 

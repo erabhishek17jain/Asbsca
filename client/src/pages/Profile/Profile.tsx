@@ -39,7 +39,7 @@ const Profile = () => {
         toast.success(<b>Profile updated sucessfully.</b>);
       })
       .catch((e: any) => {
-        toast.error(<b>{e.error.response.data.message}</b>);
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
   };
 
@@ -50,9 +50,9 @@ const Profile = () => {
     onSubmit: onSubmit,
   });
 
-  const setProfiles = (e:any) => {
+  const setProfiles = (e: any) => {
     if (e.target.files && e.target.files[0]) {
-    formikUser.setFieldValue('profile', e.target.files[0]);
+      formikUser.setFieldValue('profile', e.target.files[0]);
       setProfile(URL.createObjectURL(e.target.files[0]));
     }
   };
@@ -82,9 +82,9 @@ const Profile = () => {
                 </label>
               </div>
             </div>
-            <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
+            <div className="px-4 pb-6 text-center">
               <div className="relative z-10 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
-                <div className="relative drop-shadow-2 rounded-full">
+                <div className="relative rounded-full">
                   {userDetails?.profile ? (
                     <img
                       alt="profile"
@@ -149,6 +149,13 @@ const Profile = () => {
                     </span>
                     <span className="text-sm">Accuracy</span>
                   </div>
+                </div>
+                <div className="w-full flex justify-center">
+                  <AButton
+                    variant="link"
+                    label="Reset Password"
+                    action={() => {}}
+                  />
                 </div>
               </div>
             </div>

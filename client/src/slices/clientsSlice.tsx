@@ -1,20 +1,12 @@
-import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { baseAPI } from '../constants';
+import { getClients } from '../services';
 
 export interface IClient {}
 
 export const fetchAllClientsAsync = createAsyncThunk(
   '/clients/allClients',
-  async () => {
-    try {
-      const response = await axios.get(`${baseAPI}/clients/list`);
-      return response?.data;
-    } catch (err) {
-      return console.log(err);
-    }
-  },
+  getClients,
 );
 
 export interface IUsersState {

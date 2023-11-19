@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { convertToBase64 } from '../utils';
 
 const AFileUpload = ({
   id,
@@ -10,9 +11,10 @@ const AFileUpload = ({
 }: any) => {
   const [image, setImage] = useState<any>(null);
 
-  const onImageChange = (e: any) => {
+  const onImageChange = async (e: any) => {
     if (e.target.files && e.target.files[0]) {
-      formik.setFieldValue(id, e.target.files[0].toString());
+    const fileBase64 = await convertToBase64(e.target.files[0]);
+      formik.setFieldValue(id, fileBase64);
       setImage(URL.createObjectURL(e.target.files[0]));
     }
   };

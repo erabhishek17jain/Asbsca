@@ -41,7 +41,7 @@ const AllCases = () => {
     <>
       <ABreadcrumb pageName="All Cases" />
       <div className="flex flex-col">
-        {userDetails?.role === 'admin' && (
+        {userDetails?.role?.name === 'admin' && (
           <div className="flex justify-end gap-3 mx-4">
             <AButton
               variant={'secondary'}
@@ -63,7 +63,9 @@ const AllCases = () => {
           data={cases}
           tableHeader={ALL_CASES_TABLE_HEAD}
           header={<AllCasesHeader filters={filters} setFilters={setFilters} />}
-          tableBody={<AllCasesBody allcases={cases} role={userDetails?.role} />}
+          tableBody={
+            <AllCasesBody allcases={cases} role={userDetails?.role?.name} />
+          }
         />
       </div>
       {showModal && (

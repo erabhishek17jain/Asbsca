@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './pages/SignIn/SignIn';
@@ -8,29 +8,22 @@ import Hero from './pages/Hero/Hero';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import { CookiesProvider, useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
-import { fetchUserAsync } from './slices/usersSlice';
-import store from './store/store';
-
-const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
+import DefaultLayout from './layout/DefaultLayout';
+import { setToken } from './services';
 
 function App() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies<any>(['user']);
-  const { userDetails, error } = useSelector((state: any) => state.users);
+  const [cookies, setCookies] = useCookies<any>(['user']);
+  const { userDetails } = useSelector((state: any) => state.users);
 
   useEffect(() => {
-    if (userDetails || error) {
-      navigate('/dashboard');
-    }
-  }, [userDetails]);
-
-  useEffect(() => {
-    if (cookies?.userId && userDetails === null) {
-      store.dispatch(fetchUserAsync());
+    if (cookies?.token && userDetails === null) {
+      setToken(cookies.token);
     } else {
+      setToken('');
       navigate('/signin');
     }
-  }, []);
+  }, [cookies]);
 
   return (
     <>
@@ -41,10 +34,17 @@ function App() {
       />
       <CookiesProvider>
         <Routes>
-          <Route path="/signin" element={<SignIn setCookie={setCookie} />} />
+          <Route
+            path="/signin"
+            element={<SignIn cookies={cookies} setCookies={setCookies} />}
+          />
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route index element={<Hero />} />
-          <Route element={<DefaultLayout />}>
+          <Route
+            element={
+              <DefaultLayout cookies={cookies} setCookies={setCookies} />
+            }
+          >
             {routes.map((routes, index) => {
               const { path, component: Component } = routes;
               return (
