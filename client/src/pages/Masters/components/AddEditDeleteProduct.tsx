@@ -10,7 +10,7 @@ import {
 } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
-import { deleteProductById, addProduct } from '../../../services';
+import { deleteProductById, addProduct, updateProduct } from '../../../services';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -47,14 +47,18 @@ export function AddEditDeleteProduct({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let addProductPromise = addProduct(values);
+    let addProductPromise = activeItem?._id
+      ? updateProduct(values)
+      : addProduct(values);
     addProductPromise
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
           formikProduct.resetForm();
           store.dispatch(fetchAllProductsAsync(''));
-          toast.success(<b>Product added sucessfully.</b>);
+          toast.success(
+            <b>Product {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
+          );
         }
       })
       .catch((e) => {
@@ -90,11 +94,19 @@ export function AddEditDeleteProduct({
     setClientOptions(getOptions(allClients));
   }, [allClients]);
 
+  useEffect(() => {
+    if (activeItem) {
+      formikProduct.setFieldValue('_id', activeItem?._id);
+      formikProduct.setFieldValue('client', activeItem?.name);
+      formikProduct.setFieldValue('status', activeItem?.address);
+    }
+  }, [activeItem]);
+
   return (
     <>
       {showAddEditModal && (
         <AModal
-          title={`Add Product`}
+          title={`${activeItem?._id ? 'Edit' : 'Add'} Product`}
           onSave={formikProduct.handleSubmit}
           closeModal={() => {
             closeAddEditModal();

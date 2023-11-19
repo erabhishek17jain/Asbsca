@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
-import { deleteClientById, addClient } from '../../../services';
+import { deleteClientById, addClient, updateClient } from '../../../services';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -54,14 +54,18 @@ export function AddEditDeleteClient({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let addClientPromise = addClient(values);
+    let addClientPromise = activeItem?._id
+      ? updateClient(values)
+      : addClient(values);
     addClientPromise
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
           formikClient.resetForm();
           store.dispatch(fetchAllClientsAsync(''));
-          toast.success(<b>Client added sucessfully.</b>);
+          toast.success(
+            <b>Client {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
+          );
         }
       })
       .catch((e) => {
@@ -97,11 +101,22 @@ export function AddEditDeleteClient({
     setBranchs(getOptions(allBranchs));
   }, [allBranchs]);
 
+  useEffect(() => {
+    if (activeItem) {
+      formikClient.setFieldValue('_id', activeItem?._id);
+      formikClient.setFieldValue('name', activeItem?.name);
+      formikClient.setFieldValue('branch', activeItem?.branch);
+      formikClient.setFieldValue('logo', activeItem?.logo);
+      formikClient.setFieldValue('signature', activeItem?.signature);
+      formikClient.setFieldValue('status', activeItem?.status);
+    }
+  }, [activeItem]);
+
   return (
     <>
       {showAddEditModal && (
         <AModal
-          title={`Add Client`}
+          title={`${activeItem?._id ? 'Edit' : 'Add'} Client`}
           onSave={formikClient.handleSubmit}
           closeModal={() => {
             closeAddEditModal();

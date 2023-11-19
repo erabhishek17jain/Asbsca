@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { statusList } from '../../../constants';
 import { AModal } from '../../../components-global/AModal';
 import ASingleSelect from '../../../components-global/ASingleSelect';
@@ -5,13 +6,12 @@ import AInputField from '../../../components-global/AInputField';
 import { CheckIcon, UserIcon } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
-import { deleteBranchById, addBranch, updateBranch } from '../../../services';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { fetchAllBranchsAsync } from '../../../slices/branchsSlice';
-import { useEffect } from 'react';
+import { addRole, deleteRoleById, updateRole } from '../../../services';
+import { fetchAllRolesAsync } from '../../../slices/rolesSlice';
 
-export function AddEditDeleteBranch({
+export function AddEditDeleteRole({
   activeItem,
   showDeleteModal,
   showAddEditModal,
@@ -20,12 +20,13 @@ export function AddEditDeleteBranch({
 }: any) {
   const initialValues = {
     name: '',
-    address: '',
+    permissions: [],
+    status: '',
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
-    address: Yup.string().required('This field is required'),
+    status: Yup.string().required('This field is required'),
   });
 
   const validateFunction = async (values: any) => {
@@ -36,17 +37,17 @@ export function AddEditDeleteBranch({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let addBranchPromise = activeItem?._id
-      ? updateBranch(values)
-      : addBranch(values);
-    addBranchPromise
+    let addRolePromise = activeItem?._id
+      ? updateRole(values)
+      : addRole(values);
+    addRolePromise
       .then((res: any) => {
         if (res) {
           closeAddEditModal();
-          formikBranch.resetForm();
-          store.dispatch(fetchAllBranchsAsync(''));
+          formikRole.resetForm();
+          store.dispatch(fetchAllRolesAsync(''));
           toast.success(
-            <b>Branch {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
+            <b>Role {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
           );
         }
       })
@@ -55,7 +56,7 @@ export function AddEditDeleteBranch({
       });
   };
 
-  const formikBranch = useFormik({
+  const formikRole = useFormik({
     initialValues: initialValues,
     validate: validateFunction,
     validationSchema: validationSchema,
@@ -64,14 +65,14 @@ export function AddEditDeleteBranch({
     onSubmit: onSubmit,
   });
 
-  const deleteBranch = (id: string) => {
-    const deleteBranchPromise = deleteBranchById(id);
-    deleteBranchPromise
+  const deleteRole = (id: string) => {
+    const deleteRolePromise = deleteRoleById(id);
+    deleteRolePromise
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllBranchsAsync(''));
-          toast.success(<b>Branch deleted successfully.</b>);
+          store.dispatch(fetchAllRolesAsync(''));
+          toast.success(<b>Role deleted successfully.</b>);
         }
       })
       .catch((e: any) => {
@@ -81,9 +82,9 @@ export function AddEditDeleteBranch({
 
   useEffect(() => {
     if (activeItem) {
-      formikBranch.setFieldValue('_id', activeItem?._id);
-      formikBranch.setFieldValue('name', activeItem?.name);
-      formikBranch.setFieldValue('address', activeItem?.address);
+      formikRole.setFieldValue('_id', activeItem?._id);
+      formikRole.setFieldValue('name', activeItem?.name);
+      formikRole.setFieldValue('status', activeItem?.status);
     }
   }, [activeItem]);
 
@@ -91,28 +92,28 @@ export function AddEditDeleteBranch({
     <>
       {showAddEditModal && (
         <AModal
-          title={`${activeItem?._id ? 'Edit' : 'Add'} Branch`}
-          onSave={formikBranch.handleSubmit}
+          title={`${activeItem?._id ? 'Edit' : 'Add'} Role`}
+          onSave={formikRole.handleSubmit}
           closeModal={() => {
             closeAddEditModal();
-            formikBranch.resetForm();
+            formikRole.resetForm();
           }}
         >
           <div className="flex flex-col">
             <AInputField
               type="text"
-              label="Branch Name*"
-              error={formikBranch.errors.name}
-              formik={formikBranch.getFieldProps('name')}
+              label="Role Name*"
+              error={formikRole.errors.name}
+              formik={formikRole.getFieldProps('name')}
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'address'}
+              name={'status'}
               label={'Status'}
-              id="address"
+              id="status"
               options={statusList}
-              error={formikBranch.errors.address}
-              formik={formikBranch.getFieldProps('address')}
+              error={formikRole.errors.status}
+              formik={formikRole.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
             />
           </div>
@@ -122,8 +123,8 @@ export function AddEditDeleteBranch({
       {showDeleteModal && (
         <AModal
           saveText={'Delete'}
-          title={`Delete Branch`}
-          onSave={() => deleteBranch(activeItem?._id)}
+          title={`Delete Role`}
+          onSave={() => deleteRole(activeItem?._id)}
           closeModal={() => closeDeleteModal()}
         >
           <div className="flex flex-col">Are you sure want to delete?</div>

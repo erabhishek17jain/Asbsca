@@ -7,10 +7,7 @@ import {
   Squares2X2Icon,
   UserIcon,
   UsersIcon,
-  MapPinIcon,
-  BuildingLibraryIcon,
 } from '@heroicons/react/24/solid';
-import { MastersTable } from '../pages/Masters/MastersTable';
 
 export const baseAPI = '/api/v1';
 
@@ -54,30 +51,6 @@ export const pages = [
     label: 'Profile',
     value: 'profile',
     icon: <Cog6ToothIcon className="h-5 w-5" />,
-  },
-];
-
-export const mastersCards = [
-  {
-    label: 'Client',
-    value: 'client',
-    count: 0,
-    icon: BuildingLibraryIcon,
-    component: <MastersTable type="Client" />,
-  },
-  {
-    label: 'Product',
-    value: 'product',
-    count: 0,
-    icon: UserIcon,
-    component: <MastersTable type="Product" />,
-  },
-  {
-    label: 'Branch',
-    value: 'branch',
-    count: 0,
-    icon: MapPinIcon,
-    component: <MastersTable type="Branch" />,
   },
 ];
 
@@ -180,17 +153,26 @@ export const USER_TABLE_HEAD = [
   'Action',
 ];
 
-export const CLIENT_TABLE_HEAD = ['', 'Cient Name', 'Status', 'Action'];
+export const CLIENT_TABLE_HEAD = [
+  '',
+  'Cient Name',
+  'Branch',
+  'Signature',
+  'Status',
+  'Action',
+];
 
 export const PRODUCT_TABLE_HEAD = [
   '',
-  'Client Name',
   'Product Name',
+  'Client Name',
   'Status',
   'Action',
 ];
 
 export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
+
+export const ROLE_TABLE_HEAD = ['', 'Role Name', 'Status', 'Action'];
 
 export const calander = [
   { label: 'Last 7 Days', value: 7 },

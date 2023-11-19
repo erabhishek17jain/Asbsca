@@ -249,7 +249,7 @@ export async function assignCase(values: any) {
 export async function updateRole(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/roles/update`, values);
+      const { data } = await axios.put(`${baseAPI}/users/roles/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -261,7 +261,7 @@ export async function updateRole(values: any) {
 export async function updateClient(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/clients/update`, values);
+      const { data } = await axios.put(`${baseAPI}/clients/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -273,7 +273,7 @@ export async function updateClient(values: any) {
 export async function updateProduct(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/clients/product/update`, values);
+      const { data } = await axios.put(`${baseAPI}/clients/product/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -285,7 +285,7 @@ export async function updateProduct(values: any) {
 export async function updateBranch(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/clients/branch/update`, values);
+      const { data } = await axios.put(`${baseAPI}/clients/branch/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {

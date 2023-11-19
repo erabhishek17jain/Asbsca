@@ -24,7 +24,7 @@ import ASingleSelect from '../../components-global/ASingleSelect';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { addRole, addUser, deleteUserById } from '../../services';
+import { addUser, deleteUserById } from '../../services';
 import store from '../../store/store';
 import { fetchAllUsersAsync } from '../../slices/usersSlice';
 import { fetchAllRolesAsync } from '../../slices/rolesSlice';
@@ -36,56 +36,13 @@ const Users = () => {
   const { allRoles } = useSelector((state: any) => state.roles);
   const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allUsers } = useSelector((state: any) => state.users);
-  const [showAddRole, setShowAddRole] = useState(false);
-  const [showDeleteUser, setShowDeleteUser] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [showDeleteUser, setShowDeleteUser] = useState(false);
   const [showAddEditUser, setShowAddEditUser] = useState(false);
   const [roleOptions, setRoleOptions] = useState<any>([]);
   const [branchOptions, setBranchOptions] = useState<any>([]);
 
-  const initialValuesRole = {
-    name: '',
-    permissions: [],
-    status: '',
-  };
-
-  const validationSchemaRole = Yup.object().shape({
-    name: Yup.string().required('This field is required'),
-    status: Yup.string().required('This field is required'),
-  });
-
-  const validateFunctionRole = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
-
-  const onSubmitRole = async (values: any) => {
-    values = await Object.assign(values);
-    let addRolePromise = addRole(values);
-    addRolePromise
-      .then((res: any) => {
-        console.log(res.data);
-        closeRoleModal();
-        formikRole.resetForm();
-        store.dispatch(fetchAllRolesAsync(''));
-        toast.success(<b>Role added sucessfully.</b>);
-      })
-      .catch((e: any) => {
-        toast.error(<b>{e?.error?.response?.data?.message}</b>);
-      });
-  };
-
-  const formikRole = useFormik({
-    initialValues: initialValuesRole,
-    validate: validateFunctionRole,
-    validationSchema: validationSchemaRole,
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: onSubmitRole,
-  });
-
-  const initialValuesUser = {
+  const initialValues = {
     fullName: '',
     username: '',
     password: 'admin@123',
@@ -98,7 +55,7 @@ const Users = () => {
     about: '',
   };
 
-  const validationSchemaUser = Yup.object().shape({
+  const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('This field is required'),
     username: Yup.string().required('This field is required'),
     password: Yup.string().required('This field is required'),
@@ -109,20 +66,20 @@ const Users = () => {
     status: Yup.string().required('This field is required'),
   });
 
-  const validateFunctionUser = async (values: any) => {
+  const validateFunction = async (values: any) => {
     console.log(values);
     const errors = {};
     return errors;
   };
 
-  const onSubmitUser = async (values: any) => {
+  const onSubmit = async (values: any) => {
     values = await Object.assign(values);
     let addUserPromise = addUser(values);
     addUserPromise
       .then((res: any) => {
         console.log(res.data);
         closeUserModal();
-        formikUser.resetForm();
+        formik.resetForm();
         store.dispatch(fetchAllUsersAsync(''));
         toast.success(<b>User added sucessfully.</b>);
       })
@@ -131,23 +88,18 @@ const Users = () => {
       });
   };
 
-  const formikUser = useFormik({
-    initialValues: initialValuesUser,
-    validate: validateFunctionUser,
-    validationSchema: validationSchemaUser,
+  const formik = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: onSubmitUser,
+    onSubmit: onSubmit,
   });
 
   const closeUserModal = () => {
-    formikUser.resetForm();
+    formik.resetForm();
     setShowAddEditUser(false);
-  };
-
-  const closeRoleModal = () => {
-    formikRole.resetForm();
-    setShowAddRole(false);
   };
 
   const closeDeleteUserModal = () => {
@@ -210,10 +162,7 @@ const Users = () => {
         <ATable
           data={allUsers}
           header={
-            <UsersHeader
-              openRoleModal={() => setShowAddRole(true)}
-              openUserModal={() => setShowAddEditUser(true)}
-            />
+            <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
           }
           tableBody={
             <UsersBody
@@ -228,7 +177,7 @@ const Users = () => {
         <AModal
           saveText={'Add'}
           title={'Add User'}
-          onSave={formikUser.handleSubmit}
+          onSave={formik.handleSubmit}
           closeModal={closeUserModal}
         >
           <div className="flex flex-col ">
@@ -236,62 +185,62 @@ const Users = () => {
               type="text"
               label="Name*"
               id="fullName"
-              error={formikUser.errors.fullName}
-              formik={formikUser.getFieldProps('fullName')}
+              error={formik.errors.fullName}
+              formik={formik.getFieldProps('fullName')}
               icon={<UsersIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
               label="Emp ID*"
               id="username"
-              error={formikUser.errors.username}
-              formik={formikUser.getFieldProps('username')}
+              error={formik.errors.username}
+              formik={formik.getFieldProps('username')}
               icon={<IdentificationIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
               label="Email ID*"
               id="email"
-              error={formikUser.errors.email}
-              formik={formikUser.getFieldProps('email')}
+              error={formik.errors.email}
+              formik={formik.getFieldProps('email')}
               icon={<EnvelopeIcon className="h-4 w-4" />}
             />
             <AInputField
               type="text"
               label="Mobile No.*"
               id="mobile"
-              error={formikUser.errors.mobile}
-              formik={formikUser.getFieldProps('mobile')}
+              error={formik.errors.mobile}
+              formik={formik.getFieldProps('mobile')}
               icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id="address"
               label={'Location*'}
-              error={formikUser.errors.address}
-              formik={formikUser.getFieldProps('address')}
+              error={formik.errors.address}
+              formik={formik.getFieldProps('address')}
               icon={<MapPinIcon className="h-4 w-4" />}
               options={branchOptions}
             />
             <ASingleSelect
               id="role"
               label={'Role*'}
-              error={formikUser.errors.role}
-              formik={formikUser.getFieldProps('role')}
+              error={formik.errors.role}
+              formik={formik.getFieldProps('role')}
               icon={<UsersIcon className="h-4 w-4" />}
               options={roleOptions}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
-              error={formikUser.errors.status}
-              formik={formikUser.getFieldProps('status')}
+              error={formik.errors.status}
+              formik={formik.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
               options={statusList}
             />
             <AFileUpload
               id={'profile'}
               label={'Profile'}
-              formik={formikUser}
+              formik={formik}
               icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
             />
           </div>
@@ -306,36 +255,6 @@ const Users = () => {
         >
           <div className="flex gap-1">
             Are you sure want to delete this <b> {user?.fullName}</b>?
-          </div>
-        </AModal>
-      )}
-      {showAddRole && (
-        <AModal
-          saveText={'Add'}
-          title={'Add Role'}
-          onSave={formikRole.handleSubmit}
-          closeModal={closeRoleModal}
-        >
-          <div className="flex flex-col ">
-            <AInputField
-              id="name"
-              type="text"
-              label="Role Name*"
-              error={formikRole.errors.name}
-              formik={formikRole.getFieldProps('name')}
-              icon={<UsersIcon className="h-4 w-4" />}
-            />
-            <ASingleSelect
-              id="status"
-              label={'Status'}
-              error={formikRole.errors.status}
-              formik={formikRole.getFieldProps('status')}
-              icon={<CheckIcon className="h-4 w-4" />}
-              options={[
-                { label: 'Active', value: 'active' },
-                { label: 'Inactive', value: 'inactive' },
-              ]}
-            />
           </div>
         </AModal>
       )}

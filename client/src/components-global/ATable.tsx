@@ -48,7 +48,7 @@ export const TableColumn = ({
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal"
+              className="font-normal capitalize"
             >
               {label}
             </Typography>

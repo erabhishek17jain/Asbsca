@@ -3,7 +3,7 @@ const AButton = ({ type, action, label, variant, icon = '' }: any) => {
     <button
       type={type}
       onClick={action}
-      className={`flex justify-center items-center gap-1 rounded-lg font-medium  
+      className={`flex justify-center items-center gap-1 rounded-lg font-medium capitalize
           ${
             variant === 'small' &&
             'py-1 px-2 border border-main text-main hover:bg-grey'

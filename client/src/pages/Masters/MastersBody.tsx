@@ -2,30 +2,40 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Tooltip } from '@material-tailwind/react';
 import { TableColumn } from '../../components-global/ATable';
 
-const MastersBody = ({ type, data, openAddEditModal, openDeleteModal }: any) => {
+const MastersBody = ({
+  type,
+  data,
+  openAddEditModal,
+  openDeleteModal,
+}: any) => {
   return data.map((item: any, index: number) => {
     const isLast = index === data.length - 1;
     const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
     return (
-      <tr key={item?.clientName}>
+      <tr key={item?.name}>
         <TableColumn classes={classes} label={index + 1} />
-        {type !== 'Branch' && (
+        <TableColumn
+          classes={classes}
+          label={item?.name}
+          icon={type === 'client' ? item?.logo : ''}
+        />
+        {type === 'product' && (
           <TableColumn
             classes={classes}
-            label={item?.clientName}
+            label={item?.client}
             icon={item?.logo}
           />
         )}
-        {type === 'Product' && (
-          <TableColumn classes={classes} label={item?.productName} />
-        )}
-        {type === 'Branch' && (
-          <TableColumn classes={classes} label={item?.name} />
+        {type === 'client' && (
+          <>
+            <TableColumn classes={classes} label={item?.branch} />
+            <TableColumn classes={classes} icon={item?.signature} />
+          </>
         )}
         <TableColumn
           classes={classes}
-          label={item?.address}
-          color={item?.address === 'active' ? 'green' : 'red'}
+          label={item?.status}
+          color={item?.status === 'active' ? 'green' : 'red'}
         />
         <td className={classes}>
           <div className="flex gap-3">
