@@ -42,9 +42,7 @@ export const TableColumn = ({
         </div>
       ) : (
         <div className="flex items-center gap-2">
-          {icon !== '' && (
-            <img src={icon} className="h-8 w-8 rounded-full"/>
-          )}
+          {icon !== '' && <img src={icon} className="h-8 w-8 rounded-full" />}
           {label !== '' && (
             <Typography
               variant="small"
@@ -66,10 +64,16 @@ const ATable = ({ header, tableHeader, tableBody, data }: any) => {
 
   return (
     <Card className="h-full w-full shadow-lg">
-      <CardHeader floated={false} shadow={false} className="rounded-none pt-1">
-        {header}
-      </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      {header && (
+        <CardHeader
+          floated={false}
+          shadow={false}
+          className="rounded-none pt-1"
+        >
+          {header}
+        </CardHeader>
+      )}
+      <CardBody className="overflow-scroll py-4 px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>

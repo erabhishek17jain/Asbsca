@@ -32,6 +32,7 @@ export async function authentication(
       return Promise.resolve({ data });
     }
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -42,6 +43,7 @@ export async function resetPassword({ rejectWithValue }: any) {
     const { data } = await axios.post(`${baseAPI}/users/resetPassword`);
     return Promise.resolve({ data });
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -53,6 +55,7 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/users/self-detail`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -69,6 +72,7 @@ export async function allCasesList(values: any, { rejectWithValue }: any) {
     );
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -79,6 +83,7 @@ export async function allUsersList(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/users/list`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -89,6 +94,7 @@ export async function getAanalytics(payload: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/cases/analytics`, payload);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -99,6 +105,7 @@ export async function getRoles(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/users/roles/list`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -109,6 +116,7 @@ export async function getClients(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/clients/list`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -119,6 +127,7 @@ export async function getProducts(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/clients/product/list`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -129,6 +138,7 @@ export async function getBranchs(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/clients/branch/list`);
     return response.data;
   } catch (error: any) {
+    showError(error);
     return rejectWithValue(error.response.data);
   }
 }
@@ -142,7 +152,7 @@ export async function addCase(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -154,7 +164,7 @@ export async function addUser(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -169,7 +179,7 @@ export async function addRole(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -181,7 +191,7 @@ export async function addClient(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -196,7 +206,7 @@ export async function addProduct(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -211,7 +221,7 @@ export async function addBranch(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 
@@ -247,7 +257,7 @@ export async function assignCase(values: any) {
       return Promise.resolve({ data });
     }
   } catch (error) {
-    return Promise.reject({ error: error });
+    showError(error);
   }
 }
 

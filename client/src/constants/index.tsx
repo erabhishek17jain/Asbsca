@@ -134,6 +134,7 @@ export const casesTypes = [
       'Received Date',
       "Applicant's Name",
       'Mobile',
+      'Address',
       'City',
       'Branch',
       'Type',

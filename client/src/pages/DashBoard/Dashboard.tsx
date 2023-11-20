@@ -11,8 +11,8 @@ import { fetchCasesAnalyticsAsync } from '../../slices/casesSlice.tsx';
 import { useEffect, useState } from 'react';
 import store from '../../store/store.tsx';
 import moment from 'moment';
-import CasesHeader from '../Cases/CasesHeader.tsx';
 import CasesBody from '../Cases/CasesBody.tsx';
+import { Typography } from '@material-tailwind/react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -100,22 +100,32 @@ const Dashboard = () => {
           <ReportStatusPie />
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-12 gap-3 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-8 flex flex-col">
         {topAssignedCases.length > 0 && (
-          <div
-            className={
-              userDetails?.role?.name === 'admin'
-                ? 'col-span-12 xl:col-span-8'
-                : 'col-span-12 xl:col-span-12'
-            }
-          >
-            <ATable
-              data={topAssignedCases}
-              header={<CasesHeader />}
-              tableHeader={tableRaw?.header}
-              tableBody={<CasesBody assigned={topAssignedCases} />}
-            />
-          </div>
+          <>
+            <Typography variant="h5" color="blue-gray" className="px-4">
+              Top Assigned Cases
+            </Typography>
+            <div
+              className={
+                userDetails?.role?.name === 'admin'
+                  ? 'col-span-12 xl:col-span-8'
+                  : 'col-span-12 xl:col-span-12'
+              }
+            >
+              <ATable
+                data={topAssignedCases}
+                tableHeader={tableRaw?.header}
+                tableBody={
+                  <CasesBody
+                    status={'assigned'}
+                    allcases={topAssignedCases}
+                    role={userDetails?.role?.name}
+                  />
+                }
+              />
+            </div>
+          </>
         )}
         {userDetails?.role?.name === 'admin' && topPerfomers.length > 0 && (
           <TopPerformers topPerfomers={topPerfomers} />

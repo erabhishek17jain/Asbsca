@@ -35,21 +35,21 @@ const Cases = () => {
     const status = pathname?.slice(1);
     const raw = casesTypes.find((item: any) => item.id === status);
     setTableRaw({ ...raw });
-    if (status === 'cases') {
-      setFilters({});
-    } else if (status === 'assigned') {
-      setFilters({ filterBy: 'assignTo', filterValue: userDetails?._id });
-    } else if (status === 'review') {
-      setFilters({
-        filterBy: 'reviewer',
-        filterValue: userDetails?._id,
-      });
-    } else if (status === 'reports') {
-      setFilters({
-        filterBy: 'status',
-        filterValue: 'Report Sent',
-      });
-    }
+    // if (status === 'cases') {
+    //   setFilters({});
+    // } else if (status === 'assigned') {
+    //   setFilters({ filterBy: 'assignTo', filterValue: userDetails?._id });
+    // } else if (status === 'review') {
+    //   setFilters({
+    //     filterBy: 'reviewer',
+    //     filterValue: userDetails?._id,
+    //   });
+    // } else if (status === 'reports') {
+    //   setFilters({
+    //     filterBy: 'status',
+    //     filterValue: 'Report Sent',
+    //   });
+    // }
   }, [pathname]);
 
   return (
@@ -90,6 +90,7 @@ const Cases = () => {
           tableBody={
             <CasesBody
               allcases={allCases?.cases}
+              status={pathname?.slice(1)}
               role={userDetails?.role?.name}
             />
           }
