@@ -58,9 +58,15 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
 }
 
 /** all user list */
-export async function allCasesList(_: any, { rejectWithValue }: any) {
+export async function allCasesList(values: any, { rejectWithValue }: any) {
+  let str = '';
+  for (const key in values) {
+    str = str + `${key}=${values[key]}&`;
+  }
   try {
-    const response = await axios.get(`${baseAPI}/cases/list`);
+    const response = await axios.get(
+      `${baseAPI}/cases/list?${str.slice(0, -1)}`,
+    );
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
@@ -273,7 +279,10 @@ export async function updateClient(values: any) {
 export async function updateProduct(values: any) {
   try {
     if (values) {
-      const { data } = await axios.put(`${baseAPI}/clients/product/update`, values);
+      const { data } = await axios.put(
+        `${baseAPI}/clients/product/update`,
+        values,
+      );
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -285,7 +294,10 @@ export async function updateProduct(values: any) {
 export async function updateBranch(values: any) {
   try {
     if (values) {
-      const { data } = await axios.put(`${baseAPI}/clients/branch/update`, values);
+      const { data } = await axios.put(
+        `${baseAPI}/clients/branch/update`,
+        values,
+      );
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -310,7 +322,9 @@ export async function deleteUserById(id: any) {
 export async function deleteRoleById(id: any) {
   try {
     if (id) {
-      const { data } = await axios.delete(`${baseAPI}/users/roles/delete/${id}`);
+      const { data } = await axios.delete(
+        `${baseAPI}/users/roles/delete/${id}`,
+      );
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -355,17 +369,6 @@ export async function deleteBranchById(id: any) {
     }
   } catch (error) {
     showError(error);
-  }
-}
-
-export async function fetchCasesByFilter(values: any) {
-  try {
-    const response = await axios.post(`${baseAPI}/cases/list`, {
-      filters: values,
-    });
-    return response?.data;
-  } catch (err) {
-    return console.log(err);
   }
 }
 

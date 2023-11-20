@@ -5,7 +5,6 @@ import SignIn from './pages/SignIn/SignIn';
 import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero/Hero';
-import ResetPassword from './pages/ResetPassword/ResetPassword';
 import { CookiesProvider, useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import DefaultLayout from './layout/DefaultLayout';
@@ -47,18 +46,15 @@ function App() {
             {routes.map((routes, index) => {
               const { path, component: Component } = routes;
               return (
-                <>
-                  <Route
-                    key={index}
-                    path={path}
-                    element={
-                      <Suspense fallback={<ALoader />}>
-                        <Component />
-                      </Suspense>
-                    }
-                  />
-                  <Route path="/resetPassword" element={<ResetPassword />} />
-                </>
+                <Route
+                  key={index}
+                  path={path}
+                  element={
+                    <Suspense fallback={<ALoader />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
               );
             })}
           </Route>

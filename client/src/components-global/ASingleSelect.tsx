@@ -8,6 +8,8 @@ const ASingleSelect = ({
   variant = 'vertical',
   formik,
   options,
+  value,
+  handleChange
 }: any) => {
   return (
     <div
@@ -23,18 +25,38 @@ const ASingleSelect = ({
         {label}
       </label>
       <div className="relative w-full z-20 bg-white">
-        <select
-          id={id}
-          {...formik}
-          className="relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
-        >
-          <option value="" key={id}>Select {label}</option>
-          {options?.map((item: any) => (
-            <option key={item?.value} value={item?.value}>
-              {item?.label}
+        {formik ? (
+          <select
+            id={id}
+            {...formik}
+            className="abc relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
+          >
+            <option value="" key={id}>
+              Select {label}
             </option>
-          ))}
-        </select>
+            {options.map((item: any) => (
+              <option key={item?.value} value={item?.value}>
+                {item?.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <select
+            id={id}
+            value={value}
+            onChange={handleChange}
+            className="def relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
+          >
+            <option value="" key={id}>
+              Select {label}
+            </option>
+            {options.map((item: any) => (
+              <option key={item?.value} value={item?.value}>
+                {item?.label}
+              </option>
+            ))}
+          </select>
+        )}
         <span
           className={`absolute top-1/2 -translate-y-1/2 ${
             icon ? 'right-10' : 'right-3'

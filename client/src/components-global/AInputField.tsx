@@ -1,12 +1,12 @@
 const AInputField = ({
-  type = '',
   id = '',
+  type = '',
   label = '',
   icon = '',
   error = '',
+  formik = {},
   disabled = false,
   variant = 'vertical',
-  formik = {},
 }: any) => {
   return (
     <div

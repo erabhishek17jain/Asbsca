@@ -12,11 +12,11 @@ export function fileToBase64(file: any) {
   });
 }
 
-export function getOptions(data: any) {
+export function getOptions(data: any, label: string, value: string) {
   if (data?.length > 0) {
     const options: any[] = [];
     data.map((item: any) => {
-      options.push({ label: item.name, value: item.name });
+      options.push({ label: item[label], value: item[value] });
     });
     return options;
   }

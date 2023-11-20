@@ -3,7 +3,7 @@ import { Tooltip } from '@material-tailwind/react';
 import { TableColumn } from '../../components-global/ATable';
 import { useNavigate } from 'react-router-dom';
 
-const AllCasesBody = ({ role, allcases }: any) => {
+const CasesBody = ({ role, allcases }: any) => {
   const navigate = useNavigate();
   
   return allcases && allcases?.map((item: any, index: number) => {
@@ -19,41 +19,43 @@ const AllCasesBody = ({ role, allcases }: any) => {
           icon={item?.bankIcon}
         />
         <TableColumn classes={classes} label={item?.referenceId} />
-        <TableColumn classes={classes} label={item?.recievedDate} />
-        <TableColumn classes={classes} label={item?.appicantName} />
-        <TableColumn classes={classes} label={item?.mobileNo} />
+        <TableColumn classes={classes} label={item?.receivedDate} />
+        <TableColumn classes={classes} label={item?.name} />
+        <TableColumn classes={classes} label={item?.mobile} />
+        <TableColumn classes={classes} label={item?.address} />
         <TableColumn classes={classes} label={item?.city} />
-        <TableColumn classes={classes} label={item?.loanAmt} />
-        <TableColumn classes={classes} label={item?.caseType} />
+        <TableColumn classes={classes} label={item?.branch} />
+        <TableColumn classes={classes} label={item?.loanAmount} />
+        <TableColumn classes={classes} label={item?.localOrOGL} />
+        <TableColumn classes={classes} label={item?.type} />
         <TableColumn
           classes={classes}
-          label={item?.caseStatus}
+          label={item?.status}
           color={
-            item?.caseStatus === 'Assigned' || item?.caseStatus === 'Query'
+            item?.status === 'Assigned' || item?.status === 'Query'
               ? 'amber'
-              : item?.caseStatus === 'Completed' ||
-                item?.caseStatus === 'Sent to Bank'
+              : item?.status === 'Completed' || item?.status === 'Sent to Bank'
               ? 'green'
-              : item?.caseStatus === 'Reviewing'
+              : item?.status === 'Reviewing'
               ? 'blue'
               : 'gray'
           }
         />
         <TableColumn
           classes={classes}
-          label={item?.appointmentStatus}
+          label={item?.appStatus}
           color={
-            item?.appointmentStatus === 'Not Responding'
+            item?.appStatus === 'Not Responding'
               ? 'red'
-              : item?.appointmentStatus === 'Scheduled'
+              : item?.appStatus === 'Scheduled'
               ? 'amber'
-              : item?.appointmentStatus === 'Visited'
+              : item?.appStatus === 'Visited'
               ? 'green'
               : 'gray'
           }
         />
         <TableColumn classes={classes} label={item?.remark} />
-        <TableColumn classes={classes} label={item?.assignedTo} />
+        <TableColumn classes={classes} label={item?.assignTo} />
         <TableColumn classes={classes} label={item?.reviewer} />
         <td className={classes}>
           {role === 'admin' && (
@@ -80,4 +82,4 @@ const AllCasesBody = ({ role, allcases }: any) => {
   });
 };
 
-export default AllCasesBody;
+export default CasesBody;

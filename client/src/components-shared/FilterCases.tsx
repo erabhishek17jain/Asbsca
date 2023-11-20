@@ -14,39 +14,51 @@ import AInputField from '../components-global/AInputField';
 import { useSelector } from 'react-redux';
 import { CSVLink } from 'react-csv';
 import { Tooltip } from '@material-tailwind/react';
+import { useFormik } from 'formik';
+import { useState, useEffect } from 'react';
+import { getOptions } from '../utils';
+import { appStatusList, caseStatusList } from '../constants';
+import store from '../store/store';
+import { fetchAllClientsAsync } from '../slices/clientsSlice';
+import { fetchAllUsersAsync } from '../slices/usersSlice';
 
-export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
+export const FilterButtons = ({
+  showFilter,
+  showHideFilters,
+  defaultFilters,
+  setDefaultFilters,
+}: any) => {
   const { userDetails } = useSelector((state: any) => state.users);
-  const rows = [
-    { Dessert: 'Cupcake', Calories: 305, Fat: 3.7, Carbs: 67, Protein: 4.3 },
-    { Dessert: 'Donut', Calories: 452, Fat: 25.0, Carbs: 51, Protein: 4.9 },
-    { Dessert: 'Eclair', Calories: 262, Fat: 16.0, Carbs: 24, Protein: 6.0 },
-    {
-      Dessert: 'Frozen Yoghurt',
-      Calories: 159,
-      Fat: 6.0,
-      Carbs: 24,
-      Protein: 4.0,
+  const rows: any = [];
+
+  const formik = useFormik({
+    initialValues: {
+      search: '',
     },
-    {
-      Dessert: 'Gingerbread',
-      Calories: 356,
-      Fat: 16.0,
-      Carbs: 49,
-      Protein: 3.9,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values: any) => {
+      setDefaultFilters({ ...defaultFilters, search: values?.search });
     },
-    { Dessert: 'Honeycomb', Calories: 408, Fat: 3.2, Carbs: 87, Protein: 6.5 },
-    { Dessert: 'Ice Cream', Calories: 237, Fat: 9.0, Carbs: 37, Protein: 4.3 },
-  ];
+  });
   return (
     <>
-      <div className="w-full md:w-72">
+      <div className="flex gap-1 w-full md:w-72">
         <AInputField
           type={'text'}
-          name={'search'}
+          id={'search'}
           variant={'horizantal'}
-          icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+          error={formik.errors.search}
+          formik={formik.getFieldProps('search')}
         />
+        <div className="flex mb-8">
+          <AButton
+            label={''}
+            variant={'secondary'}
+            action={() => formik.handleSubmit()}
+            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+          />
+        </div>
       </div>
       {userDetails?.role?.name === 'admin' && (
         <Tooltip content="Edit Case">
@@ -70,7 +82,30 @@ export const FilterButtons = ({ showFilter, showHideFilters }: any) => {
   );
 };
 
-export const FilterCases = ({ showFilter, showHideFilters }: any) => {
+export const FilterCases = ({
+  filters,
+  setFilters,
+  showFilter,
+  showHideFilters,
+}: any) => {
+  const { allClients } = useSelector((state: any) => state.clients);
+  const { allUsers } = useSelector((state: any) => state.users);
+  const [clientOptions, setClientOptions] = useState<any>([]);
+  const [assignOptions, setAssignOptions] = useState<any>([]);
+
+  useEffect(() => {
+    setClientOptions(getOptions(allClients, 'name', 'name'));
+  }, [allClients]);
+
+  useEffect(() => {
+    setAssignOptions(getOptions(allUsers, 'fullName', '_id'));
+  }, [allUsers]);
+
+  useEffect(() => {
+    store.dispatch(fetchAllUsersAsync(''));
+    store.dispatch(fetchAllClientsAsync(''));
+  }, []);
+
   return (
     <div className="flex flex-col w-full justify-end gap-2 p-4 border rounded-lg">
       <span className="flex justify-between">
@@ -88,26 +123,54 @@ export const FilterCases = ({ showFilter, showHideFilters }: any) => {
         <ASingleSelect
           name={'bankName'}
           label={'Bank Name'}
+          options={clientOptions}
+          value={filters?.filterValue}
+          handleChange={(e: any) => {
+            setFilters({
+              filterBy: 'bankName',
+              filterValue: e.target.value,
+            });
+          }}
           icon={<BuildingLibraryIcon className="h-4 w-4" />}
-          options={[]}
         />
         <ASingleSelect
-          name={'appointmentStatus'}
-          label={'Appointment Status'}
-          icon={<CheckIcon className="h-4 w-4" />}
-          options={[]}
-        />
-        <ASingleSelect
-          name={'caseType'}
-          label={'Case Type'}
-          icon={<TagIcon className="h-4 w-4" />}
-          options={[]}
-        />
-        <ASingleSelect
-          name={'assignedTo'}
+          name={'assignTo'}
           label={'Assigned To'}
           icon={<UserIcon className="h-4 w-4" />}
-          options={[]}
+          options={assignOptions}
+          value={filters?.filterValue}
+          handleChange={(e: any) => {
+            setFilters({
+              filterBy: 'assignTo',
+              filterValue: e.target.value,
+            });
+          }}
+        />
+        <ASingleSelect
+          name={'status'}
+          label={'Case Type'}
+          icon={<TagIcon className="h-4 w-4" />}
+          options={caseStatusList}
+          value={filters?.filterValue}
+          handleChange={(e: any) => {
+            setFilters({
+              filterBy: 'status',
+              filterValue: e.target.value,
+            });
+          }}
+        />
+        <ASingleSelect
+          name={'appStatus'}
+          label={'Appointment Status'}
+          icon={<CheckIcon className="h-4 w-4" />}
+          options={appStatusList}
+          value={filters?.filterValue}
+          handleChange={(e: any) => {
+            setFilters({
+              filterBy: 'appStatus',
+              filterValue: e.target.value,
+            });
+          }}
         />
       </span>
     </div>

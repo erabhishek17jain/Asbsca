@@ -6,13 +6,13 @@ import AButton from '../../components-global/AButton.tsx';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import ATable from '../../components-global/ATable.tsx';
-import { ASSIGNED_CASES_TABLE_HEAD, calander } from '../../constants/index.tsx';
-import AssignedCasesBody from '../AssignedCases/AssignedCasesBody.tsx';
-import AssignedCasesHeader from '../AssignedCases/AssignedCasesHeader.tsx';
+import { calander, casesTypes } from '../../constants/index.tsx';
 import { fetchCasesAnalyticsAsync } from '../../slices/casesSlice.tsx';
 import { useEffect, useState } from 'react';
 import store from '../../store/store.tsx';
 import moment from 'moment';
+import CasesHeader from '../Cases/CasesHeader.tsx';
+import CasesBody from '../Cases/CasesBody.tsx';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const Dashboard = () => {
   const [filterBy, setFilterBy] = useState(30);
   const [topAssignedCases, setTopAssignedCases] = useState<any>([]);
   const [topPerfomers, setTopPerfomers] = useState<any>([]);
+  const [tableRaw, setTableRaw] = useState<any>({});
 
   const filterByDays = (e: any) => {
     setFilterBy(e.target.value);
@@ -41,6 +42,8 @@ const Dashboard = () => {
     if (analytics?.productiveUsers?.length) {
       setTopPerfomers([...analytics.productiveUsers]);
     }
+    const raw = casesTypes.find((item: any) => item.id === 'assigned');
+    setTableRaw({ ...raw });
   }, [analytics]);
 
   return (
@@ -108,9 +111,9 @@ const Dashboard = () => {
           >
             <ATable
               data={topAssignedCases}
-              header={<AssignedCasesHeader />}
-              tableHeader={ASSIGNED_CASES_TABLE_HEAD}
-              tableBody={<AssignedCasesBody assigned={topAssignedCases} />}
+              header={<CasesHeader />}
+              tableHeader={tableRaw?.header}
+              tableBody={<CasesBody assigned={topAssignedCases} />}
             />
           </div>
         )}

@@ -3,19 +3,13 @@ import { lazy } from 'react';
 const Dashboard = lazy(() => import('../pages/DashBoard/Dashboard'));
 const AddCase = lazy(() => import('../pages/DashBoard/AddCase'));
 const AddBulkCase = lazy(() => import('../pages/DashBoard/AddBulkCase/AddBulkCase'));
-const AllCases = lazy(() => import('../pages/AllCases/AllCases'));
-const AssignedCases = lazy(
-  () => import('../pages/AssignedCases/AssignedCases'),
-);
+const Cases = lazy(() => import('../pages/Cases/Cases'));
 const GeneratePD = lazy(() => import('../pages/GeneratePD/GeneratePD'));
 const FinalReport = lazy(() => import('../pages/FinalReport/FinalReport'));
-const ReviewCases = lazy(
-  () => import('../pages/ReviewCases/ReviewCases'),
-);
-const Reports = lazy(() => import('../pages/Reports/Reports'));
 const Users = lazy(() => import('../pages/Users/Users'));
 const Masters = lazy(() => import('../pages/Masters/Masters'));
 const Profile = lazy(() => import('../pages/Profile/Profile'));
+const ChangePassword = lazy(() => import('../pages/ChangePassword/ChangePassword'));
 
 const coreRoutes = [
   {
@@ -36,12 +30,12 @@ const coreRoutes = [
   {
     path: '/cases',
     title: 'All Cases',
-    component: AllCases,
+    component: Cases,
   },
   {
     path: '/assigned',
     title: 'Assigned Cases',
-    component: AssignedCases,
+    component: Cases,
   },
   {
     path: '/generatePD',
@@ -56,12 +50,12 @@ const coreRoutes = [
   {
     path: '/review',
     title: 'For Review Cases',
-    component: ReviewCases,
+    component: Cases,
   },
   {
     path: '/reports',
     title: 'Reports',
-    component: Reports,
+    component: Cases,
   },
   {
     path: '/masters',
@@ -77,6 +71,11 @@ const coreRoutes = [
     path: '/profile',
     title: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/resetPassword',
+    title: 'Reset Password',
+    component: ChangePassword,
   },
 ];
 

@@ -13,15 +13,19 @@ import { fetchAllClientsAsync } from '../../slices/clientsSlice';
 import { fetchAllProductsAsync } from '../../slices/productsSlice';
 import store from '../../store/store';
 import { useSelector } from 'react-redux';
-import { BuildingLibraryIcon, UserIcon, MapPinIcon } from '@heroicons/react/24/solid';
+import {
+  BuildingLibraryIcon,
+  UserIcon,
+  MapPinIcon,
+} from '@heroicons/react/24/solid';
 import { MastersTable } from './MastersTable';
 import { fetchAllRolesAsync } from '../../slices/rolesSlice';
 const Masters = () => {
   const { allClients } = useSelector((state: any) => state.clients);
   const { allProducts } = useSelector((state: any) => state.products);
-const { allBranchs } = useSelector((state: any) => state.branchs);
+  const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allRoles } = useSelector((state: any) => state.roles);
-  
+
   useEffect(() => {
     store.dispatch(fetchAllClientsAsync(''));
     store.dispatch(fetchAllProductsAsync(''));

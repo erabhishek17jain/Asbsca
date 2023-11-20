@@ -8,7 +8,7 @@ const LoanDetails = ({ formik }: any) => {
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
   useEffect(() => {
-    setClientOptions(getOptions(allClients));
+    setClientOptions(getOptions(allClients, 'name', 'name'));
   }, [allClients]);
   return (
     <div className="flex flex-col w-[60%] py-4">

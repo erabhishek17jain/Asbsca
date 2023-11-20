@@ -1,8 +1,18 @@
-import { Typography } from "@material-tailwind/react";
-import { useState } from "react";
-import { FilterButtons, FilterCases } from "../../components-shared/FilterCases";
+import { useState } from 'react';
+import { Typography } from '@material-tailwind/react';
+import {
+  FilterCases,
+  FilterButtons,
+} from '../../components-shared/FilterCases';
 
-const ReviewCasesHeader = ({ filters, setFilters }: any) => {
+const CasesHeader = ({
+  title,
+  description,
+  filters,
+  setFilters,
+  defaultFilters,
+  setDefaultFilters,
+}: any) => {
   const [showFilter, setShowFilter] = useState(false);
 
   const showHideFilters = (showFilter: boolean) => {
@@ -14,23 +24,25 @@ const ReviewCasesHeader = ({ filters, setFilters }: any) => {
       <div className="flex w-full justify-between gap-2">
         <div>
           <Typography variant="h5" color="blue-gray">
-            Review Cases
+            {title}
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            These are the list of cases to review.
+            {description}
           </Typography>
         </div>
         <div className="flex justify-between items-start gap-3">
           <FilterButtons
-            filters={filters}
-            setFilters={setFilters}
             showFilter={showFilter}
+            defaultFilters={defaultFilters}
             showHideFilters={showHideFilters}
+            setDefaultFilters={setDefaultFilters}
           />
         </div>
       </div>
       {showFilter && (
         <FilterCases
+          filters={filters}
+          setFilters={setFilters}
           showFilter={showFilter}
           showHideFilters={showHideFilters}
         />
@@ -39,4 +51,4 @@ const ReviewCasesHeader = ({ filters, setFilters }: any) => {
   );
 };
 
-export default ReviewCasesHeader;
+export default CasesHeader;

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { getAanalytics } from '../services';
+import { allCasesList, getAanalytics } from '../services';
 
 export interface ICase {}
 
@@ -9,37 +9,13 @@ export const fetchCasesAnalyticsAsync = createAsyncThunk(
   getAanalytics,
 );
 
-export const fetchAllCasesAsync = createAsyncThunk(
+export const fetchCasesAsync = createAsyncThunk(
   '/cases/allCases',
-  async (cases: any) => {
-    return cases;
-  },
-);
-
-export const fetchAssignedAsync = createAsyncThunk(
-  '/cases/assignedCases',
-  async (cases: any) => {
-    return cases;
-  },
-);
-export const fetchReviewedAsync = createAsyncThunk(
-  '/cases/reviewedCases',
-  async (cases: any) => {
-    return cases;
-  },
-);
-export const fetchCompletedAsync = createAsyncThunk(
-  '/cases/completedCases',
-  async (cases: any) => {
-    return cases;
-  },
+  allCasesList,
 );
 
 export interface ICasesState {
   allCases: any;
-  assignedCases: any;
-  reviewedCases: any;
-  completedCases: any;
   analytics: any;
   loading: boolean;
   error: any;
@@ -47,9 +23,6 @@ export interface ICasesState {
 
 const initialState: ICasesState = {
   allCases: [],
-  assignedCases: [],
-  reviewedCases: [],
-  completedCases: [],
   analytics: [],
   loading: false,
   error: null,
@@ -62,31 +35,27 @@ export const casesSlice = createSlice({
     allCases: (state: any, payload: any) => {
       state.allCases = payload;
     },
-    assignedCases: (state: any, payload: any) => {
-      state.assignedCases = payload;
-    },
-    reviewedCases: (state: any, payload: any) => {
-      state.reviewedCases = payload;
-    },
-    completedCases: (state: any, payload: any) => {
-      state.completedCases = payload;
-    },
     analytics: (state: any, payload: any) => {
       state.analytics = payload;
     },
   },
   extraReducers: {
-    [fetchAllCasesAsync.fulfilled.type]: (state, action) => {
-      state.allCases = action.payload;
+    [fetchCasesAsync.pending.type]: (state) => {
+      if (!state.loading) {
+        state.loading = true;
+      }
     },
-    [fetchAssignedAsync.fulfilled.type]: (state, action) => {
-      state.assignedCases = action.payload;
+    [fetchCasesAsync.fulfilled.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.allCases = action.payload;
+      }
     },
-    [fetchReviewedAsync.fulfilled.type]: (state, action) => {
-      state.reviewedCases = action.payload;
-    },
-    [fetchCompletedAsync.fulfilled.type]: (state, action) => {
-      state.completedCases = action.payload;
+    [fetchCasesAsync.rejected.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.error;
+      }
     },
     [fetchCasesAnalyticsAsync.pending.type]: (state) => {
       if (!state.loading) {
@@ -109,11 +78,5 @@ export const casesSlice = createSlice({
 });
 
 export const cases = (state: RootState) => state.cases;
-export const {
-  analytics,
-  allCases,
-  assignedCases,
-  reviewedCases,
-  completedCases,
-} = casesSlice.actions;
+export const { analytics, allCases } = casesSlice.actions;
 export default casesSlice.reducer;

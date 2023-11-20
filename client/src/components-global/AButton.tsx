@@ -8,9 +8,15 @@ const AButton = ({ type, action, label, variant, icon = '' }: any) => {
             variant === 'small' &&
             'py-1 px-2 border border-main text-main hover:bg-grey'
           }
-          ${variant === 'primary' && 'py-2 px-4 bg-main text-grey'}
+          ${
+            variant === 'primary' &&
+            'py-2 px-4 border border-main bg-main text-grey'
+          }
           ${variant === 'link' && 'text-main py-2 px-4 text-grey'}
-          ${variant === 'full' && 'py-2 px-4 w-full bg-main text-grey'}
+          ${
+            variant === 'full' &&
+            'py-2 px-4 border border-main w-full bg-main text-grey'
+          }
           ${
             variant === 'secondary' &&
             'py-2 px-4 border border-main text-main hover:bg-grey'

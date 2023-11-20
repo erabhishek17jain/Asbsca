@@ -17,7 +17,7 @@ const DefaultLayout = ({ cookies, setCookies }: any) => {
     if (cookies?.token !== '') {
       setToken(cookies.token);
     }
-    if (userDetails && error) {
+    if (userDetails) {
       navigate('/dashboard');
     } else if (error === 'Rejected') {
       setCookies('token', '');

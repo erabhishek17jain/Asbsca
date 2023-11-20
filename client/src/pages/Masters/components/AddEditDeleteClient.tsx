@@ -98,7 +98,7 @@ export function AddEditDeleteClient({
   };
 
   useEffect(() => {
-    setBranchs(getOptions(allBranchs));
+    setBranchs(getOptions(allBranchs, 'name', 'name'));
   }, [allBranchs]);
 
   useEffect(() => {

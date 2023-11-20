@@ -14,9 +14,11 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const SignIn = ({ cookies, setCookies }: any) => {
   const navigate = useNavigate();
+  const { error } = useSelector((state: any) => state.users);
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +57,7 @@ const SignIn = ({ cookies, setCookies }: any) => {
   });
 
   useEffect(() => {
-    if (cookies?.token !== '') {
+    if (cookies?.token !== '' && error === 'Rejected') {
       setToken(cookies.token);
       navigate('/dashboard');
     } else {
