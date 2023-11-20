@@ -38,7 +38,6 @@ function App() {
             path="/signin"
             element={<SignIn cookies={cookies} setCookies={setCookies} />}
           />
-          <Route path="/resetPassword" element={<ResetPassword />} />
           <Route index element={<Hero />} />
           <Route
             element={
@@ -48,15 +47,18 @@ function App() {
             {routes.map((routes, index) => {
               const { path, component: Component } = routes;
               return (
-                <Route
-                  key={index}
-                  path={path}
-                  element={
-                    <Suspense fallback={<ALoader />}>
-                      <Component />
-                    </Suspense>
-                  }
-                />
+                <>
+                  <Route
+                    key={index}
+                    path={path}
+                    element={
+                      <Suspense fallback={<ALoader />}>
+                        <Component />
+                      </Suspense>
+                    }
+                  />
+                  <Route path="/resetPassword" element={<ResetPassword />} />
+                </>
               );
             })}
           </Route>

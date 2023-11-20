@@ -18,8 +18,10 @@ import {
 } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { selfUpdateUser } from '../../services';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   const [isEditProfile, setIsEditProfile] = useState(false);
 
@@ -151,8 +153,10 @@ const Profile = () => {
                 <div className="w-full flex justify-center">
                   <AButton
                     variant="link"
-                    label="Reset Password"
-                    action={() => {}}
+                    label="Change Password"
+                    action={() => {
+                      navigate('/resetPassword');
+                    }}
                   />
                 </div>
               </div>
