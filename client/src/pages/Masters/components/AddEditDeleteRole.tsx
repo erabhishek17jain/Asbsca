@@ -108,9 +108,8 @@ export function AddEditDeleteRole({
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'status'}
-              label={'Status'}
               id="status"
+              label={'Status'}
               options={statusList}
               error={formikRole.errors.status}
               formik={formikRole.getFieldProps('status')}

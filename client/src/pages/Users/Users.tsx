@@ -14,8 +14,6 @@ import AInputField from '../../components-global/AInputField';
 import ATable from '../../components-global/ATable';
 import {
   USER_TABLE_HEAD,
-  branchsList,
-  rolesList,
   statusList,
 } from '../../constants';
 import UsersBody from './UsersBody';
@@ -132,8 +130,6 @@ const Users = () => {
         roleOptions.push({ label: item.name, value: item.name });
       });
       setRoleOptions(roleOptions);
-    } else {
-      setRoleOptions(rolesList);
     }
   }, [allRoles]);
 
@@ -143,9 +139,7 @@ const Users = () => {
       allBranchs?.map((item: any) => {
         branchOptions.push({ label: item.name, value: item.name });
       });
-      setBranchOptions(branchsList);
-    } else {
-      setBranchOptions(branchsList);
+      setBranchOptions(branchOptions);
     }
   }, [allBranchs]);
 

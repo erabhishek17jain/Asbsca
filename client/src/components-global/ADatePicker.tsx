@@ -1,11 +1,10 @@
 const ADatePicker = ({
-  type,
   id,
   label,
-  variant = 'vertical',
   icon,
-  error = '',
   formik,
+  error = '',
+  variant = 'vertical',
 }: any) => {
   return (
     <div
@@ -23,7 +22,7 @@ const ADatePicker = ({
       <div className="relative w-full">
         <input
           id={id}
-          type={type}
+          type={'date'}
           {...formik}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />

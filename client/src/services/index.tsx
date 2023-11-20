@@ -214,7 +214,7 @@ export async function addBranch(values: any) {
 export async function selfUpdateUser(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/self-update`, values);
+      const { data } = await axios.put(`${baseAPI}/users/self-update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -225,7 +225,7 @@ export async function selfUpdateUser(values: any) {
 export async function updateUser(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/update`, values);
+      const { data } = await axios.put(`${baseAPI}/users/update`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {

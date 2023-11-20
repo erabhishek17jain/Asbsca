@@ -26,6 +26,12 @@ const MastersBody = ({
             icon={item?.logo}
           />
         )}
+        {type === 'branch' && (
+          <TableColumn
+            classes={classes}
+            label={item?.address}
+          />
+        )}
         {type === 'client' && (
           <>
             <TableColumn classes={classes} label={item?.branch} />

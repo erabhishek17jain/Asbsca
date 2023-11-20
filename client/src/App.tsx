@@ -17,7 +17,7 @@ function App() {
   const { userDetails } = useSelector((state: any) => state.users);
 
   useEffect(() => {
-    if (cookies?.token && userDetails === null) {
+    if (cookies?.token !== '' && userDetails === null) {
       setToken(cookies.token);
     } else {
       setToken('');

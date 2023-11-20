@@ -14,7 +14,7 @@ const DefaultLayout = ({ cookies, setCookies }: any) => {
   const { userDetails, error } = useSelector((state: any) => state.users);
 
   useEffect(() => {
-    if (cookies?.token) {
+    if (cookies?.token !== '') {
       setToken(cookies.token);
     }
     if (userDetails && error) {

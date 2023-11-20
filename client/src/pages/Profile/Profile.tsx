@@ -17,22 +17,23 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
-import { updateUser } from '../../services';
+import { selfUpdateUser } from '../../services';
 
 const Profile = () => {
   const { userDetails } = useSelector((state: any) => state.users);
   const [isEditProfile, setIsEditProfile] = useState(false);
-  const [profile, setProfile] = useState<any>(userDetails?.profile);
 
   const initialValues = {
     ...userDetails,
-    profile: null,
-    about: '',
   };
 
   const onSubmit = async (values: any) => {
-    values = await Object.assign(values);
-    let updateUserPromise = updateUser(values);
+    let payload = {
+      about: values?.about,
+      profile: values?.profile,
+    };
+    payload = await Object.assign(payload);
+    let updateUserPromise = selfUpdateUser(payload);
     updateUserPromise
       .then((res: any) => {
         console.log(res.data);
@@ -49,13 +50,6 @@ const Profile = () => {
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-
-  const setProfiles = (e: any) => {
-    if (e.target.files && e.target.files[0]) {
-      formikUser.setFieldValue('profile', e.target.files[0]);
-      setProfile(URL.createObjectURL(e.target.files[0]));
-    }
-  };
 
   return (
     <>
@@ -89,13 +83,17 @@ const Profile = () => {
                     <img
                       alt="profile"
                       src={userDetails?.profile}
-                      className="w-40 h-36 rounded-full border-4 p-1"
+                      className={`w-40 h-36 rounded-full border-6 p-0.5 ${
+                        userDetails?.status === 'active'
+                          ? 'border-meta3'
+                          : 'border-meta1'
+                      }`}
                     />
                   ) : (
                     <UserCircleIcon className="w-40 h-40" />
                   )}
                   <span
-                    className={`absolute bottom-5 right-0 h-6 w-6 rounded-full border-2 border-white ${
+                    className={`absolute bottom-5 right-0.5 h-6 w-6 rounded-full border-2 border-white ${
                       userDetails?.status === 'active' ? 'bg-meta3' : 'bg-meta1'
                     }`}
                   ></span>
@@ -166,8 +164,9 @@ const Profile = () => {
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
-                  onChange={setProfiles}
-                  profile={profile}
+                  formik={formikUser}
+                  profile={userDetails?.profile}
+                  icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
                 />
                 <AInputField
                   type={'text'}
@@ -207,7 +206,7 @@ const Profile = () => {
               <ATextField
                 id={'aboutMe'}
                 label={'About Me'}
-                formik={formikUser.getFieldProps('aboutMe')}
+                formik={formikUser.getFieldProps('about')}
                 icon={<></>}
               />
               <div className="flex justify-end gap-3.5">

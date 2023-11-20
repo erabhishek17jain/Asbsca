@@ -55,7 +55,7 @@ const SignIn = ({ cookies, setCookies }: any) => {
   });
 
   useEffect(() => {
-    if (cookies?.token) {
+    if (cookies?.token !== '') {
       setToken(cookies.token);
       navigate('/dashboard');
     } else {

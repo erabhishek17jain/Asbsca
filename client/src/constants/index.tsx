@@ -170,7 +170,13 @@ export const PRODUCT_TABLE_HEAD = [
   'Action',
 ];
 
-export const BRAND_TABLE_HEAD = ['', 'Branch Name', 'Status', 'Action'];
+export const BRAND_TABLE_HEAD = [
+  '',
+  'Branch Name',
+  'Address',
+  'Status',
+  'Action',
+];
 
 export const ROLE_TABLE_HEAD = ['', 'Role Name', 'Status', 'Action'];
 
@@ -183,15 +189,14 @@ export const calander = [
   { label: 'Max', value: 'max' },
 ];
 
-export const rolesList = [
-  { label: 'Admin', value: 'admin' },
-  { label: 'Reporter', value: 'reporter' },
-  { label: 'Reviewer', value: 'reviewer' },
+export const localOrOGLList = [
+  { label: 'Local', value: 'local' },
+  { label: 'OGL', value: 'ogl' },
 ];
 
-export const branchsList = [
-  { label: 'Indore', value: 'indore' },
-  { label: 'Mumbai', value: 'mumbai' },
+export const caseTypeList = [
+  { label: 'PD', value: 'pd' },
+  { label: 'LIP', value: 'lip' },
 ];
 
 export const statusList = [

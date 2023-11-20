@@ -97,7 +97,8 @@ export function AddEditDeleteProduct({
   useEffect(() => {
     if (activeItem) {
       formikProduct.setFieldValue('_id', activeItem?._id);
-      formikProduct.setFieldValue('client', activeItem?.name);
+      formikProduct.setFieldValue('name', activeItem?.name);
+      formikProduct.setFieldValue('client', activeItem?.client);
       formikProduct.setFieldValue('status', activeItem?.address);
     }
   }, [activeItem]);

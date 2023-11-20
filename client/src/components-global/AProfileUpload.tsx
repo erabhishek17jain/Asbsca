@@ -1,14 +1,25 @@
 import { CameraIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
+import { fileToBase64 } from '../utils';
 
-const AProfileUpload = ({ id, onChange, profile }: any) => {
+const AProfileUpload = ({ id, formik, profile }: any) => {
+  const [image, setImage] = useState<any>(profile);
+
+  const onImageChange = async (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      const fileBase64 = await fileToBase64(e.target.files[0]);
+      formik.setFieldValue(id, fileBase64);
+      setImage(fileBase64);
+    }
+  };
   return (
     <div className="mb-4 flex items-center gap-3 justify-center">
       <div className="relative h-20 w-20 rounded-full">
-        {profile ? (
+        {image ? (
           <img
-            src={profile}
             alt={id}
-            className="w-20 h-20 rounded-full border-2 p-1"
+            src={image}
+            className="w-20 h-20 rounded-full border-2"
           />
         ) : (
           <UserCircleIcon className="w-22 h-22" />
@@ -23,7 +34,7 @@ const AProfileUpload = ({ id, onChange, profile }: any) => {
             name={id}
             type="file"
             className="sr-only"
-            onChange={onChange}
+            onChange={onImageChange}
           />
         </label>
       </div>

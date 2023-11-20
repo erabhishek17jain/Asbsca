@@ -2,7 +2,7 @@ import { statusList } from '../../../constants';
 import { AModal } from '../../../components-global/AModal';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
-import { CheckIcon, UserIcon } from '@heroicons/react/24/solid';
+import { CheckIcon, MapPinIcon, UserIcon } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
 import { deleteBranchById, addBranch, updateBranch } from '../../../services';
@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { fetchAllBranchsAsync } from '../../../slices/branchsSlice';
 import { useEffect } from 'react';
+import ATextField from '../../../components-global/ATextField';
 
 export function AddEditDeleteBranch({
   activeItem,
@@ -21,11 +22,13 @@ export function AddEditDeleteBranch({
   const initialValues = {
     name: '',
     address: '',
+    status: '',
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
     address: Yup.string().required('This field is required'),
+    status: Yup.string().required('This field is required'),
   });
 
   const validateFunction = async (values: any) => {
@@ -84,6 +87,7 @@ export function AddEditDeleteBranch({
       formikBranch.setFieldValue('_id', activeItem?._id);
       formikBranch.setFieldValue('name', activeItem?.name);
       formikBranch.setFieldValue('address', activeItem?.address);
+      formikBranch.setFieldValue('status', activeItem?.status);
     }
   }, [activeItem]);
 
@@ -106,13 +110,19 @@ export function AddEditDeleteBranch({
               formik={formikBranch.getFieldProps('name')}
               icon={<UserIcon className="h-4 w-4" />}
             />
-            <ASingleSelect
-              name={'address'}
-              label={'Status'}
-              id="address"
-              options={statusList}
-              error={formikBranch.errors.address}
+            <ATextField
+              id={'address'}
+              label={'Address'}
               formik={formikBranch.getFieldProps('address')}
+              icon={<MapPinIcon className="h-4 w-4" />}
+            />
+            <ASingleSelect
+              name={'status'}
+              label={'Status'}
+              id="status"
+              options={statusList}
+              error={formikBranch.errors.status}
+              formik={formikBranch.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
             />
           </div>

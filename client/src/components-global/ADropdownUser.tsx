@@ -41,9 +41,9 @@ const ADropdownUser = ({ setCookies }: any) => {
   });
 
   function userLogout() {
-     setCookies('token', '');
-     setCookies('userId', '');
-     navigate('/signin');
+    setCookies('token', '');
+    setCookies('userId', '');
+    navigate('/signin');
   }
 
   return (
@@ -60,20 +60,16 @@ const ADropdownUser = ({ setCookies }: any) => {
           </span>
           <span className="block text-xs">{userDetails?.email}</span>
         </span>
-
-        <span className="h-10 w-10 rounded-full">
-          {userDetails?.profile ? (
-            <img
-              src={userDetails?.profile}
-              className="h-10 w-10 rounded-full"
-              alt="User"
-            />
-          ) : (
-            <UserCircleIcon className="h-10 w-10 rounded-full" />
-          )}
-        </span>
+        {userDetails?.profile ? (
+          <img
+            src={userDetails?.profile}
+            className="h-8 w-8 rounded-full"
+          />
+        ) : (
+          <UserCircleIcon className="h-10 w-10 rounded-full" />
+        )}
         <ChevronDownIcon
-          className={`hidden h-5 w-5 fill-current stroke-main stroke-1 sm:block ${
+          className={`hidden h-4 w-4 fill-current stroke-main stroke-2 sm:block ${
             dropdownOpen ? 'rotate-180' : ''
           }`}
         />
