@@ -5,24 +5,17 @@ import SignIn from './pages/SignIn/SignIn';
 import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero/Hero';
-import { CookiesProvider, useCookies } from 'react-cookie';
-import { useSelector } from 'react-redux';
 import DefaultLayout from './layout/DefaultLayout';
-import { setToken } from './services';
 
 function App() {
   const navigate = useNavigate();
-  const [cookies, setCookies] = useCookies<any>(['user']);
-  const { userDetails } = useSelector((state: any) => state.users);
 
+  const cookies: any = document.cookie;
   useEffect(() => {
-    if (cookies?.token !== '' && userDetails === null) {
-      setToken(cookies.token);
-    } else {
-      setToken('');
+    if (cookies === '') {
       navigate('/signin');
     }
-  }, [cookies]);
+  }, []);
 
   return (
     <>
@@ -31,35 +24,26 @@ function App() {
         reverseOrder={false}
         containerClassName="overflow-auto"
       />
-      <CookiesProvider>
-        <Routes>
-          <Route
-            path="/signin"
-            element={<SignIn cookies={cookies} setCookies={setCookies} />}
-          />
-          <Route index element={<Hero />} />
-          <Route
-            element={
-              <DefaultLayout cookies={cookies} setCookies={setCookies} />
-            }
-          >
-            {routes.map((routes, index) => {
-              const { path, component: Component } = routes;
-              return (
-                <Route
-                  key={index}
-                  path={path}
-                  element={
-                    <Suspense fallback={<ALoader />}>
-                      <Component />
-                    </Suspense>
-                  }
-                />
-              );
-            })}
-          </Route>
-        </Routes>
-      </CookiesProvider>
+      <Routes>
+        <Route path="/signin" element={<SignIn />} />
+        <Route index element={<Hero />} />
+        <Route element={<DefaultLayout />}>
+          {routes.map((routes, index) => {
+            const { path, component: Component } = routes;
+            return (
+              <Route
+                key={index}
+                path={path}
+                element={
+                  <Suspense fallback={<ALoader />}>
+                    <Component />
+                  </Suspense>
+                }
+              />
+            );
+          })}
+        </Route>
+      </Routes>
     </>
   );
 }

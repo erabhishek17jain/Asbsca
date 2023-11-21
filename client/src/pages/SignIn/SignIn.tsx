@@ -4,7 +4,7 @@ import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { setToken, authentication } from '../../services';
+import { authentication, setToken } from '../../services';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
@@ -14,11 +14,9 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
-const SignIn = ({ cookies, setCookies }: any) => {
+const SignIn = () => {
   const navigate = useNavigate();
-  const { error } = useSelector((state: any) => state.users);
 
   const formik = useFormik({
     initialValues: {
@@ -38,10 +36,8 @@ const SignIn = ({ cookies, setCookies }: any) => {
       signinPromise
         .then((res: any) => {
           toast.success(<b>SignIn Successfully...!</b>);
-          let { token, userId } = res.data;
+          let { token } = res.data;
           setToken(token);
-          setCookies('token', token);
-          setCookies('userId', userId);
           navigate('/dashboard');
         })
         .catch((e) => {
@@ -56,14 +52,14 @@ const SignIn = ({ cookies, setCookies }: any) => {
     },
   });
 
+  const token: any = document.cookie?.replace('token=', '');
   useEffect(() => {
-    if (cookies?.token !== '' && error === 'Rejected') {
-      setToken(cookies.token);
+    if (token !== '') {
       navigate('/dashboard');
     } else {
       setToken('');
     }
-  }, [cookies]);
+  }, []);
 
   return (
     <>

@@ -8,7 +8,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid';
 
-const ADropdownUser = ({ setCookies }: any) => {
+const ADropdownUser = () => {
   const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -41,9 +41,8 @@ const ADropdownUser = ({ setCookies }: any) => {
   });
 
   function userLogout() {
-    setCookies('token', '');
-    setCookies('userId', '');
     navigate('/signin');
+    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   return (
@@ -61,10 +60,7 @@ const ADropdownUser = ({ setCookies }: any) => {
           <span className="block text-xs">{userDetails?.email}</span>
         </span>
         {userDetails?.profile ? (
-          <img
-            src={userDetails?.profile}
-            className="h-8 w-8 rounded-full"
-          />
+          <img src={userDetails?.profile} className="h-8 w-8 rounded-full" />
         ) : (
           <UserCircleIcon className="h-10 w-10 rounded-full" />
         )}

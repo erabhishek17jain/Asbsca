@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 /** services */
 export function setToken(token: string) {
+  document.cookie = 'token=' + token + '; Path=/;';
   axios.defaults.baseURL = 'http://localhost:8080';
   axios.defaults.headers.common = {
     accept: 'application/json',
@@ -55,7 +56,8 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/users/self-detail`);
     return response.data;
   } catch (error: any) {
-    showError(error);
+    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    toast.error(<b>Login Expired!</b>);
     return rejectWithValue(error.response.data);
   }
 }
