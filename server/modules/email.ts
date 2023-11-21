@@ -26,7 +26,7 @@ export default class Email implements IEmail {
       from: config.email.user,
       to,
       subject,
-      text
+      html: text
     };
 
     this.transporter.sendMail(mailOptions, (err: any, info: any) => {

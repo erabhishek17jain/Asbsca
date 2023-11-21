@@ -1,7 +1,7 @@
 
 declare interface ListQuery {
     limit?: number;
-    skip?: number;
+    page?: number;
     sort?: string;
     order?: string;
     filterBy?: string;

@@ -1,4 +1,4 @@
 declare enum Status {
-    Active = "Active",
-    Inactive = "Inactive"
+    Active = "active",
+    Inactive = "inactive"
 }

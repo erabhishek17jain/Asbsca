@@ -32,4 +32,7 @@
  *           type: string
  *         about:
  *          type: string
+ *         status:
+ *          type: string
+ *          enum: [active, inactive]
  */

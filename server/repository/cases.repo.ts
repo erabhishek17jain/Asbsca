@@ -14,9 +14,10 @@ export default class CaseRepository {
 
     public list = async (query: ListQuery, userId: string, role: string): Promise<ICases[]> => {
         try {
-            const { limit, skip, sort, order, filterBy, filterValue, q } = query;
+            const { limit, page, sort, order, filterBy, filterValue, q } = query;
             const limitNum = limit ? parseInt(limit.toString()) : 10;
-            const skipNum = skip ? parseInt(skip.toString()) : 0;
+            const pageNum = page ? parseInt(page.toString()) : 1;
+            const skipNum = (pageNum - 1) * limitNum;
             let filterObj: { [key: string]: any; } = {};
             if (filterBy && filterValue) {
                 filterObj[filterBy] = filterValue;
@@ -53,7 +54,7 @@ export default class CaseRepository {
                 };
             }
             const sortObj: { [key: string]: SortOrder; } = sort ? {[sort as string]: order === "ascend" ? 1 : -1} : {};
-            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum);
+            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum).populate("reviewer").populate("assignTo");
             return cases;
         } catch (error) {
             throw error;

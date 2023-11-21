@@ -9,7 +9,8 @@ const CONFIG = {
         user: 'erabhishek17jain@gmail.com',
         pass: 'zularurktxjctzqb',
     },
-    ADMIN_ROLE_ID: "654e7db499e3242d43db55ef"
+    ADMIN_ROLE_ID: "654e7db499e3242d43db55ef",
+    CLIENT_URL: "http://localhost:5173"
 };
 
 export default CONFIG;

@@ -10,11 +10,11 @@ export default class ProductRepository implements Repository<IProduct> {
     protected model = Product;
 
     public get = async (_id: string): Promise<IProduct | null> => {
-        return await this.model.findOne({_id: new Types.ObjectId(_id)});
+        return await this.model.findOne({_id: new Types.ObjectId(_id)}).populate("client");
     }
 
     public list = async (): Promise<IProduct[]> => {
-        return await this.model.find();
+        return await this.model.find().populate("client");
     }
 
     public create = async (product: IProduct): Promise<IProduct> => {
@@ -26,7 +26,7 @@ export default class ProductRepository implements Repository<IProduct> {
         delete data._id;
         return await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {
             $set: data
-        }, {new: true});
+        }, {new: true}).populate("client");
     }
 
     public delete = async (_id: string): Promise<IProduct | null> => {
