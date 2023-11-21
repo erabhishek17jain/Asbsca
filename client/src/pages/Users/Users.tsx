@@ -12,10 +12,7 @@ import {
 import { AModal } from '../../components-global/AModal';
 import AInputField from '../../components-global/AInputField';
 import ATable from '../../components-global/ATable';
-import {
-  USER_TABLE_HEAD,
-  statusList,
-} from '../../constants';
+import { USER_TABLE_HEAD, statusList } from '../../constants';
 import UsersBody from './UsersBody';
 import UsersHeader from './UsersHeader';
 import ASingleSelect from '../../components-global/ASingleSelect';
@@ -29,11 +26,13 @@ import { fetchAllRolesAsync } from '../../slices/rolesSlice';
 import { useSelector } from 'react-redux';
 import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
 import AFileUpload from '../../components-global/AFileUpload';
+import { getOptions } from '../../utils';
+import ALoader from '../../components-global/ALoader';
 
 const Users = () => {
   const { allRoles } = useSelector((state: any) => state.roles);
   const { allBranchs } = useSelector((state: any) => state.branchs);
-  const { allUsers } = useSelector((state: any) => state.users);
+  const { allUsers, loading } = useSelector((state: any) => state.users);
   const [user, setUser] = useState<any>(null);
   const [showDeleteUser, setShowDeleteUser] = useState(false);
   const [showAddEditUser, setShowAddEditUser] = useState(false);
@@ -125,21 +124,13 @@ const Users = () => {
 
   useEffect(() => {
     if (allRoles?.length > 0) {
-      const roleOptions: any = [];
-      allRoles.map((item: any) => {
-        roleOptions.push({ label: item.name, value: item.name });
-      });
-      setRoleOptions(roleOptions);
+      setRoleOptions(getOptions(allRoles, 'name', '_id'));
     }
   }, [allRoles]);
 
   useEffect(() => {
     if (allBranchs?.length > 0) {
-      const branchOptions: any = [];
-      allBranchs?.map((item: any) => {
-        branchOptions.push({ label: item.name, value: item.name });
-      });
-      setBranchOptions(branchOptions);
+      setBranchOptions(getOptions(allBranchs, 'name', '_id'));
     }
   }, [allBranchs]);
 
@@ -153,19 +144,23 @@ const Users = () => {
     <>
       <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
-        <ATable
-          data={allUsers}
-          header={
-            <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
-          }
-          tableBody={
-            <UsersBody
-              openUserDeleteModal={handleOpenDeleteModal}
-              openUserAddEditModal={() => setShowAddEditUser(true)}
-            />
-          }
-          tableHeader={USER_TABLE_HEAD}
-        />
+        {!loading ? (
+          <ATable
+            data={allUsers}
+            header={
+              <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
+            }
+            tableBody={
+              <UsersBody
+                openUserDeleteModal={handleOpenDeleteModal}
+                openUserAddEditModal={() => setShowAddEditUser(true)}
+              />
+            }
+            tableHeader={USER_TABLE_HEAD}
+          />
+        ) : (
+          <ALoader />
+        )}
       </div>
       {showAddEditUser && (
         <AModal

@@ -91,7 +91,7 @@ export function AddEditDeleteProduct({
   };
 
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', 'name'));
+    setClientOptions(getOptions(allClients, 'name', '_id'));
   }, [allClients]);
 
   useEffect(() => {

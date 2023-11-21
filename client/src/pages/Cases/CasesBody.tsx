@@ -1,12 +1,15 @@
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { Tooltip } from '@material-tailwind/react';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
-import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import ADropdown from '../../components-global/ADropdown';
 
-const CasesBody = ({ role, allcases, status }: any) => {
-  const navigate = useNavigate();
-
+const CasesBody = ({
+  role,
+  allcases,
+  status,
+  menuOptions,
+  selectCase,
+}: any) => {
   return (
     allcases &&
     allcases?.map((item: any, index: number) => {
@@ -75,9 +78,9 @@ const CasesBody = ({ role, allcases, status }: any) => {
             </>
           )}
           {status !== 'assigned' && (
-            <TableColumn classes={classes} label={item?.assignTo} />
+            <TableColumn classes={classes} label={item?.assignTo?.fullName} />
           )}
-          <TableColumn classes={classes} label={item?.reviewer} />
+          <TableColumn classes={classes} label={item?.reviewer?.fullName} />
           {status === 'reports' && (
             <>
               <TableColumn
@@ -93,20 +96,12 @@ const CasesBody = ({ role, allcases, status }: any) => {
           <td className={classes}>
             {role === 'admin' && (
               <div className="flex gap-3">
-                <Tooltip content="Edit Case">
-                  <PencilSquareIcon
-                    className="h-6 w-6"
-                    fill="#02385e"
-                    onClick={() => navigate('/addCase')}
-                  />
-                </Tooltip>
-                <Tooltip content="Delete User">
-                  <TrashIcon
-                    className="h-6 w-6 pointer"
-                    fill="#02385e"
-                    onClick={() => {}}
-                  />
-                </Tooltip>
+                <ADropdown
+                  item={item}
+                  options={menuOptions}
+                  selectCase={selectCase}
+                  header={<EllipsisVerticalIcon className="h-5 w-5" />}
+                />
               </div>
             )}
           </td>

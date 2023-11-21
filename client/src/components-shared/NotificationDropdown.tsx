@@ -2,7 +2,7 @@ import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const ADropdownNotification = () => {
+const NotificationDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -82,4 +82,4 @@ const ADropdownNotification = () => {
   );
 };
 
-export default ADropdownNotification;
+export default NotificationDropdown;

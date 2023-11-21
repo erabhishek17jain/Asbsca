@@ -69,7 +69,7 @@ const LoanInformation = () => {
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', 'name'));
+    setClientOptions(getOptions(allClients, 'name', '_id'));
   }, [allClients]);
   return (
     <AGroupFields>

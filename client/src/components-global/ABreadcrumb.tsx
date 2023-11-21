@@ -1,6 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ABreadcrumb = ({ pageName }: any) => {
+  const navigate = useNavigate();
+  const token: any = document.cookie?.replace('token=', '');
+
+  useEffect(() => {
+    if (token === '') {
+      navigate('/signin');
+    }
+  }, []);
+
   return (
     <div className="mb-5 flex flex-col gap-3 xsm:flex-row xsm:items-center xsm:justify-between">
       <h2 className="text-title-md2 font-semibold text-black capitalize">

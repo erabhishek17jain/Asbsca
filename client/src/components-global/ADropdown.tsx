@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  ChevronDownIcon,
-  DocumentChartBarIcon,
-  ShareIcon,
-} from '@heroicons/react/24/solid';
 
-const ADropdown = ({ dropdownPDF, dropdownWord }: any) => {
+const ADropdown = ({ header, options, item, selectCase = () => {} }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
+  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!dropdown.current) return;
@@ -26,6 +22,7 @@ const ADropdown = ({ dropdownPDF, dropdownWord }: any) => {
     return () => document.removeEventListener('click', clickHandler);
   });
 
+  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -35,54 +32,35 @@ const ADropdown = ({ dropdownPDF, dropdownWord }: any) => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-  return (
-    <div className="relative w-auto">
-      <Link
-        to="#"
-        ref={trigger}
-        onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey"
-      >
-        <span className="text-right">
-          <span className="flex gap-1 text-sm font-medium text-black">
-            <ShareIcon className="h-4 w-4" />
-            <span>Export</span>
-          </span>
-        </span>
-        <ChevronDownIcon
-          className={`h-4 w-4 fill-current stroke-main stroke-1 sm:block ${
-            dropdownOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </Link>
+  useEffect(() => {
+    selectCase(dropdownOpen ? item : null);
+  }, [dropdownOpen]);
 
+  return (
+    <div className="relative">
+      <button ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)}>
+        {header}
+      </button>
       <div
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-6 right-0 mt-4 flex flex-col w-50 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
+        className={`absolute top-6 right-0 mt-3 z-10 flex flex-col w-50 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4">
-          <li>
-            <button
-              onClick={dropdownPDF}
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
-            >
-              <DocumentChartBarIcon className="h-5 w-5" />
-              PDF
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={dropdownWord}
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
-            >
-              <DocumentChartBarIcon className="h-5 w-5" />
-              Word
-            </button>
-          </li>
+          {options?.map((item: any) => (
+            <li>
+              <button
+                onClick={item?.action}
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
+              >
+                {item.icon}
+                {item.title}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
