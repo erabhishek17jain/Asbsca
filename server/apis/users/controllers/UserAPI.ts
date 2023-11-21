@@ -2,6 +2,9 @@ import {Request, Response} from "express";
 import UserRepository from "repository/user.repo";
 import Email from "modules/email";
 import JWT from "modules/jwt";
+import User from "model/User.model";
+import Password from "modules/password";
+import CONFIG from "config";
 
 interface IUserAPI {
   getUsers: (req: Request, res: Response) => Promise<Response>;
@@ -40,11 +43,12 @@ export default class UserAPI implements IUserAPI {
       await this.emailService.sendEmail(
         user.email,
         "Verify your email",
-        `Please click this link to verify your email: ${process.env.CLIENT_URL}/verify-email/${token}`
+        `Please click this link to verify your email and set your password: <a href="${CONFIG.CLIENT_URL}/?token=${token}">Verify email</a>`
       );
 
       return res.status(200).json(user);
     } catch (e) {
+      console.log(e);
       return res.status(500).json(e);
     }
   }
@@ -70,15 +74,24 @@ export default class UserAPI implements IUserAPI {
 
   public verifyUser = async (req: Request, res: Response) : Promise<Response> => {
     try {
-      const { email } = this.jwtService.verifyEmailVerificationToken(req.params.token);
+      const {token, password} = req.body;
+      const { email } = this.jwtService.verifyEmailVerificationToken(token);
       const user = await this.repo.getByEmail(email);
       if (!user) throw new Error("User not found");
 
       let updatedUser = user;
-      updatedUser.isVerified = true;
-      updatedUser = await this.repo.update(updatedUser);
-      return res.status(200).json(user);
+      await User.updateOne({
+        _id: updatedUser._id
+      }, {
+        $set: {
+          isVerified: true,
+          password: Password.fn.generateHash(password)
+        }
+      });
+      const { user: resUser, token: resToken } = await this.repo.authenticate(email, password);
+      return res.status(200).json({ userId: resUser._id?.toString(), token: resToken });
     } catch (e) {
+      console.log(e);
       return res.status(500).json(e);
     }
   }

@@ -22,10 +22,10 @@
  *        type: integer
  *       description: Limit the number of cases returned.
  *     - in: query
- *       name: skip
+ *       name: page
  *       schema:
  *        type: integer
- *       description: Skip a number of entries in the case list.
+ *       description: Current page of the cases returned
  *     - in: query
  *       name: sort
  *       schema:

@@ -14,6 +14,9 @@
  *         address:
  *           type: string
  *           description: The address of the branch.
+ *         status:
+ *          type: string
+ *          enum: [active, inactive]
  *         createdAt:
  *           type: string
  *           format: date-time

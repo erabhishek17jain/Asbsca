@@ -10,11 +10,11 @@ export default class ClientRepository implements Repository<IClient> {
   protected model = Client;
 
   public get = async (_id: string): Promise<IClient | null> => {
-    return await this.model.findOne({_id: new Types.ObjectId(_id)});
+    return await this.model.findOne({_id: new Types.ObjectId(_id)}).populate("branch");
   }
 
   public list = async (): Promise<IClient[]> => {
-    return await this.model.find();
+    return await this.model.find().populate("branch");
   }
 
   public create = async (client: IClient): Promise<IClient> => {
@@ -28,7 +28,7 @@ export default class ClientRepository implements Repository<IClient> {
     data.branch = new Types.ObjectId(data.branch);
     return await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {
       $set: data
-    }, { new: true });
+    }, { new: true }).populate("branch");
   }
 
   public delete = async (_id: string): Promise<IClient | null> => {

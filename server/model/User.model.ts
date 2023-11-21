@@ -3,6 +3,11 @@ import Roles from "./Roles.model";
 import JWT from "modules/jwt";
 import Password from "modules/password"
 
+enum Status {
+  Active = "active",
+  Inactive = "inactive"
+}
+
 export interface IUser extends mongoose.Document {
     _id?: mongoose.Types.ObjectId;
     username: string;
@@ -14,6 +19,7 @@ export interface IUser extends mongoose.Document {
     mobile: number;
     address: string;
     isVerified?: boolean;
+    status: Status;
     profile: string;
     createdAt: Date;
     updatedAt: Date;
@@ -38,6 +44,7 @@ const UserSchema = new mongoose.Schema<IUser>({
       required: true,
       unique: true,
     },
+    status: { type: String, default: Status.Active },
     isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
 

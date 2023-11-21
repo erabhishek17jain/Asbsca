@@ -16,6 +16,9 @@
  *           items:
  *             type: string
  *           description: List of permissions associated with the role.
+ *         status:
+ *          type: string
+ *          enum: [Active, Inactive]
  *         createdAt:
  *           type: string
  *           format: date-time

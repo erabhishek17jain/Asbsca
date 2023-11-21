@@ -30,6 +30,7 @@ export default class UserRouter {
     this.router.put("/update", Auth.isadmin, UserAPI.view.updateUser);
     this.router.delete("/delete/:id", Auth.isadmin, UserAPI.view.deleteUser);
 
+    this.router.post("/self-register", UserAPI.view.verifyUser);
     this.router.get("/self-detail", Auth.isuser, UserAPI.view.selfDetails);
     this.router.put("/self-update", Auth.isuser, UserAPI.view.selfUpdate);
   }
