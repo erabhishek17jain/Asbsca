@@ -94,7 +94,7 @@ export const FilterCases = ({
   const [assignOptions, setAssignOptions] = useState<any>([]);
 
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', 'name'));
+    setClientOptions(getOptions(allClients, 'name', '_id'));
   }, [allClients]);
 
   useEffect(() => {

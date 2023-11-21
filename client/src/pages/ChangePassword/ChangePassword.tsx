@@ -64,7 +64,8 @@ export const ResetPassword = () => {
     </div>
   );
 };
-const ChangePassword = () => {
+
+export const ChangePassword = () => {
   return (
     <>
       <ABreadcrumb pageName="Change Password" />
@@ -76,5 +77,3 @@ const ChangePassword = () => {
     </>
   );
 };
-
-export default ChangePassword;

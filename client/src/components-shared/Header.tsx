@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
-import ADropdownUser from '../components-global/ADropdownUser';
-import ADropdownNotification from '../components-global/ADropdownNotification';
+import UserDropdown from './UserDropdown';
+import NotificationDropdown from './NotificationDropdown';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import Logo from '../assets/images/logo/logo-dark.png';
 
@@ -51,9 +51,9 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
 
         <div className="flex items-center gap-3">
           <ul className="flex items-center gap-2">
-            <ADropdownNotification />
+            <NotificationDropdown />
           </ul>
-          <ADropdownUser />
+          <UserDropdown />
         </div>
       </div>
     </header>
@@ -61,3 +61,4 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
 };
 
 export default Header;
+

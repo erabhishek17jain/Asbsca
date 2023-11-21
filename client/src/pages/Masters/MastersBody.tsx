@@ -22,19 +22,16 @@ const MastersBody = ({
         {type === 'product' && (
           <TableColumn
             classes={classes}
-            label={item?.client}
-            icon={item?.logo}
+            label={item?.client?.name}
+            icon={item?.client?.logo}
           />
         )}
         {type === 'branch' && (
-          <TableColumn
-            classes={classes}
-            label={item?.address}
-          />
+          <TableColumn classes={classes} label={item?.address} />
         )}
         {type === 'client' && (
           <>
-            <TableColumn classes={classes} label={item?.branch} />
+            <TableColumn classes={classes} label={item?.branch?.name} />
             <TableColumn classes={classes} icon={item?.signature} />
           </>
         )}

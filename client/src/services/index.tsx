@@ -16,6 +16,8 @@ export function setToken(token: string) {
 export function showError(error: any) {
   if (error.response.data.includes('TokenExpiredError')) {
     toast.error(<b>Login Expired!</b>);
+    window.location.reload();
+    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
 

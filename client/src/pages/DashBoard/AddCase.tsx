@@ -16,7 +16,7 @@ import AButton from '../../components-global/AButton';
 import ADatePicker from '../../components-global/ADatePicker';
 import AInputField from '../../components-global/AInputField';
 import ASingleSelect from '../../components-global/ASingleSelect';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addCase } from '../../services';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -30,6 +30,8 @@ import store from '../../store/store';
 
 const AddCase = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { activeItem } = location.state;
   const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
@@ -113,6 +115,23 @@ const AddCase = () => {
       setBranchOptions(branchOptions);
     }
   }, [allBranchs]);
+
+   useEffect(() => {
+     if (activeItem) {
+       formik.setFieldValue('_id', activeItem?._id);
+       formik.setFieldValue('name', activeItem?.name);
+       formik.setFieldValue('address', activeItem?.address);
+       formik.setFieldValue('mobile', activeItem?.mobile);
+       formik.setFieldValue('loanAmount', activeItem?.loanAmount);
+       formik.setFieldValue('referenceId', activeItem?.referenceId);
+       formik.setFieldValue('localOrOGL', activeItem?.localOrOGL);
+       formik.setFieldValue('city', activeItem?.city);
+       formik.setFieldValue('branch', activeItem?.branch);
+       formik.setFieldValue('type', activeItem?.type);
+       formik.setFieldValue('bankName', activeItem?.bankName);
+       formik.setFieldValue('recievedDate', activeItem?.recievedDate);
+     }
+   }, [activeItem]);
 
   useEffect(() => {
     store.dispatch(fetchAllClientsAsync(''));

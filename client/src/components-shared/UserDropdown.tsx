@@ -8,7 +8,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/solid';
 
-const ADropdownUser = () => {
+const UserDropdown = () => {
   const navigate = useNavigate();
   const { userDetails } = useSelector((state: any) => state.users);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -98,9 +98,8 @@ const ADropdownUser = () => {
           Log Out
         </button>
       </div>
-      {/* <!-- Dropdown End --> */}
     </div>
   );
 };
 
-export default ADropdownUser;
+export default UserDropdown;

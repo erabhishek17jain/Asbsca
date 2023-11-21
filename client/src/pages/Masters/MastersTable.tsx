@@ -13,10 +13,11 @@ import { AddEditDeleteClient } from './components/AddEditDeleteClient';
 import { AddEditDeleteProduct } from './components/AddEditDeleteProduct';
 import { AddEditDeleteBranch } from './components/AddEditDeleteBranch';
 import { AddEditDeleteRole } from './components/AddEditDeleteRole';
+import ALoader from '../../components-global/ALoader';
 
 export function MastersTable({ type }: any) {
   const { allBranchs } = useSelector((state: any) => state.branchs);
-  const { allClients } = useSelector((state: any) => state.clients);
+  const { allClients, loading } = useSelector((state: any) => state.clients);
   const { allProducts } = useSelector((state: any) => state.products);
   const { allRoles } = useSelector((state: any) => state.roles);
   const [data, setData] = useState<any>([]);
@@ -61,24 +62,28 @@ export function MastersTable({ type }: any) {
 
   return (
     <>
-      <ATable
-        data={data}
-        tableHeader={headers}
-        tableBody={
-          <MastersBody
-            type={type}
-            data={data}
-            openAddEditModal={openAddEditModal}
-            openDeleteModal={openDeleteModal}
-          />
-        }
-        header={
-          <MastersHeader
-            type={type}
-            openModal={() => setShowAddEditModal(true)}
-          />
-        }
-      />
+      {!loading ? (
+        <ATable
+          data={data}
+          tableHeader={headers}
+          tableBody={
+            <MastersBody
+              type={type}
+              data={data}
+              openAddEditModal={openAddEditModal}
+              openDeleteModal={openDeleteModal}
+            />
+          }
+          header={
+            <MastersHeader
+              type={type}
+              openModal={() => setShowAddEditModal(true)}
+            />
+          }
+        />
+      ) : (
+        <ALoader />
+      )}
       {type === 'client' && (
         <AddEditDeleteClient
           activeItem={activeItem}
