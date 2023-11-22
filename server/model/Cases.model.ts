@@ -7,6 +7,12 @@ enum CaseStatus {
     Rejected = "Rejected"
 }
 
+enum AppoinmentStatus {
+    NotYetScheduled = "notScheduled",
+    Scheduled = "scheduled",
+    Completed = "completed"
+}
+
 export interface ICases extends mongoose.Document {
     name: string;
     address: string;
@@ -26,6 +32,8 @@ export interface ICases extends mongoose.Document {
     isReviewed: boolean;
     isSentToBank: boolean;
     assignTo: mongoose.Types.ObjectId;
+    appoinmentStatus: AppoinmentStatus;
+    appoinmentDate?: Date;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -47,6 +55,8 @@ const CasesSchema = new mongoose.Schema<ICases>({
     isReviewed: { type: Boolean, default: false },
     isSentToBank: { type: Boolean, default: false },
     assignTo: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
+    appoinmentStatus: { type: String, default: AppoinmentStatus.NotYetScheduled },
+    appoinmentDate: { type: Date, required: false },
 }, { timestamps: true });
 
 const Cases = mongoose.model<ICases>('cases', CasesSchema);
