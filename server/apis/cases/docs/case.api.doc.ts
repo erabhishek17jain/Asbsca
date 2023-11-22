@@ -154,11 +154,10 @@
  *        properties:
  *         caseId:
  *          type: string
- *         userId:
+ *         assigneeId:
  *          type: string
- *         userType:
+ *         reviewerId:
  *          type: string
- *          enum: [reviewer, user]
  *    responses:
  *     200:
  *      description: The updated case.
@@ -233,4 +232,60 @@
  *         properties:
  *          message:
  *           type: string
+ */
+
+/**
+ * @openapi
+ * paths:
+ *  /api/v1/cases/{id}:
+ *   put:
+ *    summary: Update case
+ *    tags: [Cases]
+ *    description: Update a specific case.
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: The ID of the case to update.
+ *    requestBody:
+ *     required: true
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *    responses:
+ *     200:
+ *      description: The updated case.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         $ref: '#/components/schemas/Cases'
+ *     500:
+ *      description: An error occurred.
+ *   delete:
+ *    summary: Delete case
+ *    description: Delete a specific case.
+ *    tags: [Cases]
+ *    security:
+ *       - bearerAuth: []
+ *    parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: The ID of the case to delete.
+ *    responses:
+ *     200:
+ *      description: The deleted case.
+ *      content:
+ *       application/json:
+ *        schema:
+ *         $ref: '#/components/schemas/Cases'
+ *     500:
+ *      description: An error occurred.
  */

@@ -4,6 +4,7 @@ import ListCasesAPI from "./controllers/ListCasesAPI";
 import AssignCaseAPI from "./controllers/AssignCaseAPI";
 import AnalyticsAPI from "./controllers/AnalyticsAPI";
 import Auth from "middleware/auth.middleware";
+import UpdateDeleteCaseAPI from "./controllers/UpdateDeleteCaseAPI";
 
 
 export default class CasesRouter {
@@ -25,5 +26,7 @@ export default class CasesRouter {
         this.router.post("/create", Auth.isadmin, AddCasesAPI.api.post);
         this.router.post("/assign", Auth.isadmin, AssignCaseAPI.api.assign);
         this.router.get("/analytics", Auth.isuser, AnalyticsAPI.api.get)
+        this.router.put("/:id", Auth.isuser, UpdateDeleteCaseAPI.api.update)
+        this.router.delete("/:id", Auth.isuser, UpdateDeleteCaseAPI.api.delete)
     }
 }

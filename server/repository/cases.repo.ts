@@ -19,9 +19,16 @@ export default class CaseRepository {
             const pageNum = page ? parseInt(page.toString()) : 1;
             const skipNum = (pageNum - 1) * limitNum;
             let filterObj: { [key: string]: any; } = {};
-            if (filterBy && filterValue) {
-                filterObj[filterBy] = filterValue;
+            let filters = filterBy ? filterBy.split(",") : [];
+            let values = filterValue ? filterValue.split(",") : [];
+            if (filters.length !== values.length) {
+                filters = [];
+                values = [];
             }
+            filters.forEach((filter, index) => {
+                filterObj[filter] = values[index];
+            });
+
             if (role !== CONFIG.ADMIN_ROLE_ID) {
                 filterObj = {
                     ...filterObj,
@@ -33,13 +40,20 @@ export default class CaseRepository {
             }
             if (q) {
                 const regex = new RegExp(q, "i");
+                let numericValue: number | null = parseFloat(q);
+                if (isNaN(numericValue)) {
+                    numericValue = null;
+                }
+                let dateValue: Date | null = new Date(q);
+                if (isNaN(dateValue.getTime())) {
+                    dateValue = null;
+                }
+
                 filterObj = {
                     ...filterObj,
                     $or: [
                         {name: regex},
                         {address: regex},
-                        {mobile: regex},
-                        {loanAmount: regex},
                         {referenceId: regex},
                         {localOrOGL: regex},
                         {city: regex},
@@ -47,14 +61,17 @@ export default class CaseRepository {
                         {type: regex},
                         {bankName: regex},
                         {status: regex},
-                        {receivedDate: regex},
-                        {reviewer: regex},
-                        {assignTo: regex},
+                        // Numeric fields
+                        ...(numericValue !== null ? [{ mobile: numericValue }, { loanAmount: numericValue }] : []),
+                        // Date fields
+                        ...(dateValue !== null ? [{ receivedDate: { $eq: dateValue } }] : [])
+                        // Add more conditions for other fields as needed
                     ]
                 };
             }
             const sortObj: { [key: string]: SortOrder; } = sort ? {[sort as string]: order === "ascend" ? 1 : -1} : {};
-            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum).populate("reviewer").populate("assignTo");
+            const userSelectedFields = "fullName email username profile role"
+            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum).populate("reviewer", userSelectedFields).populate("assignTo", userSelectedFields);
             return cases;
         } catch (error) {
             throw error;
@@ -79,13 +96,20 @@ export default class CaseRepository {
             }
             if (q) {
                 const regex = new RegExp(q, "i");
+                let numericValue: number | null = parseFloat(q);
+                if (isNaN(numericValue)) {
+                    numericValue = null;
+                }
+                let dateValue: Date | null = new Date(q);
+                if (isNaN(dateValue.getTime())) {
+                    dateValue = null;
+                }
+
                 filterObj = {
                     ...filterObj,
                     $or: [
                         {name: regex},
                         {address: regex},
-                        {mobile: regex},
-                        {loanAmount: regex},
                         {referenceId: regex},
                         {localOrOGL: regex},
                         {city: regex},
@@ -93,9 +117,11 @@ export default class CaseRepository {
                         {type: regex},
                         {bankName: regex},
                         {status: regex},
-                        {receivedDate: regex},
-                        {reviewer: regex},
-                        {assignTo: regex},
+                        // Numeric fields
+                        ...(numericValue !== null ? [{ mobile: numericValue }, { loanAmount: numericValue }] : []),
+                        // Date fields
+                        ...(dateValue !== null ? [{ receivedDate: { $eq: dateValue } }] : [])
+                        // Add more conditions for other fields as needed
                     ]
                 };
             }
