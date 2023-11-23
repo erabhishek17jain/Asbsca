@@ -7,12 +7,12 @@ const UsersHeader = ({ openUserModal }: any) => {
     <div className="flex flex-col justify-between gap-5">
       <div className="flex w-full justify-between items-end gap-2">
         <div>
-          <Typography variant="h5" color="blue-gray">
+          <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
             Users
-          </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
+          </h5>
+          <div className="block antialiased font-sans text-sm leading-normal text-main font-normal mt-1">
             These are the list of all users worked on reports.
-          </Typography>
+          </div>
         </div>
         <div className="flex justify-between items-center gap-3">
           <div className="flex justify-end items-center gap-3">

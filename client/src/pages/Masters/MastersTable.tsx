@@ -13,7 +13,6 @@ import { AddEditDeleteClient } from './components/AddEditDeleteClient';
 import { AddEditDeleteProduct } from './components/AddEditDeleteProduct';
 import { AddEditDeleteBranch } from './components/AddEditDeleteBranch';
 import { AddEditDeleteRole } from './components/AddEditDeleteRole';
-import ALoader from '../../components-global/ALoader';
 
 export function MastersTable({ type }: any) {
   const { allBranchs } = useSelector((state: any) => state.branchs);
@@ -62,28 +61,25 @@ export function MastersTable({ type }: any) {
 
   return (
     <>
-      {!loading ? (
-        <ATable
-          data={data}
-          tableHeader={headers}
-          tableBody={
-            <MastersBody
-              type={type}
-              data={data}
-              openAddEditModal={openAddEditModal}
-              openDeleteModal={openDeleteModal}
-            />
-          }
-          header={
-            <MastersHeader
-              type={type}
-              openModal={() => setShowAddEditModal(true)}
-            />
-          }
-        />
-      ) : (
-        <ALoader />
-      )}
+      <ATable
+        data={data}
+        loading={loading}
+        tableHeader={headers}
+        tableBody={
+          <MastersBody
+            type={type}
+            data={data}
+            openAddEditModal={openAddEditModal}
+            openDeleteModal={openDeleteModal}
+          />
+        }
+        header={
+          <MastersHeader
+            type={type}
+            openModal={() => setShowAddEditModal(true)}
+          />
+        }
+      />
       {type === 'client' && (
         <AddEditDeleteClient
           activeItem={activeItem}

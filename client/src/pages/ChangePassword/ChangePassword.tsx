@@ -1,29 +1,47 @@
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { useEffect } from 'react';
 import AInputField from '../../components-global/AInputField';
 import AButton from '../../components-global/AButton';
 import { ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/24/solid';
-import { resetPassword } from '../../services';
+import { selfRegister } from '../../services';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
+import * as Yup from 'yup';
+import { useEffect } from 'react';
 
-export const ResetPassword = () => {
+export const ResetPassword = ({ isFirstPassword, token }: any) => {
   const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    newPassword: Yup.string().required('This field is required'),
+    confirmPassword: Yup.string().required('This field is required'),
+  });
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
 
   const formik = useFormik({
     initialValues: {
       token: '',
-      password: '',
+      newPassword: '',
+      confirmPassword: '',
     },
     validateOnBlur: false,
     validateOnChange: false,
+    validate: validateFunction,
+    validationSchema: validationSchema,
 
     onSubmit: async (values: any) => {
-      let resetPromise = resetPassword(values);
+      values['password'] = values.newPassword;
+      delete values.newPassword;
+      delete values.confirmPassword;
+      let resetPromise = selfRegister(values, '');
       resetPromise
         .then(() => {
-          navigate('/signin');
+          navigate(isFirstPassword ? '/signin' : '/profile');
           toast.success(<b>Password Saved Successfully...!</b>);
         })
         .catch((e) => {
@@ -32,7 +50,10 @@ export const ResetPassword = () => {
     },
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    formik.setFieldValue('token', token);
+  }, []);
+
   return (
     <div className="p-4 text-left">
       <h2 className="mb-9 text-2xl font-bold text-black xsm:text-title-xl2 text-center">
@@ -65,15 +86,18 @@ export const ResetPassword = () => {
   );
 };
 
-export const ChangePassword = () => {
+const ChangePassword = () => {
+  const token: any = document.cookie?.replace('token=', '');
   return (
     <>
       <ABreadcrumb pageName="Change Password" />
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
-        <div className="w-1/2">
-          <ResetPassword />
+        <div className="w-full md:w-2/3 lg:w-2/3 xl:w-1/2 2xl:w-1/2">
+          <ResetPassword isFirstPassword={false} token={token} />
         </div>
       </div>
     </>
   );
 };
+
+export default ChangePassword;

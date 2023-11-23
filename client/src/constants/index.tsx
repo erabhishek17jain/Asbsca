@@ -13,6 +13,7 @@ export const baseAPI = '/api/v1';
 
 export const pages = [
   {
+    isChecked: true,
     label: 'Dashboard',
     value: 'dashboard',
     icon: <Squares2X2Icon className="h-5 w-5" />,
@@ -20,36 +21,49 @@ export const pages = [
   {
     label: 'All Cases',
     value: 'cases',
+    isChecked: false,
     icon: <Square3Stack3DIcon className="h-5 w-5" />,
   },
   {
     label: 'Assigned',
     value: 'assigned',
+    isChecked: false,
     icon: <UserIcon className="h-5 w-5" />,
   },
   {
     label: 'Review',
     value: 'review',
+    isChecked: false,
     icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
   },
   {
-    label: 'Reports',
-    value: 'reports',
+    label: 'Completed',
+    value: 'completed',
+    isChecked: false,
+    icon: <NewspaperIcon className="h-5 w-5" />,
+  },
+  {
+    label: 'Sent To Bank',
+    value: 'sentToBank',
+    isChecked: false,
     icon: <NewspaperIcon className="h-5 w-5" />,
   },
   {
     label: 'Users',
     value: 'users',
+    isChecked: false,
     icon: <UsersIcon className="h-5 w-5" />,
   },
   {
     label: 'Masters',
     value: 'masters',
+    isChecked: false,
     icon: <QueueListIcon className="h-5 w-5" />,
   },
   {
     label: 'Profile',
     value: 'profile',
+    isChecked: true,
     icon: <Cog6ToothIcon className="h-5 w-5" />,
   },
 ];
@@ -95,7 +109,6 @@ export const casesTypes = [
       'City',
       'Loan Amt (Lacs)',
       'Case Type',
-      'Case Status',
       'Appointment Status',
       'Remark',
       'Reviewer',
@@ -124,9 +137,33 @@ export const casesTypes = [
     ],
   },
   {
-    id: 'reports',
+    id: 'completed',
     title: 'Completed Cases',
     description: 'These are the list of old report for your refrence.',
+    header: [
+      '',
+      'Bank Name',
+      'Reference ID',
+      'Received Date',
+      "Applicant's Name",
+      'Mobile',
+      'Address',
+      'City',
+      'Branch',
+      'Type',
+      'Case Type',
+      'Report By',
+      'Review By',
+      'Started Date',
+      'Completed date',
+      'Reports',
+    ],
+  },
+  {
+    id: 'sentToBank',
+    title: 'Send To Bank Cases',
+    description:
+      'These are the list of all cases whose reports are sent to bank.',
     header: [
       '',
       'Bank Name',
@@ -150,17 +187,17 @@ export const casesTypes = [
 
 export const BULK_UPLOAD_TABLE_HEAD = [
   '',
-  'Bank Name',
-  'Reference ID',
-  'Received Date',
   "Applicant's Name",
   'Mobile',
+  'Loan Amt (Lacs)',
+  'Reference ID',
+  'Type',
   'Address',
   'City',
-  'Loan Amt (Lacs)',
-  'Branch',
-  'Type',
   'Case Type',
+  'Bank Name',
+  'Branch',
+  'Received Date',
   'Action',
 ];
 
@@ -215,14 +252,14 @@ export const calander = [
 export const caseStatusList = [
   { label: 'Unassigned', value: 'unassigned' },
   { label: 'Assigned', value: 'assigned' },
-  { label: 'Completed', value: 'completed' },
-  { label: 'Reviewing', value: 'reviewing' },
+  { label: 'Reviewing', value: 'review' },
   { label: 'Query', value: 'query' },
+  { label: 'Completed', value: 'completed' },
   { label: 'Sent to Bank', value: 'sentToBank' },
 ];
 
-export const appStatusList = [
-  { label: 'Visited', value: 'Visited' },
+export const appoinmentStatusList = [
+  { label: 'Visited', value: 'visited' },
   { label: 'Scheduled', value: 'scheduled' },
   { label: 'Not received', value: 'notReceived' },
   { label: 'Not Responding', value: 'notResponding' },
@@ -242,4 +279,56 @@ export const caseTypeList = [
 export const statusList = [
   { label: 'Active', value: 'active' },
   { label: 'Inactive', value: 'inactive' },
+];
+
+export const addBulkCsvData: any = [];
+export const addBulkCsvColumns = [
+  {
+    id: 'name',
+    displayName: "Applicant's Name",
+  },
+  {
+    id: 'mobile',
+    displayName: 'Mobile',
+  },
+  {
+    id: 'loanAmt',
+    displayName: 'Loan Amt. (Lacs)',
+  },
+  {
+    id: 'referenceId',
+    displayName: 'Reference ID',
+  },
+  {
+    id: 'type',
+    displayName: 'Type',
+  },
+  {
+    id: 'address',
+    displayName: 'Address',
+  },
+  {
+    id: 'city',
+    displayName: 'City',
+  },
+  {
+    id: 'branch',
+    displayName: 'Branch',
+  },
+  {
+    id: 'caseType',
+    displayName: 'Case Type',
+  },
+  {
+    id: 'address',
+    displayName: 'Address',
+  },
+  {
+    id: 'bankName',
+    displayName: 'Bank Name',
+  },
+  {
+    id: 'receivedDate',
+    displayName: 'Received Date',
+  },
 ];

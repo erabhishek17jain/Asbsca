@@ -10,18 +10,34 @@ import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
 import {
   ArrowRightOnRectangleIcon,
+  EyeIcon,
   EyeSlashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [isRembember, setIsRembember] = useState<any>(false);
+  const [showPassword, setShowPassword] = useState<any>(false);
+  const token: any = document.cookie?.replace('token=', '');
+
+  const rememberMe = (isChecked: boolean, email: string, password: string) => {
+    if (isChecked) {
+      localStorage.setItem('isRembember', isChecked.toString());
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+    } else {
+      localStorage.setItem('isRembember', isChecked.toString());
+      localStorage.setItem('email', '');
+      localStorage.setItem('password', '');
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
       email: 'erabhishek17jain@gmail.com',
-      password: 'admin@123',
+      password: 'abhishek@123',
     },
     validateOnBlur: false,
     validateOnChange: false,
@@ -33,31 +49,26 @@ const SignIn = () => {
         },
         '',
       );
-      signinPromise
-        .then((res: any) => {
-          toast.success(<b>SignIn Successfully...!</b>);
-          let { token } = res.data;
-          setToken(token);
-          navigate('/dashboard');
-        })
-        .catch((e) => {
-          toast.error(
-            <b>
-              {e?.error?.response?.data === ''
-                ? 'Something Went Wrong!'
-                : e?.error?.response?.data?.message}
-            </b>,
-          );
-        });
+      signinPromise.then((res: any) => {
+        toast.success(<b>SignIn Successfully...!</b>);
+        let { token } = res.data;
+        setToken(token);
+        rememberMe(isRembember, values.email, values.password);
+        navigate('/dashboard');
+      });
     },
   });
 
-  const token: any = document.cookie?.replace('token=', '');
   useEffect(() => {
     if (token !== '') {
       navigate('/dashboard');
     } else {
       setToken('');
+      setIsRembember(
+        JSON.parse(localStorage.getItem('isRembember') || 'false'),
+      );
+      formik.setFieldValue('email', localStorage.getItem('email') || '');
+      formik.setFieldValue('password', localStorage.getItem('password') || '');
     }
   }, []);
 
@@ -101,20 +112,33 @@ const SignIn = () => {
                 <AInputField
                   type={'text'}
                   id={'email'}
-                  label={'email'}
+                  label={'Email'}
                   formik={formik.getFieldProps('email')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
-                  type={'password'}
+                  type={showPassword ? 'text' : 'password'}
                   id={'password'}
                   label={'Password'}
                   formik={formik.getFieldProps('password')}
-                  icon={<EyeSlashIcon className="h-4 w-4" />}
+                  icon={
+                    <div onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? (
+                        <EyeIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeSlashIcon className="h-4 w-4" />
+                      )}
+                    </div>
+                  }
                 />
 
                 <div className="flex justify-between mb-5">
-                  <ACheckbox name={'rememberMe'} label={'Remember me'} />
+                  <ACheckbox
+                    id={'rememberMe'}
+                    label={'Remember me'}
+                    checked={isRembember}
+                    handleChecked={(e: any) => setIsRembember(e.target.checked)}
+                  />
                   <a href="#" className="text-sm text-main">
                     Forget password?
                   </a>

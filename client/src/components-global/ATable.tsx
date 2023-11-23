@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import {
-  Typography,
   Chip,
   Card,
   CardHeader,
@@ -8,6 +7,7 @@ import {
   CardFooter,
 } from '@material-tailwind/react';
 import APagination from './APagination';
+import ALoader from './ALoader';
 
 export const TableHeader = ({ label }: any) => {
   return (
@@ -16,13 +16,9 @@ export const TableHeader = ({ label }: any) => {
       className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
     >
       {label !== '' && (
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal leading-none opacity-70"
-        >
+        <div className="block antialiased font-sans text-sm leading-none opacity-70 text-main font-normal">
           {label}
-        </Typography>
+        </div>
       )}
     </th>
   );
@@ -44,13 +40,9 @@ export const TableColumn = ({
         <div className="flex items-center gap-2">
           {icon !== '' && <img src={icon} className="h-8 w-8 rounded-full" />}
           {label !== '' && (
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
+            <div className="block antialiased font-sans text-sm leading-normal text-main font-normal">
               {label}
-            </Typography>
+            </div>
           )}
         </div>
       )}
@@ -58,7 +50,16 @@ export const TableColumn = ({
   );
 };
 
-const ATable = ({ header, tableHeader, tableBody, data }: any) => {
+const ATable = ({
+  meta,
+  data,
+  header,
+  loading,
+  tableBody,
+  tableHeader,
+  defaultFilters,
+  setDefaultFilters,
+}: any) => {
   const location = useLocation();
   const { pathname } = location;
 
@@ -82,17 +83,26 @@ const ATable = ({ header, tableHeader, tableBody, data }: any) => {
               ))}
             </tr>
           </thead>
-          {data?.length > 0 && <tbody>{tableBody}</tbody>}
+          {!loading && data?.length > 0 && <tbody>{tableBody}</tbody>}
         </table>
       </CardBody>
-      {(data === undefined || data?.length === 0) && (
-        <div className="w-full h-12 pb-6 flex items-center justify-center">
+      {!loading && data && data?.length === 0 && (
+        <div className="w-full h-20 pb-6 flex items-center justify-center">
           No Record found.
         </div>
       )}
-      {!pathname.includes('dashboard') && data?.length > 9 && (
+      {loading && (
+        <div className="w-full h-20 pb-6 flex items-center justify-center">
+          <ALoader height={80} />
+        </div>
+      )}
+      {!pathname.includes('dashboard') && meta?.count > 9 && (
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <APagination />
+          <APagination
+            meta={meta}
+            defaultFilters={defaultFilters}
+            setDefaultFilters={setDefaultFilters}
+          />
         </CardFooter>
       )}
     </Card>

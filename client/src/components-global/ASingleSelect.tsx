@@ -5,11 +5,11 @@ const ASingleSelect = ({
   label,
   icon,
   error = '',
-  variant = 'vertical',
   formik,
   options,
   value,
-  handleChange
+  handleChange,
+  variant = 'vertical',
 }: any) => {
   return (
     <div

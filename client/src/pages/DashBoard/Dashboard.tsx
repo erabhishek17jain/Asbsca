@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import store from '../../store/store.tsx';
 import moment from 'moment';
 import CasesBody from '../Cases/CasesBody.tsx';
-import { Typography } from '@material-tailwind/react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -103,9 +102,9 @@ const Dashboard = () => {
       <div className="mt-8 flex flex-col">
         {topAssignedCases.length > 0 && (
           <>
-            <Typography variant="h5" color="blue-gray" className="px-4">
+            <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
               Top Assigned Cases
-            </Typography>
+            </h5>
             <div
               className={
                 userDetails?.role?.name === 'admin'

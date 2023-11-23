@@ -27,7 +27,6 @@ import { useSelector } from 'react-redux';
 import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
 import AFileUpload from '../../components-global/AFileUpload';
 import { getOptions } from '../../utils';
-import ALoader from '../../components-global/ALoader';
 
 const Users = () => {
   const { allRoles } = useSelector((state: any) => state.roles);
@@ -144,23 +143,20 @@ const Users = () => {
     <>
       <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
-        {!loading ? (
-          <ATable
-            data={allUsers}
-            header={
-              <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
-            }
-            tableBody={
-              <UsersBody
-                openUserDeleteModal={handleOpenDeleteModal}
-                openUserAddEditModal={() => setShowAddEditUser(true)}
-              />
-            }
-            tableHeader={USER_TABLE_HEAD}
-          />
-        ) : (
-          <ALoader />
-        )}
+        <ATable
+          loading={loading}
+          data={allUsers}
+          header={
+            <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
+          }
+          tableBody={
+            <UsersBody
+              openUserDeleteModal={handleOpenDeleteModal}
+              openUserAddEditModal={() => setShowAddEditUser(true)}
+            />
+          }
+          tableHeader={USER_TABLE_HEAD}
+        />
       </div>
       {showAddEditUser && (
         <AModal

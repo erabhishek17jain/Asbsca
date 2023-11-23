@@ -32,7 +32,7 @@ const StatsCard = () => {
     },
     {
       count: analytics?.sentToBank,
-      path: '/reports',
+      path: '/sentToBank',
       title: 'Send to Bank',
       icon: <PaperAirplaneIcon className="h-5 w-5" />,
     },

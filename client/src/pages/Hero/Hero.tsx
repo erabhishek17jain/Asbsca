@@ -20,7 +20,7 @@ const Hero = () => {
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
               {search.slice(3) ? (
-                <ResetPassword />
+                <ResetPassword isFirstPassword={true} token={search.slice(3)} />
               ) : (
                 <>
                   <p className="2xl:px-20">

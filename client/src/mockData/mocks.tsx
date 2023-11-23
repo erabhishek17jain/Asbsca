@@ -45,7 +45,7 @@ export const casesData = [
     locType: 'Local', // Local, OGL
     caseType: 'PD', // PD, LIP
     caseStatus: 'Unassigned', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
-    appStatus: 'Not received', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    appoinmentStatus: 'Not received', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
     assignedTo: 'Arjun Singh',
     reviewer: 'Seemit Jain',
     recievedDate: '16/10/2023 10:54 am',
@@ -66,7 +66,7 @@ export const casesData = [
     locType: 'OGL', // Local, OGL
     caseType: 'PD', // PD, LIP
     caseStatus: 'Assigned', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
-    appStatus: 'Not yet scheduled', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    appoinmentStatus: 'Not yet scheduled', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
     assignedTo: 'Arjun Singh',
     reviewer: 'Seemit Jain',
     recievedDate: '16/10/2023 10:54 am',
@@ -87,7 +87,7 @@ export const casesData = [
     locType: 'Local', // Local, OGL
     caseType: 'LIP', // PD, LIP
     caseStatus: 'Sent to Bank', // Unassigned, Assigned, Completed, Reviewing, Query, Sent to Bank
-    appStatus: 'Visited', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
+    appoinmentStatus: 'Visited', // Scheduled, Not yet scheduled, Not received, Not Responding, Visited
     assignedTo: 'Sunita Devi',
     reviewer: 'Seemit Jain',
     recievedDate: '16/10/2023 10:54 am',

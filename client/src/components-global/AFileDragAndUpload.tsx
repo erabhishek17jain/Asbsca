@@ -1,21 +1,41 @@
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid';
+import Papa from 'papaparse';
 
-const AFileDragAndUpload = ({ type, id, label, fileTypeText, fileDesc, formik }: any) => {
+const AFileDragAndUpload = ({
+  id,
+  label,
+  setData,
+  fileDesc,
+  fileTypeText,
+}: any) => {
+  const handleOnChange = (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      Papa.parse(file, {
+        complete: (result: any) => {
+          var data = result.data;
+          setData(data);
+        },
+        header: true,
+      });
+    }
+  };
+
   return (
     <div className="col-span-5 xl:col-span-2">
-      <label className="mb-3 block text-sm text-black" htmlFor="Username">
+      <label className="mb-3 block text-sm text-black" htmlFor={id}>
         {label}
       </label>
 
       <div
-        id="FileUpload"
+        id={id}
         className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-grey py-4 px-4 sm:py-7.5"
       >
         <input
           id={id}
-          type={type}
-          {...formik}
-          accept="image/*"
+          type="file"
+          accept=".csv"
+          onChange={handleOnChange}
           className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
         />
         <div className="flex flex-col items-center justify-center text-sm space-y-3">

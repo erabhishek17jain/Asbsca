@@ -17,7 +17,7 @@ import { Tooltip } from '@material-tailwind/react';
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
 import { getOptions } from '../utils';
-import { appStatusList, caseStatusList } from '../constants';
+import { appoinmentStatusList, caseStatusList } from '../constants';
 import store from '../store/store';
 import { fetchAllClientsAsync } from '../slices/clientsSlice';
 import { fetchAllUsersAsync } from '../slices/usersSlice';
@@ -38,7 +38,7 @@ export const FilterButtons = ({
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      setDefaultFilters({ ...defaultFilters, search: values?.search });
+      setDefaultFilters({ ...defaultFilters, q: values?.search });
     },
   });
   return (
@@ -124,12 +124,9 @@ export const FilterCases = ({
           name={'bankName'}
           label={'Bank Name'}
           options={clientOptions}
-          value={filters?.filterValue}
+          value={filters['bankName']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'bankName',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ bankName: e.target.value } });
           }}
           icon={<BuildingLibraryIcon className="h-4 w-4" />}
         />
@@ -138,12 +135,9 @@ export const FilterCases = ({
           label={'Assigned To'}
           icon={<UserIcon className="h-4 w-4" />}
           options={assignOptions}
-          value={filters?.filterValue}
+          value={filters['assignTo']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'assignTo',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ assignTo: e.target.value } });
           }}
         />
         <ASingleSelect
@@ -151,25 +145,19 @@ export const FilterCases = ({
           label={'Case Type'}
           icon={<TagIcon className="h-4 w-4" />}
           options={caseStatusList}
-          value={filters?.filterValue}
+          value={filters['status']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'status',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ status: e.target.value } });
           }}
         />
         <ASingleSelect
-          name={'appStatus'}
+          name={'appoinmentStatus'}
           label={'Appointment Status'}
           icon={<CheckIcon className="h-4 w-4" />}
-          options={appStatusList}
-          value={filters?.filterValue}
+          options={appoinmentStatusList}
+          value={filters['appoinmentStatus']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'appStatus',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ appoinmentStatus: e.target.value } });
           }}
         />
       </span>

@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-const ADropdown = ({ header, options, item, selectCase = () => {} }: any) => {
+const ADropdown = ({
+  item,
+  header,
+  options,
+  activeItem,
+  position = 'down',
+  selectCase = () => {},
+}: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -33,7 +40,7 @@ const ADropdown = ({ header, options, item, selectCase = () => {} }: any) => {
   });
 
   useEffect(() => {
-    selectCase(dropdownOpen ? item : null);
+    if (activeItem?._id !== item?._id && dropdownOpen) selectCase(item);
   }, [dropdownOpen]);
 
   return (
@@ -45,13 +52,15 @@ const ADropdown = ({ header, options, item, selectCase = () => {} }: any) => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-6 right-0 mt-3 z-10 flex flex-col w-50 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
+        className={`absolute ${
+          position == 'left' ? '-top-[27px] right-7' : 'top-6 right-0'
+        } mt-3 z-10 flex flex-col w-52 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4">
           {options?.map((item: any) => (
-            <li>
+            <li key={item.title}>
               <button
                 onClick={item?.action}
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"

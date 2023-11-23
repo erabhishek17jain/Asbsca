@@ -14,9 +14,15 @@ export function setToken(token: string) {
 }
 
 export function showError(error: any) {
-  if (error.response.data.includes('TokenExpiredError')) {
+  if (typeof error?.response?.data === 'object') {
+    toast.error(<b>{error?.response?.data?.message}</b>);
+  } else if (
+    error?.response?.data?.includes('TokenExpiredError') ||
+    error?.response?.data?.includes('JsonWebTokenError')
+  ) {
     toast.error(<b>Login Expired!</b>);
-    window.location.reload();
+    window.location.href = window.location.origin + '/signin';
+    // window.location.reload();
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
@@ -36,18 +42,18 @@ export async function authentication(
     }
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
 /** reset password */
-export async function resetPassword({ rejectWithValue }: any) {
+export async function selfRegister(values: any, { rejectWithValue }: any) {
   try {
-    const { data } = await axios.post(`${baseAPI}/users/resetPassword`);
+    const { data } = await axios.post(`${baseAPI}/users/self-register`, values);
     return Promise.resolve({ data });
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -60,24 +66,33 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
   } catch (error: any) {
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     toast.error(<b>Login Expired!</b>);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
 /** all user list */
+
 export async function allCasesList(values: any, { rejectWithValue }: any) {
-  let str = '';
+  let filter = '';
   for (const key in values) {
-    str = str + `${key}=${values[key]}&`;
+    if (key === 'filter') {
+      const filterBy = Object.keys(values[key]);
+      const filterValue = Object.values(values[key]);
+      filter =
+        filter +
+        `filterBy=${filterBy.join(',')}&filterValue=${filterValue.join(',')}&`;
+    } else {
+      filter = filter + `${key}=${values[key]}&`;
+    }
   }
   try {
     const response = await axios.get(
-      `${baseAPI}/cases/list?${str.slice(0, -1)}`,
+      `${baseAPI}/cases/list?${filter.slice(0, -1)}`,
     );
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -88,7 +103,7 @@ export async function allUsersList(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -99,7 +114,7 @@ export async function getAanalytics(payload: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -110,7 +125,7 @@ export async function getRoles(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -121,7 +136,7 @@ export async function getClients(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -132,7 +147,7 @@ export async function getProducts(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -143,7 +158,7 @@ export async function getBranchs(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     showError(error);
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error?.response?.data);
   }
 }
 
@@ -230,7 +245,44 @@ export async function addBranch(values: any) {
 }
 
 /** Update API Calls */
-/** update user */
+
+/** assined case */
+export async function assignCase(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update case status */
+export async function statusUpdateCase(values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update case */
+export async function updateCase(id: string, values: any) {
+  try {
+    if (values) {
+      const { data } = await axios.put(`${baseAPI}/cases/${id}`, values);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update self user */
 export async function selfUpdateUser(values: any) {
   try {
     if (values) {
@@ -242,22 +294,11 @@ export async function selfUpdateUser(values: any) {
   }
 }
 
+/** update user */
 export async function updateUser(values: any) {
   try {
     if (values) {
       const { data } = await axios.put(`${baseAPI}/users/update`, values);
-      return Promise.resolve({ data });
-    }
-  } catch (error) {
-    showError(error);
-  }
-}
-
-/** add case */
-export async function assignCase(values: any) {
-  try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -320,6 +361,18 @@ export async function updateBranch(values: any) {
 }
 
 /** Delete API Calls */
+/**  delete case*/
+export async function deleteCaseById(id: any) {
+  try {
+    if (id) {
+      const { data } = await axios.delete(`${baseAPI}/cases/${id}`);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
 /** delete user */
 export async function deleteUserById(id: any) {
   try {
