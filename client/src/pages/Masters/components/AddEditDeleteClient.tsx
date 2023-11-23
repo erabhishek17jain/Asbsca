@@ -105,7 +105,7 @@ export function AddEditDeleteClient({
     if (activeItem) {
       formikClient.setFieldValue('_id', activeItem?._id);
       formikClient.setFieldValue('name', activeItem?.name);
-      formikClient.setFieldValue('branch', activeItem?.branch);
+      formikClient.setFieldValue('branch', activeItem?.branch?._id);
       formikClient.setFieldValue('logo', activeItem?.logo);
       formikClient.setFieldValue('signature', activeItem?.signature);
       formikClient.setFieldValue('status', activeItem?.status);
@@ -143,12 +143,14 @@ export function AddEditDeleteClient({
               id={'logo'}
               label={'Client Logo'}
               formik={formikClient}
+              value={formikClient.values.logo}
               icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
             />
             <AFileUpload
               id={'signature'}
               label={'Signature'}
               formik={formikClient}
+              value={formikClient.values.signature}
               icon={<LinkIcon className="h-4 w-4" />}
             />
             <ASingleSelect

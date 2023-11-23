@@ -7,17 +7,19 @@ const AFileUpload = ({
   icon,
   formik,
   error = '',
+  value = null,
   variant = 'vertical',
 }: any) => {
-  const [image, setImage] = useState<any>(null);
+  const [image, setImage] = useState<any>(value);
 
   const onImageChange = async (e: any) => {
     if (e.target.files && e.target.files[0]) {
-    const fileBase64 = await fileToBase64(e.target.files[0]);
+      const fileBase64 = await fileToBase64(e.target.files[0]);
       formik.setFieldValue(id, fileBase64);
       setImage(URL.createObjectURL(e.target.files[0]));
     }
   };
+
   return (
     <div
       className={`flex gap-3 w-full ${error ? 'mb-2' : 'mb-8'} ${
@@ -43,7 +45,13 @@ const AFileUpload = ({
         {image ? (
           <img
             alt={id}
-            src={image}
+            src={value}
+            className="w-13 h-13 -mt-1 rounded-full p-1"
+          />
+        ) : value !== '' ? (
+          <img
+            alt={id}
+            src={value}
             className="w-13 h-13 -mt-1 rounded-full p-1"
           />
         ) : (

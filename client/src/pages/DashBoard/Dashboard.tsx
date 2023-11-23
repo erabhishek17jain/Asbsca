@@ -69,7 +69,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="w-8/12 flex gap-3">
-          {userDetails?.role?.name === 'admin' && (
+          {userDetails?.role?.name === 'Admin' && (
             <div className="flex gap-2 w-full flex-col">
               <div className="flex justify-end gap-3">
                 <AButton
@@ -107,7 +107,7 @@ const Dashboard = () => {
             </h5>
             <div
               className={
-                userDetails?.role?.name === 'admin'
+                userDetails?.role?.name === 'Admin'
                   ? 'col-span-12 xl:col-span-8'
                   : 'col-span-12 xl:col-span-12'
               }
@@ -126,7 +126,7 @@ const Dashboard = () => {
             </div>
           </>
         )}
-        {userDetails?.role?.name === 'admin' && topPerfomers.length > 0 && (
+        {userDetails?.role?.name === 'Admin' && topPerfomers.length > 0 && (
           <TopPerformers topPerfomers={topPerfomers} />
         )}
       </div>

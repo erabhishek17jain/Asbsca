@@ -238,7 +238,13 @@ export const BRAND_TABLE_HEAD = [
   'Action',
 ];
 
-export const ROLE_TABLE_HEAD = ['', 'Role Name', 'Status', 'Action'];
+export const ROLE_TABLE_HEAD = [
+  '',
+  'Role Name',
+  'Page Access',
+  'Status',
+  'Action',
+];
 
 export const calander = [
   { label: 'Last 7 Days', value: 7 },

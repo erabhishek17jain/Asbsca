@@ -76,7 +76,10 @@ export function MastersTable({ type }: any) {
         header={
           <MastersHeader
             type={type}
-            openModal={() => setShowAddEditModal(true)}
+            openModal={() => {
+              setActiveItem(null);
+              setShowAddEditModal(true);
+            }}
           />
         }
       />

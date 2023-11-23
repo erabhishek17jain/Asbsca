@@ -103,7 +103,7 @@ const CasesBody = ({
           </>
         )}
         <td className={classes}>
-          {role === 'admin' && (
+          {role === 'Admin' && (
             <div className="flex gap-3">
               <ADropdown
                 item={item}

@@ -98,8 +98,8 @@ export function AddEditDeleteProduct({
     if (activeItem) {
       formikProduct.setFieldValue('_id', activeItem?._id);
       formikProduct.setFieldValue('name', activeItem?.name);
-      formikProduct.setFieldValue('client', activeItem?.client);
-      formikProduct.setFieldValue('status', activeItem?.address);
+      formikProduct.setFieldValue('status', activeItem?.status);
+      formikProduct.setFieldValue('client', activeItem?.client?._id);
     }
   }, [activeItem]);
 

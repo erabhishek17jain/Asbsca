@@ -60,7 +60,7 @@ export const FilterButtons = ({
           />
         </div>
       </div>
-      {userDetails?.role?.name === 'admin' && (
+      {userDetails?.role?.name === 'Admin' && (
         <Tooltip content="Edit Case">
           <CSVLink data={rows} filename={'Reports'}>
             <div

@@ -35,25 +35,43 @@ const MastersBody = ({
             <TableColumn classes={classes} icon={item?.signature} />
           </>
         )}
+        {type === 'role' && (
+          <TableColumn
+            classes={classes}
+            label={
+              item?.name === 'Admin'
+                ? 'Full Access'
+                : item?.permissions.join(', ')
+            }
+          />
+        )}
         <TableColumn
           classes={classes}
           label={item?.status}
           color={item?.status === 'active' ? 'green' : 'red'}
         />
         <td className={classes}>
-          <div className="flex gap-3">
+          <div
+            className={`flex gap-3 ${
+              item?.name === 'Admin' ? 'cursor-not-allowed opacity-70' : ''
+            }`}
+          >
             <Tooltip content={`Edit ${type}`}>
               <PencilSquareIcon
                 className="h-6 w-6"
                 fill="#02385e"
-                onClick={() => openAddEditModal(item)}
+                onClick={() =>
+                  item?.name !== 'Admin' ? openAddEditModal(item) : undefined
+                }
               />
             </Tooltip>
             <Tooltip content={`Delete ${type}`}>
               <TrashIcon
                 className="h-6 w-6"
                 fill="#02385e"
-                onClick={() => openDeleteModal(item)}
+                onClick={() =>
+                  item?.name !== 'Admin' ? openDeleteModal(item) : undefined
+                }
               />
             </Tooltip>
           </div>

@@ -291,7 +291,7 @@ const Cases = () => {
     <>
       <ABreadcrumb pageName={tableRaw?.title} />
       <div className="flex flex-col">
-        {userDetails?.role?.name === 'admin' && pathname.includes('cases') && (
+        {userDetails?.role?.name === 'Admin' && pathname.includes('cases') && (
           <div className="flex justify-end gap-3 mx-4">
             <AButton
               variant={'secondary'}
