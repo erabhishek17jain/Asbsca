@@ -130,7 +130,6 @@ export const casesTypes = [
       'City',
       'Loan Amt (Lacs)',
       'Case Type',
-      'Case Status',
       'Assigned to',
       'Reviewer',
       'Action',

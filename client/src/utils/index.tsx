@@ -15,9 +15,11 @@ export function fileToBase64(file: any) {
 export function getOptions(data: any, label: string, value: string) {
   if (data?.length > 0) {
     const options: any[] = [];
-    data.map((item: any) => {
-      options.push({ label: item[label], value: item[value] });
-    });
+    data
+      .filter((item: any) => item.status === 'active')
+      .map((item: any) => {
+        options.push({ label: item[label], value: item[value] });
+      });
     return options;
   }
   return [];

@@ -92,7 +92,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex gap-6 sm:flex-row flex-col">
-        <div className="w-full sm:1/2 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
+        <div className="w-full sm:1/2 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-4 xl:grid-cols-2 2xl:gap-7.5">
           <StatsCard />
         </div>
         <div className="w-full sm:1/2 ">
@@ -102,7 +102,7 @@ const Dashboard = () => {
       <div className="mt-8 flex flex-col">
         {topAssignedCases.length > 0 && (
           <>
-            <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
+            <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal mx-4">
               Top Assigned Cases
             </h5>
             <div
@@ -117,9 +117,8 @@ const Dashboard = () => {
                 tableHeader={tableRaw?.header}
                 tableBody={
                   <CasesBody
-                    status={'assigned'}
+                    status={'dashboard'}
                     allcases={topAssignedCases}
-                    role={userDetails?.role?.name}
                   />
                 }
               />

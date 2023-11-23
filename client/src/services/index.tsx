@@ -262,7 +262,7 @@ export async function assignCase(values: any) {
 export async function statusUpdateCase(values: any) {
   try {
     if (values) {
-      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
+      const { data } = await axios.post(`${baseAPI}/cases/status`, values);
       return Promise.resolve({ data });
     }
   } catch (error) {

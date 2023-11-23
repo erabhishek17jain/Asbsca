@@ -11,7 +11,7 @@ const ACheckbox = ({
   return (
     <div className="flex gap-3 items-center">
       {title && (
-        <label className="block text-black text-sm min-w-[25%]">{title}</label>
+        <label className="block text-main text-sm min-w-[25%]">{title}</label>
       )}
       <div className="w-full mr-3">
         <label

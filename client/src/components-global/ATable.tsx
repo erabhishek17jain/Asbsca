@@ -16,7 +16,7 @@ export const TableHeader = ({ label }: any) => {
       className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
     >
       {label !== '' && (
-        <div className="block antialiased font-sans text-sm leading-none opacity-70 text-main font-normal">
+        <div className="block antialiased font-sans font-semibold text-sm leading-none opacity-80 text-main font-normal">
           {label}
         </div>
       )}

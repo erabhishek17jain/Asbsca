@@ -33,7 +33,7 @@ const PersonalDetails = ({ formik }: any) => {
 
   return (
     <>
-      <p className="w-full text-md text-black font-bold">Applicants Details</p>
+      <p className="w-full text-md text-main font-bold">Applicants Details</p>
       <ATags
         tags={applicantList}
         setTags={setApplicantList}
@@ -86,7 +86,7 @@ const PersonalDetails = ({ formik }: any) => {
           />
         </AGroupFields>
       </ATags>
-      <p className="w-full text-md text-black font-bold">
+      <p className="w-full text-md text-main font-bold">
         Residential & Ownership Details
       </p>
       <ASection>

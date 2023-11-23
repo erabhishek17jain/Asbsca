@@ -52,7 +52,7 @@ export function AStepper({ steps, formikReport, generateReport }: any) {
       <div className="absolute top-16 bottom-0 w-[calc(100%-40px)] mb-4 overflow-x-scroll flex flex-col justify-between">
         <div className="flex flex-col gap-3 mt-2">
           {activeStep === steps[activeStep].index && (
-            <div className="w-max text-lg font-bold text-black text-center">
+            <div className="w-max text-lg font-bold text-main text-center">
               {steps[activeStep].label}
             </div>
           )}

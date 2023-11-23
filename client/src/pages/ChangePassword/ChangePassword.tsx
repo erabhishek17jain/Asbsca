@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import AInputField from '../../components-global/AInputField';
 import AButton from '../../components-global/AButton';
 import { ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/24/solid';
-import { selfRegister } from '../../services';
+import { selfRegister, setToken } from '../../services';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import * as Yup from 'yup';
 import { useEffect } from 'react';
@@ -40,8 +40,10 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
       delete values.confirmPassword;
       let resetPromise = selfRegister(values, '');
       resetPromise
-        .then(() => {
-          navigate(isFirstPassword ? '/signin' : '/profile');
+        .then((res:any) => {
+          let { token } = res.data;
+          setToken(token);
+          navigate(isFirstPassword ? '/dashboard' : '/profile');
           toast.success(<b>Password Saved Successfully...!</b>);
         })
         .catch((e) => {
@@ -56,7 +58,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
 
   return (
     <div className="p-4 text-left">
-      <h2 className="mb-9 text-2xl font-bold text-black xsm:text-title-xl2 text-center">
+      <h2 className="mb-9 text-2xl font-bold text-main xsm:text-title-xl2 text-center">
         Create New Password
       </h2>
 

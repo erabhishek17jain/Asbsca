@@ -131,7 +131,7 @@ export function AddEditDeleteRole({
               formik={formikRole.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}
             />
-            <label className="block text-black text-sm mb-4">
+            <label className="block text-main text-sm mb-4">
               Select Permissions
             </label>
             <div className="grid grid-cols-3 gap-2 flex-wrap mb-4">

@@ -13,7 +13,7 @@ const ABreadcrumb = ({ pageName }: any) => {
 
   return (
     <div className="mb-5 flex flex-col gap-3 xsm:flex-row xsm:items-center xsm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black capitalize">
+      <h2 className="text-title-md2 font-semibold text-main capitalize">
         {pageName}
       </h2>
       <nav>

@@ -187,9 +187,8 @@ const Cases = () => {
   };
 
   useEffect(() => {
-    if (allUsers.length > 0) {
+    if (allUsers.length === 0 && userDetails?.role?.name === 'Admin')
       store.dispatch(fetchAllUsersAsync(''));
-    }
     store.dispatch(
       fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
     );
@@ -328,11 +327,10 @@ const Cases = () => {
           }
           tableBody={
             <CasesBody
+              selectCase={selectCase}
               activeItem={activeItem}
               allcases={allCases?.cases}
               status={pathname?.slice(1)}
-              role={userDetails?.role?.name}
-              selectCase={selectCase}
               menuOptions={menuOptions[pathname?.slice(1)]}
             />
           }
@@ -350,7 +348,7 @@ const Cases = () => {
               id="assigneeId"
               label={'Assign Reporter*'}
               error={formikAssigned.errors.assigneeId}
-              formikAssigned={formikAssigned.getFieldProps('assigneeId')}
+              formik={formikAssigned.getFieldProps('assigneeId')}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
@@ -358,7 +356,7 @@ const Cases = () => {
               id="reviewerId"
               label={'Assign Reviewer*'}
               error={formikAssigned.errors.reviewerId}
-              formikAssigned={formikAssigned.getFieldProps('reviewerId')}
+              formik={formikAssigned.getFieldProps('reviewerId')}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
@@ -377,7 +375,7 @@ const Cases = () => {
               id="status"
               label={'Status*'}
               error={formikStatus.errors.status}
-              formikStatus={formikStatus.getFieldProps('status')}
+              formik={formikStatus.getFieldProps('status')}
               icon={<UserIcon className="h-4 w-4" />}
               options={caseStatusList}
             />
@@ -385,7 +383,7 @@ const Cases = () => {
               id="appoinmentStatus"
               label={'Appoinment Status*'}
               error={formikStatus.errors.appoinmentStatus}
-              formikStatus={formikStatus.getFieldProps('appoinmentStatus')}
+              formik={formikStatus.getFieldProps('appoinmentStatus')}
               icon={<UserIcon className="h-4 w-4" />}
               options={appoinmentStatusList}
             />

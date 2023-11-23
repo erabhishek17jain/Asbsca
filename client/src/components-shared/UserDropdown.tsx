@@ -54,7 +54,7 @@ const UserDropdown = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black">
+          <span className="block text-sm font-medium text-main">
             {userDetails?.fullName}
           </span>
           <span className="block text-xs">{userDetails?.email}</span>

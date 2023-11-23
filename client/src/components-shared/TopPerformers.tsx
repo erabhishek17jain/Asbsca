@@ -4,7 +4,7 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 const TopPerformers = ({ topPerfomers }: any) => {
   return (
     <div className="col-span-12 rounded-xl bg-clip-border shadow-lg py-6 bg-white xl:col-span-4">
-      <h4 className="mb-6 px-7.5 text-xl font-semibold text-black">
+      <h4 className="mb-6 px-7.5 text-xl font-semibold text-main">
         Top Performers of the Month
       </h4>
       {topPerfomers?.map((user: any) => (
@@ -24,7 +24,7 @@ const TopPerformers = ({ topPerfomers }: any) => {
 
           <div className="flex flex-1 items-center justify-between">
             <div>
-              <h5 className="font-medium text-black">{user?.fullName}</h5>
+              <h5 className="font-medium text-main">{user?.fullName}</h5>
               <p>
                 <span className="text-sm">Last report timing </span>
                 <span className="text-xs">{user?.lastReportTime}</span>

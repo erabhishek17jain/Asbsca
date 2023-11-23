@@ -104,7 +104,7 @@ const SignIn = () => {
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
 
-              <h2 className="mb-9 text-2xl font-bold text-black xsm:text-title-xl2 text-center lg:text-left">
+              <h2 className="mb-9 text-2xl font-bold text-main xsm:text-title-xl2 text-center lg:text-left">
                 Sign In to Asbsca
               </h2>
 

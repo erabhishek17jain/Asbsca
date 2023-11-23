@@ -23,7 +23,7 @@ const AFileDragAndUpload = ({
 
   return (
     <div className="col-span-5 xl:col-span-2">
-      <label className="mb-3 block text-sm text-black" htmlFor={id}>
+      <label className="mb-3 block text-sm text-main" htmlFor={id}>
         {label}
       </label>
 

@@ -47,7 +47,7 @@ const FinalReport = () => {
             header={
               <div className="flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey">
                 <span className="text-right">
-                  <span className="flex gap-1 text-sm font-medium text-black">
+                  <span className="flex gap-1 text-sm font-medium text-main">
                     <ShareIcon className="h-4 w-4" />
                     <span>Export</span>
                   </span>

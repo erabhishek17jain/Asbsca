@@ -102,7 +102,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="mb-1.5 text-2xl font-semibold text-black">
+                <h3 className="mb-1.5 text-2xl font-semibold text-main">
                   {userDetails?.fullName}
                 </h3>
                 <p className="flex justify-center gap-3 font-medium my-4">
@@ -121,7 +121,7 @@ const Profile = () => {
                 </p>
 
                 <div className="mx-auto max-w-180">
-                  <h4 className="font-semibold text-black">About Me</h4>
+                  <h4 className="font-semibold text-main">About Me</h4>
                   <p className="mt-4.5">
                     {userDetails?.about
                       ? userDetails?.about
@@ -129,22 +129,22 @@ const Profile = () => {
                   </p>
                 </div>
 
-                <h4 className="font-semibold text-black mt-6">PD Status</h4>
+                <h4 className="font-semibold text-main mt-6">PD Status</h4>
                 <div className="mx-auto mt-4.5 mb-5.5 grid max-w-lg grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.completedPD}
                     </span>
                     <span className="text-sm">PD Completed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.assignedPD}
                     </span>
                     <span className="text-sm">PD Assigned</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.accuracy}
                     </span>
                     <span className="text-sm">Accuracy</span>

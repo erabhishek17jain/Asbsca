@@ -1,17 +1,24 @@
-import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon, EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import moment from 'moment';
 import ADropdown from '../../components-global/ADropdown';
-import { appoinmentStatusList, caseStatusList } from '../../constants';
+import {
+  appoinmentStatusList,
+  caseStatusList,
+  caseTypeList,
+  localOrOGLList,
+} from '../../constants';
+import AButton from '../../components-global/AButton';
+import { useNavigate } from 'react-router-dom';
 
 const CasesBody = ({
-  role,
   status,
   allcases,
   activeItem,
   menuOptions,
   selectCase,
 }: any) => {
+  const navigate = useNavigate();
   return allcases?.map((item: any, index: number) => {
     const isLast = index === allcases.length - 1;
     const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
@@ -21,6 +28,13 @@ const CasesBody = ({
     const appoinmentStatus: any = appoinmentStatusList.find(
       (el: any) => el.value === item?.appoinmentStatus,
     );
+    const caseType: any = caseTypeList.find(
+      (el: any) => el.value === item?.type,
+    );
+    const localOrOGL: any = localOrOGLList.find(
+      (el: any) => el.value === item?.localOrOGL,
+    );
+
     return (
       <tr key={index}>
         <TableColumn classes={classes} label={index + 1} />
@@ -46,11 +60,11 @@ const CasesBody = ({
         {status !== 'completed' && status !== 'sentToBank' && (
           <TableColumn classes={classes} label={item?.loanAmount} />
         )}
-        <TableColumn classes={classes} label={item?.localOrOGL} />
+        <TableColumn classes={classes} label={localOrOGL.label} />
         {(status === 'cases' ||
           status === 'completed' ||
           status === 'sentToBank') && (
-          <TableColumn classes={classes} label={item?.type} />
+          <TableColumn classes={classes} label={caseType.label} />
         )}
         {status === 'cases' && (
           <TableColumn
@@ -68,7 +82,9 @@ const CasesBody = ({
             }
           />
         )}
-        {(status === 'cases' || status === 'assigned') && (
+        {(status === 'cases' ||
+          status === 'assigned' ||
+          status === 'dashboard') && (
           <>
             <TableColumn
               classes={classes}
@@ -86,7 +102,7 @@ const CasesBody = ({
             <TableColumn classes={classes} label={item?.remark} />
           </>
         )}
-        {status !== 'assigned' && (
+        {status !== 'assigned' && status !== 'dashboard' && (
           <TableColumn classes={classes} label={item?.assignTo?.fullName} />
         )}
         <TableColumn classes={classes} label={item?.reviewer?.fullName} />
@@ -103,18 +119,27 @@ const CasesBody = ({
           </>
         )}
         <td className={classes}>
-          {role === 'Admin' && (
-            <div className="flex gap-3">
+          <div className="flex gap-3">
+            {status === 'dashboard' ? (
+              <AButton
+                variant="small"
+                label={'Start PD'}
+                action={() =>
+                  navigate('/generatePD', { state: { activeItem: activeItem } })
+                }
+                icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
+              />
+            ) : (
               <ADropdown
                 item={item}
-                position='left'
-                activeItem={activeItem}
+                position="left"
                 options={menuOptions}
                 selectCase={selectCase}
+                activeItem={activeItem}
                 header={<EllipsisVerticalIcon className="h-5 w-5" />}
               />
-            </div>
-          )}
+            )}
+          </div>
         </td>
       </tr>
     );
