@@ -6,9 +6,10 @@ import {
 
 const CasesHeader = ({
   title,
-  description,
+  status,
   filters,
   setFilters,
+  description,
   defaultFilters,
   setDefaultFilters,
 }: any) => {
@@ -40,6 +41,7 @@ const CasesHeader = ({
       </div>
       {showFilter && (
         <FilterCases
+          status={status}
           filters={filters}
           setFilters={setFilters}
           showFilter={showFilter}

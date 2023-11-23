@@ -320,6 +320,7 @@ const Cases = () => {
               filters={filters}
               setFilters={setFilters}
               title={tableRaw?.title}
+              status={pathname?.slice(1)}
               defaultFilters={defaultFilters}
               setDefaultFilters={setDefaultFilters}
               description={tableRaw?.description}
@@ -371,14 +372,16 @@ const Cases = () => {
           closeModal={closeUpdateStatusModal}
         >
           <div className="flex flex-col ">
-            <ASingleSelect
-              id="status"
-              label={'Status*'}
-              error={formikStatus.errors.status}
-              formik={formikStatus.getFieldProps('status')}
-              icon={<UserIcon className="h-4 w-4" />}
-              options={caseStatusList}
-            />
+            {userDetails?.role?.name === 'Admin' && (
+              <ASingleSelect
+                id="status"
+                label={'Status*'}
+                error={formikStatus.errors.status}
+                formik={formikStatus.getFieldProps('status')}
+                icon={<UserIcon className="h-4 w-4" />}
+                options={caseStatusList}
+              />
+            )}
             <ASingleSelect
               id="appoinmentStatus"
               label={'Appoinment Status*'}

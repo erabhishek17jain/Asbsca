@@ -83,13 +83,14 @@ export const FilterButtons = ({
 };
 
 export const FilterCases = ({
+  status,
   filters,
   setFilters,
   showFilter,
   showHideFilters,
 }: any) => {
+  const { allUsers, userDetails } = useSelector((state: any) => state.users);
   const { allClients } = useSelector((state: any) => state.clients);
-  const { allUsers } = useSelector((state: any) => state.users);
   const [clientOptions, setClientOptions] = useState<any>([]);
   const [assignOptions, setAssignOptions] = useState<any>([]);
 
@@ -102,8 +103,9 @@ export const FilterCases = ({
   }, [allUsers]);
 
   useEffect(() => {
-    store.dispatch(fetchAllUsersAsync(''));
     store.dispatch(fetchAllClientsAsync(''));
+    if (userDetails?.role?.name === 'Admin')
+      store.dispatch(fetchAllUsersAsync(''));
   }, []);
 
   return (
@@ -130,26 +132,30 @@ export const FilterCases = ({
           }}
           icon={<BuildingLibraryIcon className="h-4 w-4" />}
         />
-        <ASingleSelect
-          name={'assignTo'}
-          label={'Assigned To'}
-          icon={<UserIcon className="h-4 w-4" />}
-          options={assignOptions}
-          value={filters['assignTo']}
-          handleChange={(e: any) => {
-            setFilters({ ...filters, ...{ assignTo: e.target.value } });
-          }}
-        />
-        <ASingleSelect
-          name={'status'}
-          label={'Case Type'}
-          icon={<TagIcon className="h-4 w-4" />}
-          options={caseStatusList}
-          value={filters['status']}
-          handleChange={(e: any) => {
-            setFilters({ ...filters, ...{ status: e.target.value } });
-          }}
-        />
+        {userDetails?.role?.name === 'Admin' && (
+          <ASingleSelect
+            name={'assignTo'}
+            label={'Assigned To'}
+            icon={<UserIcon className="h-4 w-4" />}
+            options={assignOptions}
+            value={filters['assignTo']}
+            handleChange={(e: any) => {
+              setFilters({ ...filters, ...{ assignTo: e.target.value } });
+            }}
+          />
+        )}
+        {status === 'cases' && (
+          <ASingleSelect
+            name={'status'}
+            label={'Case Type'}
+            icon={<TagIcon className="h-4 w-4" />}
+            options={caseStatusList}
+            value={filters['status']}
+            handleChange={(e: any) => {
+              setFilters({ ...filters, ...{ status: e.target.value } });
+            }}
+          />
+        )}
         <ASingleSelect
           name={'appoinmentStatus'}
           label={'Appointment Status'}

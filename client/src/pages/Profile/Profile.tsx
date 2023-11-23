@@ -79,7 +79,7 @@ const Profile = () => {
               </div>
             </div>
             <div className="px-4 pb-6 text-center">
-              <div className="relative z-10 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
+              <div className="relative mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
                 <div className="relative rounded-full">
                   {userDetails?.profile ? (
                     <img
