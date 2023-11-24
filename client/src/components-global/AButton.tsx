@@ -1,8 +1,16 @@
-const AButton = ({ type, action, label, variant, icon = '' }: any) => {
+const AButton = ({
+  type,
+  action,
+  label,
+  variant,
+  icon = '',
+  disabled = false,
+}: any) => {
   return (
     <button
       type={type}
       onClick={action}
+      disabled={disabled}
       className={`flex justify-center items-center gap-1 rounded-lg font-medium capitalize
           ${
             variant === 'small' &&
@@ -10,7 +18,11 @@ const AButton = ({ type, action, label, variant, icon = '' }: any) => {
           }
           ${
             variant === 'primary' &&
-            'py-2 px-4 border border-main bg-main text-grey'
+            `py-2 px-4 border border-main ${
+              disabled
+                ? 'bg-grey text-main cursor-not-allowed'
+                : 'bg-main text-grey cursor-pointer'
+            }`
           }
           ${variant === 'link' && 'text-main py-2 px-4 text-grey'}
           ${

@@ -17,7 +17,7 @@ import { Tooltip } from '@material-tailwind/react';
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
 import { getOptions } from '../utils';
-import { appStatusList, caseStatusList } from '../constants';
+import { appoinmentStatusList, caseStatusList } from '../constants';
 import store from '../store/store';
 import { fetchAllClientsAsync } from '../slices/clientsSlice';
 import { fetchAllUsersAsync } from '../slices/usersSlice';
@@ -38,14 +38,13 @@ export const FilterButtons = ({
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
-      setDefaultFilters({ ...defaultFilters, search: values?.search });
+      setDefaultFilters({ ...defaultFilters, q: values?.search });
     },
   });
   return (
     <>
       <div className="flex gap-1 w-full md:w-72">
         <AInputField
-          type={'text'}
           id={'search'}
           variant={'horizantal'}
           error={formik.errors.search}
@@ -60,7 +59,7 @@ export const FilterButtons = ({
           />
         </div>
       </div>
-      {userDetails?.role?.name === 'admin' && (
+      {userDetails?.role?.name === 'Admin' && (
         <Tooltip content="Edit Case">
           <CSVLink data={rows} filename={'Reports'}>
             <div
@@ -83,13 +82,14 @@ export const FilterButtons = ({
 };
 
 export const FilterCases = ({
+  status,
   filters,
   setFilters,
   showFilter,
   showHideFilters,
 }: any) => {
+  const { allUsers, userDetails } = useSelector((state: any) => state.users);
   const { allClients } = useSelector((state: any) => state.clients);
-  const { allUsers } = useSelector((state: any) => state.users);
   const [clientOptions, setClientOptions] = useState<any>([]);
   const [assignOptions, setAssignOptions] = useState<any>([]);
 
@@ -102,8 +102,9 @@ export const FilterCases = ({
   }, [allUsers]);
 
   useEffect(() => {
-    store.dispatch(fetchAllUsersAsync(''));
     store.dispatch(fetchAllClientsAsync(''));
+    if (userDetails?.role?.name === 'Admin')
+      store.dispatch(fetchAllUsersAsync(''));
   }, []);
 
   return (
@@ -121,55 +122,47 @@ export const FilterCases = ({
       </span>
       <span className="flex gap-3">
         <ASingleSelect
-          name={'bankName'}
+          id={'bankName'}
           label={'Bank Name'}
           options={clientOptions}
-          value={filters?.filterValue}
+          value={filters['bankName']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'bankName',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ bankName: e.target.value } });
           }}
           icon={<BuildingLibraryIcon className="h-4 w-4" />}
         />
+        {userDetails?.role?.name === 'Admin' && (
+          <ASingleSelect
+            id={'assignTo'}
+            label={'Assigned To'}
+            icon={<UserIcon className="h-4 w-4" />}
+            options={assignOptions}
+            value={filters['assignTo']}
+            handleChange={(e: any) => {
+              setFilters({ ...filters, ...{ assignTo: e.target.value } });
+            }}
+          />
+        )}
+        {status === 'cases' && (
+          <ASingleSelect
+            id={'status'}
+            label={'Case Type'}
+            icon={<TagIcon className="h-4 w-4" />}
+            options={caseStatusList}
+            value={filters['status']}
+            handleChange={(e: any) => {
+              setFilters({ ...filters, ...{ status: e.target.value } });
+            }}
+          />
+        )}
         <ASingleSelect
-          name={'assignTo'}
-          label={'Assigned To'}
-          icon={<UserIcon className="h-4 w-4" />}
-          options={assignOptions}
-          value={filters?.filterValue}
-          handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'assignTo',
-              filterValue: e.target.value,
-            });
-          }}
-        />
-        <ASingleSelect
-          name={'status'}
-          label={'Case Type'}
-          icon={<TagIcon className="h-4 w-4" />}
-          options={caseStatusList}
-          value={filters?.filterValue}
-          handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'status',
-              filterValue: e.target.value,
-            });
-          }}
-        />
-        <ASingleSelect
-          name={'appStatus'}
+          id={'appoinmentStatus'}
           label={'Appointment Status'}
           icon={<CheckIcon className="h-4 w-4" />}
-          options={appStatusList}
-          value={filters?.filterValue}
+          options={appoinmentStatusList}
+          value={filters['appoinmentStatus']}
           handleChange={(e: any) => {
-            setFilters({
-              filterBy: 'appStatus',
-              filterValue: e.target.value,
-            });
+            setFilters({ ...filters, ...{ appoinmentStatus: e.target.value } });
           }}
         />
       </span>

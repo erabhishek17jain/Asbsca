@@ -8,7 +8,6 @@ import {
   BuildingLibraryIcon,
   BuildingOfficeIcon,
   CheckIcon,
-  LinkIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
@@ -105,7 +104,7 @@ export function AddEditDeleteClient({
     if (activeItem) {
       formikClient.setFieldValue('_id', activeItem?._id);
       formikClient.setFieldValue('name', activeItem?.name);
-      formikClient.setFieldValue('branch', activeItem?.branch);
+      formikClient.setFieldValue('branch', activeItem?.branch?._id);
       formikClient.setFieldValue('logo', activeItem?.logo);
       formikClient.setFieldValue('signature', activeItem?.signature);
       formikClient.setFieldValue('status', activeItem?.status);
@@ -132,7 +131,7 @@ export function AddEditDeleteClient({
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'branch'}
+              id={'branch'}
               label={'Branch*'}
               options={branchs}
               error={formikClient.errors.branch}
@@ -142,19 +141,22 @@ export function AddEditDeleteClient({
             <AFileUpload
               id={'logo'}
               label={'Client Logo'}
-              formik={formikClient}
+              value={formikClient.values.logo}
+              error={formikClient.errors.logo}
+              formik={formikClient.getFieldProps('logo')}
               icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
             />
             <AFileUpload
               id={'signature'}
               label={'Signature'}
-              formik={formikClient}
-              icon={<LinkIcon className="h-4 w-4" />}
+              value={formikClient.values.signature}
+              error={formikClient.errors.signature}
+              formik={formikClient.getFieldProps('signature')}
+              icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
             />
             <ASingleSelect
-              name={'status'}
-              label={'Status'}
               id="status"
+              label={'Status'}
               error={formikClient.errors.status}
               formik={formikClient.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}

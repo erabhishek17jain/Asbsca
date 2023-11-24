@@ -4,8 +4,13 @@ import ABreadcrumb from '../../components-global/ABreadcrumb';
 import ATable from '../../components-global/ATable';
 import CasesBody from './CasesBody';
 import CasesHeader from './CasesHeader';
-import { casesTypes } from '../../constants';
 import {
+  appoinmentStatusList,
+  caseStatusList,
+  casesTypes,
+} from '../../constants';
+import {
+  ArrowDownTrayIcon,
   ArrowTopRightOnSquareIcon,
   PencilSquareIcon,
   PlusIcon,
@@ -16,9 +21,8 @@ import AButton from '../../components-global/AButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import store from '../../store/store';
 import { fetchCasesAsync } from '../../slices/casesSlice';
-import ALoader from '../../components-global/ALoader';
 import { AModal } from '../../components-global/AModal';
-import { assignCase } from '../../services';
+import { assignCase, deleteCaseById, statusUpdateCase } from '../../services';
 import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -34,34 +38,43 @@ const Cases = () => {
   const { allCases, loading } = useSelector((state: any) => state.cases);
   const [tableRaw, setTableRaw] = useState<any>({});
   const [showAssignCase, setShowAssignCase] = useState(false);
+  const [showStatusCase, setShowStatusCase] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [usersOptions, setUsersOptions] = useState<any>([]);
   const [activeItem, setActiveItem] = useState<any>(null);
-  const [filters, setFilters] = useState<any>({});
+  const [filters, setFilters] = useState<any>();
   const [defaultFilters, setDefaultFilters] = useState<any>({
-    skip: 0,
+    q: '',
+    page: 1,
     limit: 10,
-    search: '',
     order: 'ascend',
     sort: 'receivedDate',
   });
 
-  const initialValues = {
+  const selectCase = (item: any) => {
+    setActiveItem({ ...item });
+  };
+
+  const initialValuesAssigned = {
     caseId: '',
+    status: '',
     assigneeId: '',
     reviewerId: '',
   };
 
-  const validationSchema = Yup.object().shape({
+  const validationSchemaAssigned = Yup.object().shape({
+    status: Yup.string().required('This field is required'),
     assigneeId: Yup.string().required('This field is required'),
     reviewerId: Yup.string().required('This field is required'),
   });
 
-  const onSubmit = async (values: any) => {
+  const onSubmitAssigned = async (values: any) => {
     values = await Object.assign(values);
-    let addUserPromise = assignCase(values);
-    addUserPromise
+    let assignCasePromise = assignCase(values);
+    assignCasePromise
       .then(() => {
-        formik.resetForm();
+        formikAssigned.resetForm();
+        closeAssignCaseModal();
         store.dispatch(fetchCasesAsync(''));
         toast.success(<b>Case assigned sucessfully.</b>);
       })
@@ -70,25 +83,115 @@ const Cases = () => {
       });
   };
 
-  const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+  const formikAssigned = useFormik({
+    initialValues: initialValuesAssigned,
+    validationSchema: validationSchemaAssigned,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: onSubmit,
+    onSubmit: onSubmitAssigned,
   });
-
-  const selectCase = (item: any) => {
-    setActiveItem({ ...item });
-  };
 
   const closeAssignCaseModal = () => {
     setShowAssignCase(false);
   };
 
+  const assignReviewCase = () => {
+    setShowAssignCase(true);
+    formikAssigned.setFieldValue('caseId', activeItem?._id);
+    formikAssigned.setFieldValue('status', 'assigned');
+  };
+
   useEffect(() => {
-    store.dispatch(fetchAllUsersAsync(''));
-    store.dispatch(fetchCasesAsync({ ...defaultFilters, ...filters }));
+    if (activeItem) {
+      formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
+      formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
+    }
+  }, [activeItem]);
+
+  const initialValuesStatus = {
+    caseId: '',
+    status: '',
+    appoinmentStatus: '',
+  };
+
+  const validationSchemaStatus = Yup.object().shape({
+    status: Yup.string().required('This field is required'),
+    appoinmentStatus: Yup.string().required('This field is required'),
+  });
+
+  const onSubmitStatus = async (values: any) => {
+    values = await Object.assign(values);
+    let updateStatusPromise = statusUpdateCase(values);
+    updateStatusPromise
+      .then(() => {
+        formikStatus.resetForm();
+        closeUpdateStatusModal();
+        store.dispatch(fetchCasesAsync(''));
+        toast.success(<b>Case assigned sucessfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
+      });
+  };
+
+  const formikStatus = useFormik({
+    initialValues: initialValuesStatus,
+    validationSchema: validationSchemaStatus,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmitStatus,
+  });
+
+  const closeUpdateStatusModal = () => {
+    setShowStatusCase(false);
+  };
+
+  const updateStatusCase = () => {
+    setShowStatusCase(true);
+    formikStatus.setFieldValue('caseId', activeItem?._id);
+  };
+
+  useEffect(() => {
+    if (activeItem) {
+      formikStatus.setFieldValue('status', activeItem?.status);
+      formikStatus.setFieldValue(
+        'appoinmentStatus',
+        activeItem?.appoinmentStatus,
+      );
+    }
+  }, [activeItem]);
+
+  const openDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const deleteCase = (id: string) => {
+    const deleteBranchPromise = deleteCaseById(id);
+    deleteBranchPromise
+      .then((res: any) => {
+        if (res) {
+          closeDeleteModal();
+          store.dispatch(
+            fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
+          );
+          toast.success(<b>Case deleted successfully.</b>);
+        }
+      })
+      .catch((e: any) => {
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
+      });
+  };
+
+  useEffect(() => {
+    if (allUsers.length === 0 && userDetails?.role?.name === 'Admin')
+      store.dispatch(fetchAllUsersAsync(''));
+    store.dispatch(
+      fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
+    );
   }, [filters, defaultFilters]);
 
   useEffect(() => {
@@ -97,53 +200,97 @@ const Cases = () => {
     setTableRaw({ ...raw });
     if (status === 'cases') {
       setFilters({});
-    } else if (status === 'assigned') {
-      setFilters({ filterBy: 'assignTo', filterValue: userDetails?._id });
-    } else if (status === 'review') {
-      setFilters({
-        filterBy: 'reviewer',
-        filterValue: userDetails?._id,
-      });
-    } else if (status === 'reports') {
-      setFilters({
-        filterBy: 'status',
-        filterValue: 'Report Sent',
-      });
+    } else {
+      setFilters({ ...filters, ...{ status: status } });
     }
   }, [pathname]);
 
-  const assignReviewCase = () => {
-    setShowAssignCase(true);
-    formik.setFieldValue('caseId', activeItem?._id);
-  };
-
   useEffect(() => {
-    setUsersOptions(getOptions(allUsers, 'fullName', '_id'));
+    if (allUsers?.length > 0) {
+      setUsersOptions(getOptions(allUsers, 'fullName', '_id'));
+    }
   }, [allUsers]);
 
-  const menuOptions = [
-    {
-      title: 'Edit Case',
-      action: () => navigate('/addCase', { state: { activeItem: activeItem } }),
-      icon: <PencilSquareIcon className="h-5 w-5" />,
-    },
-    {
-      title: 'Assign Case',
-      action: assignReviewCase,
-      icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-    },
-    {
-      title: 'Delete Case',
-      action: {},
-      icon: <TrashIcon className="h-5 w-5" />,
-    },
-  ];
+  const menuOptions: any = {
+    cases: [
+      {
+        title: 'Edit Case',
+        action: () =>
+          navigate('/addCase', { state: { activeItem: activeItem } }),
+        icon: <PencilSquareIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Assign Case',
+        action: assignReviewCase,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Update Status',
+        action: updateStatusCase,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Delete Case',
+        action: openDeleteModal,
+        icon: <TrashIcon className="h-5 w-5" />,
+      },
+    ],
+    assigned: [
+      {
+        title: 'Start Report',
+        action: () =>
+          navigate('/generatePD', { state: { activeItem: activeItem } }),
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Update Status',
+        action: updateStatusCase,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Send To Review',
+        action: () => {},
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+    ],
+    review: [
+      {
+        title: 'Revert to Assignee',
+        action: () => {},
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Approve Case',
+        action: () => {},
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Send To Bank',
+        action: () => {},
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+    ],
+    completed: [
+      {
+        title: 'Download Report',
+        action: () => {},
+        icon: <ArrowDownTrayIcon className="h-5 w-5 stroke-2" />,
+      },
+    ],
+    sentToBank: [
+      {
+        title: 'Download Report',
+        action: () => {},
+        icon: <ArrowDownTrayIcon className="h-5 w-5 stroke-2" />,
+      },
+    ],
+  };
 
   return (
     <>
       <ABreadcrumb pageName={tableRaw?.title} />
       <div className="flex flex-col">
-        {userDetails?.role?.name === 'admin' && pathname.includes('cases') && (
+        {userDetails?.role?.name === 'Admin' && pathname.includes('cases') && (
           <div className="flex justify-end gap-3 mx-4">
             <AButton
               variant={'secondary'}
@@ -161,59 +308,99 @@ const Cases = () => {
             />
           </div>
         )}
-        {!loading ? (
-          <ATable
-            data={allCases?.cases}
-            tableHeader={tableRaw?.header}
-            header={
-              <CasesHeader
-                filters={filters}
-                setFilters={setFilters}
-                title={tableRaw?.title}
-                defaultFilters={defaultFilters}
-                setDefaultFilters={setDefaultFilters}
-                description={tableRaw?.description}
-              />
-            }
-            tableBody={
-              <CasesBody
-                allcases={allCases?.cases}
-                status={pathname?.slice(1)}
-                role={userDetails?.role?.name}
-                selectCase={selectCase}
-                menuOptions={menuOptions}
-              />
-            }
-          />
-        ) : (
-          <ALoader />
-        )}
+        <ATable
+          loading={loading}
+          meta={allCases?.meta}
+          data={allCases?.cases}
+          tableHeader={tableRaw?.header}
+          defaultFilters={defaultFilters}
+          setDefaultFilters={setDefaultFilters}
+          header={
+            <CasesHeader
+              filters={filters}
+              setFilters={setFilters}
+              title={tableRaw?.title}
+              status={pathname?.slice(1)}
+              defaultFilters={defaultFilters}
+              setDefaultFilters={setDefaultFilters}
+              description={tableRaw?.description}
+            />
+          }
+          tableBody={
+            <CasesBody
+              selectCase={selectCase}
+              activeItem={activeItem}
+              allcases={allCases?.cases}
+              status={pathname?.slice(1)}
+              menuOptions={menuOptions[pathname?.slice(1)]}
+            />
+          }
+        />
       </div>
       {showAssignCase && (
         <AModal
-          saveText={'Save'}
-          title={'AssignUser'}
-          onSave={formik.handleSubmit}
+          saveText={'Update'}
+          title={'Assign Reporter or Reviewer'}
+          onSave={formikAssigned.handleSubmit}
           closeModal={closeAssignCaseModal}
         >
           <div className="flex flex-col ">
             <ASingleSelect
               id="assigneeId"
               label={'Assign Reporter*'}
-              error={formik.errors.assigneeId}
-              formik={formik.getFieldProps('assigneeId')}
+              error={formikAssigned.errors.assigneeId}
+              formik={formikAssigned.getFieldProps('assigneeId')}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
             <ASingleSelect
               id="reviewerId"
               label={'Assign Reviewer*'}
-              error={formik.errors.reviewerId}
-              formik={formik.getFieldProps('reviewerId')}
+              error={formikAssigned.errors.reviewerId}
+              formik={formikAssigned.getFieldProps('reviewerId')}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
           </div>
+        </AModal>
+      )}
+      {showStatusCase && (
+        <AModal
+          saveText={'Update'}
+          title={'Update Status'}
+          onSave={formikStatus.handleSubmit}
+          closeModal={closeUpdateStatusModal}
+        >
+          <div className="flex flex-col ">
+            {userDetails?.role?.name === 'Admin' && (
+              <ASingleSelect
+                id="status"
+                label={'Status*'}
+                error={formikStatus.errors.status}
+                formik={formikStatus.getFieldProps('status')}
+                icon={<UserIcon className="h-4 w-4" />}
+                options={caseStatusList}
+              />
+            )}
+            <ASingleSelect
+              id="appoinmentStatus"
+              label={'Appoinment Status*'}
+              error={formikStatus.errors.appoinmentStatus}
+              formik={formikStatus.getFieldProps('appoinmentStatus')}
+              icon={<UserIcon className="h-4 w-4" />}
+              options={appoinmentStatusList}
+            />
+          </div>
+        </AModal>
+      )}
+      {showDeleteModal && (
+        <AModal
+          saveText={'Delete'}
+          title={`Delete Case`}
+          onSave={() => deleteCase(activeItem?._id)}
+          closeModal={() => closeDeleteModal()}
+        >
+          <div className="flex flex-col">Are you sure want to delete?</div>
         </AModal>
       )}
     </>

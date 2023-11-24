@@ -19,7 +19,7 @@ import ASingleSelect from '../../components-global/ASingleSelect';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { addUser, deleteUserById } from '../../services';
+import { addUser, deleteUserById, updateUser } from '../../services';
 import store from '../../store/store';
 import { fetchAllUsersAsync } from '../../slices/usersSlice';
 import { fetchAllRolesAsync } from '../../slices/rolesSlice';
@@ -27,17 +27,15 @@ import { useSelector } from 'react-redux';
 import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
 import AFileUpload from '../../components-global/AFileUpload';
 import { getOptions } from '../../utils';
-import ALoader from '../../components-global/ALoader';
 
 const Users = () => {
   const { allRoles } = useSelector((state: any) => state.roles);
-  const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allUsers, loading } = useSelector((state: any) => state.users);
   const [user, setUser] = useState<any>(null);
   const [showDeleteUser, setShowDeleteUser] = useState(false);
   const [showAddEditUser, setShowAddEditUser] = useState(false);
   const [roleOptions, setRoleOptions] = useState<any>([]);
-  const [branchOptions, setBranchOptions] = useState<any>([]);
+  const [activeItem, setActiveItem] = useState<any>(null);
 
   const initialValues = {
     fullName: '',
@@ -71,7 +69,9 @@ const Users = () => {
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let addUserPromise = addUser(values);
+    let addUserPromise = activeItem?._id
+      ? updateUser(values)
+      : addUser(values);
     addUserPromise
       .then((res: any) => {
         console.log(res.data);
@@ -94,12 +94,18 @@ const Users = () => {
     onSubmit: onSubmit,
   });
 
+  const openUserAddEditModal = (item: any) => {
+    setActiveItem({ ...item });
+    setShowAddEditUser(true);
+  };
+
   const closeUserModal = () => {
     formik.resetForm();
     setShowAddEditUser(false);
   };
 
-  const closeDeleteUserModal = () => {
+  const closeDeleteUserModal = (item: any) => {
+    setActiveItem({ ...item });
     setShowDeleteUser(false);
   };
 
@@ -113,7 +119,7 @@ const Users = () => {
     deleteUserPromise
       .then((res: any) => {
         console.log(res?.data);
-        closeDeleteUserModal();
+        closeDeleteUserModal(null);
         store.dispatch(fetchAllUsersAsync(''));
         toast.success(<b>User Deleted successfully.</b>);
       })
@@ -129,38 +135,49 @@ const Users = () => {
   }, [allRoles]);
 
   useEffect(() => {
-    if (allBranchs?.length > 0) {
-      setBranchOptions(getOptions(allBranchs, 'name', '_id'));
-    }
-  }, [allBranchs]);
-
-  useEffect(() => {
     store.dispatch(fetchAllUsersAsync(''));
     store.dispatch(fetchAllRolesAsync(''));
     store.dispatch(fetchAllBranchsAsync(''));
   }, []);
 
+  useEffect(() => {
+    if (activeItem) {
+      formik.setFieldValue('_id', activeItem?._id);
+      formik.setFieldValue('fullName', activeItem?.fullName);
+      formik.setFieldValue('username', activeItem?.username);
+      formik.setFieldValue('email', activeItem?.email);
+      formik.setFieldValue('mobile', activeItem?.mobile);
+      formik.setFieldValue('address', activeItem?.address);
+      formik.setFieldValue('role', activeItem?.role?._id);
+      formik.setFieldValue('status', activeItem?.status);
+      formik.setFieldValue('profile', activeItem?.profile);
+      formik.setFieldValue('about', activeItem?.about);
+    }
+  }, [activeItem]);
+
   return (
     <>
       <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
-        {!loading ? (
-          <ATable
-            data={allUsers}
-            header={
-              <UsersHeader openUserModal={() => setShowAddEditUser(true)} />
-            }
-            tableBody={
-              <UsersBody
-                openUserDeleteModal={handleOpenDeleteModal}
-                openUserAddEditModal={() => setShowAddEditUser(true)}
-              />
-            }
-            tableHeader={USER_TABLE_HEAD}
-          />
-        ) : (
-          <ALoader />
-        )}
+        <ATable
+          loading={loading}
+          data={allUsers}
+          header={
+            <UsersHeader
+              openUserModal={() => {
+                setActiveItem(null);
+                setShowAddEditUser(true);
+              }}
+            />
+          }
+          tableBody={
+            <UsersBody
+              openUserDeleteModal={handleOpenDeleteModal}
+              openUserAddEditModal={openUserAddEditModal}
+            />
+          }
+          tableHeader={USER_TABLE_HEAD}
+        />
       </div>
       {showAddEditUser && (
         <AModal
@@ -202,13 +219,13 @@ const Users = () => {
               formik={formik.getFieldProps('mobile')}
               icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
             />
-            <ASingleSelect
+            <AInputField
               id="address"
+              type="text"
               label={'Location*'}
               error={formik.errors.address}
               formik={formik.getFieldProps('address')}
               icon={<MapPinIcon className="h-4 w-4" />}
-              options={branchOptions}
             />
             <ASingleSelect
               id="role"
@@ -229,7 +246,9 @@ const Users = () => {
             <AFileUpload
               id={'profile'}
               label={'Profile'}
-              formik={formik}
+              value={formik.values.profile}
+              error={formik.errors.profile}
+              formik={formik.getFieldProps('profile')}
               icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
             />
           </div>

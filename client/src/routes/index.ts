@@ -49,12 +49,17 @@ const coreRoutes = [
   },
   {
     path: '/review',
-    title: 'For Review Cases',
+    title: 'Review Cases',
     component: Cases,
   },
   {
-    path: '/reports',
-    title: 'Reports',
+    path: '/completed',
+    title: 'Completed',
+    component: Cases,
+  },
+  {
+    path: '/sentToBank',
+    title: 'Sent To Bank',
     component: Cases,
   },
   {

@@ -3,24 +3,32 @@ import Logo from '../../assets/images/logo/logo.png';
 import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { ResetPassword } from '../ChangePassword/ChangePassword';
+import { useEffect } from 'react';
+import { setToken } from '../../services';
 
 const Hero = () => {
   const location = useLocation();
   const { search } = location;
+  const token = search.slice(7);
+
+  useEffect(() => {
+    if (token !== '') {
+      setToken(token);
+    }
+  }, [search]);
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default">
         <div className="flex flex-wrap justify-center items-center h-screen">
           <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-            <div
-              className={`p-4 ${search.slice(3) ? 'text-left' : 'text-center'}`}
-            >
+            <div className={`p-4 ${token ? 'text-left' : 'text-center'}`}>
               <Link className="mb-5.5 inline-block w-80" to="/">
                 <img className="hidden" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
-              {search.slice(3) ? (
-                <ResetPassword />
+              {token ? (
+                <ResetPassword isFirstPassword={true} token={token} />
               ) : (
                 <>
                   <p className="2xl:px-20">

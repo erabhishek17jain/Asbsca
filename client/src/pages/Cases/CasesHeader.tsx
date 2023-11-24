@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Typography } from '@material-tailwind/react';
 import {
   FilterCases,
   FilterButtons,
@@ -7,9 +6,10 @@ import {
 
 const CasesHeader = ({
   title,
-  description,
+  status,
   filters,
   setFilters,
+  description,
   defaultFilters,
   setDefaultFilters,
 }: any) => {
@@ -23,12 +23,12 @@ const CasesHeader = ({
     <div className="flex flex-col justify-between gap-5">
       <div className="flex w-full justify-between gap-2">
         <div>
-          <Typography variant="h5" color="blue-gray">
+          <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal">
             {title}
-          </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
+          </h5>
+          <div className="block antialiased font-sans text-lg leading-normal text-main font-normal mt-1">
             {description}
-          </Typography>
+          </div>
         </div>
         <div className="flex justify-between items-start gap-3">
           <FilterButtons
@@ -41,6 +41,7 @@ const CasesHeader = ({
       </div>
       {showFilter && (
         <FilterCases
+          status={status}
           filters={filters}
           setFilters={setFilters}
           showFilter={showFilter}

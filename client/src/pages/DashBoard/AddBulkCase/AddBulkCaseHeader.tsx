@@ -1,12 +1,10 @@
-import { Typography } from "@material-tailwind/react";
-
 const AddBulkCaseHeader = () => {
   return (
     <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
       <div>
-        <Typography variant="h5" color="blue-gray">
+        <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
           Uploaded Cases
-        </Typography>
+        </h5>
       </div>
     </div>
   );

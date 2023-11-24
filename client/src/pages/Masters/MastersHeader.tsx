@@ -1,14 +1,13 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { Typography } from '@material-tailwind/react';
 import AButton from '../../components-global/AButton';
 
 const MastersHeader = ({ type, openModal }: any) => {
   return (
     <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
       <div>
-        <Typography variant="h5" color="blue-gray" className="capitalize">
+        <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
           {`${type}s`}
-        </Typography>
+        </h5>
       </div>
       <div className="flex shrink-0 gap-2 md:w-max">
         <AButton

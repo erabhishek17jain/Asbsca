@@ -32,7 +32,7 @@ const StatsCard = () => {
     },
     {
       count: analytics?.sentToBank,
-      path: '/reports',
+      path: '/sentToBank',
       title: 'Send to Bank',
       icon: <PaperAirplaneIcon className="h-5 w-5" />,
     },
@@ -41,18 +41,18 @@ const StatsCard = () => {
     analytics &&
     statsData.map((item: any) => (
       <div
-        className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5 shadow-default"
+        className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg p-4 shadow-default"
         key={item?.path}
       >
         <div className="flex justify-between">
           <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta2">
             {item?.icon}
           </div>
-          <h4 className="text-title-lg font-bold text-black">{item?.count}</h4>
+          <h4 className="text-title-lg font-bold text-main">{item?.count}</h4>
         </div>
         <div className="my-4 flex items-end justify-between">
           <div>
-            <span className="text-sm font-medium">{item?.title}</span>
+            <span className="text-base text-main font-medium">{item?.title}</span>
           </div>
         </div>
         <Link to={item?.path} className='flex flex-col'>

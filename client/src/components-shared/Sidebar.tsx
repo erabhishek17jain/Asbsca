@@ -59,7 +59,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, [sidebarExpanded]);
 
   useEffect(() => {
-    if (userDetails && userDetails?.role?.name !== 'admin') {
+    if (userDetails && userDetails?.role?.name !== 'Admin') {
       const menu = pages.filter(
         (item) => !['cases', 'users', 'masters'].includes(item.value),
       );

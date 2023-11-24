@@ -79,7 +79,7 @@ const Profile = () => {
               </div>
             </div>
             <div className="px-4 pb-6 text-center">
-              <div className="relative z-10 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
+              <div className="relative mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
                 <div className="relative rounded-full">
                   {userDetails?.profile ? (
                     <img
@@ -102,7 +102,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="mb-1.5 text-2xl font-semibold text-black">
+                <h3 className="mb-1.5 text-2xl font-semibold text-main">
                   {userDetails?.fullName}
                 </h3>
                 <p className="flex justify-center gap-3 font-medium my-4">
@@ -121,7 +121,7 @@ const Profile = () => {
                 </p>
 
                 <div className="mx-auto max-w-180">
-                  <h4 className="font-semibold text-black">About Me</h4>
+                  <h4 className="font-semibold text-main">About Me</h4>
                   <p className="mt-4.5">
                     {userDetails?.about
                       ? userDetails?.about
@@ -129,22 +129,22 @@ const Profile = () => {
                   </p>
                 </div>
 
-                <h4 className="font-semibold text-black mt-6">PD Status</h4>
+                <h4 className="font-semibold text-main mt-6">PD Status</h4>
                 <div className="mx-auto mt-4.5 mb-5.5 grid max-w-lg grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.completedPD}
                     </span>
                     <span className="text-sm">PD Completed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.assignedPD}
                     </span>
                     <span className="text-sm">PD Assigned</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
-                    <span className="font-semibold text-black">
+                    <span className="font-semibold text-main">
                       {userDetails?.accuracy}
                     </span>
                     <span className="text-sm">Accuracy</span>
@@ -168,41 +168,40 @@ const Profile = () => {
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
-                  formik={formikUser}
                   profile={userDetails?.profile}
-                  icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
+                  formik={formikUser.getFieldProps('profile')}
                 />
                 <AInputField
-                  type={'text'}
                   id={'fullName'}
                   label={'Full Name'}
                   disabled={true}
+                  error={formikUser.errors.fullName}
                   formik={formikUser.getFieldProps('fullName')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
-                  type={'text'}
                   id={'mobile'}
                   label={'Mobile No'}
                   disabled={true}
+                  error={formikUser.errors.mobile}
                   formik={formikUser.getFieldProps('mobile')}
                   icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
                 />
               </div>
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AInputField
-                  type={'text'}
                   id={'email'}
                   label={'E-Mail'}
                   disabled={true}
+                  error={formikUser.errors.email}
                   formik={formikUser.getFieldProps('email')}
                   icon={<></>}
                 />
                 <AInputField
-                  type={'text'}
                   id={'username'}
                   label={'Employee ID'}
                   disabled={true}
+                  error={formikUser.errors.username}
                   formik={formikUser.getFieldProps('username')}
                   icon={<></>}
                 />
@@ -210,6 +209,7 @@ const Profile = () => {
               <ATextField
                 id={'aboutMe'}
                 label={'About Me'}
+                error={formikUser.errors.about}
                 formik={formikUser.getFieldProps('about')}
                 icon={<></>}
               />

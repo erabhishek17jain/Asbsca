@@ -1,20 +1,32 @@
-import { Button, Typography } from '@material-tailwind/react';
+import AButton from "./AButton";
 
-interface APaginationProps {}
+const APagination = ({ meta, defaultFilters, setDefaultFilters }: any) => {
+  const nextPage = () => {
+    setDefaultFilters({ ...defaultFilters, page: parseInt(meta.page) + 1 });
+  };
 
-const APagination = ({}: APaginationProps) => {
+  const previousPage = () => {
+    setDefaultFilters({ ...defaultFilters, page: parseInt(meta.page) - 1 });
+  };
+
   return (
     <>
-      <Typography variant="small" color="blue-gray" className="font-normal">
-        Page 1 of 10
-      </Typography>
+      <div className="block antialiased font-sans text-sm leading-normal text-main font-normal">
+        Page {meta?.page} of {meta?.count}
+      </div>
       <div className="flex gap-2">
-        <Button variant="outlined" size="sm">
-          Previous
-        </Button>
-        <Button variant="outlined" size="sm">
-          Next
-        </Button>
+        <AButton
+          variant="small"
+          label={'Previous'}
+          action={previousPage}
+          disabled={meta?.page === 1}
+        />
+        <AButton
+          label={'Next'}
+          variant="small"
+          action={nextPage}
+          disabled={Math.floor(meta?.page) + 1 === 1}
+        />
       </div>
     </>
   );

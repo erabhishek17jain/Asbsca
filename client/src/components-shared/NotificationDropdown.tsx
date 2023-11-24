@@ -67,7 +67,7 @@ const NotificationDropdown = () => {
               to="#"
             >
               <p className="text-sm">
-                <span className="text-black">
+                <span className="text-main">
                   Edit your information in a swipe
                 </span>{' '}
                 Sint occaecat cupidatat non proident, sunt in culpa qui officia

@@ -1453,7 +1453,7 @@ const ReportData = () => {
       </table>
       <div className="my-4">
         <h1>Disclaimer Clause: -</h1>
-        <p className="text-black">
+        <p className="text-main">
           The above data and explanation are based on the information provided
           to us during the course of the visit. This report (including any
           attachments) has been prepared on the basis of verbal information

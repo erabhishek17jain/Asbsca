@@ -6,6 +6,9 @@ import ASection from '../../../components-global/ASection';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import ATags, { AddTagButton } from '../../../components-global/ATags';
 import { yesNoOptions } from '../constants';
+import { AStepperPagination } from '../../../components-global/AStepper';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 const businessAssetFooters = [
   {
@@ -93,7 +96,14 @@ const AssetInformation = () => {
   );
 };
 
-const AssetsInvestmentBank = ({ formik }: any) => {
+const AssetsInvestmentBank = ({
+  steps,
+  payloads,
+  activeStep,
+  handlePrev,
+  handleNext,
+  setPayloads,
+}: any) => {
   const [isBusinessAssets, setIsBusinessAssets] = useState('yes');
   const [businessAssets, setBusinessAssets] = useState<any>([]);
 
@@ -157,144 +167,196 @@ const AssetsInvestmentBank = ({ formik }: any) => {
     });
     setBankAccounts([...tags]);
   };
+
+  
+  const initialValues = {
+    loan: '',
+    loanType: '',
+    bankName: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    loan: Yup.string().required('This field is required'),
+    loanType: Yup.string().required('This field is required'),
+    bankName: Yup.string().required('This field is required'),
+  });
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmit = async (values: any) => {
+    values = await Object.assign(values);
+    setPayloads({ ...payloads, loanDetails: { ...values } });
+    handleNext();
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmit,
+  });
+  
   return (
-    <div className="flex flex-col w-full">
-      <ARadioButtonGroup
-        value={isBusinessAssets}
-        title={'Business Assets'}
-        radioValues={yesNoOptions}
-        handleChecked={handleBusinessAssets}
-      />
-      {isBusinessAssets === 'yes' && (
-        <ASection
-          title={'Business Asset Details'}
-          footers={businessAssetFooters}
-        >
-          {businessAssets.length > 0 ? (
-            <ATags
-              tags={businessAssets}
-              addTag={addBusinessAssets}
-              setTags={setBusinessAssets}
+    <>
+      <div className="absolute top-12 bottom-19 overflow-auto w-full">
+        <div className="flex flex-col w-full">
+          <ARadioButtonGroup
+            value={isBusinessAssets}
+            title={'Business Assets'}
+            radioValues={yesNoOptions}
+            handleChecked={handleBusinessAssets}
+          />
+          {isBusinessAssets === 'yes' && (
+            <ASection
+              title={'Business Asset Details'}
+              footers={businessAssetFooters}
             >
-              <AssetInformation />
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Business Asset'}
-              addLoan={() => addBusinessAssets(businessAssets)}
-            />
+              {businessAssets.length > 0 ? (
+                <ATags
+                  tags={businessAssets}
+                  addTag={addBusinessAssets}
+                  setTags={setBusinessAssets}
+                >
+                  <AssetInformation />
+                </ATags>
+              ) : (
+                <AddTagButton
+                  title={'Add Business Asset'}
+                  addLoan={() => addBusinessAssets(businessAssets)}
+                />
+              )}
+            </ASection>
           )}
-        </ASection>
-      )}
-      <ARadioButtonGroup
-        value={isPersonalAssets}
-        title={'Personal Assets'}
-        radioValues={yesNoOptions}
-        handleChecked={handlePersonalAssets}
-      />
-      {isPersonalAssets === 'yes' && (
-        <ASection
-          title={'Personal Asset Details'}
-          footers={personalAssetFooters}
-        >
-          {personalAssets.length > 0 ? (
-            <ATags
-              tags={personalAssets}
-              addTag={addPersonalAssets}
-              setTags={setPersonalAssets}
+          <ARadioButtonGroup
+            value={isPersonalAssets}
+            title={'Personal Assets'}
+            radioValues={yesNoOptions}
+            handleChecked={handlePersonalAssets}
+          />
+          {isPersonalAssets === 'yes' && (
+            <ASection
+              title={'Personal Asset Details'}
+              footers={personalAssetFooters}
             >
-              <AssetInformation />
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Personal Asset'}
-              addLoan={() => addPersonalAssets(personalAssets)}
-            />
+              {personalAssets.length > 0 ? (
+                <ATags
+                  tags={personalAssets}
+                  addTag={addPersonalAssets}
+                  setTags={setPersonalAssets}
+                >
+                  <AssetInformation />
+                </ATags>
+              ) : (
+                <AddTagButton
+                  title={'Add Personal Asset'}
+                  addLoan={() => addPersonalAssets(personalAssets)}
+                />
+              )}
+            </ASection>
           )}
-        </ASection>
-      )}
-      <ARadioButtonGroup
-        value={isInvestments}
-        title={'Investments'}
-        radioValues={yesNoOptions}
-        handleChecked={handleInvestments}
-      />
-      {isInvestments === 'yes' && (
-        <ASection title={'Investment Details'} footers={investmentFooters}>
-          {investments.length > 0 ? (
-            <ATags
-              tags={investments}
-              addTag={addInvestments}
-              setTags={setInvestments}
+          <ARadioButtonGroup
+            value={isInvestments}
+            title={'Investments'}
+            radioValues={yesNoOptions}
+            handleChecked={handleInvestments}
+          />
+          {isInvestments === 'yes' && (
+            <ASection title={'Investment Details'} footers={investmentFooters}>
+              {investments.length > 0 ? (
+                <ATags
+                  tags={investments}
+                  addTag={addInvestments}
+                  setTags={setInvestments}
+                >
+                  <AGroupFields>
+                    <ASingleSelect
+                      name={'particularts'}
+                      label={'Particularts'}
+                      options={[{ label: 'India', value: 'india' }]}
+                    />
+                    <AInputField
+                      type={'text'}
+                      name={'contribution'}
+                      label={'Contribution'}
+                    />
+                    <AInputField
+                      type={'text'}
+                      name={'marketValue'}
+                      label={'Market Value'}
+                    />
+                  </AGroupFields>
+                </ATags>
+              ) : (
+                <AddTagButton
+                  title={'Add Investment'}
+                  addLoan={() => addInvestments(investments)}
+                />
+              )}
+            </ASection>
+          )}
+          <ARadioButtonGroup
+            value={isBankAccounts}
+            title={'Bank Account'}
+            radioValues={yesNoOptions}
+            handleChecked={handleBankAccounts}
+          />
+          {isBankAccounts === 'yes' && (
+            <ASection
+              title={'Bank Account Details'}
+              footers={bankAccountFooters}
             >
-              <AGroupFields>
-                <ASingleSelect
-                  name={'particularts'}
-                  label={'Particularts'}
-                  options={[{ label: 'India', value: 'india' }]}
+              {bankAccounts.length > 0 ? (
+                <ATags
+                  tags={bankAccounts}
+                  addTag={addBankAccounts}
+                  setTags={setBankAccounts}
+                >
+                  <AGroupFields>
+                    <ASingleSelect
+                      name={'bankName'}
+                      label={'Bank Name'}
+                      options={[{ label: 'India', value: 'india' }]}
+                    />
+                    <AInputField
+                      type={'text'}
+                      name={'branch'}
+                      label={'Branch'}
+                    />
+                    <ASingleSelect
+                      name={'type'}
+                      label={'Type'}
+                      options={[{ label: 'India', value: 'india' }]}
+                    />
+                    <AInputField
+                      type={'text'}
+                      name={'balanceOnDay'}
+                      label={'Balance On Day'}
+                    />
+                  </AGroupFields>
+                </ATags>
+              ) : (
+                <AddTagButton
+                  title={'Add Bank Account'}
+                  addLoan={() => addBankAccounts(bankAccounts)}
                 />
-                <AInputField
-                  type={'text'}
-                  name={'contribution'}
-                  label={'Contribution'}
-                />
-                <AInputField
-                  type={'text'}
-                  name={'marketValue'}
-                  label={'Market Value'}
-                />
-              </AGroupFields>
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Investment'}
-              addLoan={() => addInvestments(investments)}
-            />
+              )}
+            </ASection>
           )}
-        </ASection>
-      )}
-      <ARadioButtonGroup
-        value={isBankAccounts}
-        title={'Bank Account'}
-        radioValues={yesNoOptions}
-        handleChecked={handleBankAccounts}
+        </div>
+      </div>
+      <AStepperPagination
+        steps={steps}
+        activeStep={activeStep}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
       />
-      {isBankAccounts === 'yes' && (
-        <ASection title={'Bank Account Details'} footers={bankAccountFooters}>
-          {bankAccounts.length > 0 ? (
-            <ATags
-              tags={bankAccounts}
-              addTag={addBankAccounts}
-              setTags={setBankAccounts}
-            >
-              <AGroupFields>
-                <ASingleSelect
-                  name={'bankName'}
-                  label={'Bank Name'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-                <AInputField type={'text'} name={'branch'} label={'Branch'} />
-                <ASingleSelect
-                  name={'type'}
-                  label={'Type'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-                <AInputField
-                  type={'text'}
-                  name={'balanceOnDay'}
-                  label={'Balance On Day'}
-                />
-              </AGroupFields>
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Bank Account'}
-              addLoan={() => addBankAccounts(bankAccounts)}
-            />
-          )}
-        </ASection>
-      )}
-    </div>
+    </>
   );
 };
 

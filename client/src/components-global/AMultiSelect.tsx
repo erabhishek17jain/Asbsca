@@ -17,7 +17,7 @@ const AMultiSelect = ({
       }`}
     >
       <label
-        className={`block text-black text-sm ${
+        className={`block text-main text-sm ${
           variant === 'horizantal' ? 'min-w-[25%]' : ''
         }`}
       >

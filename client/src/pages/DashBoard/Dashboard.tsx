@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import store from '../../store/store.tsx';
 import moment from 'moment';
 import CasesBody from '../Cases/CasesBody.tsx';
-import { Typography } from '@material-tailwind/react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="w-8/12 flex gap-3">
-          {userDetails?.role?.name === 'admin' && (
+          {userDetails?.role?.name === 'Admin' && (
             <div className="flex gap-2 w-full flex-col">
               <div className="flex justify-end gap-3">
                 <AButton
@@ -93,7 +92,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex gap-6 sm:flex-row flex-col">
-        <div className="w-full sm:1/2 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
+        <div className="w-full sm:1/2 grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-4 xl:grid-cols-2 2xl:gap-7.5">
           <StatsCard />
         </div>
         <div className="w-full sm:1/2 ">
@@ -103,12 +102,12 @@ const Dashboard = () => {
       <div className="mt-8 flex flex-col">
         {topAssignedCases.length > 0 && (
           <>
-            <Typography variant="h5" color="blue-gray" className="px-4">
+            <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal mx-4">
               Top Assigned Cases
-            </Typography>
+            </h5>
             <div
               className={
-                userDetails?.role?.name === 'admin'
+                userDetails?.role?.name === 'Admin'
                   ? 'col-span-12 xl:col-span-8'
                   : 'col-span-12 xl:col-span-12'
               }
@@ -118,16 +117,15 @@ const Dashboard = () => {
                 tableHeader={tableRaw?.header}
                 tableBody={
                   <CasesBody
-                    status={'assigned'}
+                    status={'dashboard'}
                     allcases={topAssignedCases}
-                    role={userDetails?.role?.name}
                   />
                 }
               />
             </div>
           </>
         )}
-        {userDetails?.role?.name === 'admin' && topPerfomers.length > 0 && (
+        {userDetails?.role?.name === 'Admin' && topPerfomers.length > 0 && (
           <TopPerformers topPerfomers={topPerfomers} />
         )}
       </div>
