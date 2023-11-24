@@ -17,10 +17,18 @@ export default class ProductAPI implements IProductAPI {
         return this.instance;
     }
     
-    public list = async (_: Request, res: Response): Promise<Response> => {
+    public list = async (req: Request, res: Response): Promise<Response> => {
         try {
-        const products = await this.productRepo.list();
-        return res.status(200).json(products);
+        const products = await this.productRepo.list(req.query);
+        const count = await this.productRepo.count(req.query);
+        return res.status(200).json({
+            products,
+            meta: {
+                page: req.query.page,
+                limit: req.query.limit,
+                count,
+            },
+        });
         } catch (error) {
         return res.status(500).json({ error });
         }

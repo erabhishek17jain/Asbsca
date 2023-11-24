@@ -19,17 +19,19 @@ export default class ClientRouter {
   }
 
   private init() {
-    this.router.get("/list", Auth.isadmin, ClientAPI.view.list);
+    this.router.get("/list", Auth.isuser, ClientAPI.view.list);
+    this.router.get("/get/:id", Auth.isuser, ClientAPI.view.get);
     this.router.post("/create", Auth.isadmin, ClientAPI.view.create);
     this.router.put("/update", Auth.isadmin, ClientAPI.view.update);
     this.router.delete("/delete/:id", Auth.isadmin, ClientAPI.view.delete);
 
-    this.router.get("/branch/list", Auth.isadmin, BranchAPI.view.list);
+    this.router.get("/branch/list", Auth.isuser, BranchAPI.view.list);
+    this.router.get("/branch/get/:id", Auth.isuser, BranchAPI.view.get);
     this.router.post("/branch/create", Auth.isadmin, BranchAPI.view.create);
     this.router.put("/branch/update", Auth.isadmin, BranchAPI.view.update);
     this.router.delete("/branch/delete/:id", Auth.isadmin, BranchAPI.view.delete);
 
-    this.router.get("/product/list", Auth.isadmin, ProductAPI.view.list);
+    this.router.get("/product/list", Auth.isuser, ProductAPI.view.list);
     this.router.post("/product/create", Auth.isadmin, ProductAPI.view.create);
     this.router.put("/product/update", Auth.isadmin, ProductAPI.view.update);
     this.router.delete("/product/delete/:id", Auth.isadmin, ProductAPI.view.delete);

@@ -27,6 +27,32 @@
    */
 
 /**
+ * @openapi
+ * /api/v1/clients/get/{id}:
+ *   get:
+ *     summary: Get a client
+ *     tags: [Clients]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The id of the client to get.
+ *         schema:
+ *            type: string
+ *     responses:
+ *        201:
+ *          description: Client successfully fetched
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Client'
+ *        500:
+ *          description: Internal server error
+ */
+
+/**
    * @openapi
    * /api/v1/clients/create:
    *   post:

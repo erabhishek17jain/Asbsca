@@ -13,8 +13,14 @@ export default class ClientRepository implements Repository<IClient> {
     return await this.model.findOne({_id: new Types.ObjectId(_id)}).populate("branch");
   }
 
-  public list = async (): Promise<IClient[]> => {
-    return await this.model.find().populate("branch");
+  public list = async (query: ListQuery): Promise<IClient[]> => {
+    const { limit = 10, page = 1 } = query;
+    const skip = (page - 1) * limit;
+    return await this.model.find().skip(skip).limit(limit).populate("branch");
+  }
+
+  public count = async (query: ListQuery): Promise<number> => {
+    return await this.model.countDocuments();
   }
 
   public create = async (client: IClient): Promise<IClient> => {

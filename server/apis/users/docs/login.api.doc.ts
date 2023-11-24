@@ -122,3 +122,28 @@
    *                   type: string
    *                   description: Error message
    */
+
+/**
+   * @openapi
+   * /api/v1/users/reset-password:
+   *   post:
+   *    tags: [Authentication]
+   *    summary: 'Send reset password email'
+   *    description: 'This method sends a reset password email to the user'
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            required:
+   *             - email
+   *            properties:
+   *             email:
+   *              type: string
+   *    responses:
+   *      '200':
+   *        description: 'Email sent successfully'
+   *      '500':
+   *        description: 'Internal server error'
+   */

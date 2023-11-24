@@ -13,8 +13,14 @@ export default class ProductRepository implements Repository<IProduct> {
         return await this.model.findOne({_id: new Types.ObjectId(_id)}).populate("client");
     }
 
-    public list = async (): Promise<IProduct[]> => {
-        return await this.model.find().populate("client");
+    public list = async (query: ListQuery): Promise<IProduct[]> => {
+        const { limit = 10, page = 1 } = query;
+        const skip = (page - 1) * limit;
+        return await this.model.find().skip(skip).limit(limit).populate("client");
+    }
+
+    public count = async (query: ListQuery): Promise<number> => {
+        return await this.model.countDocuments();
     }
 
     public create = async (product: IProduct): Promise<IProduct> => {

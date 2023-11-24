@@ -5,6 +5,8 @@ import JWT from "modules/jwt";
 import User from "model/User.model";
 import Password from "modules/password";
 import CONFIG from "config";
+import fs from "fs";
+import path from "path";
 
 interface IUserAPI {
   getUsers: (req: Request, res: Response) => Promise<Response>;
@@ -17,6 +19,7 @@ interface IUserAPI {
 
 export default class UserAPI implements IUserAPI {
   private static instance: UserAPI = new this();
+  private template: string = fs.readFileSync(path.join(__dirname, "../../../templates/welcome.html"), "utf8");
   private constructor() {}
   public static get view(): UserAPI {
     return this.instance;
@@ -26,10 +29,17 @@ export default class UserAPI implements IUserAPI {
   private emailService = Email.fn;
   private jwtService = JWT.fn;
 
-  public getUsers = async (_: Request, res: Response) : Promise<Response> => {
+  public getUsers = async (req: Request, res: Response) : Promise<Response> => {
     try {
-      const users = await this.repo.list();
-      return res.status(200).json(users);
+      const users = await this.repo.list(req.query);
+      return res.status(200).json({
+        users,
+        meta: {
+          page: req.query.page,
+          limit: req.query.limit,
+          count: await this.repo.count(req.query),
+        },
+      });
     } catch (e) {
       return res.status(500).json(e);
     }
@@ -40,10 +50,12 @@ export default class UserAPI implements IUserAPI {
       const user = await this.repo.create(req.body);
       const token = this.jwtService.getEmailVerificationToken(user.email);
 
+      const link = `${CONFIG.CLIENT_URL}/?token=${token}`;
+
       await this.emailService.sendEmail(
         user.email,
-        "Verify your email",
-        `Please click this link to verify your email and set your password: <a href="${CONFIG.CLIENT_URL}/?token=${token}">Verify email</a>`
+        "Verify your email for Abasca",
+        this.template.replace("{{link}}", link).replace("{{name}}", user.fullName || "User")
       );
 
       return res.status(200).json(user);

@@ -13,8 +13,14 @@ export default class BranchRepository implements Repository<IBranch> {
     return await this.model.findOne({_id: new Types.ObjectId(_id)});
   }
 
-  public list = async (): Promise<IBranch[]> => {
-    return await this.model.find();
+  public list = async (query: ListQuery): Promise<IBranch[]> => {
+    const { limit = 10, page = 1 } = query;
+    const skip = (page - 1) * limit;
+    return await this.model.find().skip(skip).limit(limit);
+  }
+
+  public count = async (query: ListQuery): Promise<number> => {
+    return await this.model.countDocuments();
   }
 
   public create = async (branch: IBranch): Promise<IBranch> => {

@@ -54,7 +54,7 @@
 /**
    * @openapi
    * /api/v1/users/roles/update:
-   *   post:
+   *   put:
    *     tags: [Roles]
    *     description: Update a role
    *     security:
@@ -79,7 +79,7 @@
 /**
    * @openapi
    * /api/v1/users/roles/delete/{id}:
-   *   post:
+   *   delete:
    *     tags: [Roles]
    *     description: Delete a role by ID
    *     security:

@@ -17,14 +17,31 @@ export default class BranchAPI implements IBranchAPI {
     return this.instance;
   }
 
-  public list = async (_: Request, res: Response): Promise<Response> => {
+  public list = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const branches = await this.branchRepo.list();
-      return res.status(200).json(branches);
+      const branches = await this.branchRepo.list(req.query);
+      const count = await this.branchRepo.count(req.query);
+      return res.status(200).json({
+        branches,
+        meta: {
+          page: req.query.page,
+          limit: req.query.limit,
+          count,
+        },
+      });
     } catch (error) {
       return res.status(500).json({ error });
     }
   };
+
+  public get = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const branch = await this.branchRepo.get(req.params.id);
+      return res.status(200).json(branch);
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
+  }
 
   public create = async (req: Request, res: Response): Promise<Response> => {
     try {

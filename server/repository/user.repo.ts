@@ -23,8 +23,14 @@ export default class UserRepository implements IUserRepository {
     return await this.model.findOne({ email }).populate("role");
   }
 
-  public async list(): Promise<IUser[]> {
-    return await this.model.find().populate("role");
+  public async list(query: ListQuery): Promise<IUser[]> {
+    const { limit = 10, page = 1 } = query;
+    const skip = (page - 1) * limit;
+    return await this.model.find().skip(skip).limit(limit).populate("role");
+  }
+
+  public async count(query: ListQuery): Promise<number> {
+    return await this.model.countDocuments();
   }
 
   public async create(user: IUser): Promise<IUser> {

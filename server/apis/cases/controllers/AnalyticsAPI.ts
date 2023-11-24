@@ -28,6 +28,7 @@ export default class AnalyticsAPI {
                 endDate = dayjs().format("YYYY-MM-DD");
             }
             let filter: { [key: string]: any } = {
+                assignTo: { $ne: null },
                 createdAt: {
                     $gte: dayjs(String(startDate)).startOf("day").toDate(),
                     $lte: dayjs(String(endDate)).endOf("day").toDate(),

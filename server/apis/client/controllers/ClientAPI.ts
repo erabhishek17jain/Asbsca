@@ -17,9 +17,26 @@ export default class ClientAPI implements IClientAPI {
   }
   private repo = ClientRepository.repo;
 
-  public list = async (_: Request, res: Response): Promise<Response> => {
+  public list = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const data = await this.repo.list();
+      const data = await this.repo.list(req.query);
+      const count = await this.repo.count(req.query);
+      return res.status(200).json({
+        data,
+        meta: {
+          page: req.query.page,
+          limit: req.query.limit,
+          count,
+        },
+      });
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+
+  public get = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const data = await this.repo.get(req.params.id);
       return res.status(200).json(data);
     } catch (error) {
       return res.status(500).json(error);

@@ -4,6 +4,7 @@ import LoginAPI from "./controllers/LoginAPI";
 import UserAPI from "./controllers/UserAPI";
 import authMiddleware from "middleware/auth.middleware";
 import Auth from "middleware/auth.middleware";
+import ResetPasswordAPI from "./controllers/ResetPasswordAPI";
 
 export default class UserRouter {
   private router: Router = Router({
@@ -20,10 +21,11 @@ export default class UserRouter {
 
   private init(): void {
     this.router.post("/login", LoginAPI.view.login);
+    this.router.post("/reset-password", ResetPasswordAPI.view.post);
     this.router.get("/roles/list", Auth.isadmin, RolesAPI.view.get);
     this.router.post("/roles/create", Auth.isadmin, RolesAPI.view.create);
     this.router.put("/roles/update", Auth.isadmin, RolesAPI.view.update);
-    this.router.delete("/roles/delete", Auth.isadmin, RolesAPI.view.delete);
+    this.router.delete("/roles/delete/:id", Auth.isadmin, RolesAPI.view.delete);
 
     this.router.get("/list", Auth.isadmin, UserAPI.view.getUsers);
     this.router.post("/create", Auth.isadmin, UserAPI.view.addUser);

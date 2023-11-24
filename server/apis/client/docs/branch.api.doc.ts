@@ -52,6 +52,34 @@
    */
 
 /**
+ * @openapi
+ * paths:
+ *  /api/v1/clients/branch/get/{id}:
+ *    get:
+ *      summary: Get a branch
+ *      tags: [Branches]
+ *      security:
+ *        - bearerAuth: []
+ *      description: Retrieve a single branch
+ *      parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           schema:
+ *              type: string
+ *           description: The ID of the branch to retrieve.
+ *      responses:
+ *        200:
+ *          description: Branch successfully fetched
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Branch'
+ *        500:
+ *          description: Internal server error
+ */
+
+/**
    * @openapi
    * /api/v1/clients/branch/update:
    *   put:

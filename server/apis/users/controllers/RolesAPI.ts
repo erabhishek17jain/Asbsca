@@ -16,10 +16,18 @@ export default class RolesAPI implements IRole {
   }
   private repo = RoleRepository.repo;
 
-  public get = async (_: Request, res: Response): Promise<Response> => {
+  public get = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const roles = await this.repo.list();
-      return res.status(200).json(roles);
+      const roles = await this.repo.list(req.query);
+      const count = await this.repo.count(req.query);
+      return res.status(200).json({
+        roles,
+        meta: {
+          page: req.query.page,
+          limit: req.query.limit,
+          count,
+        },
+      });
     } catch (error) {
       return res.status(500).json(error);
     }

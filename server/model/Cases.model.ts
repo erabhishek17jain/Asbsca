@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import User from "./User.model";
+import Branch from "./Branch.model";
+import Client from "./Client.model";
 
 enum CaseStatus {
     Pending = "Pending",
@@ -21,9 +23,9 @@ export interface ICases extends mongoose.Document {
     referenceId: string;
     localOrOGL: "Local" | "OGL";
     city: string;
-    branch: string;
+    branch: mongoose.Types.ObjectId;
     type: "PD" | "LIP";
-    bankName: string;
+    bankName: mongoose.Types.ObjectId;
     status: CaseStatus;
     receivedDate: Date;
     visitStatus: VisitStatus;
@@ -46,9 +48,9 @@ const CasesSchema = new mongoose.Schema<ICases>({
     referenceId: { type: String, required: true },
     localOrOGL: { type: String, required: true },
     city: { type: String, required: true },
-    branch: { type: String, required: true },
+    branch: { type: mongoose.Schema.Types.ObjectId, ref: Branch, required: false },
     type: { type: String, required: true },
-    bankName: { type: String, required: true },
+    bankName: { type: mongoose.Schema.Types.ObjectId, ref: Client, required: false },
     status: { type: String, default: CaseStatus.Pending },
     receivedDate: { type: Date, default: Date.now },
     reviewer: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
