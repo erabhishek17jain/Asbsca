@@ -64,9 +64,9 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
 
       <form onSubmit={formik.handleSubmit}>
         <AInputField
-          type={'text'}
           id={'newPassword'}
           label={'New Password'}
+          error={formik.errors.newPassword}
           formik={formik.getFieldProps('newPassword')}
           icon={<KeyIcon className="h-4 w-4" />}
         />
@@ -74,6 +74,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
           type={'password'}
           id={'confirmPassword'}
           label={'Confirm Password'}
+          error={formik.errors.confirmPassword}
           formik={formik.getFieldProps('confirmPassword')}
           icon={<KeyIcon className="h-4 w-4" />}
         />

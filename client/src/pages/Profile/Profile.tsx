@@ -168,41 +168,40 @@ const Profile = () => {
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
-                  formik={formikUser}
                   profile={userDetails?.profile}
-                  icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
+                  formik={formikUser.getFieldProps('profile')}
                 />
                 <AInputField
-                  type={'text'}
                   id={'fullName'}
                   label={'Full Name'}
                   disabled={true}
+                  error={formikUser.errors.fullName}
                   formik={formikUser.getFieldProps('fullName')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
-                  type={'text'}
                   id={'mobile'}
                   label={'Mobile No'}
                   disabled={true}
+                  error={formikUser.errors.mobile}
                   formik={formikUser.getFieldProps('mobile')}
                   icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
                 />
               </div>
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AInputField
-                  type={'text'}
                   id={'email'}
                   label={'E-Mail'}
                   disabled={true}
+                  error={formikUser.errors.email}
                   formik={formikUser.getFieldProps('email')}
                   icon={<></>}
                 />
                 <AInputField
-                  type={'text'}
                   id={'username'}
                   label={'Employee ID'}
                   disabled={true}
+                  error={formikUser.errors.username}
                   formik={formikUser.getFieldProps('username')}
                   icon={<></>}
                 />
@@ -210,6 +209,7 @@ const Profile = () => {
               <ATextField
                 id={'aboutMe'}
                 label={'About Me'}
+                error={formikUser.errors.about}
                 formik={formikUser.getFieldProps('about')}
                 icon={<></>}
               />

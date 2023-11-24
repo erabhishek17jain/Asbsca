@@ -117,9 +117,8 @@ export function AddEditDeleteBranch({
               icon={<MapPinIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'status'}
-              label={'Status'}
               id="status"
+              label={'Status'}
               options={statusList}
               error={formikBranch.errors.status}
               formik={formikBranch.getFieldProps('status')}

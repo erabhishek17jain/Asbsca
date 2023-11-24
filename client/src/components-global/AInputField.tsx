@@ -1,10 +1,10 @@
 const AInputField = ({
-  id = '',
-  type = '',
+  id,
   label = '',
   icon = '',
   error = '',
   formik = {},
+  type = 'text',
   disabled = false,
   variant = 'vertical',
 }: any) => {

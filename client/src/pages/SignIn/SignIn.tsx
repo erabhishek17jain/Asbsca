@@ -110,16 +110,18 @@ const SignIn = () => {
 
               <form onSubmit={formik.handleSubmit}>
                 <AInputField
-                  type={'text'}
                   id={'email'}
+                  type={'email'}
                   label={'Email'}
+                  error={formik.errors.email}
                   formik={formik.getFieldProps('email')}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
-                  type={showPassword ? 'text' : 'password'}
                   id={'password'}
+                  type={showPassword ? 'text' : 'password'}
                   label={'Password'}
+                  error={formik.errors.password}
                   formik={formik.getFieldProps('password')}
                   icon={
                     <div onClick={() => setShowPassword(!showPassword)}>

@@ -246,8 +246,9 @@ const Users = () => {
             <AFileUpload
               id={'profile'}
               label={'Profile'}
-              formik={formik}
               value={formik.values.profile}
+              error={formik.errors.profile}
+              formik={formik.getFieldProps('profile')}
               icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
             />
           </div>

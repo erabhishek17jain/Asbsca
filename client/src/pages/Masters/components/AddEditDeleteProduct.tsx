@@ -123,7 +123,7 @@ export function AddEditDeleteProduct({
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'client'}
+              id={'client'}
               label={'Client Name*'}
               options={clientOptions}
               error={formikProduct.errors.client}
@@ -131,9 +131,8 @@ export function AddEditDeleteProduct({
               icon={<BuildingOfficeIcon className="h-4 w-4" />}
             />
             <ASingleSelect
-              name={'status'}
-              label={'Status'}
               id="status"
+              label={'Status'}
               error={formikProduct.errors.status}
               formik={formikProduct.getFieldProps('status')}
               icon={<CheckIcon className="h-4 w-4" />}

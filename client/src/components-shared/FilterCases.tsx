@@ -45,7 +45,6 @@ export const FilterButtons = ({
     <>
       <div className="flex gap-1 w-full md:w-72">
         <AInputField
-          type={'text'}
           id={'search'}
           variant={'horizantal'}
           error={formik.errors.search}
@@ -123,7 +122,7 @@ export const FilterCases = ({
       </span>
       <span className="flex gap-3">
         <ASingleSelect
-          name={'bankName'}
+          id={'bankName'}
           label={'Bank Name'}
           options={clientOptions}
           value={filters['bankName']}
@@ -134,7 +133,7 @@ export const FilterCases = ({
         />
         {userDetails?.role?.name === 'Admin' && (
           <ASingleSelect
-            name={'assignTo'}
+            id={'assignTo'}
             label={'Assigned To'}
             icon={<UserIcon className="h-4 w-4" />}
             options={assignOptions}
@@ -146,7 +145,7 @@ export const FilterCases = ({
         )}
         {status === 'cases' && (
           <ASingleSelect
-            name={'status'}
+            id={'status'}
             label={'Case Type'}
             icon={<TagIcon className="h-4 w-4" />}
             options={caseStatusList}
@@ -157,7 +156,7 @@ export const FilterCases = ({
           />
         )}
         <ASingleSelect
-          name={'appoinmentStatus'}
+          id={'appoinmentStatus'}
           label={'Appointment Status'}
           icon={<CheckIcon className="h-4 w-4" />}
           options={appoinmentStatusList}
