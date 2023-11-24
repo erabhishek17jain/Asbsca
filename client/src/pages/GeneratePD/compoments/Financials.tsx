@@ -6,6 +6,9 @@ import ASingleSelect from '../../../components-global/ASingleSelect';
 import { AModal } from '../../../components-global/AModal';
 import ASection, { SectionFooter } from '../../../components-global/ASection';
 import AGroupFields from '../../../components-global/AGroupFields';
+import { AStepperPagination } from '../../../components-global/AStepper';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 const turnoverFooter = [
   {
@@ -71,78 +74,134 @@ const FinancialType = ({ title }: any) => {
   );
 };
 
-const Financials = ({ formik }: any) => {
+const Financials = ({
+  steps,
+  payloads,
+  activeStep,
+  handlePrev,
+  handleNext,
+  setPayloads,
+}: any) => {
   const [showModal, setShowModal] = useState(false);
+
+  
+  const initialValues = {
+    loan: '',
+    loanType: '',
+    bankName: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    loan: Yup.string().required('This field is required'),
+    loanType: Yup.string().required('This field is required'),
+    bankName: Yup.string().required('This field is required'),
+  });
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmit = async (values: any) => {
+    values = await Object.assign(values);
+    setPayloads({ ...payloads, loanDetails: { ...values } });
+    handleNext();
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmit,
+  });
+  
   return (
-    <div className="flex flex-col py-4">
-      <AGroupFields col={2}>
-        <AInputField type={'text'} name={'entityName'} label={'Entity Name'} />
-        <ASingleSelect
-          name={'incomeOfWhichApplicant'}
-          label={'Income of which applicant?'}
-          options={[{ label: 'India', value: 'india' }]}
-        />
-      </AGroupFields>
-      <ASection footers={turnoverFooter}>
-        {financials.map((item) => (
-          <FinancialType key={item.title} title={item.title} />
-        ))}
-      </ASection>
-      <ASection>
-        {expenses.map((item) => {
-          return <FinancialType key={item.title} title={item.title} />;
-        })}
-        <div className="flex items-center justify-center">
-          <AButton
-            label={'Add More'}
-            variant="small"
-            action={() => setShowModal(true)}
-            icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
-          />
-        </div>
-        {showModal && (
-          <AModal
-            saveText={'Add'}
-            title={'Add More Expenses'}
-            closeModal={() => setShowModal(false)}
-          >
+    <>
+      <div className="absolute top-12 bottom-19 overflow-auto w-full">
+        <div className="flex flex-col py-4">
+          <AGroupFields col={2}>
             <AInputField
               type={'text'}
-              name={'expenseType'}
-              label="Expense Type"
+              name={'entityName'}
+              label={'Entity Name'}
             />
-          </AModal>
-        )}
-        <SectionFooter footers={totalExpensesFooter} />
-        <SectionFooter footers={profitFooter} />
-      </ASection>
-      <ASection footers={totalEarningFooter}>
-        {salaryFromBusiness.map((item) => {
-          return <FinancialType key={item.title} title={item.title} />;
-        })}
-        <div className="flex justify-center">
-          <AButton
-            label={'Add More'}
-            variant="small"
-            action={() => setShowModal(true)}
-            icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
-          />
+            <ASingleSelect
+              name={'incomeOfWhichApplicant'}
+              label={'Income of which applicant?'}
+              options={[{ label: 'India', value: 'india' }]}
+            />
+          </AGroupFields>
+          <ASection footers={turnoverFooter}>
+            {financials.map((item) => (
+              <FinancialType key={item.title} title={item.title} />
+            ))}
+          </ASection>
+          <ASection>
+            {expenses.map((item) => {
+              return <FinancialType key={item.title} title={item.title} />;
+            })}
+            <div className="flex items-center justify-center">
+              <AButton
+                label={'Add More'}
+                variant="small"
+                action={() => setShowModal(true)}
+                icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
+              />
+            </div>
+            {showModal && (
+              <AModal
+                saveText={'Add'}
+                title={'Add More Expenses'}
+                closeModal={() => setShowModal(false)}
+              >
+                <AInputField
+                  type={'text'}
+                  name={'expenseType'}
+                  label="Expense Type"
+                />
+              </AModal>
+            )}
+            <SectionFooter footers={totalExpensesFooter} />
+            <SectionFooter footers={profitFooter} />
+          </ASection>
+          <ASection footers={totalEarningFooter}>
+            {salaryFromBusiness.map((item) => {
+              return <FinancialType key={item.title} title={item.title} />;
+            })}
+            <div className="flex justify-center">
+              <AButton
+                label={'Add More'}
+                variant="small"
+                action={() => setShowModal(true)}
+                icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
+              />
+            </div>
+            {showModal && (
+              <AModal
+                saveText={'Add'}
+                title={'Add More Expenses'}
+                closeModal={() => setShowModal(false)}
+              >
+                <AInputField
+                  type={'text'}
+                  name={'expenseType'}
+                  label="Expense Type"
+                />
+              </AModal>
+            )}
+          </ASection>
         </div>
-        {showModal && (
-          <AModal
-            saveText={'Add'}
-            title={'Add More Expenses'}
-            closeModal={() => setShowModal(false)}
-          >
-            <AInputField
-              type={'text'}
-              name={'expenseType'}
-              label="Expense Type"
-            />
-          </AModal>
-        )}
-      </ASection>
-    </div>
+      </div>
+      <AStepperPagination
+        steps={steps}
+        activeStep={activeStep}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+      />
+    </>
   );
 };
 

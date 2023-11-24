@@ -17,7 +17,7 @@ const AInputField = ({
       {label && (
         <label
           className={`block text-main text-sm ${
-            variant === 'horizantal' ? 'min-w-[25%]' : ''
+            variant === 'horizantal' ? `min-w-[25%] ${error && 'mb-6'}` : ''
           }`}
           htmlFor={id}
         >
@@ -34,12 +34,12 @@ const AInputField = ({
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />
         {icon && (
-          <span className="absolute top-1/2 right-3 -translate-y-1/2">
+          <span className="absolute top-6 right-3 -translate-y-1/2">
             {icon}
           </span>
         )}
+        {error && <span className="ml-1 text-xs text-meta1">{error}</span>}
       </div>
-      {error && <span className="ml-1 text-xs text-meta1">{error}</span>}
     </div>
   );
 };

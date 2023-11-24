@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { getOptions } from '../../../utils';
 import { yesNoOptions } from '../constants';
 import AGroupFields from '../../../components-global/AGroupFields';
+import { AStepperPagination } from '../../../components-global/AStepper';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 const existingLoanFooter = [
   {
@@ -369,13 +372,63 @@ const OtherCommitments = () => {
   );
 };
 
-const ExistingLoanCredit = ({ formik }: any) => {
+const ExistingLoanCredit = ({
+  steps,
+  payloads,
+  activeStep,
+  handlePrev,
+  handleNext,
+  setPayloads,
+}: any) => {
+  const initialValues = {
+    loan: '',
+    loanType: '',
+    bankName: '',
+  };
+
+  const validationSchema = Yup.object().shape({
+    loan: Yup.string().required('This field is required'),
+    loanType: Yup.string().required('This field is required'),
+    bankName: Yup.string().required('This field is required'),
+  });
+
+  const validateFunction = async (values: any) => {
+    console.log(values);
+    const errors = {};
+    return errors;
+  };
+
+  const onSubmit = async (values: any) => {
+    values = await Object.assign(values);
+    setPayloads({ ...payloads, loanDetails: { ...values } });
+    handleNext();
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validate: validateFunction,
+    validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: onSubmit,
+  });
+
   return (
-    <div className="flex flex-col w-full">
-      <ExistingLoan />
-      <CreditFacility />
-      <OtherCommitments />
-    </div>
+    <>
+      <div className="absolute top-12 bottom-19 overflow-auto w-full">
+        <div className="flex flex-col w-full">
+          <ExistingLoan />
+          <CreditFacility />
+          <OtherCommitments />
+        </div>
+      </div>
+      <AStepperPagination
+        steps={steps}
+        activeStep={activeStep}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+      />
+    </>
   );
 };
 

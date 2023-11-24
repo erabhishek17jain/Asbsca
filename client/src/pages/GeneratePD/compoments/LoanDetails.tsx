@@ -17,13 +17,18 @@ const LoanDetails = ({
 }: any) => {
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
+
   const initialValues = {
     loan: '',
     loanType: '',
     bankName: '',
   };
 
-  const validationSchema = Yup.object().shape({});
+  const validationSchema = Yup.object().shape({
+    loan: Yup.string().required('This field is required'),
+    loanType: Yup.string().required('This field is required'),
+    bankName: Yup.string().required('This field is required'),
+  });
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -33,7 +38,7 @@ const LoanDetails = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: {} });
+    setPayloads({ ...payloads, loanDetails: { ...values } });
     handleNext();
   };
 
@@ -47,36 +52,37 @@ const LoanDetails = ({
   });
 
   useEffect(() => {
-    // setClientOptions(getOptions(allClients, 'name', '_id'));
-    setClientOptions([{label:'Axis Bank', value:'hkhbkxjkxcmxkcm'}]);
+    setClientOptions(getOptions(allClients, 'name', '_id'));
   }, [allClients]);
   return (
     <>
-      <div className="flex flex-col w-[60%] py-4">
-        <ASingleSelect
-          id={'bankName'}
-          label={'Bank Name*'}
-          options={clientOptions}
-          variant={'horizantal'}
-          error={formik.errors.bankName}
-          formik={formik.getFieldProps('bankName')}
-        />
-        <ASingleSelect
-          id={'loan'}
-          label={'Loan'}
-          options={loans}
-          variant={'horizantal'}
-          error={formik.errors.loan}
-          formik={formik.getFieldProps('loan')}
-        />
-        <ASingleSelect
-          id={'loanType'}
-          label={'Loan Type'}
-          options={loanTypes}
-          variant={'horizantal'}
-          error={formik.errors.loanType}
-          formik={formik.getFieldProps('loanType')}
-        />
+      <div className="absolute top-12 bottom-19 overflow-auto w-full">
+        <div className="flex flex-col w-[60%] py-4">
+          <ASingleSelect
+            id={'bankName'}
+            label={'Bank Name*'}
+            options={clientOptions}
+            variant={'horizantal'}
+            error={formik.errors.bankName}
+            formik={formik.getFieldProps('bankName')}
+          />
+          <ASingleSelect
+            id={'loan'}
+            label={'Loan'}
+            options={loans}
+            variant={'horizantal'}
+            error={formik.errors.loan}
+            formik={formik.getFieldProps('loan')}
+          />
+          <ASingleSelect
+            id={'loanType'}
+            label={'Loan Type'}
+            options={loanTypes}
+            variant={'horizantal'}
+            error={formik.errors.loanType}
+            formik={formik.getFieldProps('loanType')}
+          />
+        </div>
       </div>
       <AStepperPagination
         steps={steps}

@@ -15,16 +15,19 @@ export const reportSteps = [
   { index: 13, label: 'Documents seen' },
   { index: 14, label: 'Business Process of' },
 ];
+
 export const yesNoOptions = [
   { name: 'yes', label: 'Yes' },
   { name: 'no', label: 'No' },
   { name: 'noDetail', label: 'Details Not Provided' },
 ];
+
 export const loans = [
   { label: 'Home Loan', value: 'homeloan' },
   { label: 'LAP', value: 'lap' },
   { label: 'LAP: Existing Property', value: 'lapexist' },
 ];
+
 export const loanTypes = [
   { label: 'Fresh', value: 'fresh' },
   { label: 'Balance Transfer', value: 'bt' },
@@ -34,6 +37,7 @@ export const loanTypes = [
   { label: 'Interest Subvention', value: 'subvention' },
   { label: 'Other', value: 'other' },
 ];
+
 export const alc = [
   { label: 'Andheri ALC', value: 'andheriAlc' },
   { label: 'Badlapur ALC', value: 'badlapurAlc' },
@@ -47,6 +51,7 @@ export const alc = [
   { label: 'Sanpada ALC', value: 'sanpadaAlc' },
   { label: 'Thane ALC', value: 'thaneAlc' },
 ];
+
 export const qualification = [
   { label: 'Uneducated', value: 'uneducated' },
   { label: 'S.S.C', value: 'ssc' },
@@ -60,6 +65,7 @@ export const qualification = [
   { label: 'Interior Designer', value: 'interiorDesigner' },
   { label: 'LLB', value: 'llb' },
 ];
+
 export const natureOfAddress = [
   { label: 'House Wife', value: 'houseWife' },
   { label: 'Manufacturing', value: 'manufacturing' },
@@ -70,6 +76,7 @@ export const natureOfAddress = [
   { label: 'Student', value: 'student' },
   { label: 'Trading or Manufacturing', value: 'tradingOrManufacturing' },
 ];
+
 export const residenceStatus = [
   { label: 'Owned by Applicant', value: 'ownedByApplicant' },
   { label: 'Owned by Co-Applicant', value: 'ownedByCoApplicant' },
@@ -90,6 +97,7 @@ export const residenceStatus = [
   { label: 'Owned by Mother', value: 'ownedByMother' },
   { label: 'Owned by Under Pagadi System', value: 'ownedByPagadiSystem' },
 ];
+
 export const familyBcakgroundRealtion = [
   { label: 'Spouse', value: 'spouse' },
   { label: 'Mother', value: 'mother' },
@@ -103,11 +111,13 @@ export const familyBcakgroundRealtion = [
   { label: 'Director', value: 'director' },
   { label: 'Partner', value: 'partner' },
 ];
+
 export const familyBackgroundEarningStatus = [
   { label: 'Earning', value: 'earning' },
   { label: 'Dependent', value: 'dependent' },
   { label: 'NP', value: 'np' },
 ];
+
 export const typesOfLoan = [
   { label: 'Home Loan', value: 'homeLoan' },
   { label: 'LAP', value: 'lap' },
@@ -120,6 +130,7 @@ export const typesOfLoan = [
   { label: 'Gold Loan', value: 'goldLoan' },
   { label: 'Term Loan', value: 'termLoan' },
 ];
+
 export const remark = [
   { label: 'Taken to buy the property', value: 'takenToBuyTheProperty' },
   { label: 'Taken to buy machines', value: 'takenToBuyuMachines' },
@@ -139,6 +150,7 @@ export const remark = [
   { label: 'Taken for Renovation work', value: 'takenForRenovationWork' },
   { label: 'Taken to buy vehicle', value: 'takenToBuyVehicle' },
 ];
+
 export const typeOfFacility = [
   { label: 'Cash Credit', value: 'cashCredit' },
   { label: 'Credit Card', value: 'creditCard' },
@@ -147,6 +159,7 @@ export const typeOfFacility = [
   { label: 'Packing Credit', value: 'packingCredit' },
   { label: 'Dropline Overdraft', value: 'droplineOverdraft' },
 ];
+
 export const particulars = [
   { label: 'Medium', value: 'medium' },
   { label: 'Term Plan', value: 'termPlan' },
@@ -155,6 +168,7 @@ export const particulars = [
   { label: 'Life Insurance', value: 'lifeInsurance' },
   { label: 'Health Insurance', value: 'healthInsurance' },
 ];
+
 export const purchaseYear = [
   { label: '2022', value: '2022' },
   { label: 'Property not yet Finalised', value: 'properyNotYetFinalised' },
@@ -163,6 +177,7 @@ export const purchaseYear = [
     value: 'propertyDetailsNotProvided',
   },
 ];
+
 export const occupiedBy = [
   { label: 'Tenant', value: 'tenant' },
   { label: 'Applicant', value: 'applicant' },
@@ -172,6 +187,7 @@ export const occupiedBy = [
   { label: 'NP', value: 'np' },
   { label: 'Given to Relative', value: 'givenToRelative' },
 ];
+
 export const sourceOcr = [
   {
     label: 'Savings in form of Investments',
@@ -193,6 +209,7 @@ export const sourceOcr = [
   { label: 'Arrange from Market', value: 'arrangeFromMarket' },
   { label: 'Savings of Spouse', value: 'savingsOfSpouse' },
 ];
+
 export const typesOfEntity = [
   { label: 'Proprietorship', value: 'proprietorship' },
   { label: 'Partnership', value: 'partnership' },
@@ -203,12 +220,14 @@ export const typesOfEntity = [
   { label: 'Individual', value: 'individual' },
   { label: 'Salaried', value: 'salaried' },
 ];
+
 export const generation = [
   { label: 'First Generation', value: 'firstGeneration' },
   { label: 'Second Generation', value: 'secondGeneration' },
   { label: 'Third Generation', value: 'thirdGeneration' },
   { label: 'Fourth Generation', value: 'fourthGeneration' },
 ];
+
 export const vicinity = [
   {
     label: 'Commercial (Easily Accesible)',
@@ -235,6 +254,7 @@ export const vicinity = [
     value: 'residentalCumCommercialEasilyAccessible',
   },
 ];
+
 export const howWasTurnoverVerified = [
   {
     label: 'Turnover is not verified as documents were not provided',
@@ -261,6 +281,7 @@ export const howWasTurnoverVerified = [
     value: 'turnoverIsVerifiedWithProvisionalHisabBook',
   },
 ];
+
 export const citiesOfRepresentation = [
   { label: 'Mumbai', value: 'mumbai' },
   {
@@ -273,6 +294,7 @@ export const citiesOfRepresentation = [
   { label: 'All India', value: 'allIndia' },
   { label: 'India & Abroad', value: 'india&Abroad' },
 ];
+
 export const incomeOfWhichApplicant = [
   { label: 'Applicant', value: 'Applicant' },
   { label: 'Applicant & Co-Applicant', value: 'Applicant&CoApplicant' },
@@ -284,6 +306,7 @@ export const incomeOfWhichApplicant = [
   { label: 'Co-Applicant 5', value: 'CoApplicant5' },
   { label: 'Co-Applicant 6', value: 'CoApplicant6' },
 ];
+
 export const commentOnTrendOfBusinessOfPast2years = [
   {
     label: 'Cannot Comment as data was not provided',
@@ -300,6 +323,7 @@ export const commentOnTrendOfBusinessOfPast2years = [
   },
   { label: 'Business is stable', value: 'businessIsStable' },
 ];
+
 export const futureProjection = [
   {
     label: 'Applicant will continue business as it is',
@@ -313,6 +337,7 @@ export const futureProjection = [
       'applicantIsPlanningToBuyMachineriesAndInvestInWorkingCapitalFromLAP/Top-up',
   },
 ];
+
 export const particularsN1 = [
   { label: 'Residence', value: 'residence' },
   { label: 'Agricutural Land', value: 'agriculturalLand' },
@@ -334,6 +359,7 @@ export const particularsN1 = [
   { label: 'Tempo', value: 'tempo' },
   { label: 'Truck', value: 'truck' },
 ];
+
 export const statusN1 = [
   { label: 'Owned by Applicant', value: 'ownedByApplicant' },
   { label: 'Owned by Co-Applicant', value: 'ownedByCoApplicant' },
@@ -344,6 +370,7 @@ export const statusN1 = [
   { label: 'Self-Owned by (Parental)', value: 'selfOwnedByParental' },
   { label: 'Self-constructed', value: 'selfConstrucetd' },
 ];
+
 export const purchaseYa = [
   { label: '', value: '' },
   { label: '', value: '' },

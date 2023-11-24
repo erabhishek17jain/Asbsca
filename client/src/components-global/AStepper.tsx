@@ -29,7 +29,7 @@ export const AStepperPagination = ({
   handleNext,
 }: any) => {
   return (
-    <div className="flex justify-between mt-4">
+    <div className="absolute bottom-5 w-full flex justify-between mt-3">
       <AButton
         label={'Previous'}
         variant={'secondary'}
@@ -40,10 +40,10 @@ export const AStepperPagination = ({
       <AButton
         action={handleNext}
         variant={'secondary'}
-        disabled={activeStep === steps.length - 1}
-        label={activeStep === steps.length - 1 ? 'Generate Report' : 'Next'}
+        disabled={activeStep === steps?.length - 1}
+        label={activeStep === steps?.length - 1 ? 'Generate Report' : 'Next'}
         icon={
-          activeStep === steps.length - 1 ? (
+          activeStep === steps?.length - 1 ? (
             <DocumentChartBarIcon className="h-5 w-5" />
           ) : (
             <ArrowRightIcon className="h-5 w-5 stroke-main stroke-1" />
@@ -60,10 +60,10 @@ export function AStepper({
   setPayloads,
   generateReport,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(11);
 
   const handleNext = () =>
-    activeStep !== steps.length - 1 && setActiveStep((cur) => cur + 1);
+    activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
   const handlePrev = () => activeStep !== 0 && setActiveStep((cur) => cur - 1);
 
   return (
@@ -72,7 +72,7 @@ export function AStepper({
         {steps?.map((item: any) => {
           return item.index === 0 ||
             item.index === activeStep ||
-            item.index === steps.length - 1 ? (
+            item.index === steps?.length - 1 ? (
             <Step key={item.index} onClick={() => setActiveStep(item.index)}>
               {item.index + 1}
             </Step>
@@ -81,8 +81,8 @@ export function AStepper({
           );
         })}
       </Stepper>
-      <div className="absolute top-16 bottom-0 w-[calc(100%-40px)] mb-4 overflow-x-scroll flex flex-col justify-between">
-        <div className="flex flex-col gap-3 mt-2">
+      <div className="absolute w-[calc(100%-40px)] h-[calc(100%-60px)] mb-4 overflow-x-scroll flex flex-col justify-between">
+        <div className="flex flex-col gap-3 mt-3">
           {activeStep === steps[activeStep].index && (
             <div className="w-max text-lg font-bold text-main text-center">
               {steps[activeStep].label}
@@ -94,26 +94,150 @@ export function AStepper({
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
+              handleNext={handleNext}
               setPayloads={setPayloads}
-              handleNext={
-                activeStep === steps.length - 1 ? generateReport : handleNext
-              }
             />
           )}
-          {activeStep === 1 && <PersonalDetails />}
-          {activeStep === 2 && <ExistingLoanCredit />}
-          {activeStep === 3 && <DetailsOfProperty />}
-          {activeStep === 4 && <BusinessDetails />}
-          {activeStep === 5 && <Financials />}
-          {activeStep === 6 && <ComitmentsSummaryFOIR />}
-          {activeStep === 7 && <TurnoverGrossReceipts />}
-          {activeStep === 8 && <ClientsDebtors />}
-          {activeStep === 9 && <Stocks />}
-          {activeStep === 10 && <SuppliersCreditors />}
-          {activeStep === 11 && <AssetsInvestmentBank />}
-          {activeStep === 12 && <OtherObservation />}
-          {activeStep === 13 && <DocumentsSeen />}
-          {activeStep === 14 && <BusinessProcessOf />}
+          {activeStep === 1 && (
+            <PersonalDetails
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              handleNext={handleNext}
+              setPayloads={setPayloads}
+            />
+          )}
+          {activeStep === 2 && (
+            <ExistingLoanCredit
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 3 && (
+            <DetailsOfProperty
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 4 && (
+            <BusinessDetails
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 5 && (
+            <Financials
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 6 && (
+            <ComitmentsSummaryFOIR
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 7 && (
+            <TurnoverGrossReceipts
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 8 && (
+            <ClientsDebtors
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 9 && (
+            <Stocks
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 10 && (
+            <SuppliersCreditors
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 11 && (
+            <AssetsInvestmentBank
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 12 && (
+            <OtherObservation
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 13 && (
+            <DocumentsSeen
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 14 && (
+            <BusinessProcessOf
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={generateReport}
+            />
+          )}
         </div>
       </div>
     </div>
