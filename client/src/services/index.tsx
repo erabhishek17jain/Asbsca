@@ -46,10 +46,21 @@ export async function authentication(
   }
 }
 
-/** reset password */
+/** first time reset password */
 export async function selfRegister(values: any, { rejectWithValue }: any) {
   try {
     const { data } = await axios.post(`${baseAPI}/users/self-register`, values);
+    return Promise.resolve({ data });
+  } catch (error: any) {
+    showError(error);
+    return rejectWithValue(error?.response?.data);
+  }
+}
+
+/** reset password */
+export async function forgotPassword(values: any, { rejectWithValue }: any) {
+  try {
+    const { data } = await axios.post(`${baseAPI}/users/reset-password`, values);
     return Promise.resolve({ data });
   } catch (error: any) {
     showError(error);

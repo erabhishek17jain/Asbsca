@@ -21,18 +21,19 @@ const Stocks = ({
     setIsStocks(val);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    isStockDetails: '',
+    stockDetails: {
+      rawMaterialAmount: '',
+      wipAmount: '',
+      finishGoods: '',
+      totalStocks: '',
+      stockHoldingPeriod: '',
+      whyStocklowHigh: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -54,7 +55,7 @@ const Stocks = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -70,28 +71,28 @@ const Stocks = ({
             <ASection>
               <AGroupFields>
                 <AInputField
-                  type={'text'}
+                  
                   name={'rawMaterial'}
                   label={'Raw Material Amt.'}
                 />
-                <AInputField type={'text'} name={'wip'} label={'WIP Amt.'} />
+                <AInputField  name={'wip'} label={'WIP Amt.'} />
                 <AInputField
-                  type={'text'}
+                  
                   name={'finishGoods'}
                   label={'Finish Goods'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'totalStock'}
                   label={'Total Stock'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'stockHoldingPeriod'}
                   label={'Stock Holding Period'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'whyLowHigh'}
                   label={'Why Stock is low/high?'}
                 />

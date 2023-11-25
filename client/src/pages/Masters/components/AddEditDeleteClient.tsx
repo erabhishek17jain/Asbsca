@@ -97,7 +97,9 @@ export function AddEditDeleteClient({
   };
 
   useEffect(() => {
-    setBranchs(getOptions(allBranchs, 'name', '_id'));
+    if (allBranchs?.branches?.length > 0) {
+      setBranchs(getOptions(allBranchs?.branches, 'name', '_id'));
+    }
   }, [allBranchs]);
 
   useEffect(() => {
@@ -124,18 +126,20 @@ export function AddEditDeleteClient({
         >
           <div className="flex flex-col">
             <AInputField
-              type="text"
+              id={'name'}
               label="Client Name*"
+              value={formikClient.values.name}
               error={formikClient.errors.name}
-              formik={formikClient.getFieldProps('name')}
+              handleChange={formikClient.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id={'branch'}
               label={'Branch*'}
               options={branchs}
+              value={formikClient.values.branch}
               error={formikClient.errors.branch}
-              formik={formikClient.getFieldProps('branch')}
+              handleChange={formikClient.handleChange}
               icon={<BuildingOfficeIcon className="h-4 w-4" />}
             />
             <AFileUpload
@@ -157,8 +161,9 @@ export function AddEditDeleteClient({
             <ASingleSelect
               id="status"
               label={'Status'}
+              value={formikClient.values.status}
               error={formikClient.errors.status}
-              formik={formikClient.getFieldProps('status')}
+              handleChange={formikClient.handleChange}
               icon={<CheckIcon className="h-4 w-4" />}
               options={statusList}
             />

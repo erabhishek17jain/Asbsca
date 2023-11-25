@@ -2,13 +2,13 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
 const ASingleSelect = ({
   id,
-  label,
   icon,
-  error = '',
-  formik,
-  options,
   value,
+  label = '',
+  error = '',
+  options = [],
   handleChange,
+  disabled = false,
   variant = 'vertical',
 }: any) => {
   return (
@@ -25,38 +25,22 @@ const ASingleSelect = ({
         {label}
       </label>
       <div className="relative w-full z-20 bg-white">
-        {formik ? (
-          <select
-            id={id}
-            {...formik}
-            className="abc relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
-          >
-            <option value="" key={id}>
-              Select {label}
+        <select
+          id={id}
+          value={value}
+          disabled={disabled}
+          onChange={handleChange}
+          className="def relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
+        >
+          <option value="" key={id}>
+            Select {label}
+          </option>
+          {options.map((item: any) => (
+            <option key={item?.value} value={item?.value}>
+              {item?.label}
             </option>
-            {options.map((item: any) => (
-              <option key={item?.value} value={item?.value}>
-                {item?.label}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <select
-            id={id}
-            value={value}
-            onChange={handleChange}
-            className="def relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary"
-          >
-            <option value="" key={id}>
-              Select {label}
-            </option>
-            {options.map((item: any) => (
-              <option key={item?.value} value={item?.value}>
-                {item?.label}
-              </option>
-            ))}
-          </select>
-        )}
+          ))}
+        </select>
         <span
           className={`absolute top-6 -translate-y-1/2 ${
             icon ? 'right-10' : 'right-3'

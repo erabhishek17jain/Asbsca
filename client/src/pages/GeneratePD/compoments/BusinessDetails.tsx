@@ -38,18 +38,35 @@ const BusinessDetails = ({
     setBussShare([...tags]);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    bussinessName: '',
+    typeOfEntity: '',
+    yearOfIncorporation: '',
+    generation: '',
+    gstNumber: '',
+    regOfficeAddress: '',
+    visitedAddress: '',
+    vicinity: '',
+    ownershipOfAddressVisited: '',
+    pdConductWith: '',
+    designation: '',
+    mobile: 0,
+    familyBusiness: '',
+    mainUseproducts: '',
+    howTurnoverVerified: '',
+    citiesOfReppresentation: '',
+    competitorsOfBusiness: '',
+    noOfVisit: '',
+    doYouHavefixedEmployee: false,
+    shareHoldings: [
+      {
+        ownerName: '',
+        shareHolding: '',
+      },
+    ],
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -71,7 +88,7 @@ const BusinessDetails = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -79,7 +96,7 @@ const BusinessDetails = ({
           <ASection>
             <AGroupFields>
               <AInputField
-                type={'text'}
+                
                 name={'businessName'}
                 label={'Business Name'}
               />
@@ -89,7 +106,7 @@ const BusinessDetails = ({
                 options={[{ label: 'India', value: 'india' }]}
               />
               <AInputField
-                type={'text'}
+                
                 name={'yearOfIncorporation'}
                 label={'Year of Incorporation'}
               />
@@ -99,17 +116,17 @@ const BusinessDetails = ({
                 options={[{ label: 'India', value: 'india' }]}
               />
               <AInputField
-                type={'text'}
+                
                 name={'gstNumber'}
                 label={'GST Number'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'regOfficerAddress'}
                 label={'Registered Office Address'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'visitedAddress'}
                 label={'Visited Address'}
               />
@@ -139,12 +156,12 @@ const BusinessDetails = ({
                 label={'Mobile No.'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'familyMembersInBusiness'}
                 label={'Family Members in Business'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'mainUseOfProductsServices'}
                 label={'Main use of products/services'}
               />
@@ -159,7 +176,7 @@ const BusinessDetails = ({
                 options={[{ label: 'India', value: 'india' }]}
               />
               <AInputField
-                type={'text'}
+                
                 name={'keyCompetitorsToBusiness'}
                 label={'Key Competitors to Business'}
               />
@@ -187,12 +204,12 @@ const BusinessDetails = ({
               >
                 <AGroupFields col={2}>
                   <AInputField
-                    type={'text'}
+                    
                     name={'nameOfOwner'}
                     label={'Name of Owner'}
                   />
                   <AInputField
-                    type={'text'}
+                    
                     name={'holding'}
                     label={'% of Holding'}
                   />

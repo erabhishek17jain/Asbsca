@@ -67,9 +67,9 @@ const salaryFromBusiness = [
 const FinancialType = ({ title }: any) => {
   return (
     <AGroupFields col={3} title={title}>
-      <AInputField type={'text'} name={'amountPA'} label={'Amount PA'} />
-      <AInputField type={'text'} name={'amountPM'} label={'Amount PM'} />
-      <AInputField type={'text'} name={'months'} label={'Months'} />
+      <AInputField  name={'amountPA'} label={'Amount PA'} />
+      <AInputField  name={'amountPM'} label={'Amount PM'} />
+      <AInputField  name={'months'} label={'Months'} />
     </AGroupFields>
   );
 };
@@ -84,18 +84,109 @@ const Financials = ({
 }: any) => {
   const [showModal, setShowModal] = useState(false);
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    entityName: '',
+    incomeOfWhichApplicant: '',
+    income: {
+      turnoverGrossReciepts: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      purchases: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalAmountPA: '',
+      totalAmountPM: '',
+    },
+    expenses: {
+      salary: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      maintanance: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      transport: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      electricity: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      travelling: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      fuel: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      officeRent: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      partnersSalary: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      partnersRemuneration: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      otherExpenses: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      bifercationOfExpenses: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalExpensePA: '',
+      totalExpensePM: '',
+      netProfitPA: '',
+      netProfitPM: '',
+      shareOfProfitPA: '',
+      shareOfProfitPM: '',
+    },
+    businessIncome: {
+      salaryFromBusiness: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      remunerationFromBusiness: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      rent: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalIncomePA: '',
+      totalIncomePM: '',
+      totalEarning: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -117,14 +208,14 @@ const Financials = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col py-4">
           <AGroupFields col={2}>
             <AInputField
-              type={'text'}
+              
               name={'entityName'}
               label={'Entity Name'}
             />
@@ -158,7 +249,7 @@ const Financials = ({
                 closeModal={() => setShowModal(false)}
               >
                 <AInputField
-                  type={'text'}
+                  
                   name={'expenseType'}
                   label="Expense Type"
                 />
@@ -186,7 +277,7 @@ const Financials = ({
                 closeModal={() => setShowModal(false)}
               >
                 <AInputField
-                  type={'text'}
+                  
                   name={'expenseType'}
                   label="Expense Type"
                 />

@@ -22,18 +22,40 @@ const OtherObservation = ({
   handleNext,
   setPayloads,
 }: any) => {
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    businessPlateName: {
+      exist: '',
+      reasonForNo: '',
+    },
+    activity: {
+      exist: '',
+      reasonForNo: '',
+    },
+    customer: {
+      exist: '',
+      reasonForNo: '',
+    },
+    stock: {
+      exist: '',
+      reasonForNo: '',
+    },
+    thirdPartyCheck: {
+      exist: '',
+      reasonForNo: '',
+    },
+    screenshotOfCCTVofPremises: {
+      exist: '',
+      reasonForNo: '',
+    },
+    behaviourOfApplicant: '',
+    duringVist: {
+      applicantDoing: '',
+      employeesDoing: '',
+      otherObservation: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -55,7 +77,7 @@ const OtherObservation = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -63,9 +85,9 @@ const OtherObservation = ({
           <ASection>
             {observations.map((item) => (
               <AGroupFields col={2} title={item.title}>
-                <AInputField type={'text'} name={'select'} label={'Select'} />
+                <AInputField  name={'select'} label={'Select'} />
                 <AInputField
-                  type={'text'}
+                  
                   name={'reason'}
                   label={'Reason if No or NA'}
                 />
@@ -73,7 +95,7 @@ const OtherObservation = ({
             ))}
             <AGroupFields col={2}>
               <AInputField
-                type={'text'}
+                
                 name={'behaviour'}
                 label={'Behaviour of applicant'}
               />
@@ -81,17 +103,17 @@ const OtherObservation = ({
             <p className="w-full mb-3">During Visit</p>
             <AGroupFields col={3}>
               <AInputField
-                type={'text'}
+                
                 name={'applicantDoing'}
                 label={'What applicant were doing?'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'employeesDoing'}
                 label={'What employees were doing?'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'other'}
                 label={'Other observation during visit?'}
               />

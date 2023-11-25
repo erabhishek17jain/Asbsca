@@ -38,18 +38,33 @@ const ClientsDebtors = ({
     setIsDebtors(val);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    clients: {
+      isClientDetails: '',
+      clientDetails: {
+        noOfClientDaily: '',
+        majorClient: [{ clientName: '', contact: '' }],
+      },
+    },
+    debitors: {
+      isDebitorDetails: '',
+      debitorDetails: {
+        moreThan6Month: {
+          amount: '',
+          reason: '',
+        },
+        lessThan6Month: {
+          amount: '',
+          reason: '',
+        },
+        totalDebtors: '',
+        creditPeriodAllowed: '',
+        whyIrRegular: '',
+      },
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -71,7 +86,6 @@ const ClientsDebtors = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
 
   return (
     <>
@@ -88,7 +102,7 @@ const ClientsDebtors = ({
             <ASection>
               <AGroupFields col={2}>
                 <AInputField
-                  type={'text'}
+                  
                   name={'noOfClients'}
                   label={'No of Clients/Daily Foot Fall'}
                 />
@@ -101,12 +115,12 @@ const ClientsDebtors = ({
               >
                 <AGroupFields col={2}>
                   <AInputField
-                    type={'text'}
+                    
                     name={'clientName'}
                     label={'Name of the client'}
                   />
                   <AInputField
-                    type={'text'}
+                    
                     name={'contactNo'}
                     label={'Contact No'}
                   />
@@ -127,12 +141,12 @@ const ClientsDebtors = ({
                 debators.map((item) => (
                   <AGroupFields col={2} title={item.title}>
                     <AInputField
-                      type={'text'}
+                      
                       name={'amount'}
                       label={'Amount'}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'reason'}
                       label={'Reason for Debtors more than 6 Months'}
                     />
@@ -142,19 +156,19 @@ const ClientsDebtors = ({
                 {isDebtors == '' && (
                   <>
                     <AInputField
-                      type={'text'}
+                      
                       name={'totalDebtors'}
                       label={'Total Debtors'}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'periodAllowedToClient'}
                       label={'Cr. Period allowed to Clients'}
                     />
                   </>
                 )}
                 <AInputField
-                  type={'text'}
+                  
                   name={'whyIrregular'}
                   label={'Why Ir-Regular?'}
                 />

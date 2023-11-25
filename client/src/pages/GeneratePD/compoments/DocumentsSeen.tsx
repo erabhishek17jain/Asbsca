@@ -62,18 +62,29 @@ const DocumentsSeen = ({
     },
   });
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    documentHandyDuringPD: '',
+    documentProvidedToBank: '',
+    gstReturns: '',
+    gstRegistrationCertificate: '',
+    currentYearFinancialStatement: '',
+    lastYearFinancialStatement: '',
+    secondLastYearFinancialStatement: '',
+    salesBills: '',
+    purchaseBils: '',
+    currentYearITR: '',
+    lastYearITR: '',
+    secondLastYearITR: '',
+    udhyamAadhar: '',
+    vechicleRegistration: '',
+    gumasta: '',
+    rcBook: '',
+    salarySlip: '',
+    provisionalFinancialLastYear: '',
+    financialsInTally: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -95,7 +106,7 @@ const DocumentsSeen = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -125,7 +136,7 @@ const DocumentsSeen = ({
               closeModal={() => setShowModal(false)}
             >
               <AInputField
-                type={'text'}
+                
                 name={'docName'}
                 label="Document Name"
                 formik={formikAddDocument.getFieldProps('docName')}

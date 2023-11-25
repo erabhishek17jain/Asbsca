@@ -52,7 +52,9 @@ const LoanDetails = ({
   });
 
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', '_id'));
+    if (allClients?.data?.length > 0) {
+      setClientOptions(getOptions(allClients?.data, 'name', '_id'));
+    }
   }, [allClients]);
   return (
     <>
@@ -63,24 +65,27 @@ const LoanDetails = ({
             label={'Bank Name*'}
             options={clientOptions}
             variant={'horizantal'}
+            value={formik.values.bankName}
             error={formik.errors.bankName}
-            formik={formik.getFieldProps('bankName')}
+            handleChange={formik.handleChange}
           />
           <ASingleSelect
             id={'loan'}
             label={'Loan'}
             options={loans}
             variant={'horizantal'}
+            value={formik.values.loan}
             error={formik.errors.loan}
-            formik={formik.getFieldProps('loan')}
+            handleChange={formik.handleChange}
           />
           <ASingleSelect
             id={'loanType'}
             label={'Loan Type'}
             options={loanTypes}
             variant={'horizantal'}
+            value={formik.values.loanType}
             error={formik.errors.loanType}
-            formik={formik.getFieldProps('loanType')}
+            handleChange={formik.handleChange}
           />
         </div>
       </div>

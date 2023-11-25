@@ -5,7 +5,7 @@ const MastersHeader = ({ type, openModal }: any) => {
   return (
     <div className="flex flex-col justify-between gap-5 xsm:flex-row xsm:items-center">
       <div>
-        <h5 className="block antialiased font-sans text-sm leading-normal text-main font-normal">
+        <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal capitalize">
           {`${type}s`}
         </h5>
       </div>

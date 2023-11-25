@@ -1,3 +1,5 @@
+export const tagInfo = { isOpen: true, data: [] };
+
 export const reportSteps = [
   { index: 0, label: 'Loan Heading' },
   { index: 1, label: 'Basic Personal Details & Experience' },

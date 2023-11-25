@@ -3,11 +3,63 @@ import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import AInputField from '../../components-global/AInputField';
 import AButton from '../../components-global/AButton';
-import { ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/24/solid';
-import { selfRegister, setToken } from '../../services';
+import { ArrowRightOnRectangleIcon, EnvelopeIcon, KeyIcon } from '@heroicons/react/24/solid';
+import { forgotPassword, selfRegister, setToken } from '../../services';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import * as Yup from 'yup';
 import { useEffect } from 'react';
+
+export const ForgotPassword = () => {
+  const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required('This field is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    validateOnBlur: false,
+    validateOnChange: false,
+    validationSchema: validationSchema,
+    onSubmit: async (values: any) => {
+      let resetPromise = forgotPassword(values, '');
+      resetPromise
+        .then(() => {
+          navigate('/signin');
+          toast.success(<b>Please check inbox to get password reset link!</b>);
+        })
+        .catch((e) => {
+          toast.error(<b>{e?.error?.response?.data?.message}</b>);
+        });
+    },
+  });
+
+  return (
+    <div className="p-4 text-left">
+      <p className="mb-8 2xl:px-20">
+        Submit your register email address and check your inbox to get password reset link.
+      </p>
+      <form onSubmit={formik.handleSubmit}>
+        <AInputField
+          id={'email'}
+          label={'Registered Email'}
+          value={formik.values.email}
+          error={formik.errors.email}
+          handleChange={formik.handleChange}
+          icon={<EnvelopeIcon className="h-4 w-4" />}
+        />
+        <AButton
+          type={'submit'}
+          variant={'full'}
+          label={'Send Email'}
+          icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
+        />
+      </form>
+    </div>
+  );
+};
 
 export const ResetPassword = ({ isFirstPassword, token }: any) => {
   const navigate = useNavigate();
@@ -40,7 +92,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
       delete values.confirmPassword;
       let resetPromise = selfRegister(values, '');
       resetPromise
-        .then((res:any) => {
+        .then((res: any) => {
           let { token } = res.data;
           setToken(token);
           navigate(isFirstPassword ? '/dashboard' : '/profile');
@@ -66,16 +118,18 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
         <AInputField
           id={'newPassword'}
           label={'New Password'}
+          value={formik.values.newPassword}
           error={formik.errors.newPassword}
-          formik={formik.getFieldProps('newPassword')}
+          handleChange={formik.handleChange}
           icon={<KeyIcon className="h-4 w-4" />}
         />
         <AInputField
           type={'password'}
           id={'confirmPassword'}
           label={'Confirm Password'}
+          value={formik.values.confirmPassword}
           error={formik.errors.confirmPassword}
-          formik={formik.getFieldProps('confirmPassword')}
+          handleChange={formik.handleChange}
           icon={<KeyIcon className="h-4 w-4" />}
         />
         <AButton

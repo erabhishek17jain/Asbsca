@@ -1,9 +1,10 @@
 const AInputField = ({
   id,
-  label = '',
   icon = '',
+  value,
+  label = '',
   error = '',
-  formik = {},
+  handleChange,
   type = 'text',
   disabled = false,
   variant = 'vertical',
@@ -28,8 +29,9 @@ const AInputField = ({
         <input
           id={id}
           type={type}
-          {...formik}
+          value={value}
           disabled={disabled}
+          onChange={handleChange}
           placeholder={`Enter ${label}`}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />

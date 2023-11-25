@@ -25,19 +25,22 @@ const ComitmentsSummaryFOIR = ({
   handleNext,
   setPayloads,
 }: any) => {
-
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    proposedEMI: { amountPA: '', amountPM: '' },
+    existingEMI: { amountPA: '', amountPM: '' },
+    btEMI: { amountPA: '', amountPM: '' },
+    closureEMI: { amountPA: '', amountPM: '' },
+    licMedSipTpOther: { amountPA: '', amountPM: '' },
+    houseRent: { amountPA: '', amountPM: '' },
+    totalCommitments: { amountPA: '', amountPM: '' },
+    totalPresentEMI: { amountPA: '', amountPM: '' },
+    existingCommitments: { amountPA: '', amountPM: '' },
+    onlyEMIRatio: '',
+    foirRatio: '',
+    totalCommitmentsRatio: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -59,7 +62,7 @@ const ComitmentsSummaryFOIR = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -68,12 +71,12 @@ const ComitmentsSummaryFOIR = ({
             {comitments.map((item) => (
               <AGroupFields col={2} title={item.title}>
                 <AInputField
-                  type={'text'}
+                  
                   name={'amountPA'}
                   label={'Amount P.A.'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'amountPM'}
                   label={'Amount P.M.'}
                 />
@@ -81,17 +84,17 @@ const ComitmentsSummaryFOIR = ({
             ))}
             <AGroupFields col={3}>
               <AInputField
-                type={'text'}
+                
                 name={'emiRatio'}
                 label={'Only EMI Ratio'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'emiRatio'}
                 label={'FOIR Ratio (EMI + Other Con.)'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'emiRatio'}
                 label={'Total Commitments Ratio'}
               />

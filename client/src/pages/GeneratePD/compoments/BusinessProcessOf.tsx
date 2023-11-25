@@ -12,16 +12,10 @@ const BusinessProcessOf = ({
   setPayloads,
 }: any) => {
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    bussinessProcessOf: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);

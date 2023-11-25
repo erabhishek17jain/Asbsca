@@ -72,7 +72,9 @@ const LoanInformation = () => {
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', '_id'));
+    if (allClients?.data?.length > 0) {
+      setClientOptions(getOptions(allClients?.data, 'name', '_id'));
+    }
   }, [allClients]);
   return (
     <AGroupFields>
@@ -93,7 +95,7 @@ const LoanInformation = () => {
       />
       <AInputField type={'number'} name={'tenure'} label={'Tenure (Months)'} />
       <AInputField type={'number'} name={'emi'} label={'EMI'} />
-      <AInputField type={'text'} name={'outstanding'} label={'Outstanding'} />
+      <AInputField name={'outstanding'} label={'Outstanding'} />
       <ASingleSelect
         name={'remark'}
         label={'Remark'}
@@ -269,15 +271,13 @@ const CreditFacility = () => {
                   label={'Bank Name'}
                   options={[{ label: 'India', value: 'india' }]}
                 />
-                <AInputField type={'text'} name={'limit'} label={'Limit'} />
+                <AInputField name={'limit'} label={'Limit'} />
                 <AInputField
-                  type={'text'}
                   name={'averageUtilization'}
                   label={'Average Utilization'}
                 />
-                <AInputField type={'text'} name={'emi'} label={'EMI'} />
+                <AInputField name={'emi'} label={'EMI'} />
                 <AInputField
-                  type={'text'}
                   name={'interestRate'}
                   label={'Interest Rate (%)'}
                 />
@@ -312,7 +312,7 @@ const OtherCommitments = () => {
   const handleOtherCommitments = (val: string) => {
     setIsOtherCommitments(val);
   };
-  
+
   const addOtherCommitments = (tags: any) => {
     tags.push({
       ...commitmentsInfo,
@@ -321,7 +321,6 @@ const OtherCommitments = () => {
     });
     setOtherCommitments([...tags]);
   };
-
 
   return (
     <>
@@ -349,12 +348,10 @@ const OtherCommitments = () => {
                   options={[{ label: 'India', value: 'india' }]}
                 />
                 <AInputField
-                  type={'text'}
                   name={'contribution'}
                   label={'Contribution P.A.'}
                 />
                 <AInputField
-                  type={'text'}
                   name={'sumAssured'}
                   label={'Sum Assured/Maturity Value (Rs.)'}
                 />
@@ -381,16 +378,69 @@ const ExistingLoanCredit = ({
   setPayloads,
 }: any) => {
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    existanceLoan: {
+      isExistanceLoan: true,
+      businessTransfer: [
+        {
+          typeOfLoan: '',
+          bankName: '',
+          loanAmount: 0,
+          tenureMonth: 0,
+          emi: 0,
+          outstanding: '',
+          remark: '',
+        },
+      ],
+      existingLoanClosedThisYear: [
+        {
+          typeOfLoan: '',
+          bankName: '',
+          loanAmount: 0,
+          tenureMonth: 0,
+          emi: 0,
+          outstanding: '',
+          remark: '',
+        },
+      ],
+      existingLoanEMI: [
+        {
+          typeOfLoan: '',
+          bankName: '',
+          loanAmount: 0,
+          tenureMonth: 0,
+          emi: 0,
+          outstanding: '',
+          remark: '',
+        },
+      ],
+    },
+    creditFacility: {
+      isCreditFacility: true,
+      creditDetails: [
+        {
+          typeOfFacility: '',
+          bankName: '',
+          limit: 0,
+          averageUtilization: 0,
+          emi: 0,
+          interestRate: 0,
+          remark: '',
+        },
+      ],
+    },
+    otherCommitments: {
+      isOtherCommitmemts: true,
+      commitmentsDetails: [
+        {
+          particulars: '',
+          contributionPA: 0,
+          sumAssured: 0,
+        },
+      ],
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);

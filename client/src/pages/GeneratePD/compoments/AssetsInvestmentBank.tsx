@@ -78,20 +78,20 @@ const AssetInformation = () => {
         label={'Particularts'}
         options={[{ label: 'India', value: 'india' }]}
       />
-      <AInputField type={'text'} name={'location'} label={'Location'} />
+      <AInputField  name={'location'} label={'Location'} />
       <AInputField
-        type={'text'}
+        
         name={'purchaseYear'}
         label={'Purchase Year'}
       />
-      <AInputField type={'text'} name={'carpetArea'} label={'Carpet Area'} />
+      <AInputField  name={'carpetArea'} label={'Carpet Area'} />
       <ASingleSelect
         name={'status'}
         label={'Status'}
         options={[{ label: 'India', value: 'india' }]}
       />
-      <AInputField type={'text'} name={'marketValue'} label={'Market Value'} />
-      <AInputField type={'text'} name={'remtPm'} label={'Rent P.M.'} />
+      <AInputField  name={'marketValue'} label={'Market Value'} />
+      <AInputField  name={'remtPm'} label={'Rent P.M.'} />
     </AGroupFields>
   );
 };
@@ -168,18 +168,53 @@ const AssetsInvestmentBank = ({
     setBankAccounts([...tags]);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    isBussinessAssets: '',
+    bussinessAssetDetails: {
+      bussinessAssets: [
+        {
+          particulars: '',
+          location: '',
+          purchaseYear: '',
+          carpetArea: '',
+          status: '',
+          marketValue: '',
+          rentPM: '',
+        },
+      ],
+      totalMarketValue: '',
+      totalRentPM: '',
+    },
+    isPersonalAssets: '',
+    personalAssetDetails: {
+      personalAssets: [
+        {
+          particulars: '',
+          location: '',
+          purchaseYear: '',
+          carpetArea: '',
+          status: '',
+          marketValue: '',
+          rentPM: '',
+        },
+      ],
+      totalMarketValue: '',
+      totalRentPM: '',
+    },
+    isInvestments: '',
+    investmentDetails: {
+      investments: [{ particulars: '', contribution: '', marketValue: '' }],
+    },
+    totalRentPM: '',
+    totalMarketValue: '',
+    isBankAccount: '',
+    bankAccountDetails: {
+      bankAccounts: [{ bankName: '', branch: '', type: '', balanceOnDay: '' }],
+      totalBalance: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -201,7 +236,7 @@ const AssetsInvestmentBank = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -281,12 +316,12 @@ const AssetsInvestmentBank = ({
                       options={[{ label: 'India', value: 'india' }]}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'contribution'}
                       label={'Contribution'}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'marketValue'}
                       label={'Market Value'}
                     />
@@ -324,7 +359,7 @@ const AssetsInvestmentBank = ({
                       options={[{ label: 'India', value: 'india' }]}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'branch'}
                       label={'Branch'}
                     />
@@ -334,7 +369,7 @@ const AssetsInvestmentBank = ({
                       options={[{ label: 'India', value: 'india' }]}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'balanceOnDay'}
                       label={'Balance On Day'}
                     />

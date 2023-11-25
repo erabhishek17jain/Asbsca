@@ -47,8 +47,9 @@ export const FilterButtons = ({
         <AInputField
           id={'search'}
           variant={'horizantal'}
+          value={formik.values.search}
           error={formik.errors.search}
-          formik={formik.getFieldProps('search')}
+          handleChange={formik.handleChange}
         />
         <div className="flex mb-8">
           <AButton
@@ -94,11 +95,12 @@ export const FilterCases = ({
   const [assignOptions, setAssignOptions] = useState<any>([]);
 
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', '_id'));
-  }, [allClients]);
+    if (allClients?.data?.length > 0) {
+    setClientOptions(getOptions(allClients?.data, 'name', '_id'));
+  }  }, [allClients]);
 
   useEffect(() => {
-    setAssignOptions(getOptions(allUsers, 'fullName', '_id'));
+    setAssignOptions(getOptions(allUsers?.users, 'fullName', '_id'));
   }, [allUsers]);
 
   useEffect(() => {

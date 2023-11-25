@@ -41,18 +41,21 @@ const SuppliersCreditors = ({
     setIsSuppliers(val);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    isSuppliersDetails: '',
+    suppliersDetails: {
+      noOfSuppliers: '',
+      majorSuppliers: [{ clientName: '', contact: '' }],
+    },
+    creditors: {
+      amount: '',
+      collectionPeriod: '',
+    },
+    creitPeriodAllowed: '',
+    whyCreditorHighThanCredit: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -74,7 +77,7 @@ const SuppliersCreditors = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -91,7 +94,7 @@ const SuppliersCreditors = ({
               <>
                 <AGroupFields col={2}>
                   <AInputField
-                    type={'text'}
+                    
                     name={'noOfClients'}
                     label={'No of Clients/Daily Foot Fall'}
                   />
@@ -104,12 +107,12 @@ const SuppliersCreditors = ({
                 >
                   <AGroupFields col={2}>
                     <AInputField
-                      type={'text'}
+                      
                       name={'clientName'}
                       label={'Name of the client'}
                     />
                     <AInputField
-                      type={'text'}
+                      
                       name={'contactNo'}
                       label={'Contact No'}
                     />
@@ -120,12 +123,12 @@ const SuppliersCreditors = ({
             {suppliers.map((item) => (
               <AGroupFields col={2} title={item.title}>
                 <AInputField
-                  type={'text'}
+                  
                   name={'amountPA'}
                   label={'Amount P.A.'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'amountPM'}
                   label={'Amount P.M.'}
                 />
@@ -133,12 +136,12 @@ const SuppliersCreditors = ({
             ))}
             <AGroupFields col={2}>
               <AInputField
-                type={'text'}
+                
                 name={'periodAllowedToClient'}
                 label={'Cr. Period allowed to Clients'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'whyCreditorsHigher'}
                 label={'Why Creditors are high than credit period allowed'}
               />

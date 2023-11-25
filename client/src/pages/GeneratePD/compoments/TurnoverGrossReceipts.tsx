@@ -55,18 +55,48 @@ const TurnoverGrossReceipts = ({
   const [currentLastCompTurnoverDetails, setCurrentLastCompTurnoverDetails] =
     useState([{ ...currentLastCompTurnoverInfo }]);
 
-    
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    apirilTillDate: {
+      idealAprilTillDate: {
+        turnover: '',
+        netProfit: '',
+      },
+      aprilTillDate: {
+        turnover: '',
+        netProfit: '',
+      },
+      reasonforDiff: '',
+    },
+    lastYears: {
+      firstLastYear: '',
+      secondLastYear: '',
+      changes: '',
+      reasonforDiff: '',
+    },
+    currentYearActual: {
+      actuals: {
+        turnover: '',
+        netProfit: '',
+        profitPercentage: '',
+      },
+      asPerFinancials: {
+        turnover: '',
+        netProfit: '',
+        profitPercentage: '',
+      },
+      financialActualRatio: '',
+    },
+    currentLastYearComparision: {
+      firstLastYear: '',
+      secondLastYear: '',
+      changes: '',
+      reasonforDiff: '',
+    },
+    bussinessTrendLast2Year: '',
+    futureProjection: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -88,7 +118,6 @@ const TurnoverGrossReceipts = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
 
   return (
     <>
@@ -101,28 +130,16 @@ const TurnoverGrossReceipts = ({
           >
             <p className="w-full pb-3">Ideal April till date Turnover</p>
             <AGroupFields col={2}>
-              <AInputField type={'text'} name={'turnover'} label={'Turnover'} />
-              <AInputField
-                type={'text'}
-                name={'netprofit'}
-                label={'Net Profit'}
-              />
+              <AInputField name={'turnover'} label={'Turnover'} />
+              <AInputField name={'netprofit'} label={'Net Profit'} />
             </AGroupFields>
             <p className="w-full pb-3">April till date Turnover</p>
             <AGroupFields col={2}>
-              <AInputField type={'text'} name={'turnover'} label={'Turnover'} />
-              <AInputField
-                type={'text'}
-                name={'netprofit'}
-                label={'Net Profit'}
-              />
+              <AInputField name={'turnover'} label={'Turnover'} />
+              <AInputField name={'netprofit'} label={'Net Profit'} />
             </AGroupFields>
             <AGroupFields col={2}>
-              <AInputField
-                type={'text'}
-                name={'reason'}
-                label={'Reason if major diff'}
-              />
+              <AInputField name={'reason'} label={'Reason if major diff'} />
             </AGroupFields>
           </ATags>
           <ATags
@@ -132,21 +149,15 @@ const TurnoverGrossReceipts = ({
           >
             <AGroupFields>
               <AInputField
-                type={'text'}
                 name={'last2year'}
                 label={'March-2021 (As per F.S.)'}
               />
               <AInputField
-                type={'text'}
                 name={'lastyear'}
                 label={'March-2022 (As per F.S.)'}
               />
-              <AInputField type={'text'} name={'changes'} label={'Changes'} />
-              <AInputField
-                type={'text'}
-                name={'changes'}
-                label={'Reason if major diff'}
-              />
+              <AInputField name={'changes'} label={'Changes'} />
+              <AInputField name={'changes'} label={'Reason if major diff'} />
             </AGroupFields>
           </ATags>
           <ATags
@@ -156,27 +167,18 @@ const TurnoverGrossReceipts = ({
           >
             <p className="w-full pb-3">Actuals</p>
             <AGroupFields col={3}>
-              <AInputField type={'text'} name={'turnover'} label={'Turnover'} />
-              <AInputField
-                type={'text'}
-                name={'netprofit'}
-                label={'Net Profit'}
-              />
-              <AInputField type={'text'} name={'percent'} label={'%'} />
+              <AInputField name={'turnover'} label={'Turnover'} />
+              <AInputField name={'netprofit'} label={'Net Profit'} />
+              <AInputField name={'percent'} label={'%'} />
             </AGroupFields>
             <p className="w-full pb-3">As per Financial</p>
             <AGroupFields col={3}>
-              <AInputField type={'text'} name={'turnover'} label={'Turnover'} />
-              <AInputField
-                type={'text'}
-                name={'netprofit'}
-                label={'Net Profit'}
-              />
-              <AInputField type={'text'} name={'percent'} label={'%'} />
+              <AInputField name={'turnover'} label={'Turnover'} />
+              <AInputField name={'netprofit'} label={'Net Profit'} />
+              <AInputField name={'percent'} label={'%'} />
             </AGroupFields>
             <AGroupFields col={2}>
               <AInputField
-                type={'text'}
                 name={'fsActual'}
                 label={'F.S./Acutals (Bank Ratio)'}
               />
@@ -189,22 +191,10 @@ const TurnoverGrossReceipts = ({
           >
             <p className="w-full pb-3">Turnover</p>
             <AGroupFields>
-              <AInputField
-                type={'text'}
-                name={'marchlast2'}
-                label={'March-2022'}
-              />
-              <AInputField
-                type={'text'}
-                name={'marchlast1'}
-                label={'March-2023'}
-              />
-              <AInputField type={'text'} name={'changes'} label={'Changes'} />
-              <AInputField
-                type={'text'}
-                name={'changes'}
-                label={'Reason if major diff'}
-              />
+              <AInputField name={'marchlast2'} label={'March-2022'} />
+              <AInputField name={'marchlast1'} label={'March-2023'} />
+              <AInputField name={'changes'} label={'Changes'} />
+              <AInputField name={'changes'} label={'Reason if major diff'} />
             </AGroupFields>
           </ATags>
           <AGroupFields col={2}>

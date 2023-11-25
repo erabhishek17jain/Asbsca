@@ -58,16 +58,29 @@ const DetailsOfProperty = ({
   };
 
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    purchaseYear: '',
+    buildUpArea: '',
+    caretArea: '',
+    occupiedBy: '',
+    loanPropertyAddress: '',
+    builderName: '',
+    propertyLoanDetails: {
+      isLoanProvided: '',
+      loanDetails: [{ amount: '', emi: '', roi: '', year: '' }],
+      propertyValue: {
+        agreementValue: '',
+        purchaseValue: '',
+        marketValue: '',
+        ocrPaid: '',
+        pOrb: '',
+        balanceOcr: '',
+        sourceOcr: '',
+      },
+      loanAsPerForm: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -102,12 +115,12 @@ const DetailsOfProperty = ({
                 options={[{ label: 'India', value: 'india' }]}
               />
               <AInputField
-                type={'text'}
+                
                 name={'buildupArea'}
                 label={'Build-up Area (Sq. Ft.)'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'carpetArea'}
                 label={'Carpet Area (Sq. Ft.)'}
               />
@@ -117,12 +130,12 @@ const DetailsOfProperty = ({
                 options={[{ label: 'India', value: 'india' }]}
               />
               <AInputField
-                type={'text'}
+                
                 name={'loanPropertyAddress'}
                 label={'Loan Property Address'}
               />
               <AInputField
-                type={'text'}
+                
                 name={'builderName'}
                 label={'Builder Name'}
               />
@@ -142,13 +155,13 @@ const DetailsOfProperty = ({
                 <ATags tags={loans} addTag={addLoan} setTags={setLoans}>
                   <AGroupFields>
                     <AInputField
-                      type={'text'}
+                      
                       name={'amount'}
                       label={'Amount'}
                     />
-                    <AInputField type={'text'} name={'emi'} label={'EMI'} />
-                    <AInputField type={'text'} name={'roi'} label={'ROI'} />
-                    <AInputField type={'text'} name={'year'} label={'Year'} />
+                    <AInputField  name={'emi'} label={'EMI'} />
+                    <AInputField  name={'roi'} label={'ROI'} />
+                    <AInputField  name={'year'} label={'Year'} />
                   </AGroupFields>
                 </ATags>
               ) : (
@@ -164,35 +177,35 @@ const DetailsOfProperty = ({
             <ASection title={'Property Value'}>
               <AGroupFields>
                 <AInputField
-                  type={'text'}
+                  
                   name={'agreementValue'}
                   label={'Agreement Value'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'purchaseValue'}
                   label={'Purchase Value'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'marketValue'}
                   label={'Market Value'}
                 />
                 <div className="flex gap-3">
                   <AInputField
-                    type={'text'}
+                    
                     name={'ocrPaid'}
                     label={'OCR Paid'}
                   />
                   <ASingleSelect name={'putPB'} label={'P/B'} options={[]} />
                 </div>
                 <AInputField
-                  type={'text'}
+                  
                   name={'balanceOcr'}
                   label={'Balance OCR'}
                 />
                 <AInputField
-                  type={'text'}
+                  
                   name={'sourceOcr'}
                   label={'Source OCR'}
                 />
@@ -201,7 +214,7 @@ const DetailsOfProperty = ({
           )}
           <AGroupFields col={2}>
             <AInputField
-              type={'text'}
+              
               name={'loanApplication'}
               label={'Loan as per application Form'}
             />
