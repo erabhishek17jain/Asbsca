@@ -29,6 +29,24 @@ import * as Yup from 'yup';
 import ASingleSelect from '../../components-global/ASingleSelect';
 import { getOptions } from '../../utils';
 import { fetchAllUsersAsync } from '../../slices/usersSlice';
+import ATextField from '../../components-global/ATextField';
+
+const modalTitle: any = {
+  assigned: 'Assign Reporter or Reviewer ',
+  query: 'Revert to Assignee',
+  review: 'Sent to Reviewer',
+  completed: 'Approve Case',
+  sentToBank: 'Sent To Bank',
+  status: 'Update Status',
+};
+
+const successMessages: any = {
+  assigned: 'Case sent to assignee & reviewe sucessfully.',
+  query: 'Case sent back to assignee to re-check.',
+  review: 'Case sent to reviewer sucessfully.',
+  completed: 'Case is approved sucessfully.',
+  sentToBank: 'Case is sucessfully sent to bank.',
+};
 
 const Cases = () => {
   const navigate = useNavigate();
@@ -39,6 +57,7 @@ const Cases = () => {
   const [tableRaw, setTableRaw] = useState<any>({});
   const [showAssignCase, setShowAssignCase] = useState(false);
   const [showStatusCase, setShowStatusCase] = useState(false);
+  const [actionType, setActionType] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [usersOptions, setUsersOptions] = useState<any>([]);
   const [activeItem, setActiveItem] = useState<any>(null);
@@ -47,8 +66,8 @@ const Cases = () => {
     q: '',
     page: 1,
     limit: 10,
-    order: 'ascend',
-    sort: 'receivedDate',
+    order: 'descend',
+    sort: 'updatedAt',
   });
 
   const selectCase = (item: any) => {
@@ -56,13 +75,17 @@ const Cases = () => {
   };
 
   const updateAssigneeReviewer = (values: any) => {
+    if (values?.status === 'assigned') {
+      values.remark = '';
+    }
     let assignCasePromise = assignCase(values);
     assignCasePromise
       .then(() => {
-        formikAssigned.resetForm();
+        setActiveItem(null);
         closeAssignCaseModal();
+        formikAssigned.resetForm();
         store.dispatch(fetchCasesAsync({ ...defaultFilters }));
-        toast.success(<b>Case assigned sucessfully.</b>);
+        toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);
@@ -73,10 +96,11 @@ const Cases = () => {
     let updateStatusPromise = statusUpdateCase(id, values);
     updateStatusPromise
       .then(() => {
-        formikStatus.resetForm();
+        setActiveItem(null);
         closeUpdateStatusModal();
+        formikStatus.resetForm();
         store.dispatch(fetchCasesAsync(''));
-        toast.success(<b>Case status sucessfully.</b>);
+        toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);
@@ -86,11 +110,13 @@ const Cases = () => {
   const initialValuesAssigned = {
     caseId: '',
     status: '',
+    remark: '',
     assigneeId: '',
     reviewerId: '',
   };
 
   const validationSchemaAssigned = Yup.object().shape({
+    remark: Yup.string().required('This field is required'),
     status: Yup.string().required('This field is required'),
     assigneeId: Yup.string().required('This field is required'),
     reviewerId: Yup.string().required('This field is required'),
@@ -144,48 +170,57 @@ const Cases = () => {
 
   const assignReviewCase = () => {
     setShowAssignCase(true);
+    setActionType('assigned');
     formikAssigned.setFieldValue('caseId', activeItem?._id);
     formikAssigned.setFieldValue('status', 'assigned');
+    formikAssigned.setFieldValue('remark', 'assigned');
   };
 
   const updateStatusCase = () => {
+    setActionType('status');
     setShowStatusCase(true);
   };
 
   const startPD = () => {
-    const values = { appoinmentStatus: 'visited' };
-    updateCaseStatus(activeItem?._id, values);
-    navigate('/generatePD', { state: { activeItem: activeItem } });
+    if (activeItem?.status === 'assigned') {
+      const values = { appoinmentStatus: 'visited' };
+      updateCaseStatus(activeItem?._id, values);
+      navigate('/generatePD', { state: { activeItem: activeItem } });
+    } else {
+      navigate('/generatePD', { state: { activeItem: activeItem } });
+    }
   };
-
+  
   const sentToReviewCase = () => {
-    const values = {
-      status: 'review',
-      caseId: activeItem?._id,
-      assigneeId: activeItem?.assignTo?._id,
-      reviewerId: activeItem?.reviewer?._id,
-    };
-    updateAssigneeReviewer(values);
+    setShowAssignCase(true);
+    setActionType('review');
+    formikAssigned.setFieldValue('status', 'review');
+    formikAssigned.setFieldValue('caseId', activeItem?._id);
+    formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
+    formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
   };
 
   const revertToAssignee = () => {
-    const values = {
-      status: 'assigned',
-      caseId: activeItem?._id,
-      assigneeId: activeItem?.assignTo?._id,
-      reviewerId: activeItem?.reviewer?._id,
-    };
-    updateAssigneeReviewer(values);
+    setShowAssignCase(true);
+    setActionType('query');
+    formikAssigned.setFieldValue('status', 'query');
+    formikAssigned.setFieldValue('caseId', activeItem?._id);
+    formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
+    formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
   };
 
   const caseCompleted = () => {
-    const values = { status: 'completed', appoinmentStatus: 'visited' };
-    updateCaseStatus(activeItem?._id, values);
+    setActionType('completed');
+    setShowStatusCase(true);
+    formikStatus.setFieldValue('status', 'completed');
+    formikStatus.setFieldValue('appoinmentStatus', 'visited');
   };
 
   const caseSentToBank = () => {
-    const values = { status: 'sentToBank', appoinmentStatus: 'visited' };
-    updateCaseStatus(activeItem?._id, values);
+    setActionType('sentToBank');
+    setShowStatusCase(true);
+    formikStatus.setFieldValue('status', 'sentToBank');
+    formikStatus.setFieldValue('appoinmentStatus', 'visited');
   };
 
   const openDeleteModal = () => {
@@ -215,8 +250,10 @@ const Cases = () => {
 
   useEffect(() => {
     if (activeItem) {
+      formikAssigned.setFieldValue('remark', activeItem?.remark);
       formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
       formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
+      formikStatus.setFieldValue('remark', activeItem?.remark);
       formikStatus.setFieldValue('status', activeItem?.status);
       formikStatus.setFieldValue(
         'appoinmentStatus',
@@ -293,6 +330,17 @@ const Cases = () => {
     ],
     review: [
       {
+        title: 'Preview Report',
+        action: () =>
+          navigate('/finalReport', { state: { activeItem: activeItem } }),
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Edit Report',
+        action: startPD,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
         title: 'Revert to Assignee',
         action: revertToAssignee,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
@@ -310,12 +358,24 @@ const Cases = () => {
     ],
     completed: [
       {
+        title: 'Preview Report',
+        action: () =>
+          navigate('/finalReport', { state: { activeItem: activeItem } }),
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
         title: 'Download Report',
         action: () => {},
         icon: <ArrowDownTrayIcon className="h-5 w-5 stroke-2" />,
       },
     ],
     sentToBank: [
+      {
+        title: 'Preview Report',
+        action: () =>
+          navigate('/finalReport', { state: { activeItem: activeItem } }),
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
       {
         title: 'Download Report',
         action: () => {},
@@ -377,60 +437,86 @@ const Cases = () => {
       </div>
       {showAssignCase && (
         <AModal
-          saveText={'Update'}
-          title={'Assign Reporter or Reviewer'}
+          saveText={'Assign'}
+          title={modalTitle[actionType]}
           onSave={formikAssigned.handleSubmit}
           closeModal={closeAssignCaseModal}
         >
           <div className="flex flex-col ">
-            <ASingleSelect
-              id="assigneeId"
-              label={'Assign Reporter*'}
-              value={formikAssigned.values.assigneeId}
-              error={formikAssigned.errors.assigneeId}
-              handleChange={formikAssigned.handleChange}
-              icon={<UserIcon className="h-4 w-4" />}
-              options={usersOptions}
-            />
-            <ASingleSelect
-              id="reviewerId"
-              label={'Assign Reviewer*'}
-              value={formikAssigned.values.reviewerId}
-              error={formikAssigned.errors.reviewerId}
-              handleChange={formikAssigned.handleChange}
-              icon={<UserIcon className="h-4 w-4" />}
-              options={usersOptions}
-            />
+            {actionType === 'assigned' && (
+              <>
+                <ASingleSelect
+                  id="assigneeId"
+                  label={'Assign Reporter*'}
+                  value={formikAssigned.values.assigneeId}
+                  error={formikAssigned.errors.assigneeId}
+                  handleChange={formikAssigned.handleChange}
+                  icon={<UserIcon className="h-4 w-4" />}
+                  options={usersOptions}
+                />
+                <ASingleSelect
+                  id="reviewerId"
+                  label={'Assign Reviewer*'}
+                  value={formikAssigned.values.reviewerId}
+                  error={formikAssigned.errors.reviewerId}
+                  handleChange={formikAssigned.handleChange}
+                  icon={<UserIcon className="h-4 w-4" />}
+                  options={usersOptions}
+                />
+              </>
+            )}
+            {actionType !== 'assigned' && (
+              <ATextField
+                id={'remark'}
+                label={'Remark'}
+                value={formikAssigned.values.remark}
+                error={formikAssigned.errors.remark}
+                handleChange={formikAssigned.handleChange}
+                icon={<></>}
+              />
+            )}
           </div>
         </AModal>
       )}
       {showStatusCase && (
         <AModal
           saveText={'Update'}
-          title={'Update Status'}
+          title={modalTitle[actionType]}
           onSave={formikStatus.handleSubmit}
           closeModal={closeUpdateStatusModal}
         >
           <div className="flex flex-col ">
-            {userDetails?.role?.name === 'Admin' && (
-              <ASingleSelect
-                id="status"
-                label={'Status*'}
-                value={formikStatus.values.status}
-                error={formikStatus.errors.status}
-                handleChange={formikStatus.handleChange}
-                icon={<UserIcon className="h-4 w-4" />}
-                options={caseStatusList}
-              />
+            {actionType === 'status' && (
+              <>
+                {userDetails?.role?.name === 'Admin' && (
+                  <ASingleSelect
+                    id="status"
+                    label={'Status*'}
+                    value={formikStatus.values.status}
+                    error={formikStatus.errors.status}
+                    handleChange={formikStatus.handleChange}
+                    icon={<UserIcon className="h-4 w-4" />}
+                    options={caseStatusList}
+                  />
+                )}
+                <ASingleSelect
+                  id="appoinmentStatus"
+                  label={'Appoinment Status*'}
+                  value={formikStatus.values.appoinmentStatus}
+                  error={formikStatus.errors.appoinmentStatus}
+                  handleChange={formikStatus.handleChange}
+                  icon={<UserIcon className="h-4 w-4" />}
+                  options={appoinmentStatusList}
+                />
+              </>
             )}
-            <ASingleSelect
-              id="appoinmentStatus"
-              label={'Appoinment Status*'}
-              value={formikStatus.values.appoinmentStatus}
-              error={formikStatus.errors.appoinmentStatus}
+            <ATextField
+              id={'remark'}
+              label={'Remark'}
+              value={formikStatus.values.remark}
+              error={formikStatus.errors.remark}
               handleChange={formikStatus.handleChange}
-              icon={<UserIcon className="h-4 w-4" />}
-              options={appoinmentStatusList}
+              icon={<></>}
             />
           </div>
         </AModal>

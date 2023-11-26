@@ -53,7 +53,7 @@ const AddCase = () => {
     branch: '',
     type: '',
     bankName: '',
-    recievedDate: '',
+    receivedDate: '',
     status:'',
     appoinmentStatus: '',
     assigneeId: '',
@@ -72,7 +72,7 @@ const AddCase = () => {
     branch: Yup.string().required('This field is required'),
     type: Yup.string().required('This field is required'),
     bankName: Yup.string().required('This field is required'),
-    recievedDate: Yup.string().required('This field is required'),
+    receivedDate: Yup.string().required('This field is required'),
     status: Yup.string().required('This field is required'),
     appoinmentStatus: Yup.string().required('This field is required'),
   });
@@ -141,7 +141,8 @@ const AddCase = () => {
       formik.setFieldValue('branch', state?.activeItem?.branch?._id);
       formik.setFieldValue('type', state?.activeItem?.type);
       formik.setFieldValue('bankName', state?.activeItem?.bankName?._id);
-      formik.setFieldValue('recievedDate', state?.activeItem?.recievedDate);
+      const date = state?.activeItem?.receivedDate;
+      formik.setFieldValue('receivedDate', date?.slice(0, -8));
       formik.setFieldValue('status', state?.activeItem?.status);
       formik.setFieldValue('appoinmentStatus', state?.activeItem?.appoinmentStatus);
       formik.setFieldValue('assigneeId', state?.activeItem?.assignTo?._id);
@@ -245,6 +246,16 @@ const AddCase = () => {
             icon={<MapPinIcon className="h-4 w-4" />}
           />
           <ASingleSelect
+            id={'bankName'}
+            label={'Bank Name'}
+            variant={'horizantal'}
+            value={formik.values.bankName}
+            error={formik.errors.bankName}
+            handleChange={formik.handleChange}
+            icon={<BuildingLibraryIcon className="h-4 w-4" />}
+            options={clientOptions}
+          />
+          <ASingleSelect
             id={'branch'}
             label={'Branch'}
             variant={'horizantal'}
@@ -264,22 +275,12 @@ const AddCase = () => {
             icon={<TagIcon className="h-4 w-4" />}
             options={caseTypeList}
           />
-          <ASingleSelect
-            id={'bankName'}
-            label={'Bank Name'}
-            variant={'horizantal'}
-            value={formik.values.bankName}
-            error={formik.errors.bankName}
-            handleChange={formik.handleChange}
-            icon={<BuildingLibraryIcon className="h-4 w-4" />}
-            options={clientOptions}
-          />
           <ADatePicker
-            id={'recievedDate'}
+            id={'receivedDate'}
             label={'Received Date'}
             variant={'horizantal'}
-            value={formik.values.recievedDate}
-            error={formik.errors.recievedDate}
+            value={formik.values.receivedDate}
+            error={formik.errors.receivedDate}
             handleChange={formik.handleChange}
           />
           {state?.activeItem?._id && (

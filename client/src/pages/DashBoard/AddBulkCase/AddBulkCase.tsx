@@ -63,8 +63,8 @@ const AddBulkCase = () => {
           ...item,
           ...data,
           ...{
-            branch: branch?._id,
-            bankName: bankName ? bankName?._id : '655cc8399a598b90846974a8',
+            branch: branch?._id ? branch?._id : '',
+            bankName: bankName ? bankName?._id : '',
           },
         };
       });
@@ -109,13 +109,13 @@ const AddBulkCase = () => {
           </p>
         </div>
         <div className="flex flex-col gap-6">
-          {addCaseData.length > 0 && (
+          {payload.length > 0 && (
             <>
               <ATable
-                data={addCaseData}
+                data={payload}
                 header={<AddBulkCaseHeader />}
                 tableHeader={BULK_UPLOAD_TABLE_HEAD}
-                tableBody={<AddBulkCaseBody data={addCaseData} />}
+                tableBody={<AddBulkCaseBody data={payload} />}
               />
               <AButton
                 disabled={isAdd}

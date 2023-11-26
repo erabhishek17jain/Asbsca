@@ -1,7 +1,6 @@
 const ADatePicker = ({
   id,
   label,
-  icon,
   value,
   error = '',
   handleChange,
@@ -23,14 +22,12 @@ const ADatePicker = ({
       <div className="relative w-full">
         <input
           id={id}
-          type={'date'}
           value={value}
           onChange={handleChange}
+          type={'datetime-local'}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />
-        <span className="absolute top-1/2 right-3 -translate-y-1/2">
-          {icon}
-        </span>
+        {error && <span className="ml-1 text-xs text-meta1">{error}</span>}
       </div>
     </div>
   );
