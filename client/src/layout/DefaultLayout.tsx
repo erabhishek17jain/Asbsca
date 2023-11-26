@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '../components-shared/Header';
 import Sidebar from '../components-shared/Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { addNotification, setToken } from '../services';
+import { setToken } from '../services';
 import { useSelector } from 'react-redux';
 import { onMessageListener, getFirebaseToken } from '../firebase';
 import { fetchUserAsync } from '../slices/usersSlice';
@@ -13,12 +13,12 @@ const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const token: any = document.cookie?.replace('token=', '');
   const { userDetails } = useSelector((state: any) => state.users);
-
+  const [, setNotification] = useState({ title: '', body: '' });
   const [isTokenFound, setTokenFound] = useState(false);
 
   onMessageListener()
     .then((payload: any) => {
-      addNotification({
+      setNotification({
         title: payload.notification.title,
         body: payload.notification.body,
       });

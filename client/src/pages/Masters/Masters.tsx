@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import {
   Tab,
@@ -25,12 +25,16 @@ const Masters = () => {
   const { allProducts } = useSelector((state: any) => state.products);
   const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allRoles } = useSelector((state: any) => state.roles);
+  const [defaultFilters, setDefaultFilters] = useState<any>({
+    page: 1,
+    limit: 10,
+  });
 
   useEffect(() => {
-    store.dispatch(fetchAllClientsAsync(''));
-    store.dispatch(fetchAllProductsAsync(''));
-    store.dispatch(fetchAllBranchsAsync(''));
-    store.dispatch(fetchAllRolesAsync(''));
+    store.dispatch(fetchAllClientsAsync({ ...defaultFilters }));
+    store.dispatch(fetchAllProductsAsync({ ...defaultFilters }));
+    store.dispatch(fetchAllBranchsAsync({ ...defaultFilters }));
+    store.dispatch(fetchAllRolesAsync({ ...defaultFilters }));
   }, []);
 
   return (
@@ -66,16 +70,32 @@ const Masters = () => {
           </TabsHeader>
           <TabsBody>
             <TabPanel value={'client'} className="px-0">
-              <MastersTable type="client" />
+              <MastersTable
+                type="client"
+                defaultFilters={defaultFilters}
+                setDefaultFilters={setDefaultFilters}
+              />
             </TabPanel>
             <TabPanel value={'product'} className="px-0">
-              <MastersTable type="product" />
+              <MastersTable
+                type="product"
+                defaultFilters={defaultFilters}
+                setDefaultFilters={setDefaultFilters}
+              />
             </TabPanel>
             <TabPanel value={'branch'} className="px-0">
-              <MastersTable type="branch" />
+              <MastersTable
+                type="branch"
+                defaultFilters={defaultFilters}
+                setDefaultFilters={setDefaultFilters}
+              />
             </TabPanel>
             <TabPanel value={'role'} className="px-0">
-              <MastersTable type="role" />
+              <MastersTable
+                type="role"
+                defaultFilters={defaultFilters}
+                setDefaultFilters={setDefaultFilters}
+              />
             </TabPanel>
           </TabsBody>
         </Tabs>

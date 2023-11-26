@@ -10,7 +10,7 @@ const MastersBody = ({
 }: any) => {
   return data.map((item: any, index: number) => {
     const isLast = index === data.length - 1;
-    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
     return (
       <tr key={item?.name}>
         <TableColumn classes={classes} label={index + 1} />

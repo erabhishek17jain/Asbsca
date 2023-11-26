@@ -6,8 +6,13 @@ function setFilters(payload: any) {
   let filter = '';
   for (const key in payload) {
     if (key === 'filter') {
-      const filterBy = Object.keys(payload[key]);
-      const filterValue = Object.values(payload[key]);
+      const filterObj = Object.fromEntries(
+        Object.entries(payload.filter).filter(([_, v]) => {
+          return v != '';
+        }),
+      );
+      const filterBy = Object.keys(filterObj);
+      const filterValue = Object.values(filterObj);
       filter =
         filter +
         `filterBy=${filterBy.join(',')}&filterValue=${filterValue.join(',')}&`;
@@ -206,22 +211,6 @@ export async function getBranchs(payload: any, { rejectWithValue }: any) {
 }
 
 /** Add API Calls */
-
-/** add notification */
-export async function addNotification(payload: any) {
-  try {
-    if (payload) {
-      const { data } = await axios.post(
-        `${baseAPI}/users/notification/create`,
-        payload,
-      );
-      return Promise.resolve({ data });
-    }
-  } catch (error) {
-    showError(error);
-  }
-}
-
 /** add user */
 export async function addCase(payload: any) {
   try {
@@ -321,7 +310,7 @@ export async function assignCase(payload: any) {
 export async function statusUpdateCase(id: string, payload: any) {
   try {
     if (payload) {
-      const { data } = await axios.post(`${baseAPI}/cases/${id}`, payload);
+      const { data } = await axios.put(`${baseAPI}/cases/${id}`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {

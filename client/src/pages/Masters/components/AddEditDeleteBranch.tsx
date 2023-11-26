@@ -47,7 +47,7 @@ export function AddEditDeleteBranch({
         if (res) {
           closeAddEditModal();
           formikBranch.resetForm();
-          store.dispatch(fetchAllBranchsAsync(''));
+          store.dispatch(fetchAllBranchsAsync({ page: 1, limit: 10 }));
           toast.success(
             <b>Branch {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
           );
@@ -73,7 +73,7 @@ export function AddEditDeleteBranch({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllBranchsAsync(''));
+          store.dispatch(fetchAllBranchsAsync({ page: 1, limit: 10 }));
           toast.success(<b>Branch deleted successfully.</b>);
         }
       })

@@ -13,7 +13,7 @@ export const TableHeader = ({ label }: any) => {
   return (
     <th
       key={label}
-      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+      className="border-y border-blue-grey-100 bg-blue-grey-50/50 p-4"
     >
       {label !== '' && (
         <div className="block antialiased font-sans font-semibold text-sm leading-none opacity-80 text-main font-normal">
@@ -97,7 +97,7 @@ const ATable = ({
         </div>
       )}
       {!pathname.includes('dashboard') && meta?.count > 9 && (
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        <CardFooter className="flex items-center justify-between border-t border-blue-grey-50 p-4">
           <APagination
             meta={meta}
             defaultFilters={defaultFilters}

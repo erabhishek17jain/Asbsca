@@ -49,7 +49,7 @@ export function AddEditDeleteRole({
         if (res) {
           closeAddEditModal();
           formikRole.resetForm();
-          store.dispatch(fetchAllRolesAsync(''));
+          store.dispatch(fetchAllRolesAsync({ page: 1, limit: 10 }));
           toast.success(
             <b>Role {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
           );
@@ -81,7 +81,7 @@ export function AddEditDeleteRole({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllRolesAsync(''));
+          store.dispatch(fetchAllRolesAsync({ page: 1, limit: 10 }));
           toast.success(<b>Role deleted successfully.</b>);
         }
       })

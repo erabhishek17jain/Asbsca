@@ -27,7 +27,7 @@ const AMultiSelect = ({
         <div className="flex flex-wrap items-center">
           {selected.length > 0 ? (
             selected?.map((item: any) => (
-              <span className="flex items-center justify-center rounded border-[.5px] border-stroke bg-gray py-1 px-2 text-sm font-medium">
+              <span className="flex items-center justify-center rounded border-[.5px] border-stroke bg-grey py-1 px-2 text-sm font-medium">
                 {item.label}
                 <span className="cursor-pointer pl-2 hover:text-danger">
                   <XMarkIcon className="h-3 w-3" />

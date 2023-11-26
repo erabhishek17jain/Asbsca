@@ -59,7 +59,7 @@ export function AddEditDeleteProduct({
         if (res) {
           closeAddEditModal();
           formikProduct.resetForm();
-          store.dispatch(fetchAllProductsAsync(''));
+          store.dispatch(fetchAllProductsAsync({ page: 1, limit: 10 }));
           toast.success(
             <b>Product {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
           );
@@ -85,7 +85,7 @@ export function AddEditDeleteProduct({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllProductsAsync(''));
+          store.dispatch(fetchAllProductsAsync({ page: 1, limit: 10 }));
           toast.success(<b>Product deleted successfully.</b>);
         }
       })

@@ -13,13 +13,19 @@ import { AddEditDeleteClient } from './components/AddEditDeleteClient';
 import { AddEditDeleteProduct } from './components/AddEditDeleteProduct';
 import { AddEditDeleteBranch } from './components/AddEditDeleteBranch';
 import { AddEditDeleteRole } from './components/AddEditDeleteRole';
+import store from '../../store/store';
+import { fetchAllClientsAsync } from '../../slices/clientsSlice';
+import { fetchAllProductsAsync } from '../../slices/productsSlice';
+import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
+import { fetchAllRolesAsync } from '../../slices/rolesSlice';
 
-export function MastersTable({ type }: any) {
+export function MastersTable({ type, defaultFilters, setDefaultFilters }: any) {
   const { allBranchs } = useSelector((state: any) => state.branchs);
   const { allClients, loading } = useSelector((state: any) => state.clients);
   const { allProducts } = useSelector((state: any) => state.products);
   const { allRoles } = useSelector((state: any) => state.roles);
   const [data, setData] = useState<any>([]);
+  const [meta, setMeta] = useState<any>({});
   const [headers, setHeaders] = useState<any>([]);
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -45,26 +51,45 @@ export function MastersTable({ type }: any) {
 
   useEffect(() => {
     if (type === 'client') {
+      setMeta(allClients?.meta);
       setData(allClients?.data);
       setHeaders(CLIENT_TABLE_HEAD);
     } else if (type === 'product') {
+      setMeta(allProducts?.meta);
       setData(allProducts?.products);
       setHeaders(PRODUCT_TABLE_HEAD);
     } else if (type === 'branch') {
+      setMeta(allBranchs?.meta);
       setData(allBranchs?.branches);
       setHeaders(BRAND_TABLE_HEAD);
     } else if (type === 'role') {
+      setMeta(allRoles?.meta);
       setData(allRoles?.roles);
       setHeaders(ROLE_TABLE_HEAD);
     }
   }, [allClients, allBranchs, allProducts, allRoles]);
 
+  useEffect(() => {
+    if (type === 'client') {
+      store.dispatch(fetchAllClientsAsync({ ...defaultFilters }));
+    } else if (type === 'product') {
+      store.dispatch(fetchAllProductsAsync({ ...defaultFilters }));
+    } else if (type === 'branch') {
+      store.dispatch(fetchAllBranchsAsync({ ...defaultFilters }));
+    } else if (type === 'role') {
+      store.dispatch(fetchAllRolesAsync({ ...defaultFilters }));
+    }
+  }, [defaultFilters]);
+
   return (
     <>
       <ATable
+        meta={meta}
         data={data}
         loading={loading}
         tableHeader={headers}
+        defaultFilters={defaultFilters}
+        setDefaultFilters={setDefaultFilters}
         tableBody={
           <MastersBody
             type={type}

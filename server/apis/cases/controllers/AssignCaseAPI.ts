@@ -22,7 +22,7 @@ export default class AssignCaseAPI {
 
     public assign = async (req: Request, res: Response) => {
         try {
-            const { caseId, assigneeId, reviewerId } = req.body;
+            const { caseId, assigneeId, reviewerId, status } = req.body;
 
             const assignee = await UserRepository.repo.get(assigneeId);
             const reviewer = await UserRepository.repo.get(reviewerId);
@@ -31,6 +31,7 @@ export default class AssignCaseAPI {
             }
             let updatedCase = await this.repo.assignCase(caseId, assigneeId, "user");
             updatedCase = await this.repo.assignCase(caseId, reviewerId, "reviewer"); 
+            updatedCase = await this.repo.assignCase(caseId, status, 'status'); 
             const loginLink = `${CONFIG.CLIENT_URL}/dashboard`;
             const subject = `You have been assigned a case`;
             const assigneeBody = this.template.replace("{{name}}", assignee.fullName || "User").replace("{{link}}", loginLink);

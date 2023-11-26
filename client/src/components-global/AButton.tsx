@@ -14,14 +14,18 @@ const AButton = ({
       className={`flex justify-center items-center gap-1 rounded-lg font-medium capitalize
           ${
             variant === 'small' &&
-            'py-1 px-2 border border-main text-main hover:bg-grey'
+            `py-1 px-2 border ${
+              disabled
+                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                : 'border-main text-main cursor-pointer'
+            }`
           }
           ${
             variant === 'primary' &&
-            `py-2 px-4 border border-main ${
+            `py-2 px-4 border ${
               disabled
-                ? 'bg-grey text-main cursor-not-allowed'
-                : 'bg-main text-grey cursor-pointer'
+                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                : 'bg-main border-main text-white cursor-pointer'
             }`
           }
           ${variant === 'link' && 'text-main py-2 px-4 text-grey'}
@@ -31,7 +35,11 @@ const AButton = ({
           }
           ${
             variant === 'secondary' &&
-            'py-2 px-4 border border-main text-main hover:bg-grey'
+            `py-2 px-4 border ${
+              disabled
+                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                : 'border-main text-main cursor-pointer'
+            }`
           }`}
     >
       {icon}

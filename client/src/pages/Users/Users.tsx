@@ -36,6 +36,10 @@ const Users = () => {
   const [showAddEditUser, setShowAddEditUser] = useState(false);
   const [roleOptions, setRoleOptions] = useState<any>([]);
   const [activeItem, setActiveItem] = useState<any>(null);
+  const [defaultFilters, setDefaultFilters] = useState<any>({
+    page: 1,
+    limit: 10,
+  });
 
   const initialValues = {
     fullName: '',
@@ -69,15 +73,13 @@ const Users = () => {
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    let addUserPromise = activeItem?._id
-      ? updateUser(values)
-      : addUser(values);
+    let addUserPromise = activeItem?._id ? updateUser(values) : addUser(values);
     addUserPromise
       .then((res: any) => {
         console.log(res.data);
         closeUserModal();
         formik.resetForm();
-        store.dispatch(fetchAllUsersAsync(''));
+        setDefaultFilters({ ...{ page: 1, limit: 10 } });
         toast.success(<b>User added sucessfully.</b>);
       })
       .catch((e) => {
@@ -120,7 +122,7 @@ const Users = () => {
       .then((res: any) => {
         console.log(res?.data);
         closeDeleteUserModal(null);
-        store.dispatch(fetchAllUsersAsync(''));
+        setDefaultFilters({ ...{ page: 1, limit: 10 } });
         toast.success(<b>User Deleted successfully.</b>);
       })
       .catch((e) => {
@@ -133,12 +135,6 @@ const Users = () => {
       setRoleOptions(getOptions(allRoles?.roles, 'name', '_id'));
     }
   }, [allRoles]);
-
-  useEffect(() => {
-    store.dispatch(fetchAllUsersAsync(''));
-    store.dispatch(fetchAllRolesAsync(''));
-    store.dispatch(fetchAllBranchsAsync(''));
-  }, []);
 
   useEffect(() => {
     if (activeItem) {
@@ -155,13 +151,27 @@ const Users = () => {
     }
   }, [activeItem]);
 
+  useEffect(() => {
+    store.dispatch(fetchAllUsersAsync({ ...defaultFilters }));
+  }, [defaultFilters]);
+
+  useEffect(() => {
+    store.dispatch(fetchAllUsersAsync({ ...defaultFilters }));
+    store.dispatch(fetchAllRolesAsync({ page: 1, limit: 200 }));
+    store.dispatch(fetchAllBranchsAsync({ page: 1, limit: 200 }));
+  }, []);
+
   return (
     <>
       <ABreadcrumb pageName="Users" />
       <div className="flex flex-col gap-10">
         <ATable
           loading={loading}
+          meta={allUsers?.meta}
           data={allUsers?.users}
+          tableHeader={USER_TABLE_HEAD}
+          defaultFilters={defaultFilters}
+          setDefaultFilters={setDefaultFilters}
           header={
             <UsersHeader
               openUserModal={() => {
@@ -176,7 +186,6 @@ const Users = () => {
               openUserAddEditModal={openUserAddEditModal}
             />
           }
-          tableHeader={USER_TABLE_HEAD}
         />
       </div>
       {showAddEditUser && (

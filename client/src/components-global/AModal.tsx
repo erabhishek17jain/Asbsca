@@ -17,7 +17,7 @@ export const AModal = ({
       >
         <div className="w-full max-w-lg">
           <div className="bg-white px-5 rounded-lg shadow relative h-full">
-            <div className="flex justify-between items-center border-b-2 border-grey py-3">
+            <div className="flex justify-between items-center border-b-2 border-stroke py-3">
               <h3 className="text-xl font-medium text-graydark">{title}</h3>
               <AButton
                 label={''}
@@ -29,7 +29,7 @@ export const AModal = ({
             <div className="my-3 overflow-y-auto h-full max-h-[480px]">
               {children}
             </div>
-            <div className="flex justify-end gap-3 border-t-2 border-grey py-3">
+            <div className="flex justify-end gap-3 border-t-2 border-stroke py-3">
               <AButton
                 label={'Cancel'}
                 variant={'secondary'}
@@ -41,7 +41,13 @@ export const AModal = ({
                 type={'submit'}
                 variant={'primary'}
                 action={onSave}
-                icon={saveText === 'Add' ? <PlusIcon className="h-5 w-5 stroke-white stroke-1" /> : <ArrowTopRightOnSquareIcon className="h-5 w-5" />}
+                icon={
+                  saveText === 'Add' ? (
+                    <PlusIcon className="h-5 w-5 stroke-white stroke-1" />
+                  ) : (
+                    <ArrowTopRightOnSquareIcon className="h-5 w-5" />
+                  )
+                }
               />
             </div>
           </div>

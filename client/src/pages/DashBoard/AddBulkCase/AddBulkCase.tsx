@@ -73,8 +73,8 @@ const AddBulkCase = () => {
   }, [addCaseData]);
 
   useEffect(() => {
-    store.dispatch(fetchAllClientsAsync(''));
-    store.dispatch(fetchAllBranchsAsync(''));
+    store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));
+    store.dispatch(fetchAllBranchsAsync({ page: 1, limit: 200 }));
   }, []);
 
   return (

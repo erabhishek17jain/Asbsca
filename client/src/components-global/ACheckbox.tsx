@@ -28,7 +28,7 @@ const ACheckbox = ({
             />
             <div
               className={`mr-4 flex h-5 w-5 items-center justify-center rounded border ${
-                checked && 'border-primary bg-gray'
+                checked && 'border-primary bg-grey'
               }`}
             >
               <span className={`opacity-0 ${checked && '!opacity-100'}`}>

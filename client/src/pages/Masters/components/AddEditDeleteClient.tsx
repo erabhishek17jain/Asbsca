@@ -61,7 +61,7 @@ export function AddEditDeleteClient({
         if (res) {
           closeAddEditModal();
           formikClient.resetForm();
-          store.dispatch(fetchAllClientsAsync(''));
+          store.dispatch(fetchAllClientsAsync({ page: 1, limit: 10 }));
           toast.success(
             <b>Client {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>,
           );
@@ -87,7 +87,7 @@ export function AddEditDeleteClient({
       .then((res: any) => {
         if (res) {
           closeDeleteModal();
-          store.dispatch(fetchAllClientsAsync(''));
+          store.dispatch(fetchAllClientsAsync({ page: 1, limit: 10 }));
           toast.success(<b>Client deleted successfully.</b>);
         }
       })

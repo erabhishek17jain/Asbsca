@@ -55,6 +55,34 @@ const Cases = () => {
     setActiveItem({ ...item });
   };
 
+  const updateAssigneeReviewer = (values: any) => {
+    let assignCasePromise = assignCase(values);
+    assignCasePromise
+      .then(() => {
+        formikAssigned.resetForm();
+        closeAssignCaseModal();
+        store.dispatch(fetchCasesAsync({ ...defaultFilters }));
+        toast.success(<b>Case assigned sucessfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
+      });
+  };
+
+  const updateCaseStatus = (id: string, values: any) => {
+    let updateStatusPromise = statusUpdateCase(id, values);
+    updateStatusPromise
+      .then(() => {
+        formikStatus.resetForm();
+        closeUpdateStatusModal();
+        store.dispatch(fetchCasesAsync(''));
+        toast.success(<b>Case status sucessfully.</b>);
+      })
+      .catch((e) => {
+        toast.error(<b>{e?.error?.response?.data?.message}</b>);
+      });
+  };
+
   const initialValuesAssigned = {
     caseId: '',
     status: '',
@@ -70,17 +98,7 @@ const Cases = () => {
 
   const onSubmitAssigned = async (values: any) => {
     values = await Object.assign(values);
-    let assignCasePromise = assignCase(values);
-    assignCasePromise
-      .then(() => {
-        formikAssigned.resetForm();
-        closeAssignCaseModal();
-        store.dispatch(fetchCasesAsync(''));
-        toast.success(<b>Case assigned sucessfully.</b>);
-      })
-      .catch((e) => {
-        toast.error(<b>{e?.error?.response?.data?.message}</b>);
-      });
+    updateAssigneeReviewer(values);
   };
 
   const formikAssigned = useFormik({
@@ -91,49 +109,21 @@ const Cases = () => {
     onSubmit: onSubmitAssigned,
   });
 
-  const closeAssignCaseModal = () => {
-    setShowAssignCase(false);
-  };
-
-  const assignReviewCase = () => {
-    setShowAssignCase(true);
-    formikAssigned.setFieldValue('caseId', activeItem?._id);
-    formikAssigned.setFieldValue('status', 'assigned');
-  };
-
-  useEffect(() => {
-    if (activeItem) {
-      formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
-      formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
-    }
-  }, [activeItem]);
-
   const initialValuesStatus = {
-    caseId: '',
+    remark: '',
     status: '',
     appoinmentStatus: '',
   };
 
   const validationSchemaStatus = Yup.object().shape({
+    remark: Yup.string().required('This field is required'),
     status: Yup.string().required('This field is required'),
     appoinmentStatus: Yup.string().required('This field is required'),
   });
 
   const onSubmitStatus = async (values: any) => {
-    const id = values?.caseId;
-    delete values?.caseId;
     values = await Object.assign(values);
-    let updateStatusPromise = statusUpdateCase(id, values);
-    updateStatusPromise
-      .then(() => {
-        formikStatus.resetForm();
-        closeUpdateStatusModal();
-        store.dispatch(fetchCasesAsync(''));
-        toast.success(<b>Case status sucessfully.</b>);
-      })
-      .catch((e) => {
-        toast.error(<b>{e?.error?.response?.data?.message}</b>);
-      });
+    updateCaseStatus(activeItem?._id, values);
   };
 
   const formikStatus = useFormik({
@@ -144,24 +134,59 @@ const Cases = () => {
     onSubmit: onSubmitStatus,
   });
 
+  const closeAssignCaseModal = () => {
+    setShowAssignCase(false);
+  };
+
   const closeUpdateStatusModal = () => {
     setShowStatusCase(false);
   };
 
-  const updateStatusCase = () => {
-    setShowStatusCase(true);
-    formikStatus.setFieldValue('caseId', activeItem?._id);
+  const assignReviewCase = () => {
+    setShowAssignCase(true);
+    formikAssigned.setFieldValue('caseId', activeItem?._id);
+    formikAssigned.setFieldValue('status', 'assigned');
   };
 
-  useEffect(() => {
-    if (activeItem) {
-      formikStatus.setFieldValue('status', activeItem?.status);
-      formikStatus.setFieldValue(
-        'appoinmentStatus',
-        activeItem?.appoinmentStatus,
-      );
-    }
-  }, [activeItem]);
+  const updateStatusCase = () => {
+    setShowStatusCase(true);
+  };
+
+  const startPD = () => {
+    const values = { appoinmentStatus: 'visited' };
+    updateCaseStatus(activeItem?._id, values);
+    navigate('/generatePD', { state: { activeItem: activeItem } });
+  };
+
+  const sentToReviewCase = () => {
+    const values = {
+      status: 'review',
+      caseId: activeItem?._id,
+      assigneeId: activeItem?.assignTo?._id,
+      reviewerId: activeItem?.reviewer?._id,
+    };
+    updateAssigneeReviewer(values);
+  };
+
+  const revertToAssignee = () => {
+    const values = {
+      status: 'assigned',
+      caseId: activeItem?._id,
+      assigneeId: activeItem?.assignTo?._id,
+      reviewerId: activeItem?.reviewer?._id,
+    };
+    updateAssigneeReviewer(values);
+  };
+
+  const caseCompleted = () => {
+    const values = { status: 'completed', appoinmentStatus: 'visited' };
+    updateCaseStatus(activeItem?._id, values);
+  };
+
+  const caseSentToBank = () => {
+    const values = { status: 'sentToBank', appoinmentStatus: 'visited' };
+    updateCaseStatus(activeItem?._id, values);
+  };
 
   const openDeleteModal = () => {
     setShowDeleteModal(true);
@@ -189,8 +214,20 @@ const Cases = () => {
   };
 
   useEffect(() => {
+    if (activeItem) {
+      formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
+      formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
+      formikStatus.setFieldValue('status', activeItem?.status);
+      formikStatus.setFieldValue(
+        'appoinmentStatus',
+        activeItem?.appoinmentStatus,
+      );
+    }
+  }, [activeItem]);
+
+  useEffect(() => {
     if (userDetails?.role?.name === 'Admin')
-      store.dispatch(fetchAllUsersAsync(''));
+      store.dispatch(fetchAllUsersAsync({ page: 1, limit: 200 }));
     store.dispatch(
       fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
     );
@@ -240,8 +277,7 @@ const Cases = () => {
     assigned: [
       {
         title: 'Start Report',
-        action: () =>
-          navigate('/generatePD', { state: { activeItem: activeItem } }),
+        action: startPD,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
@@ -251,24 +287,24 @@ const Cases = () => {
       },
       {
         title: 'Send To Review',
-        action: () => {},
+        action: sentToReviewCase,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
     ],
     review: [
       {
         title: 'Revert to Assignee',
-        action: () => {},
+        action: revertToAssignee,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
         title: 'Approve Case',
-        action: () => {},
+        action: caseCompleted,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
         title: 'Send To Bank',
-        action: () => {},
+        action: caseSentToBank,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
     ],

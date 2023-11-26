@@ -153,9 +153,9 @@ const AddCase = () => {
   }, [state]);
 
   useEffect(() => {
-    store.dispatch(fetchAllClientsAsync(''));
-    store.dispatch(fetchAllBranchsAsync(''));
-    store.dispatch(fetchAllUsersAsync(''));
+    store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));
+    store.dispatch(fetchAllBranchsAsync({ page: 1, limit: 200 }));
+    store.dispatch(fetchAllUsersAsync({ page: 1, limit: 200 }));
   }, []);
 
   return (

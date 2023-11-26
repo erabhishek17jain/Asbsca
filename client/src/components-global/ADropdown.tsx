@@ -54,13 +54,13 @@ const ADropdown = ({
         onBlur={() => setDropdownOpen(false)}
         className={`absolute ${
           position == 'left' ? '-bottom-[28px] right-7' : 'top-6 right-0'
-        } mt-3 z-10 flex flex-col w-56 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
+        } mt-3 z-10 flex flex-col w-56 bg-clip-border border border-stroke rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col gap-5 px-6 py-4">
+        <ul className="flex flex-col">
           {options?.map((item: any) => (
-            <li key={item.title}>
+            <li key={item.title} className="px-4 py-3 border-b border-stroke">
               <button
                 onClick={item?.action}
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"

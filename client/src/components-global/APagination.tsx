@@ -19,13 +19,13 @@ const APagination = ({ meta, defaultFilters, setDefaultFilters }: any) => {
           variant="small"
           label={'Previous'}
           action={previousPage}
-          disabled={meta?.page === 1}
+          disabled={meta?.page == 1}
         />
         <AButton
           label={'Next'}
           variant="small"
           action={nextPage}
-          disabled={Math.floor(meta?.page) + 1 === 1}
+          disabled={Math.floor(meta?.count / meta?.page) < 10}
         />
       </div>
     </>

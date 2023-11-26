@@ -144,11 +144,14 @@ export default class CaseRepository {
     public assignCase = async (id: string, assignTo: string, userType: string): Promise<ICases | null> => {
         let updateParams: { [key: string]: any; } = {};
         switch (userType) {
-            case "reviewer":
-                updateParams = {reviewer: new Types.ObjectId(assignTo)};
+            case 'reviewer':
+                updateParams = { reviewer: new Types.ObjectId(assignTo) };
                 break;
-            case "user":
-                updateParams = {assignTo: new Types.ObjectId(assignTo)};
+            case 'user':
+                updateParams = { assignTo: new Types.ObjectId(assignTo) };
+                break;
+            case 'status':
+                updateParams = { status: assignTo };
                 break;
             default:
                 return null;

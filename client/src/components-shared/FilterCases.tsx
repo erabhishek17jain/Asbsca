@@ -104,9 +104,9 @@ export const FilterCases = ({
   }, [allUsers]);
 
   useEffect(() => {
-    store.dispatch(fetchAllClientsAsync(''));
+    store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));
     if (userDetails?.role?.name === 'Admin')
-      store.dispatch(fetchAllUsersAsync(''));
+      store.dispatch(fetchAllUsersAsync({ page: 1, limit: 200 }));
   }, []);
 
   return (

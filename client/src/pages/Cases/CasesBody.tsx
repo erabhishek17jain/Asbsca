@@ -21,7 +21,7 @@ const CasesBody = ({
   const navigate = useNavigate();
   return allcases?.map((item: any, index: number) => {
     const isLast = index === allcases.length - 1;
-    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
+    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
     const caseStatus: any = caseStatusList.find(
       (el: any) => el.value === item?.status,
     );
