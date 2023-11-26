@@ -181,7 +181,7 @@ const ClientsDebtors = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={() => formik.handleSubmit()}
       />
     </>
   );

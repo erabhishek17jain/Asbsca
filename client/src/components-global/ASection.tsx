@@ -12,7 +12,7 @@ export const SectionFooter = ({ footers }: any) => {
 
 const ASection = ({ title, children, footers }: any) => {
   return (
-    <div className="border-2 rounded-lg mb-4">
+    <div className="border-2 rounded-lg mb-4 border-stroke">
       {title && <p className="w-full pt-3 px-4">{title}</p>}
       {children && <div className="flex flex-col gap-3 py-3 px-4">{children}</div>}
       {footers && <SectionFooter footers={footers} />}

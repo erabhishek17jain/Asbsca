@@ -22,7 +22,7 @@ module.exports = withMT({
         primary: '#3C50E0',
         stroke: '#E2E8F0',
         grey: '#EFF4FB',
-        gray: '#808080',
+        lightgrey: '#808080',
         graydark: '#333A48',
         whiter: '#F5F7FD',
         meta1: '#DC3545',

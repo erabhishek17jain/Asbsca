@@ -15,7 +15,11 @@ import {
   citiesOfRepresentation,
   generation,
   familyRealtion,
+  designations,
+  designation,
 } from '../constants';
+import { useEffect, useState } from 'react';
+import { getOptions } from '../../../utils';
 
 const shareHolderFooters = [
   {
@@ -37,6 +41,8 @@ const BusinessDetails = ({
   handleNext,
   setPayloads,
 }: any) => {
+  const [applicants, setApplicants] = useState<any>([]);
+
   const initialValues = {
     bussinessName: '',
     typeOfEntity: '',
@@ -49,14 +55,16 @@ const BusinessDetails = ({
     ownershipOfAddressVisited: '',
     pdConductWith: '',
     designation: '',
-    mobile: 0,
+    mobile: '',
     familyBusiness: '',
     mainUseproducts: '',
     howTurnoverVerified: '',
     citiesOfReppresentation: '',
     competitorsOfBusiness: '',
-    noOfVisit: '',
-    doYouHavefixedEmployee: false,
+    noOfVisit: 1,
+    doYouHavefixedEmployee: '',
+    empSpecified: 0,
+    empSeen: 0,
     shareHoldings: [
       {
         ownerName: '',
@@ -65,13 +73,36 @@ const BusinessDetails = ({
     ],
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    resiAddress: Yup.string().required('This field is required'),
+    bussinessName: Yup.string().required('This field is required'),
+    typeOfEntity: Yup.string().required('This field is required'),
+    yearOfIncorporation: Yup.string().required('This field is required'),
+    generation: Yup.string().required('This field is required'),
+    gstNumber: Yup.string().required('This field is required'),
+    regOfficeAddress: Yup.string().required('This field is required'),
+    visitedAddress: Yup.string().required('This field is required'),
+    vicinity: Yup.string().required('This field is required'),
+    ownershipOfAddressVisited: Yup.string().required('This field is required'),
+    pdConductWith: Yup.string().required('This field is required'),
+    designation: Yup.string().required('This field is required'),
+    mobile: Yup.number().required('This field is required'),
+    familyBusiness: Yup.string().required('This field is required'),
+    mainUseproducts: Yup.string().required('This field is required'),
+    howTurnoverVerified: Yup.string().required('This field is required'),
+    citiesOfReppresentation: Yup.string().required('This field is required'),
+    competitorsOfBusiness: Yup.string().required('This field is required'),
+    noOfVisit: Yup.number().required('This field is required'),
+    doYouHavefixedEmployee: Yup.string().required('This field is required'),
+    empSpecified: Yup.number().required('This field is required'),
+    empSeen: Yup.number().required('This field is required'),
+    shareHoldings: Yup.array().of(
+      Yup.object().shape({
+        ownerName: Yup.string().required('This field is required'),
+        shareHolding: Yup.string().required('This field is required'),
+      }),
+    ),
+  });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -81,12 +112,26 @@ const BusinessDetails = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    setApplicants(
+      getOptions(payloads?.personalDetails?.applicants, 'name', 'name'),
+    );
+  }, []);
+
+  const handleTypeOfEntity = (e: any) => {
+    const { value } = e.target;
+    const design = designation.find((item: any) => item.value === value);
+    formik.setFieldValue('designation', design?.label.toLowerCase()); // to do calculate emi
+    formik.handleChange(e);
+  };
+
+  const errors: any = formik?.errors?.shareHoldings;
 
   return (
     <>
@@ -107,7 +152,7 @@ const BusinessDetails = ({
                 options={typesOfEntity}
                 value={formik.values.typeOfEntity}
                 error={formik.errors.typeOfEntity}
-                handleChange={formik.handleChange}
+                handleChange={handleTypeOfEntity}
               />
               <AInputField
                 name={'yearOfIncorporation'}
@@ -165,7 +210,7 @@ const BusinessDetails = ({
               <ASingleSelect
                 name={'pdConductWith'}
                 label={'PD Conducted With'}
-                options={[]}
+                options={applicants}
                 value={formik.values.pdConductWith}
                 error={formik.errors.pdConductWith}
                 handleChange={formik.handleChange}
@@ -173,7 +218,7 @@ const BusinessDetails = ({
               <ASingleSelect
                 name={'designation'}
                 label={'Designation'}
-                options={[]}
+                options={designations}
                 value={formik.values.designation}
                 error={formik.errors.designation}
                 handleChange={formik.handleChange}
@@ -239,6 +284,24 @@ const BusinessDetails = ({
                 error={formik.errors.doYouHavefixedEmployee}
                 handleChange={formik.handleChange}
               />
+              <div className="flex gap-3">
+                <AInputField
+                  type={'number'}
+                  name={'empSpecified'}
+                  label={'Emp. Specified'}
+                  value={formik.values.empSpecified}
+                  error={formik.errors.empSpecified}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  type={'number'}
+                  name={'empSeen'}
+                  label={'Emp. Seen'}
+                  value={formik.values.empSeen}
+                  error={formik.errors.empSeen}
+                  handleChange={formik.handleChange}
+                />
+              </div>
             </AGroupFields>
           </ASection>
           <ASection
@@ -269,8 +332,8 @@ const BusinessDetails = ({
                                         .ownerName
                                     }
                                     error={
-                                      formik?.values?.shareHoldings[index]
-                                        .ownerName
+                                      errors?.length > 0 &&
+                                      errors[index].ownerName
                                     }
                                     handleChange={formik.handleChange}
                                   />
@@ -282,8 +345,8 @@ const BusinessDetails = ({
                                         .shareHolding
                                     }
                                     error={
-                                      formik?.values?.shareHoldings[index]
-                                        .shareHolding
+                                      errors?.length > 0 &&
+                                      errors[index].ownerName
                                     }
                                     handleChange={formik.handleChange}
                                   />
@@ -314,7 +377,7 @@ const BusinessDetails = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={() => formik.handleSubmit()}
       />
     </>
   );

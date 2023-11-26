@@ -6,10 +6,13 @@ import { loanTypes, loans } from '../constants';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { AStepperPagination } from '../../../components-global/AStepper';
+import { fetchAllClientsAsync } from '../../../slices/clientsSlice';
+import store from '../../../store/store';
 
 const LoanDetails = ({
   steps,
   payloads,
+  activeItem,
   activeStep,
   handlePrev,
   handleNext,
@@ -56,6 +59,12 @@ const LoanDetails = ({
       setClientOptions(getOptions(allClients?.data, 'name', '_id'));
     }
   }, [allClients]);
+
+  useEffect(() => {
+    formik.setFieldValue('bankName', activeItem?.bankName?._id);
+    store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));
+  }, []);
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -66,12 +75,12 @@ const LoanDetails = ({
             options={clientOptions}
             variant={'horizantal'}
             value={formik.values.bankName}
-            error={formik.errors.bankName}
+            error={formik.values.bankName !== '' ? formik.errors.bankName : ''}
             handleChange={formik.handleChange}
           />
           <ASingleSelect
             id={'loan'}
-            label={'Loan'}
+            label={'Loan*'}
             options={loans}
             variant={'horizantal'}
             value={formik.values.loan}
@@ -80,7 +89,7 @@ const LoanDetails = ({
           />
           <ASingleSelect
             id={'loanType'}
-            label={'Loan Type'}
+            label={'Loan Type*'}
             options={loanTypes}
             variant={'horizantal'}
             value={formik.values.loanType}

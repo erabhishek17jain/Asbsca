@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import { AStepper } from '../../components-global/AStepper';
 import { reportSteps } from './constants';
@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 const GeneratePD = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location?.state;
   const [payloads, setPayloads] = useState({
     loanDetails: { loan: '', loanType: '', bankName: '' },
     personalDetails: {
@@ -472,6 +474,7 @@ const GeneratePD = () => {
           payloads={payloads}
           setPayloads={setPayloads}
           generateReport={generateReport}
+          activeItem={state?.activeItem}
         />
       </div>
     </>

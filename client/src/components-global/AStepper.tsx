@@ -56,10 +56,11 @@ export const AStepperPagination = ({
 export function AStepper({
   steps,
   payloads,
+  activeItem,
   setPayloads,
   generateReport,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(5);
 
   const handleNext = () =>
     activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
@@ -91,6 +92,7 @@ export function AStepper({
             <LoanDetails
               steps={steps}
               payloads={payloads}
+              activeItem={activeItem}
               activeStep={activeStep}
               handlePrev={handlePrev}
               handleNext={handleNext}

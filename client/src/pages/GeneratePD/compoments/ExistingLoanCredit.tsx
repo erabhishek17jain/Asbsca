@@ -100,7 +100,7 @@ const ExistingLoan = ({ formik }: any) => {
                                   })
                                 }
                               />
-                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
                                 <AGroupFields>
                                   <ASingleSelect
                                     id={`existanceLoan.balanceTransfer[${index}].typeOfLoan`}
@@ -248,7 +248,7 @@ const ExistingLoan = ({ formik }: any) => {
                                   })
                                 }
                               />
-                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
                                 <AGroupFields>
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].typeOfLoan`}
@@ -407,7 +407,7 @@ const ExistingLoan = ({ formik }: any) => {
                                   })
                                 }
                               />
-                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
                                 <AGroupFields>
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanEMI[${index}].typeOfLoan`}
@@ -575,7 +575,7 @@ const CreditFacility = ({ formik }: any) => {
                                 })
                               }
                             />
-                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
                               <AGroupFields>
                                 <ASingleSelect
                                   id={`creditFacility.creditDetails[${index}].typeOfFacility`}
@@ -742,7 +742,7 @@ const OtherCommitments = ({ formik }: any) => {
                                 })
                               }
                             />
-                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
                               <AGroupFields>
                                 <ASingleSelect
                                   id={`otherCommitments.commitmentsDetails[${index}].particulars`}
@@ -903,7 +903,7 @@ const ExistingLoanCredit = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={() => formik.handleSubmit()}
       />
     </>
   );

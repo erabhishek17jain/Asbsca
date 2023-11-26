@@ -23,8 +23,6 @@ export const yesNoOptions = [
 ];
 
 export const putPB = [
-  { value: 'p', label: 'p' },
-  { value: 'b', label: 'b' },
   { value: 'P', label: 'P' },
   { value: 'B', label: 'B' },
 ];
@@ -85,24 +83,30 @@ export const natureOfAddress = [
 ];
 
 export const residenceStatus = [
-  { label: 'Owned by Applicant', value: 'ownedByApplicant' },
-  { label: 'Owned by Co-Applicant', value: 'ownedByCoApplicant' },
+  { label: 'Owned by Applicant', value: 'ownedByApplicantp' },
+  { label: 'Owned by Co-Applicant', value: 'ownedByCoApplicantp' },
   {
     label: 'Jointly Owned by Applicant & Co-Applicants',
-    value: 'jointlyOwnedByApplicant&CoApplicant',
+    value: 'jointlyOwnedByApplicant&CoApplicantp',
   },
-  { label: 'Self-Owned (Parental)', value: 'selfOwnedParental' },
-  { label: 'Self-Constructed', value: 'selfConstructed' },
-  { label: 'Rental', value: 'rental' },
-  { label: 'Owned by Company', value: 'OwnedByCompany' },
-  { label: 'Owned by Firm', value: 'ownedByFirm' },
-  { label: 'Owned by Family Memeber', value: 'ownedByFamilyMember' },
-  { label: 'Owned by Brother', value: 'ownedByBrother' },
-  { label: 'Owned by Father', value: 'ownedByFather' },
-  { label: 'Owned by Spouse', value: 'ownedBySpouse' },
-  { label: 'Owned by Grand Parent', value: 'ownedByGrandFather' },
-  { label: 'Owned by Mother', value: 'ownedByMother' },
-  { label: 'Owned by Under Pagadi System', value: 'ownedByPagadiSystem' },
+  { label: 'Self-Owned (Parental)', value: 'selfOwnedParentalp' },
+  { label: 'Self-Constructed', value: 'selfConstructedp' },
+  { label: 'Rental', value: 'rentaln' },
+  { label: 'Owned by Company', value: 'OwnedByCompanyb' },
+  { label: 'Owned by Firm', value: 'ownedByFirmb' },
+  { label: 'Owned by Family Memeber', value: 'ownedByFamilyMembern' },
+  { label: 'Owned by Brother', value: 'ownedByBrothern' },
+  { label: 'Owned by Father', value: 'ownedByFathern' },
+  { label: 'Owned by Spouse', value: 'ownedBySpousen' },
+  { label: 'Owned by Grand Parent', value: 'ownedByGrandFathern' },
+  { label: 'Owned by Mother', value: 'ownedByMothern' },
+  { label: 'Owned by Under Pagadi System', value: 'ownedByPagadiSystempn' },
+];
+
+export const residanceType = [
+  { label: 'P', value: 'p' },
+  { label: 'B', value: 'b' },
+  { label: 'N', value: 'n' },
 ];
 
 export const familyRealtion = [
@@ -133,7 +137,6 @@ export const propertyLoanOptions = [
   },
   { value: 'bothNotProvided', label: 'Both Not Provided' },
 ];
-
 
 export const typesOfLoan = [
   { label: 'Home Loan', value: 'homeLoan' },
@@ -253,6 +256,11 @@ export const occupiedBy = [
   { label: 'Under Construction', value: 'underConstruction' },
   { label: 'NP', value: 'np' },
   { label: 'Given to Relative', value: 'givenToRelative' },
+  { label: 'Property not yet Finalised', value: 'properyNotYetFinalised' },
+  {
+    label: 'Property Details not provided',
+    value: 'propertyDetailsNotProvided',
+  },
 ];
 
 export const sourceOcr = [
@@ -293,6 +301,26 @@ export const generation = [
   { label: 'Second Generation', value: 'secondGeneration' },
   { label: 'Third Generation', value: 'thirdGeneration' },
   { label: 'Fourth Generation', value: 'fourthGeneration' },
+];
+
+export const designations = [
+  { label: 'Proprietor', value: 'proprietor' },
+  { label: 'Partner', value: 'partner' },
+  { label: 'director', value: 'director' },
+  { label: 'Professional', value: 'professional' },
+  { label: 'Individual', value: 'individual' },
+  { label: 'Salaried', value: 'salaried' },
+];
+
+export const designation = [
+  { label: 'Proprietor', value: 'proprietorship' },
+  { label: 'Partner', value: 'partnership' },
+  { label: 'Partner', value: 'partnershipLLP' },
+  { label: 'Director', value: 'privateLimitedCompany' },
+  { label: 'Director', value: 'publiclimitedCompany' },
+  { label: 'Professinal', value: 'professinal' },
+  { label: 'Individual', value: 'individual' },
+  { label: 'Salaried', value: 'salaried' },
 ];
 
 export const vicinity = [

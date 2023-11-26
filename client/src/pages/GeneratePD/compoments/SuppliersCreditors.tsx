@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 
 const Section = ({ title, children }: any) => {
   return (
-    <div className="border-2 rounded-lg mb-4">
+    <div className="border-2 rounded-lg mb-4 border-stroke">
       <p className="w-full pt-3 px-4">{title}</p>
       {children && <div className="pt-3 px-4">{children}</div>}
     </div>
@@ -137,7 +137,7 @@ const SuppliersCreditors = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={() => formik.handleSubmit()}
       />
     </>
   );

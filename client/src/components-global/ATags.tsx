@@ -20,7 +20,7 @@ export const AddTagButton = ({ title, addTag }: any) => {
 
 export const AddTagHeader = ({ title, addTag, removeTag }: any) => {
   return (
-    <div className="flex justify-between items-center w-full rounded-t-lg border-[1.5px] bg-grey py-2.5 px-3">
+    <div className="flex justify-between items-center w-full rounded-t-lg border-[1.5px] border-stroke bg-grey py-2.5 px-3">
       <div className="flex gap-2 items-center">{title}</div>
       <div className="flex">
         <MinusCircleIcon className="h-6 w-6" onClick={removeTag} />

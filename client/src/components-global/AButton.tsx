@@ -16,7 +16,7 @@ const AButton = ({
             variant === 'small' &&
             `py-1 px-2 border ${
               disabled
-                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                ? 'bg-grey border-lightgrey text-lightgrey cursor-not-allowed'
                 : 'border-main text-main cursor-pointer'
             }`
           }
@@ -24,7 +24,7 @@ const AButton = ({
             variant === 'primary' &&
             `py-2 px-4 border ${
               disabled
-                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                ? 'bg-grey border-lightgrey text-lightgrey cursor-not-allowed'
                 : 'bg-main border-main text-white cursor-pointer'
             }`
           }
@@ -37,7 +37,7 @@ const AButton = ({
             variant === 'secondary' &&
             `py-2 px-4 border ${
               disabled
-                ? 'bg-grey border-gray text-gray cursor-not-allowed'
+                ? 'bg-grey border-lightgrey text-lightgrey cursor-not-allowed'
                 : 'border-main text-main cursor-pointer'
             }`
           }`}
