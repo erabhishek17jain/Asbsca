@@ -31,10 +31,10 @@ const ClientsDebtors = ({
   const [isDebtors, setIsDebtors] = useState('');
   const [clientsDetails, setClientsDetails] = useState([{ ...clientsInfo }]);
 
-  const handleClients = (val: string) => {
+  const handleClients = (title: string, val: string) => {
     setIsClients(val);
   };
-  const handleDebtors = (val: string) => {
+  const handleDebtors = (title: string, val: string) => {
     setIsDebtors(val);
   };
 
@@ -95,7 +95,7 @@ const ClientsDebtors = ({
             isReset={true}
             value={isClients}
             title={'Clients'}
-            handleChecked={handleClients}
+            handleChange={handleClients}
             radioValues={[]}
           />
           {isClients == '' && (
@@ -132,7 +132,7 @@ const ClientsDebtors = ({
             isReset={true}
             value={isDebtors}
             title={'Debtors'}
-            handleChecked={handleDebtors}
+            handleChange={handleDebtors}
             radioValues={[]}
           />
           <ASection>

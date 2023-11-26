@@ -4,14 +4,19 @@ import ASection from '../../../components-global/ASection';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import ASingleSelect from '../../../components-global/ASingleSelect';
+import { applicantDoing, employeeDoing, yesNoOptions } from '../constants';
 
 const observations = [
-  { title: 'Business Plate name seen' },
-  { title: 'Activtity Seen' },
-  { title: 'Customer Seen' },
-  { title: 'Stock seen' },
-  { title: 'Third Party Check' },
-  { title: 'Screenshot of CCTV of premises other than Visited' },
+  { title: 'Business Plate name seen', value: 'businessPlateName' },
+  { title: 'Activtity Seen', value: 'activity' },
+  { title: 'Customer Seen', value: 'customer' },
+  { title: 'Stock seen', value: 'stock' },
+  { title: 'Third Party Check', value: 'thirdPartyCheck' },
+  {
+    title: 'Screenshot of CCTV of premises other than Visited',
+    value: 'screenshotOfCCTVofPremises',
+  },
 ];
 
 const OtherObservation = ({
@@ -53,7 +58,7 @@ const OtherObservation = ({
       employeesDoing: '',
       otherObservation: '',
     },
-  };
+  } as any;
 
   const validationSchema = Yup.object().shape({});
 
@@ -83,39 +88,58 @@ const OtherObservation = ({
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
           <ASection>
-            {observations.map((item) => (
+            {observations.map((item: any) => (
               <AGroupFields col={2} title={item.title}>
-                <AInputField  name={'select'} label={'Select'} />
+                <ASingleSelect
+                  label={'Select'}
+                  options={yesNoOptions}
+                  id={`[${item.value}].exist`}
+                  value={formik.values[item.value].exist}
+                  error={formik.values[item.value].exist}
+                  handleChange={formik.handleChange}
+                />
                 <AInputField
-                  
-                  name={'reason'}
+                  id={`[${item.value}].reasonForNo`}
                   label={'Reason if No or NA'}
+                  value={formik.values[item.value].reasonForNo}
+                  error={formik.values[item.value].reasonForNo}
+                  handleChange={formik.handleChange}
                 />
               </AGroupFields>
             ))}
             <AGroupFields col={2}>
               <AInputField
-                
-                name={'behaviour'}
+                id={'behaviourOfApplicant'}
                 label={'Behaviour of applicant'}
+                value={formik.values.behaviourOfApplicant}
+                error={formik.errors.behaviourOfApplicant}
+                handleChange={formik.handleChange}
               />
             </AGroupFields>
             <p className="w-full mb-3">During Visit</p>
             <AGroupFields col={3}>
-              <AInputField
-                
-                name={'applicantDoing'}
+              <ASingleSelect
+                options={applicantDoing}
+                id={'duringVist.applicantDoing'}
                 label={'What applicant were doing?'}
+                value={formik.values.duringVist.applicantDoing}
+                error={formik.values.duringVist.applicantDoing}
+                handleChange={formik.handleChange}
               />
-              <AInputField
-                
-                name={'employeesDoing'}
+              <ASingleSelect
+                options={employeeDoing}
+                id={'duringVist.employeesDoing'}
                 label={'What employees were doing?'}
+                value={formik.values.duringVist.employeesDoing}
+                error={formik.values.duringVist.employeesDoing}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                
-                name={'other'}
+                id={'duringVist.otherObservation'}
                 label={'Other observation during visit?'}
+                value={formik.values.duringVist.otherObservation}
+                error={formik.values.duringVist.otherObservation}
+                handleChange={formik.handleChange}
               />
             </AGroupFields>
           </ASection>

@@ -6,7 +6,7 @@ const ARadioButtonGroup = ({
   value,
   width,
   radioValues,
-  handleChecked,
+  handleChange,
   isReset = false,
 }: any) => {
   return (
@@ -15,19 +15,19 @@ const ARadioButtonGroup = ({
       <div className="flex">
         {radioValues?.map((item: any) => (
           <ARadiobox
-            id={item.name + title}
-            key={item.name}
+            id={item.value + title}
+            key={item.value + title}
             label={item.label}
             variant={'horizantal'}
-            checked={value === item.name}
-            handleChecked={() => handleChecked(item.name)}
+            checked={value === item.value}
+            handleChange={() => handleChange(title, item.value)}
           />
         ))}
         {isReset && value !== '' && (
           <AButton
             label={'Reset'}
             variant="small"
-            action={() => handleChecked('')}
+            action={() => handleChange('')}
           />
         )}
       </div>

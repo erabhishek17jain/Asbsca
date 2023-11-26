@@ -6,6 +6,7 @@ import AGroupFields from '../../../components-global/AGroupFields';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { trendOfBusiness, futureProjection } from '../constants';
 
 const aprilTurnoverInfo = {
   id: 'trun1',
@@ -201,12 +202,12 @@ const TurnoverGrossReceipts = ({
             <ASingleSelect
               name={'comments'}
               label={'Comment on Trend of Business of past 2 years'}
-              options={[]}
+              options={trendOfBusiness}
             />
             <ASingleSelect
               name={'changes'}
               label={'Future Projection:'}
-              options={[]}
+              options={futureProjection}
             />
           </AGroupFields>
         </div>

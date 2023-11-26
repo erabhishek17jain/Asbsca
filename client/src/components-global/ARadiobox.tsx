@@ -2,9 +2,8 @@ const ARadiobox = ({
   id,
   title = '',
   label = '',
-  formik = {},
   checked = false,
-  handleChecked,
+  handleChange,
 }: any) => {
   return (
     <div className="flex gap-3 items-center">
@@ -19,11 +18,10 @@ const ARadiobox = ({
           <div className="relative">
             <input
               id={id}
-              {...formik}
               type="checkbox"
               checked={checked}
               className="sr-only"
-              onChange={handleChecked}
+              onChange={handleChange}
             />
             <div
               className={`box mr-4 flex h-5 w-5 items-center justify-center rounded-full border border-primary ${

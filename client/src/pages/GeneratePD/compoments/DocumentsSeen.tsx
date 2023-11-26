@@ -6,36 +6,69 @@ import { AModal } from '../../../components-global/AModal';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import { useFormik } from 'formik';
 import { AStepperPagination } from '../../../components-global/AStepper';
-import * as Yup from 'yup';
 
 const radioValues = [
-  { name: 'yes', label: 'Yes' },
-  { name: 'no', label: 'No' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
 ];
 
 const documents = [
-  { title: 'Documents were not handy during PD.' },
+  {
+    title: 'Documents were not handy during PD.',
+    value: 'documentHandyDuringPD',
+    isDoc: 'no',
+  },
   {
     title:
       'No documents provided & applicant said Documents are already given to bank.',
+    value: 'documentProvidedToBank',
+    isDoc: 'no',
   },
-  { title: 'GST Returns' },
-  { title: 'GST Registration Certificate' },
-  { title: 'Financial Statements of March 2023' },
-  { title: 'Financial Statements of March 2022' },
-  { title: 'Financial Statements of March 2021' },
-  { title: 'Sales Bills' },
-  { title: 'Purchase Bills' },
-  { title: 'ITR for March 2023' },
-  { title: 'ITR for March 2022' },
-  { title: 'ITR for March 2021' },
-  { title: 'Udyam Aadhar' },
-  { title: 'Vehicle Registration (RC Book)' },
-  { title: 'Gumasta' },
-  { title: 'RC Book' },
-  { title: 'Salary Slip' },
-  { title: 'Provisional Financials for March 2022' },
-  { title: 'Financials in Tally' },
+  { title: 'GST Returns', value: 'gstReturns', isDoc: 'no' },
+  {
+    title: 'GST Registration Certificate',
+    value: 'gstRegistrationCertificate',
+    isDoc: 'no',
+  },
+  {
+    title: 'Financial Statements of March Current Year',
+    value: 'currentYearFinancialStatement',
+    isDoc: 'no',
+  },
+  {
+    title: 'Financial Statements of March Last Year',
+    value: 'lastYearFinancialStatement',
+    isDoc: 'no',
+  },
+  {
+    title: 'Financial Statements of March Second Last Year',
+    value: 'secondLastYearFinancialStatement',
+    isDoc: 'no',
+  },
+  { title: 'Sales Bills', value: 'salesBills', isDoc: 'no' },
+  { title: 'Purchase Bills', value: 'purchaseBils', isDoc: 'no' },
+  { title: 'ITR for March Current Year', value: 'currentYearITR', isDoc: 'no' },
+  { title: 'ITR for March Last Year', value: 'lastYearITR', isDoc: 'no' },
+  {
+    title: 'ITR for March Second Last Year',
+    value: 'secondLastYearITR',
+    isDoc: 'no',
+  },
+  { title: 'Udyam Aadhar', value: 'udhyamAadhar', isDoc: 'no' },
+  {
+    title: 'Vehicle Registration (RC Book)',
+    value: 'vechicleRegistration',
+    isDoc: 'no',
+  },
+  { title: 'Gumasta', value: 'gumasta', isDoc: 'no' },
+  { title: 'RC Book', value: 'rcBook', isDoc: 'no' },
+  { title: 'Salary Slip', value: 'salarySlip', isDoc: 'no' },
+  {
+    title: 'Provisional Financials for March Last Year',
+    value: 'provisionalFinancialLastYear',
+    isDoc: 'no',
+  },
+  { title: 'Financials in Tally', value: 'financialsInTally', isDoc: 'no' },
 ];
 
 const DocumentsSeen = ({
@@ -49,63 +82,37 @@ const DocumentsSeen = ({
   const [showModal, setShowModal] = useState(false);
   const [documentList, setDocumentList] = useState<any>([...documents]);
 
-  const formikAddDocument = useFormik({
+  const formik = useFormik({
     initialValues: {
-      docName: '',
+      name: '',
     },
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values: any) => {
       setShowModal(false);
-      documentList.push({ title: values.docName });
+      documentList.push({
+        title: values.name,
+        value: values.name.replaceAll(' ', ''),
+        isDoc: 'no',
+      });
       setDocumentList([...documentList]);
     },
   });
 
-  const initialValues = {
-    documentHandyDuringPD: '',
-    documentProvidedToBank: '',
-    gstReturns: '',
-    gstRegistrationCertificate: '',
-    currentYearFinancialStatement: '',
-    lastYearFinancialStatement: '',
-    secondLastYearFinancialStatement: '',
-    salesBills: '',
-    purchaseBils: '',
-    currentYearITR: '',
-    lastYearITR: '',
-    secondLastYearITR: '',
-    udhyamAadhar: '',
-    vechicleRegistration: '',
-    gumasta: '',
-    rcBook: '',
-    salarySlip: '',
-    provisionalFinancialLastYear: '',
-    financialsInTally: '',
+  const selectDocuments = (title: string, val: string) => {
+    const index = documentList.findIndex((item: any) => item.title === title);
+    documentList[index].isDoc = val;
+    setDocumentList([...documentList]);
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
-
-  const onSubmit = async (values: any) => {
-    values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+  const submitDocuments = () => {
+    const documents = documentList.reduce(
+      (obj:any, cur:any) => ({ ...obj, [cur.value]: cur.isDoc }),
+      {},
+    );
+    setPayloads({ ...payloads, documentsSeen: documents });
     handleNext();
   };
-
-  const formik = useFormik({
-    initialValues: initialValues,
-    validate: validateFunction,
-    validationSchema: validationSchema,
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: onSubmit,
-  });
 
   return (
     <>
@@ -114,10 +121,11 @@ const DocumentsSeen = ({
           {documentList.map((item: any) => (
             <ARadioButtonGroup
               width={'w-1/2'}
-              key={item.title}
+              key={item.value}
               title={item.title}
+              value={item.isDoc}
               radioValues={radioValues}
-              handleChecked={() => {}}
+              handleChange={selectDocuments}
             />
           ))}
           <div className="flex items-start my-4">
@@ -132,14 +140,15 @@ const DocumentsSeen = ({
             <AModal
               saveText={'Add'}
               title={'Add More Expenses'}
-              onSave={formikAddDocument.handleSubmit}
+              onSave={formik.handleSubmit}
               closeModal={() => setShowModal(false)}
             >
               <AInputField
-                
-                name={'docName'}
+                id={'name'}
                 label="Document Name"
-                formik={formikAddDocument.getFieldProps('docName')}
+                value={formik.values.name}
+                error={formik.errors.name}
+                handleChange={formik.handleChange}
               />
             </AModal>
           )}
@@ -149,7 +158,7 @@ const DocumentsSeen = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={submitDocuments}
       />
     </>
   );

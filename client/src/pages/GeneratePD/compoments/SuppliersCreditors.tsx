@@ -37,7 +37,7 @@ const SuppliersCreditors = ({
     { ...clientsInfo },
   ]);
 
-  const handleSuppliers = (val: string) => {
+  const handleSuppliers = (title: string, val: string) => {
     setIsSuppliers(val);
   };
 
@@ -86,7 +86,7 @@ const SuppliersCreditors = ({
             isReset={true}
             value={isSuppliers}
             title={'Suppliers'}
-            handleChecked={handleSuppliers}
+            handleChange={handleSuppliers}
             radioValues={[]}
           />
           <Section>
@@ -94,7 +94,6 @@ const SuppliersCreditors = ({
               <>
                 <AGroupFields col={2}>
                   <AInputField
-                    
                     name={'noOfClients'}
                     label={'No of Clients/Daily Foot Fall'}
                   />
@@ -107,41 +106,26 @@ const SuppliersCreditors = ({
                 >
                   <AGroupFields col={2}>
                     <AInputField
-                      
                       name={'clientName'}
                       label={'Name of the client'}
                     />
-                    <AInputField
-                      
-                      name={'contactNo'}
-                      label={'Contact No'}
-                    />
+                    <AInputField name={'contactNo'} label={'Contact No'} />
                   </AGroupFields>
                 </ATags>
               </>
             )}
             {suppliers.map((item) => (
               <AGroupFields col={2} title={item.title}>
-                <AInputField
-                  
-                  name={'amountPA'}
-                  label={'Amount P.A.'}
-                />
-                <AInputField
-                  
-                  name={'amountPM'}
-                  label={'Amount P.M.'}
-                />
+                <AInputField name={'amountPA'} label={'Amount P.A.'} />
+                <AInputField name={'amountPM'} label={'Amount P.M.'} />
               </AGroupFields>
             ))}
             <AGroupFields col={2}>
               <AInputField
-                
                 name={'periodAllowedToClient'}
                 label={'Cr. Period allowed to Clients'}
               />
               <AInputField
-                
                 name={'whyCreditorsHigher'}
                 label={'Why Creditors are high than credit period allowed'}
               />

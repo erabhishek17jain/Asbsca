@@ -17,7 +17,7 @@ const Stocks = ({
 }: any) => {
   const [isStocks, setIsStocks] = useState('');
 
-  const handleStocks = (val: string) => {
+  const handleStocks = (title: string, val: string) => {
     setIsStocks(val);
   };
 
@@ -64,7 +64,7 @@ const Stocks = ({
             isReset={true}
             value={isStocks}
             title={'Stocks'}
-            handleChecked={handleStocks}
+            handleChange={handleStocks}
             radioValues={[]}
           />
           {isStocks == '' && (
