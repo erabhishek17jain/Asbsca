@@ -120,14 +120,16 @@ const Cases = () => {
   });
 
   const onSubmitStatus = async (values: any) => {
+    const id = values?.caseId;
+    delete values?.caseId;
     values = await Object.assign(values);
-    let updateStatusPromise = statusUpdateCase(values);
+    let updateStatusPromise = statusUpdateCase(id, values);
     updateStatusPromise
       .then(() => {
         formikStatus.resetForm();
         closeUpdateStatusModal();
         store.dispatch(fetchCasesAsync(''));
-        toast.success(<b>Case assigned sucessfully.</b>);
+        toast.success(<b>Case status sucessfully.</b>);
       })
       .catch((e) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);
@@ -187,7 +189,7 @@ const Cases = () => {
   };
 
   useEffect(() => {
-    if (allUsers?.users?.length === 0 && userDetails?.role?.name === 'Admin')
+    if (userDetails?.role?.name === 'Admin')
       store.dispatch(fetchAllUsersAsync(''));
     store.dispatch(
       fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
@@ -209,7 +211,7 @@ const Cases = () => {
     if (allUsers?.users?.length > 0) {
       setUsersOptions(getOptions(allUsers?.users, 'fullName', '_id'));
     }
-  }, [allUsers]);
+  }, [allUsers.users]);
 
   const menuOptions: any = {
     cases: [

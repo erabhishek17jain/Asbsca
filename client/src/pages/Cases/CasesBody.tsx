@@ -40,8 +40,8 @@ const CasesBody = ({
         <TableColumn classes={classes} label={index + 1} />
         <TableColumn
           classes={classes}
-          label={item?.bankName}
-          icon={item?.bankIcon}
+          label={item?.bankName?.name}
+          icon={item?.bankName?.logo}
         />
         <TableColumn classes={classes} label={item?.referenceId} />
         <TableColumn
@@ -55,7 +55,7 @@ const CasesBody = ({
         {(status === 'cases' ||
           status === 'completed' ||
           status === 'sentToBank') && (
-          <TableColumn classes={classes} label={item?.branch} />
+          <TableColumn classes={classes} label={item?.branch?.name} />
         )}
         {status !== 'completed' && status !== 'sentToBank' && (
           <TableColumn classes={classes} label={item?.loanAmount} />

@@ -1,9 +1,17 @@
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchAllNotificationsAsync } from '../slices/notificationsSlice';
+import store from '../store/store';
 
 const NotificationDropdown = () => {
+  const { allNotifications } = useSelector((state: any) => state.notifications);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [defaultFilters] = useState<any>({
+    page: 1,
+    limit: 10,
+  });
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -33,6 +41,10 @@ const NotificationDropdown = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
+  useEffect(() => {
+    store.dispatch(fetchAllNotificationsAsync({ ...defaultFilters }));
+  }, []);
+
   return (
     <li className="relative">
       <Link
@@ -52,7 +64,7 @@ const NotificationDropdown = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-11 right-0 mt-4 flex flex-col w-75 bg-clip-border rounded-lg bg-white text-grey-700 shadow-lg ${
+        className={`absolute top-12 right-0 flex flex-col w-50 border border-stroke bg-clip-border rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
@@ -61,21 +73,27 @@ const NotificationDropdown = () => {
         </div>
 
         <ul className="flex h-auto flex-col overflow-y-auto">
-          <li>
-            <Link
-              className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-grey"
-              to="#"
-            >
-              <p className="text-sm">
-                <span className="text-main">
-                  Edit your information in a swipe
-                </span>{' '}
-                Sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim.
-              </p>
-              <p className="text-xs">12 May, 2025</p>
-            </Link>
-          </li>
+          {allNotifications.length > 0 ? (
+            allNotifications.map((item: any) => (
+              <li>
+                <div className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-grey">
+                  <p className="text-sm">
+                    <span className="text-main">{item?.title}</span>
+                    {item?.body}
+                  </p>
+                  <p className="text-xs">{item?.createdAt}</p>
+                </div>
+              </li>
+            ))
+          ) : (
+            <li>
+              <div className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-grey">
+                <p className="text-sm">
+                  <span className="text-main">No notification found.</span>
+                </p>
+              </div>
+            </li>
+          )}
         </ul>
       </div>
     </li>

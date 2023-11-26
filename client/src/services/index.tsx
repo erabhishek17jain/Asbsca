@@ -2,6 +2,22 @@ import axios from 'axios';
 import { baseAPI } from '../constants';
 import toast from 'react-hot-toast';
 
+function setFilters(payload: any) {
+  let filter = '';
+  for (const key in payload) {
+    if (key === 'filter') {
+      const filterBy = Object.keys(payload[key]);
+      const filterValue = Object.values(payload[key]);
+      filter =
+        filter +
+        `filterBy=${filterBy.join(',')}&filterValue=${filterValue.join(',')}&`;
+    } else {
+      filter = filter + `${key}=${payload[key]}&`;
+    }
+  }
+  return filter.slice(0, -1);
+}
+
 /** services */
 export function setToken(token: string) {
   document.cookie = 'token=' + token + '; Path=/;';
@@ -47,9 +63,12 @@ export async function authentication(
 }
 
 /** first time reset password */
-export async function selfRegister(values: any, { rejectWithValue }: any) {
+export async function selfRegister(payload: any, { rejectWithValue }: any) {
   try {
-    const { data } = await axios.post(`${baseAPI}/users/self-register`, values);
+    const { data } = await axios.post(
+      `${baseAPI}/users/self-register`,
+      payload,
+    );
     return Promise.resolve({ data });
   } catch (error: any) {
     showError(error);
@@ -58,9 +77,12 @@ export async function selfRegister(values: any, { rejectWithValue }: any) {
 }
 
 /** reset password */
-export async function forgotPassword(values: any, { rejectWithValue }: any) {
+export async function forgotPassword(payload: any, { rejectWithValue }: any) {
   try {
-    const { data } = await axios.post(`${baseAPI}/users/reset-password`, values);
+    const { data } = await axios.post(
+      `${baseAPI}/users/reset-password`,
+      payload,
+    );
     return Promise.resolve({ data });
   } catch (error: any) {
     showError(error);
@@ -82,23 +104,10 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
 }
 
 /** all user list */
-
-export async function allCasesList(values: any, { rejectWithValue }: any) {
-  let filter = '';
-  for (const key in values) {
-    if (key === 'filter') {
-      const filterBy = Object.keys(values[key]);
-      const filterValue = Object.values(values[key]);
-      filter =
-        filter +
-        `filterBy=${filterBy.join(',')}&filterValue=${filterValue.join(',')}&`;
-    } else {
-      filter = filter + `${key}=${values[key]}&`;
-    }
-  }
+export async function getCases(payload: any, { rejectWithValue }: any) {
   try {
     const response = await axios.get(
-      `${baseAPI}/cases/list?${filter.slice(0, -1)}`,
+      `${baseAPI}/cases/list?${setFilters(payload)}`,
     );
     return response.data;
   } catch (error: any) {
@@ -108,9 +117,24 @@ export async function allCasesList(values: any, { rejectWithValue }: any) {
 }
 
 /** all user list */
-export async function allUsersList(_: any, { rejectWithValue }: any) {
+export async function getUsers(payload: any, { rejectWithValue }: any) {
   try {
-    const response = await axios.get(`${baseAPI}/users/list`);
+    const response = await axios.get(
+      `${baseAPI}/users/list?${setFilters(payload)}`,
+    );
+    return response.data;
+  } catch (error: any) {
+    showError(error);
+    return rejectWithValue(error?.response?.data);
+  }
+}
+
+/** get Notifications */
+export async function getNotifications(payload: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(
+      `${baseAPI}/users/notifications?${setFilters(payload)}`,
+    );
     return response.data;
   } catch (error: any) {
     showError(error);
@@ -130,9 +154,11 @@ export async function getAanalytics(payload: any, { rejectWithValue }: any) {
 }
 
 /** all roles list */
-export async function getRoles(_: any, { rejectWithValue }: any) {
+export async function getRoles(payload: any, { rejectWithValue }: any) {
   try {
-    const response = await axios.get(`${baseAPI}/users/roles/list`);
+    const response = await axios.get(
+      `${baseAPI}/users/roles/list?${setFilters(payload)}`,
+    );
     return response.data;
   } catch (error: any) {
     showError(error);
@@ -141,9 +167,11 @@ export async function getRoles(_: any, { rejectWithValue }: any) {
 }
 
 /** all clients list */
-export async function getClients(_: any, { rejectWithValue }: any) {
+export async function getClients(payload: any, { rejectWithValue }: any) {
   try {
-    const response = await axios.get(`${baseAPI}/clients/list`);
+    const response = await axios.get(
+      `${baseAPI}/clients/list?${setFilters(payload)}`,
+    );
     return response.data;
   } catch (error: any) {
     showError(error);
@@ -152,9 +180,11 @@ export async function getClients(_: any, { rejectWithValue }: any) {
 }
 
 /** all products list */
-export async function getProducts(_: any, { rejectWithValue }: any) {
+export async function getProducts(payload: any, { rejectWithValue }: any) {
   try {
-    const response = await axios.get(`${baseAPI}/clients/product/list`);
+    const response = await axios.get(
+      `${baseAPI}/clients/product/list?${setFilters(payload)}`,
+    );
     return response.data;
   } catch (error: any) {
     showError(error);
@@ -163,9 +193,11 @@ export async function getProducts(_: any, { rejectWithValue }: any) {
 }
 
 /** all branches list */
-export async function getBranchs(_: any, { rejectWithValue }: any) {
+export async function getBranchs(payload: any, { rejectWithValue }: any) {
   try {
-    const response = await axios.get(`${baseAPI}/clients/branch/list`);
+    const response = await axios.get(
+      `${baseAPI}/clients/branch/list?${setFilters(payload)}`,
+    );
     return response.data;
   } catch (error: any) {
     showError(error);
@@ -174,11 +206,15 @@ export async function getBranchs(_: any, { rejectWithValue }: any) {
 }
 
 /** Add API Calls */
-/** add user */
-export async function addCase(values: any) {
+
+/** add notification */
+export async function addNotification(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/cases/create`, values);
+    if (payload) {
+      const { data } = await axios.post(
+        `${baseAPI}/users/notification/create`,
+        payload,
+      );
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -187,10 +223,22 @@ export async function addCase(values: any) {
 }
 
 /** add user */
-export async function addUser(values: any) {
+export async function addCase(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/users/create`, values);
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/cases/create`, payload);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** add user */
+export async function addUser(payload: any) {
+  try {
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/users/create`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -199,12 +247,12 @@ export async function addUser(values: any) {
 }
 
 /** add role */
-export async function addRole(values: any) {
+export async function addRole(payload: any) {
   try {
-    if (values) {
+    if (payload) {
       const { data } = await axios.post(
         `${baseAPI}/users/roles/create`,
-        values,
+        payload,
       );
       return Promise.resolve({ data });
     }
@@ -214,10 +262,10 @@ export async function addRole(values: any) {
 }
 
 /** add client */
-export async function addClient(values: any) {
+export async function addClient(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/clients/create`, values);
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/clients/create`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -226,12 +274,12 @@ export async function addClient(values: any) {
 }
 
 /** add product */
-export async function addProduct(values: any) {
+export async function addProduct(payload: any) {
   try {
-    if (values) {
+    if (payload) {
       const { data } = await axios.post(
         `${baseAPI}/clients/product/create`,
-        values,
+        payload,
       );
       return Promise.resolve({ data });
     }
@@ -241,12 +289,12 @@ export async function addProduct(values: any) {
 }
 
 /** add branch */
-export async function addBranch(values: any) {
+export async function addBranch(payload: any) {
   try {
-    if (values) {
+    if (payload) {
       const { data } = await axios.post(
         `${baseAPI}/clients/branch/create`,
-        values,
+        payload,
       );
       return Promise.resolve({ data });
     }
@@ -258,10 +306,10 @@ export async function addBranch(values: any) {
 /** Update API Calls */
 
 /** assined case */
-export async function assignCase(values: any) {
+export async function assignCase(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/cases/assign`, values);
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/cases/assign`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -270,10 +318,10 @@ export async function assignCase(values: any) {
 }
 
 /** update case status */
-export async function statusUpdateCase(values: any) {
+export async function statusUpdateCase(id: string, payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.post(`${baseAPI}/cases/status`, values);
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/cases/${id}`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -282,10 +330,10 @@ export async function statusUpdateCase(values: any) {
 }
 
 /** update case */
-export async function updateCase(id: string, values: any) {
+export async function updateCase(id: string, payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.put(`${baseAPI}/cases/${id}`, values);
+    if (payload) {
+      const { data } = await axios.put(`${baseAPI}/cases/${id}`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -294,10 +342,10 @@ export async function updateCase(id: string, values: any) {
 }
 
 /** update self user */
-export async function selfUpdateUser(values: any) {
+export async function selfUpdateUser(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.put(`${baseAPI}/users/self-update`, values);
+    if (payload) {
+      const { data } = await axios.put(`${baseAPI}/users/self-update`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -306,10 +354,10 @@ export async function selfUpdateUser(values: any) {
 }
 
 /** update user */
-export async function updateUser(values: any) {
+export async function updateUser(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.put(`${baseAPI}/users/update`, values);
+    if (payload) {
+      const { data } = await axios.put(`${baseAPI}/users/update`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -318,36 +366,12 @@ export async function updateUser(values: any) {
 }
 
 /** update user */
-export async function updateRole(values: any) {
+export async function updateRole(payload: any) {
   try {
-    if (values) {
-      const { data } = await axios.put(`${baseAPI}/users/roles/update`, values);
-      return Promise.resolve({ data });
-    }
-  } catch (error) {
-    showError(error);
-  }
-}
-
-/** update user */
-export async function updateClient(values: any) {
-  try {
-    if (values) {
-      const { data } = await axios.put(`${baseAPI}/clients/update`, values);
-      return Promise.resolve({ data });
-    }
-  } catch (error) {
-    showError(error);
-  }
-}
-
-/** update user */
-export async function updateProduct(values: any) {
-  try {
-    if (values) {
+    if (payload) {
       const { data } = await axios.put(
-        `${baseAPI}/clients/product/update`,
-        values,
+        `${baseAPI}/users/roles/update`,
+        payload,
       );
       return Promise.resolve({ data });
     }
@@ -357,12 +381,39 @@ export async function updateProduct(values: any) {
 }
 
 /** update user */
-export async function updateBranch(values: any) {
+export async function updateClient(payload: any) {
   try {
-    if (values) {
+    if (payload) {
+      const { data } = await axios.put(`${baseAPI}/clients/update`, payload);
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update user */
+export async function updateProduct(payload: any) {
+  try {
+    if (payload) {
+      const { data } = await axios.put(
+        `${baseAPI}/clients/product/update`,
+        payload,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** update user */
+export async function updateBranch(payload: any) {
+  try {
+    if (payload) {
       const { data } = await axios.put(
         `${baseAPI}/clients/branch/update`,
-        values,
+        payload,
       );
       return Promise.resolve({ data });
     }
@@ -450,10 +501,10 @@ export async function deleteBranchById(id: any) {
   }
 }
 
-export async function generatePDReport(values: any) {
+export async function generatePDReport(payload: any) {
   try {
     const response = await axios.post(`${baseAPI}/cases/generateReport`, {
-      filters: values,
+      filters: payload,
     });
     return response?.data;
   } catch (err) {

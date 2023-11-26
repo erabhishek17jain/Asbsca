@@ -250,7 +250,7 @@ const Users = () => {
               label={'Profile'}
               value={formik.values.profile}
               error={formik.errors.profile}
-              formik={formik.getFieldProps('profile')}
+              formik={formik}
               icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
             />
           </div>

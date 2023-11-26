@@ -133,19 +133,19 @@ const Profile = () => {
                 <div className="mx-auto mt-4.5 mb-5.5 grid max-w-lg grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1">
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
                     <span className="font-semibold text-main">
-                      {userDetails?.completedPD}
+                      {userDetails?.analysis?.pdCompleted}
                     </span>
                     <span className="text-sm">PD Completed</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 xsm:flex-row">
                     <span className="font-semibold text-main">
-                      {userDetails?.assignedPD}
+                      {userDetails?.analysis?.pdPending}
                     </span>
                     <span className="text-sm">PD Assigned</span>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                     <span className="font-semibold text-main">
-                      {userDetails?.accuracy}
+                      {userDetails?.analysis?.accuracy}
                     </span>
                     <span className="text-sm">Accuracy</span>
                   </div>
@@ -168,8 +168,8 @@ const Profile = () => {
               <div className="mb-4 flex items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
+                  formik={formikUser}
                   profile={userDetails?.profile}
-                  formik={formikUser.getFieldProps('profile')}
                 />
                 <AInputField
                   id={'fullName'}

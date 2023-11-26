@@ -10,7 +10,7 @@ const TopPerformers = ({ topPerfomers }: any) => {
       {topPerfomers?.map((user: any) => (
         <Link
           to="/"
-          key={user.fullName}
+          key={user?.fullName}
           className="flex items-center gap-5 py-3 px-7.5 hover:bg-grey"
         >
           <div className="relative h-14 w-14 rounded-full">
@@ -32,7 +32,7 @@ const TopPerformers = ({ topPerfomers }: any) => {
             </div>
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-main">
               <span className="text-sm font-medium text-white">
-                {user?.lastMonthReportCount}
+                {user?.completedCases}
               </span>
             </div>
           </div>

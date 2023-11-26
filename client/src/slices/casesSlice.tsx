@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { allCasesList, getAanalytics } from '../services';
+import { getCases, getAanalytics } from '../services';
 
 export interface ICase {}
 
@@ -11,7 +11,7 @@ export const fetchCasesAnalyticsAsync = createAsyncThunk(
 
 export const fetchCasesAsync = createAsyncThunk(
   '/cases/allCases',
-  allCasesList,
+  getCases,
 );
 
 export interface ICasesState {

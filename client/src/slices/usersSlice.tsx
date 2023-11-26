@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { allUsersList, selfDetails } from '../services';
+import { getUsers, selfDetails } from '../services';
 
 export interface IUser {
   username: string;
@@ -20,7 +20,7 @@ export const fetchUserAsync = createAsyncThunk(
 );
 export const fetchAllUsersAsync = createAsyncThunk(
   '/users/allUsers',
-  allUsersList,
+  getUsers,
 );
 
 export interface IUsersState {

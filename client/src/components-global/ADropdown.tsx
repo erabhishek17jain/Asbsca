@@ -53,12 +53,12 @@ const ADropdown = ({
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute ${
-          position == 'left' ? '-top-[27px] right-7' : 'top-6 right-0'
+          position == 'left' ? '-bottom-[28px] right-7' : 'top-6 right-0'
         } mt-3 z-10 flex flex-col w-56 bg-clip-border border rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-4">
+        <ul className="flex flex-col gap-5 px-6 py-4">
           {options?.map((item: any) => (
             <li key={item.title}>
               <button
