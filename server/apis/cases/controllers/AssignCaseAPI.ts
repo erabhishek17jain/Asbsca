@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import CONFIG from "config";
 import FirebaseNotification from "modules/Notification";
+import Notification from "model/Notification.model";
 
 export default class AssignCaseAPI {
     private static instance: AssignCaseAPI = new AssignCaseAPI();
@@ -47,6 +48,25 @@ export default class AssignCaseAPI {
                 body: "You have been assigned a new case",
                 tokens,
             });
+            
+            if (assignee.email === reviewer.email) {
+                await Notification.create({
+                    title: "New case assigned",
+                    body: "You have been assigned a new case",
+                    user: assignee._id,
+                });
+            } else {
+                await Notification.create({
+                    title: "New case assigned",
+                    body: "You have been assigned a new case",
+                    user: assignee._id,
+                })
+                await Notification.create({
+                    title: "New case assigned",
+                    body: "You have been assigned a new case",
+                    user: reviewer._id,
+                });
+            }
 
             if (assignee.email === reviewer.email) {
                 await this.email.sendEmail(assignee.email, subject, assigneeBody);

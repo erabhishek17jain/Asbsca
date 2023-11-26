@@ -33,20 +33,12 @@ export default class ClientRepository implements Repository<IClient> {
     const id = data._id;
     delete data._id;
     if (data.logo && data.logo.startsWith("data:image")) {
-      cloudinary.uploader.upload(data.logo, { resource_type: "image" }, (err, res) => {
-        if (err) {
-          console.log(err);
-        }
-        data.logo = res!.url;
-      });
+      const logo = await cloudinary.uploader.upload(data.logo, { resource_type: "image" });
+      data.logo = logo!.url;
     }
     if (data.signature && data.signature.startsWith("data:image")) {
-      cloudinary.uploader.upload(data.signature, { resource_type: "image" }, (err, res) => {
-        if (err) {
-          console.log(err);
-        }
-        data.signature = res!.url;
-      });
+      const sign = await cloudinary.uploader.upload(data.signature, { resource_type: "image" });
+      data.signature = sign!.url;
     }
     data.branch = new Types.ObjectId(data.branch);
     return await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {

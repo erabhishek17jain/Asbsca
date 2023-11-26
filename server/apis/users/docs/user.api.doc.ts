@@ -125,7 +125,7 @@
 /**
  * @openapi
  * paths:
- *  /api/v1/user/self-update:
+ *  /api/v1/users/self-update:
  *   put:
  *    summary: Update self
  *    description: Update the current user's details.
@@ -152,4 +152,45 @@
  *         $ref: '#/components/schemas/User'
  *     500:
  *      description: An error occurred.
+ */
+
+/**
+ * @openapi
+ * /api/v1/users/notifications:
+ *  get:
+ *    summary: Get notifications for a user
+ *    tags: [Notifications]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: query
+ *        name: page
+ *        schema:
+ *          type: integer
+ *        description: Page number
+ *      - in: query
+ *        name: limit
+ *        schema:
+ *          type: integer
+ *        description: Number of notifications per page
+ *    responses:
+ *      '200':
+ *        description: Notifications retrieved
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                notifications: []
+ *                meta:
+ *                  type: object
+ *                  properties:
+ *                    page:
+ *                      type: integer
+ *                    limit:
+ *                      type: integer
+ *                    total:
+ *                      type: integer
+ *      '500':
+ *        description: Internal server error
  */
