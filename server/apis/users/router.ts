@@ -5,6 +5,7 @@ import UserAPI from "./controllers/UserAPI";
 import authMiddleware from "middleware/auth.middleware";
 import Auth from "middleware/auth.middleware";
 import ResetPasswordAPI from "./controllers/ResetPasswordAPI";
+import NotificationAPI from "./controllers/NotificationAPI";
 
 export default class UserRouter {
   private router: Router = Router({
@@ -35,6 +36,8 @@ export default class UserRouter {
     this.router.post("/self-register", UserAPI.view.verifyUser);
     this.router.get("/self-detail", Auth.isuser, UserAPI.view.selfDetails);
     this.router.put("/self-update", Auth.isuser, UserAPI.view.selfUpdate);
+
+    this.router.get("/notifications", Auth.isuser, NotificationAPI.view.get);
   }
 }
 

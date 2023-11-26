@@ -113,8 +113,8 @@ export default class AnalyticsAPI {
 
             const topFiveCases = await this.model.find({
                 ...filter,
-                status: { $ne: CaseStatus.Unassigned }
-            }).sort({ createdAt: -1 }).limit(5);
+                status: CaseStatus.Assigned
+            }).sort({ createdAt: -1 }).limit(5).populate("reviewer").populate("branch").populate("bankName");
 
             if (currentUser.role === CONFIG.ADMIN_ROLE_ID) {
                 let productiveUsers = await this.getProductiveUsers(req);
