@@ -153,6 +153,9 @@ export default class CaseRepository {
             case 'status':
                 updateParams = { status: assignTo };
                 break;
+            case 'remark':
+                updateParams = { remark: assignTo };
+                break;
             default:
                 return null;
         }
