@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "apexcharts": "^3.41.0",
     "axios": "^1.5.1",
+    "firebase": "^10.6.0",
     "formik": "^2.4.5",
     "headlessui": "^0.0.0",
     "i": "^0.3.7",

@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './pages/SignIn/SignIn';
@@ -6,11 +6,25 @@ import ALoader from './components-global/ALoader';
 import routes from './routes';
 import Hero from './pages/Hero/Hero';
 import DefaultLayout from './layout/DefaultLayout';
+import {getFirebaseToken, onMessageListener} from "./firebase"
 
 function App() {
   const navigate = useNavigate();
 
   const cookies: any = document.cookie;
+
+  const [notification, setNotification] = useState({title: '', body: ''});
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [show, setShow] = useState(false);
+
+  getFirebaseToken(setTokenFound);
+
+  onMessageListener().then((payload: any) => {
+    setShow(true);
+    setNotification({title: payload.notification.title, body: payload.notification.body})
+    console.log(payload);
+  }).catch(err => console.log('failed: ', err));
+
   useEffect(() => {
     if (cookies === '') {
       navigate('/signin');

@@ -6,7 +6,9 @@ import User from "model/User.model";
 import Password from "modules/password";
 import CONFIG from "config";
 import fs from "fs";
+import Cases, {CaseStatus} from "model/Cases.model";
 import path from "path";
+import { Types } from "mongoose";
 
 interface IUserAPI {
   getUsers: (req: Request, res: Response) => Promise<Response>;
@@ -111,7 +113,10 @@ export default class UserAPI implements IUserAPI {
   public selfDetails = async (req: Request, res: Response) : Promise<Response> => {
     try {
       const user = await this.repo.get(res.locals.user.id);
-      return res.status(200).json(user);
+      const pdCompleted = await Cases.countDocuments({assignTo: new Types.ObjectId(res.locals.user.id), status: CaseStatus.Completed});
+      const pdPending = await Cases.countDocuments({assignTo: new Types.ObjectId(res.locals.user.id), status: CaseStatus.Assigned});
+      const accuracy = pdCompleted / (pdCompleted + pdPending);
+      return res.status(200).json({...user!.toJSON(), analysis: {pdCompleted, pdPending, accuracy}});
     } catch (e) {
       return res.status(500).json(e);
     }
@@ -120,10 +125,12 @@ export default class UserAPI implements IUserAPI {
   public selfUpdate = async (req: Request, res: Response) : Promise<Response> => {
     try {
       const { id } = res.locals.user;
-      const {about, profile} = req.body;
-      let payload: {_id: string, about?: string, profile?: string} = {_id: id};
+      const {about, profile, firebaseTokens} = req.body;
+      let payload: {_id: string, about?: string, profile?: string, firebaseTokens?: string[]} = {_id: id};
+      const existingUser = await this.repo.get(id);
       if (about) payload.about = about;
       if (profile) payload.profile = profile;
+      if (firebaseTokens) payload.firebaseTokens = existingUser?.firebaseTokens?.filter((token) => !firebaseTokens.includes(token)).concat(firebaseTokens) || firebaseTokens;
       const user = await this.repo.update(payload as any);
       return res.status(200).json(user);
     } catch (e) {

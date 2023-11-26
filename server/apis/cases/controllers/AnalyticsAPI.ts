@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Cases, {ICases} from "model/Cases.model";
+import Cases, {CaseStatus} from "model/Cases.model";
 import dayjs from "dayjs";
 import CONFIG from "config";
 
@@ -13,8 +13,60 @@ export default class AnalyticsAPI {
 
     private model = Cases;
 
-    private getProductiveUsers = async () => {
-        return []
+    private getProductiveUsers = async (req: Request) => {
+        try {
+            let { startDate, endDate } = req.query;
+
+            let matchQuery: {[key: string]: string | Date | object} = {
+                status: CaseStatus.Completed,
+            };
+
+            if (startDate && endDate) {
+                matchQuery.updatedAt = { 
+                    $gte: dayjs(String(startDate)).startOf("day").toDate(), 
+                    $lte: dayjs(String(endDate)).endOf("day").toDate()
+                };
+            }
+
+            const productiveUsers = await Cases.aggregate([
+                {
+                    $match: matchQuery
+                },
+                {
+                    $group: {
+                        _id: "$assignTo",
+                        completedCases: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { completedCases: -1 }
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "_id",
+                        foreignField: "_id",
+                        as: "userDetails"
+                    }
+                },
+                {
+                    $unwind: "$userDetails"
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        completedCases: 1,
+                        username: "$userDetails.username",
+                        email: "$userDetails.email"
+                    }
+                }
+            ]);
+
+            return productiveUsers;
+        } catch (error) {
+            console.error("Error getting productive users: ", error);
+            return [];
+        }
     }
 
     public get = async (req: Request, res: Response): Promise<Response> => {
@@ -28,7 +80,6 @@ export default class AnalyticsAPI {
                 endDate = dayjs().format("YYYY-MM-DD");
             }
             let filter: { [key: string]: any } = {
-                assignTo: { $ne: null },
                 createdAt: {
                     $gte: dayjs(String(startDate)).startOf("day").toDate(),
                     $lte: dayjs(String(endDate)).endOf("day").toDate(),
@@ -45,16 +96,30 @@ export default class AnalyticsAPI {
                 };
             }
 
-            const cases = await this.model.find(filter).sort({ createdAt: -1 });
+            const cases = await this.model.countDocuments(filter);
+            const assignedCases = await this.model.countDocuments({
+                ...filter,
+                status: CaseStatus.Assigned
+            });
+            const reviewedCases = await this.model.countDocuments({
+                ...filter,
+                status: CaseStatus.Reviewing
+            });
 
-            const assignedCases = cases.filter((c: ICases) => c.assignTo).length;
-            const reviewedCases = cases.filter((c: ICases) => c.isReviewed).length;
-            const sentToBank = cases.filter((c: ICases) => c.isSentToBank).length;
-            const topFiveCases = cases.slice(0, 5);
+            const sentToBank = await this.model.countDocuments({
+                ...filter,
+                status: CaseStatus.SentToBank
+            });
+
+            const topFiveCases = await this.model.find({
+                ...filter,
+                status: { $ne: CaseStatus.Unassigned }
+            }).sort({ createdAt: -1 }).limit(5);
+
             if (currentUser.role === CONFIG.ADMIN_ROLE_ID) {
-                let productiveUsers = await this.getProductiveUsers();
+                let productiveUsers = await this.getProductiveUsers(req);
                 return res.status(200).json({
-                    cases: cases.length,
+                    cases,
                     assignedCases,
                     reviewedCases,
                     sentToBank,
@@ -63,7 +128,7 @@ export default class AnalyticsAPI {
                 });
             }
             return res.status(200).json({
-                cases: cases.length,
+                cases,
                 assignedCases,
                 reviewedCases,
                 sentToBank,
@@ -71,6 +136,7 @@ export default class AnalyticsAPI {
             });
 
         } catch (error: any) {
+            console.log(error);
             return res.status(500).json({
                 message: error.message,
             });

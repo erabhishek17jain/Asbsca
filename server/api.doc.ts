@@ -20,7 +20,7 @@ const swaggerSpec = swaggerJSDoc({
             },
         }
     },
-    apis: ["./apis/**/*.{ts,js}"],
+    apis: ["./apis/**/*.{ts,js,yml}"],
 });
 console.log(__dirname)
 export default swaggerSpec;

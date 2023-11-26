@@ -3,16 +3,21 @@ import User from "./User.model";
 import Branch from "./Branch.model";
 import Client from "./Client.model";
 
-enum CaseStatus {
-    Pending = "Pending",
-    Approved = "Approved",
-    Rejected = "Rejected"
+export enum CaseStatus {
+    Unassigned = "unassigned",
+    Assigned = "assigned",
+    Reviewing = "review",
+    Query = "query",
+    Completed = "completed",
+    SentToBank = "sentToBank",
 }
 
 enum AppoinmentStatus {
-    NotYetScheduled = "notScheduled",
+    Visited = "visited",
     Scheduled = "scheduled",
-    Completed = "completed"
+    NotReceived = "notReceived",
+    NotResponding = "notResponding",
+    NotYetScheduled = "notScheduled",
 }
 
 export interface ICases extends mongoose.Document {
@@ -32,10 +37,10 @@ export interface ICases extends mongoose.Document {
     reportStatus: ReportStatus;
     reviewer: mongoose.Types.ObjectId;
     isReviewed: boolean;
-    isSentToBank: boolean;
     assignTo: mongoose.Types.ObjectId;
     appoinmentStatus: AppoinmentStatus;
     appoinmentDate?: Date;
+    remark: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -51,14 +56,14 @@ const CasesSchema = new mongoose.Schema<ICases>({
     branch: { type: mongoose.Schema.Types.ObjectId, ref: Branch, required: false },
     type: { type: String, required: true },
     bankName: { type: mongoose.Schema.Types.ObjectId, ref: Client, required: false },
-    status: { type: String, default: CaseStatus.Pending },
+    status: { type: String, default: CaseStatus.Unassigned },
     receivedDate: { type: Date, default: Date.now },
     reviewer: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
     isReviewed: { type: Boolean, default: false },
-    isSentToBank: { type: Boolean, default: false },
     assignTo: { type: mongoose.Schema.Types.ObjectId, ref: User, required: false },
     appoinmentStatus: { type: String, default: AppoinmentStatus.NotYetScheduled },
     appoinmentDate: { type: Date, required: false },
+    remark: { type: String, required: false },
 }, { timestamps: true });
 
 const Cases = mongoose.model<ICases>('cases', CasesSchema);

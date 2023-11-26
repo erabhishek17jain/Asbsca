@@ -3,9 +3,9 @@ import { Message } from "firebase-admin/lib/messaging/messaging-api";
 import serviceAccount from "google.json";
 
 interface IPayload {
-    title?: string;
-    body?: string;
-    token?: string;
+    title: string;
+    body: string;
+    tokens: string[];
 }
 
 interface INotification {
@@ -29,14 +29,17 @@ export default class FirebaseNotification implements INotification {
     
     public sendNotification = async (payload: IPayload): Promise<void> => {
         try {
+            if (!payload.tokens.length) {
+                return;
+            }
             console.info("payload notification -> ", payload);
-            await this.firebase.messaging().send({
+            await this.firebase.messaging().sendEachForMulticast({
                 notification: {
                     title: payload.title,
                     body: payload.body,
                 },
-                token: payload.token,
-            } as Message);
+                tokens: payload.tokens,
+            });
         } catch (error) {
             console.error(error);
         }
