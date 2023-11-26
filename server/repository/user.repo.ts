@@ -1,6 +1,7 @@
 import User, {IUser} from "model/User.model";
 import Password from "modules/password";
 import { Types } from "mongoose";
+import cloudinary from "modules/cloudinary";
 
 
 interface IUserRepository extends Repository<IUser> {
@@ -46,6 +47,14 @@ export default class UserRepository implements IUserRepository {
     delete user.password;
     delete user.isVerified;
     user.role = new Types.ObjectId(user.role);
+    if (user.profile && user.profile.startsWith("data:image")) {
+      cloudinary.uploader.upload(user.profile, { resource_type: "image" }, (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        user.profile = res!.url;
+      });
+    }
     const existingUser = await this.model.findByIdAndUpdate(
       new Types.ObjectId(id),
       { $set: user },

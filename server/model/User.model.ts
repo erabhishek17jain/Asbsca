@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Roles from "./Roles.model";
 import JWT from "modules/jwt";
 import Password from "modules/password"
+import cloudinary from "modules/cloudinary";
 
 enum Status {
   Active = "active",
@@ -62,6 +63,14 @@ UserSchema.methods.getToken = function (): string {
 UserSchema.pre<IUser>('save', function (next) {
   if (this.isModified('password')) {
     this.password = Password.fn.generateHash(this.password || "Secret@123");
+  }
+  if (this.profile && this.isModified('profile')) {
+    cloudinary.uploader.upload(this.profile, { resource_type: "image" }, (err, res) => {
+      if (err) {
+        console.log(err);
+      }
+      this.profile = res!.url;
+    });
   }
   next();
 });
