@@ -1,8 +1,11 @@
 
 declare enum CaseStatus {
-    Pending = "Pending",
-    Approved = "Approved",
-    Rejected = "Rejected"
+    Unassigned = "unassigned",
+    Assigned = "assigned",
+    Reviewing = "review",
+    Query = "query",
+    Completed = "completed",
+    SentToBank = "sentToBank",
 }
 
 declare type VisitStatus = {

@@ -21,6 +21,7 @@ export interface IUser extends mongoose.Document {
     isVerified?: boolean;
     status: Status;
     profile: string;
+    firebaseTokens?: string[];
     createdAt: Date;
     updatedAt: Date;
     getToken: () => string;
@@ -45,6 +46,7 @@ const UserSchema = new mongoose.Schema<IUser>({
       unique: true,
     },
     status: { type: String, default: Status.Active },
+    firebaseTokens: [{ type: String }],
     isVerified: { type: Boolean, default: false },
 }, { timestamps: true });
 
