@@ -71,7 +71,7 @@ export default class CaseRepository {
             }
             const sortObj: { [key: string]: SortOrder; } = sort ? {[sort as string]: order === "ascend" ? 1 : -1} : {};
             const userSelectedFields = "fullName email username profile role"
-            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum).populate("reviewer", userSelectedFields).populate("assignTo", userSelectedFields);
+            const cases = await this.model.find(filterObj).sort(sortObj).limit(limitNum).skip(skipNum).populate("reviewer", userSelectedFields).populate("assignTo", userSelectedFields).populate("branch").populate("bankName");
             return cases;
         } catch (error) {
             throw error;
@@ -154,7 +154,7 @@ export default class CaseRepository {
                 return null;
         }
 
-        const updatedCase = await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {$set: updateParams}, {new: true});
+        const updatedCase = await this.model.findOneAndUpdate({_id: new Types.ObjectId(id)}, {$set: updateParams}, {new: true}).populate("branch").populate("bankName");
         return updatedCase;
     }
 }

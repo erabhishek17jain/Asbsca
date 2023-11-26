@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Branch from "./Branch.model";
+import cloudinary from "modules/cloudinary";
 
 enum Status {
     Active = "active",
@@ -23,6 +24,28 @@ const ClientSchema = new mongoose.Schema<IClient>({
     logo: { type: String, required: false },
     signature: { type: String, required: false },
 }, { timestamps: true });
+
+ClientSchema.pre('save', function (next) {
+    if (this.logo && this.isModified('logo')) {
+        cloudinary.uploader.upload(this.logo, { resource_type: "image" }, (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+            this.logo = res!.url;
+        });
+    }
+
+    if (this.signature && this.isModified('signature')) {
+        cloudinary.uploader.upload(this.signature, { resource_type: "image" }, (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+            this.signature = res!.url;
+        });
+    }
+
+    next();
+});
 
 const Client = mongoose.model<IClient>('client', ClientSchema);
 export default Client;
