@@ -10,7 +10,11 @@ import {
 } from '@heroicons/react/24/solid';
 import store from '../../../store/store';
 import toast from 'react-hot-toast';
-import { deleteProductById, addProduct, updateProduct } from '../../../services';
+import {
+  deleteProductById,
+  addProduct,
+  updateProduct,
+} from '../../../services';
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -91,7 +95,9 @@ export function AddEditDeleteProduct({
   };
 
   useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', '_id'));
+    if (allClients?.data?.length > 0) {
+      setClientOptions(getOptions(allClients?.data, 'name', '_id'));
+    }
   }, [allClients]);
 
   useEffect(() => {
@@ -116,25 +122,28 @@ export function AddEditDeleteProduct({
         >
           <div className="flex flex-col">
             <AInputField
-              type="text"
+              id={'name'}
               label="Product Name*"
+              value={formikProduct.values.name}
               error={formikProduct.errors.name}
-              formik={formikProduct.getFieldProps('name')}
+              handleChange={formikProduct.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id={'client'}
               label={'Client Name*'}
-              options={clientOptions}
+              value={formikProduct.values.client}
               error={formikProduct.errors.client}
-              formik={formikProduct.getFieldProps('client')}
+              handleChange={formikProduct.handleChange}
               icon={<BuildingOfficeIcon className="h-4 w-4" />}
+              options={clientOptions}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
+              value={formikProduct.values.status}
               error={formikProduct.errors.status}
-              formik={formikProduct.getFieldProps('status')}
+              handleChange={formikProduct.handleChange}
               icon={<CheckIcon className="h-4 w-4" />}
               options={statusList}
             />

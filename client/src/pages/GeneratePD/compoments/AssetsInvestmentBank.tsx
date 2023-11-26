@@ -5,7 +5,14 @@ import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import ATags, { AddTagButton } from '../../../components-global/ATags';
-import { yesNoOptions } from '../constants';
+import {
+  bankTypes,
+  banksList,
+  particularsAssets,
+  particularsInvestment,
+  statusAssets,
+  yesNoOptions,
+} from '../constants';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -76,22 +83,14 @@ const AssetInformation = () => {
       <ASingleSelect
         name={'particularts'}
         label={'Particularts'}
-        options={[{ label: 'India', value: 'india' }]}
+        options={particularsAssets}
       />
-      <AInputField type={'text'} name={'location'} label={'Location'} />
-      <AInputField
-        type={'text'}
-        name={'purchaseYear'}
-        label={'Purchase Year'}
-      />
-      <AInputField type={'text'} name={'carpetArea'} label={'Carpet Area'} />
-      <ASingleSelect
-        name={'status'}
-        label={'Status'}
-        options={[{ label: 'India', value: 'india' }]}
-      />
-      <AInputField type={'text'} name={'marketValue'} label={'Market Value'} />
-      <AInputField type={'text'} name={'remtPm'} label={'Rent P.M.'} />
+      <AInputField name={'location'} label={'Location'} />
+      <AInputField name={'purchaseYear'} label={'Purchase Year'} />
+      <AInputField name={'carpetArea'} label={'Carpet Area'} />
+      <ASingleSelect name={'status'} label={'Status'} options={statusAssets} />
+      <AInputField name={'marketValue'} label={'Market Value'} />
+      <AInputField name={'remtPm'} label={'Rent P.M.'} />
     </AGroupFields>
   );
 };
@@ -107,7 +106,7 @@ const AssetsInvestmentBank = ({
   const [isBusinessAssets, setIsBusinessAssets] = useState('yes');
   const [businessAssets, setBusinessAssets] = useState<any>([]);
 
-  const handleBusinessAssets = (val: string) => {
+  const handleBusinessAssets = (title: string, val: string) => {
     setIsBusinessAssets(val);
   };
 
@@ -123,7 +122,7 @@ const AssetsInvestmentBank = ({
   const [isPersonalAssets, setIsPersonalAssets] = useState('yes');
   const [personalAssets, setPersonalAssets] = useState<any>([]);
 
-  const handlePersonalAssets = (val: string) => {
+  const handlePersonalAssets = (title: string, val: string) => {
     setIsPersonalAssets(val);
   };
 
@@ -139,7 +138,7 @@ const AssetsInvestmentBank = ({
   const [isInvestments, setIsInvestments] = useState('yes');
   const [investments, setInvestments] = useState<any>([]);
 
-  const handleInvestments = (val: string) => {
+  const handleInvestments = (title: string, val: string) => {
     setIsInvestments(val);
   };
 
@@ -155,7 +154,7 @@ const AssetsInvestmentBank = ({
   const [isBankAccounts, setIsBankAccounts] = useState('yes');
   const [bankAccounts, setBankAccounts] = useState<any>([]);
 
-  const handleBankAccounts = (val: string) => {
+  const handleBankAccounts = (title: string, val: string) => {
     setIsBankAccounts(val);
   };
 
@@ -168,18 +167,53 @@ const AssetsInvestmentBank = ({
     setBankAccounts([...tags]);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    isBussinessAssets: '',
+    bussinessAssetDetails: {
+      bussinessAssets: [
+        {
+          particulars: '',
+          location: '',
+          purchaseYear: '',
+          carpetArea: '',
+          status: '',
+          marketValue: '',
+          rentPM: '',
+        },
+      ],
+      totalMarketValue: '',
+      totalRentPM: '',
+    },
+    isPersonalAssets: '',
+    personalAssetDetails: {
+      personalAssets: [
+        {
+          particulars: '',
+          location: '',
+          purchaseYear: '',
+          carpetArea: '',
+          status: '',
+          marketValue: '',
+          rentPM: '',
+        },
+      ],
+      totalMarketValue: '',
+      totalRentPM: '',
+    },
+    isInvestments: '',
+    investmentDetails: {
+      investments: [{ particulars: '', contribution: '', marketValue: '' }],
+    },
+    totalRentPM: '',
+    totalMarketValue: '',
+    isBankAccount: '',
+    bankAccountDetails: {
+      bankAccounts: [{ bankName: '', branch: '', type: '', balanceOnDay: '' }],
+      totalBalance: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -201,7 +235,7 @@ const AssetsInvestmentBank = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -210,7 +244,7 @@ const AssetsInvestmentBank = ({
             value={isBusinessAssets}
             title={'Business Assets'}
             radioValues={yesNoOptions}
-            handleChecked={handleBusinessAssets}
+            handleChange={handleBusinessAssets}
           />
           {isBusinessAssets === 'yes' && (
             <ASection
@@ -237,7 +271,7 @@ const AssetsInvestmentBank = ({
             value={isPersonalAssets}
             title={'Personal Assets'}
             radioValues={yesNoOptions}
-            handleChecked={handlePersonalAssets}
+            handleChange={handlePersonalAssets}
           />
           {isPersonalAssets === 'yes' && (
             <ASection
@@ -264,7 +298,7 @@ const AssetsInvestmentBank = ({
             value={isInvestments}
             title={'Investments'}
             radioValues={yesNoOptions}
-            handleChecked={handleInvestments}
+            handleChange={handleInvestments}
           />
           {isInvestments === 'yes' && (
             <ASection title={'Investment Details'} footers={investmentFooters}>
@@ -278,18 +312,10 @@ const AssetsInvestmentBank = ({
                     <ASingleSelect
                       name={'particularts'}
                       label={'Particularts'}
-                      options={[{ label: 'India', value: 'india' }]}
+                      options={particularsInvestment}
                     />
-                    <AInputField
-                      type={'text'}
-                      name={'contribution'}
-                      label={'Contribution'}
-                    />
-                    <AInputField
-                      type={'text'}
-                      name={'marketValue'}
-                      label={'Market Value'}
-                    />
+                    <AInputField name={'contribution'} label={'Contribution'} />
+                    <AInputField name={'marketValue'} label={'Market Value'} />
                   </AGroupFields>
                 </ATags>
               ) : (
@@ -304,7 +330,7 @@ const AssetsInvestmentBank = ({
             value={isBankAccounts}
             title={'Bank Account'}
             radioValues={yesNoOptions}
-            handleChecked={handleBankAccounts}
+            handleChange={handleBankAccounts}
           />
           {isBankAccounts === 'yes' && (
             <ASection
@@ -321,20 +347,15 @@ const AssetsInvestmentBank = ({
                     <ASingleSelect
                       name={'bankName'}
                       label={'Bank Name'}
-                      options={[{ label: 'India', value: 'india' }]}
+                      options={banksList}
                     />
-                    <AInputField
-                      type={'text'}
-                      name={'branch'}
-                      label={'Branch'}
-                    />
+                    <AInputField name={'branch'} label={'Branch'} />
                     <ASingleSelect
                       name={'type'}
                       label={'Type'}
-                      options={[{ label: 'India', value: 'india' }]}
+                      options={bankTypes}
                     />
                     <AInputField
-                      type={'text'}
                       name={'balanceOnDay'}
                       label={'Balance On Day'}
                     />

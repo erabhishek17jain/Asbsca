@@ -104,24 +104,28 @@ export function AddEditDeleteBranch({
         >
           <div className="flex flex-col">
             <AInputField
-              type="text"
+              id={'name'}
               label="Branch Name*"
+              value={formikBranch.values.name}
               error={formikBranch.errors.name}
-              formik={formikBranch.getFieldProps('name')}
+              handleChange={formikBranch.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ATextField
               id={'address'}
               label={'Address'}
-              formik={formikBranch.getFieldProps('address')}
+              value={formikBranch.values.address}
+              error={formikBranch.errors.address}
+              handleChange={formikBranch.handleChange}
               icon={<MapPinIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
               options={statusList}
+              value={formikBranch.values.status}
               error={formikBranch.errors.status}
-              formik={formikBranch.getFieldProps('status')}
+              handleChange={formikBranch.handleChange}
               icon={<CheckIcon className="h-4 w-4" />}
             />
           </div>

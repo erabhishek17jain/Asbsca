@@ -49,10 +49,10 @@ const AddBulkCase = () => {
     if (addCaseData.length > 0) {
       uploadData = addCaseData.map((item: any) => {
         delete item?.srNo;
-        const branch = allBranchs.find(
+        const branch = allBranchs?.branches.find(
           (el: any) => el?.name?.includes(item.branch),
         );
-        const bankName = allClients.find(
+        const bankName = allClients?.data.find(
           (el: any) => el?.name?.includes(item.bankName),
         );
         if (!bankName) {

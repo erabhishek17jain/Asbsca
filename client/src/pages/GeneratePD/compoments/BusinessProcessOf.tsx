@@ -2,6 +2,7 @@ import ASingleSelect from '../../../components-global/ASingleSelect';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { businessProcess } from '../constants';
 
 const BusinessProcessOf = ({
   steps,
@@ -12,22 +13,12 @@ const BusinessProcessOf = ({
   setPayloads,
 }: any) => {
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    bussinessProcessOf: '',
   };
 
   const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
+    bussinessProcessOf: Yup.string().required('This field is required'),
   });
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -37,21 +28,24 @@ const BusinessProcessOf = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+  
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-[60%] py-4">
           <ASingleSelect
-            name={'bussinessProcess'}
+            id={'bussinessProcessOf'}
             label={'Business Process of'}
             variant={'horizantal'}
-            options={[{ label: 'Trading (B2B)', value: 'trading' }]}
+            options={businessProcess}
+            value={formik.values.bussinessProcessOf}
+            error={formik.errors.bussinessProcessOf}
+            handleChange={formik.handleChange}
           />
         </div>
       </div>
@@ -59,7 +53,7 @@ const BusinessProcessOf = ({
         steps={steps}
         activeStep={activeStep}
         handlePrev={handlePrev}
-        handleNext={handleNext}
+        handleNext={formik.handleSubmit}
       />
     </>
   );

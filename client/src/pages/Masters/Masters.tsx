@@ -42,25 +42,25 @@ const Masters = () => {
             <Tab value={'client'}>
               <div className="flex items-center gap-2">
                 <BuildingLibraryIcon className="h-5 w-5" />
-                <span>Clients ({allClients.length})</span>
+                <span>Clients ({allClients?.meta?.count})</span>
               </div>
             </Tab>
             <Tab value={'product'}>
               <div className="flex items-center gap-2">
                 <UserIcon className="h-5 w-5" />
-                <span>Products ({allProducts.length})</span>
+                <span>Products ({allProducts?.meta?.count})</span>
               </div>
             </Tab>
             <Tab value={'branch'}>
               <div className="flex items-center gap-2">
                 <MapPinIcon className="h-5 w-5" />
-                <span>Branchs ({allBranchs.length})</span>
+                <span>Branchs ({allBranchs?.meta?.count})</span>
               </div>
             </Tab>
             <Tab value={'role'}>
               <div className="flex items-center gap-2">
                 <MapPinIcon className="h-5 w-5" />
-                <span>Roles ({allRoles.length})</span>
+                <span>Roles ({allRoles?.meta?.count})</span>
               </div>
             </Tab>
           </TabsHeader>

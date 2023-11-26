@@ -2,9 +2,8 @@ export const SectionFooter = ({ footers }: any) => {
   return (
     <div className="flex items-center bg-grey p-4">
       {footers?.map((item: any) => (
-        <p className="flex gap-3 w-full">
-          <span>{item?.label}</span>:
-          <span>{item?.value}</span>
+        <p className="flex gap-3 w-full" key={Math.random()}>
+          <span>{item?.label}</span>:<span>{item?.value}</span>
         </p>
       ))}
     </div>

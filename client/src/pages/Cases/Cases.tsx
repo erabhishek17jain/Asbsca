@@ -187,7 +187,7 @@ const Cases = () => {
   };
 
   useEffect(() => {
-    if (allUsers.length === 0 && userDetails?.role?.name === 'Admin')
+    if (allUsers?.users?.length === 0 && userDetails?.role?.name === 'Admin')
       store.dispatch(fetchAllUsersAsync(''));
     store.dispatch(
       fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
@@ -206,8 +206,8 @@ const Cases = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (allUsers?.length > 0) {
-      setUsersOptions(getOptions(allUsers, 'fullName', '_id'));
+    if (allUsers?.users?.length > 0) {
+      setUsersOptions(getOptions(allUsers?.users, 'fullName', '_id'));
     }
   }, [allUsers]);
 
@@ -348,16 +348,18 @@ const Cases = () => {
             <ASingleSelect
               id="assigneeId"
               label={'Assign Reporter*'}
+              value={formikAssigned.values.assigneeId}
               error={formikAssigned.errors.assigneeId}
-              formik={formikAssigned.getFieldProps('assigneeId')}
+              handleChange={formikAssigned.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
             <ASingleSelect
               id="reviewerId"
               label={'Assign Reviewer*'}
+              value={formikAssigned.values.reviewerId}
               error={formikAssigned.errors.reviewerId}
-              formik={formikAssigned.getFieldProps('reviewerId')}
+              handleChange={formikAssigned.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
               options={usersOptions}
             />
@@ -376,8 +378,9 @@ const Cases = () => {
               <ASingleSelect
                 id="status"
                 label={'Status*'}
+                value={formikStatus.values.status}
                 error={formikStatus.errors.status}
-                formik={formikStatus.getFieldProps('status')}
+                handleChange={formikStatus.handleChange}
                 icon={<UserIcon className="h-4 w-4" />}
                 options={caseStatusList}
               />
@@ -385,8 +388,9 @@ const Cases = () => {
             <ASingleSelect
               id="appoinmentStatus"
               label={'Appoinment Status*'}
+              value={formikStatus.values.appoinmentStatus}
               error={formikStatus.errors.appoinmentStatus}
-              formik={formikStatus.getFieldProps('appoinmentStatus')}
+              handleChange={formikStatus.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
               options={appoinmentStatusList}
             />

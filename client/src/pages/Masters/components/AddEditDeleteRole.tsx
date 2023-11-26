@@ -117,18 +117,20 @@ export function AddEditDeleteRole({
         >
           <div className="flex flex-col">
             <AInputField
-              type="text"
+              id={'name'}
               label="Role Name*"
+              value={formikRole.values.name}
               error={formikRole.errors.name}
-              formik={formikRole.getFieldProps('name')}
+              handleChange={formikRole.handleChange}
               icon={<UserIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
               options={statusList}
+              value={formikRole.values.status}
               error={formikRole.errors.status}
-              formik={formikRole.getFieldProps('status')}
+              handleChange={formikRole.handleChange}
               icon={<CheckIcon className="h-4 w-4" />}
             />
             <label className="block text-main text-sm mb-4">

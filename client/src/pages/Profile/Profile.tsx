@@ -175,16 +175,18 @@ const Profile = () => {
                   id={'fullName'}
                   label={'Full Name'}
                   disabled={true}
+                  value={formikUser.values.fullName}
                   error={formikUser.errors.fullName}
-                  formik={formikUser.getFieldProps('fullName')}
+                  handleChange={formikUser.handleChange}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
                   id={'mobile'}
                   label={'Mobile No'}
                   disabled={true}
+                  value={formikUser.values.mobile}
                   error={formikUser.errors.mobile}
-                  formik={formikUser.getFieldProps('mobile')}
+                  handleChange={formikUser.handleChange}
                   icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
                 />
               </div>
@@ -193,24 +195,27 @@ const Profile = () => {
                   id={'email'}
                   label={'E-Mail'}
                   disabled={true}
+                  value={formikUser.values.email}
                   error={formikUser.errors.email}
-                  formik={formikUser.getFieldProps('email')}
+                  handleChange={formikUser.handleChange}
                   icon={<></>}
                 />
                 <AInputField
                   id={'username'}
                   label={'Employee ID'}
                   disabled={true}
+                  value={formikUser.values.username}
                   error={formikUser.errors.username}
-                  formik={formikUser.getFieldProps('username')}
+                  handleChange={formikUser.handleChange}
                   icon={<></>}
                 />
               </div>
               <ATextField
-                id={'aboutMe'}
+                id={'about'}
                 label={'About Me'}
+                value={formikUser.values.about}
                 error={formikUser.errors.about}
-                formik={formikUser.getFieldProps('about')}
+                handleChange={formikUser.handleChange}
                 icon={<></>}
               />
               <div className="flex justify-end gap-3.5">

@@ -4,19 +4,17 @@ import { useState } from 'react';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
 import AGroupFields from '../../../components-global/AGroupFields';
-import ATags, { AddTagButton } from '../../../components-global/ATags';
+import { AddTagButton, AddTagFooter } from '../../../components-global/ATags';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
-
-const propertyLoanOptions = [
-  { name: 'loanDetailsNotProvided', label: 'Loan Details Not Provided' },
-  {
-    name: 'propertyValueNotProvided',
-    label: 'Property Vaue Not Provided',
-  },
-  { name: 'bothNotProvided', label: 'Both Not Provided' },
-];
+import { FieldArray, FormikProvider, useFormik } from 'formik';
+import {
+  purchaseYear,
+  occupiedBy,
+  putPB,
+  sourceOcr,
+  propertyLoanOptions,
+} from '../constants';
 
 const loanFooter = [
   {
@@ -29,10 +27,7 @@ const loanFooter = [
   },
 ];
 
-const loanInfo = {
-  isOpen: true,
-  data: [],
-};
+const loanInfo = { amount: '', emi: '', roi: '', year: '' };
 
 const DetailsOfProperty = ({
   steps,
@@ -43,31 +38,34 @@ const DetailsOfProperty = ({
   setPayloads,
 }: any) => {
   const [loanPropertyEMI, setLoanPropertyEMI] = useState<string>('');
-  const [loans, setLoans] = useState<any>([]);
 
-  const handleLoanPropertyEMI = (val: string) => {
+  const handleLoanPropertyEMI = (title: string, val: string) => {
     setLoanPropertyEMI(val);
   };
-
-  const addLoan = (tags: any) => {
-    tags.push({
-      ...loanInfo,
-      id: `loan${tags.length + 1}`,
-    });
-    setLoans([...tags]);
-  };
-
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    purchaseYear: '',
+    buildUpArea: '',
+    caretArea: '',
+    occupiedBy: '',
+    loanPropertyAddress: '',
+    builderName: '',
+    propertyLoanDetails: {
+      isLoanProvided: '',
+      loanDetails: [{ ...loanInfo }],
+      propertyValue: {
+        agreementValue: '',
+        purchaseValue: '',
+        marketValue: '',
+        ocrPaid: '',
+        pOrb: '',
+        balanceOcr: '',
+        sourceOcr: '',
+      },
+      loanAsPerForm: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -97,34 +95,48 @@ const DetailsOfProperty = ({
           <ASection title={'Property Details'}>
             <AGroupFields>
               <ASingleSelect
-                name={'purchaseYear'}
+                id={'purchaseYear'}
                 label={'Purchase Year'}
-                options={[{ label: 'India', value: 'india' }]}
+                options={purchaseYear}
+                value={formik.values.purchaseYear}
+                error={formik.errors.purchaseYear}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                type={'text'}
-                name={'buildupArea'}
+                id={'buildUpArea'}
                 label={'Build-up Area (Sq. Ft.)'}
+                value={formik.values.buildUpArea}
+                error={formik.errors.buildUpArea}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                type={'text'}
-                name={'carpetArea'}
+                id={'caretArea'}
                 label={'Carpet Area (Sq. Ft.)'}
+                value={formik.values.caretArea}
+                error={formik.errors.caretArea}
+                handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'occupiedBy'}
+                id={'occupiedBy'}
                 label={'Occupied By'}
-                options={[{ label: 'India', value: 'india' }]}
+                options={occupiedBy}
+                value={formik.values.occupiedBy}
+                error={formik.errors.occupiedBy}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                type={'text'}
-                name={'loanPropertyAddress'}
+                id={'loanPropertyAddress'}
                 label={'Loan Property Address'}
+                value={formik.values.loanPropertyAddress}
+                error={formik.errors.loanPropertyAddress}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                type={'text'}
-                name={'builderName'}
+                id={'builderName'}
                 label={'Builder Name'}
+                value={formik.values.builderName}
+                error={formik.errors.builderName}
+                handleChange={formik.handleChange}
               />
             </AGroupFields>
           </ASection>
@@ -133,30 +145,99 @@ const DetailsOfProperty = ({
             value={loanPropertyEMI}
             title={'Loan to Property'}
             radioValues={propertyLoanOptions}
-            handleChecked={handleLoanPropertyEMI}
+            handleChange={handleLoanPropertyEMI}
           />
           {(loanPropertyEMI === 'propertyValueNotProvided' ||
             loanPropertyEMI === '') && (
             <ASection title={'Loan Applied'} footers={loanFooter}>
-              {loans.length > 0 ? (
-                <ATags tags={loans} addTag={addLoan} setTags={setLoans}>
-                  <AGroupFields>
-                    <AInputField
-                      type={'text'}
-                      name={'amount'}
-                      label={'Amount'}
-                    />
-                    <AInputField type={'text'} name={'emi'} label={'EMI'} />
-                    <AInputField type={'text'} name={'roi'} label={'ROI'} />
-                    <AInputField type={'text'} name={'year'} label={'Year'} />
-                  </AGroupFields>
-                </ATags>
-              ) : (
-                <AddTagButton
-                  title={'Add Loan'}
-                  addLoan={() => addLoan(loans)}
-                />
-              )}
+              <FormikProvider value={formik}>
+                <form>
+                  <FieldArray
+                    name="propertyLoanDetails.loanDetails"
+                    render={(tag) => (
+                      <div>
+                        {formik.values.propertyLoanDetails.loanDetails.length >
+                        0 ? (
+                          formik.values.propertyLoanDetails.loanDetails.map(
+                            (item: any, index: any) => (
+                              <div
+                                key={item?.name}
+                                className="flex items-center w-full gap-3 mb-3"
+                              >
+                                <div className="w-full border-2 rounded-lg pt-3 px-3">
+                                  <AGroupFields col={3}>
+                                    <AInputField
+                                      label={'Amount'}
+                                      id={`propertyLoanDetails.loanDetails[${index}].amount`}
+                                      value={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].amount
+                                      }
+                                      error={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].amount
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
+                                    <AInputField
+                                      label={'EMI'}
+                                      id={`propertyLoanDetails.loanDetails[${index}].emi`}
+                                      value={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].emi
+                                      }
+                                      error={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].emi
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
+                                    <AInputField
+                                      label={'ROI'}
+                                      id={`propertyLoanDetails.loanDetails[${index}].roi`}
+                                      value={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].roi
+                                      }
+                                      error={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].roi
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
+                                    <AInputField
+                                      label={'Year'}
+                                      id={`propertyLoanDetails.loanDetails[${index}].year`}
+                                      value={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].year
+                                      }
+                                      error={
+                                        formik?.values?.propertyLoanDetails
+                                          .loanDetails[index].year
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
+                                  </AGroupFields>
+                                </div>
+                                <AddTagFooter
+                                  addTag={() => tag.push(loanInfo)}
+                                  removeTag={() => tag.remove(index)}
+                                />
+                              </div>
+                            ),
+                          )
+                        ) : (
+                          <AddTagButton
+                            title={'Add Family Member'}
+                            addTag={() => tag.push(loanInfo)}
+                          />
+                        )}
+                      </div>
+                    )}
+                  />
+                </form>
+              </FormikProvider>
             </ASection>
           )}
           {(loanPropertyEMI === 'loanDetailsNotProvided' ||
@@ -164,46 +245,96 @@ const DetailsOfProperty = ({
             <ASection title={'Property Value'}>
               <AGroupFields>
                 <AInputField
-                  type={'text'}
-                  name={'agreementValue'}
+                  id={'agreementValue'}
                   label={'Agreement Value'}
+                  value={
+                    formik.values.propertyLoanDetails.propertyValue
+                      .agreementValue
+                  }
+                  error={
+                    formik.values.propertyLoanDetails.propertyValue
+                      .agreementValue
+                  }
+                  handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'text'}
-                  name={'purchaseValue'}
+                  id={'purchaseValue'}
                   label={'Purchase Value'}
+                  value={
+                    formik.values.propertyLoanDetails.propertyValue
+                      .purchaseValue
+                  }
+                  error={
+                    formik.values.propertyLoanDetails.propertyValue
+                      .purchaseValue
+                  }
+                  handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'text'}
-                  name={'marketValue'}
                   label={'Market Value'}
+                  id={'marketValue'}
+                  value={
+                    formik.values.propertyLoanDetails.propertyValue.marketValue
+                  }
+                  error={
+                    formik.values.propertyLoanDetails.propertyValue.marketValue
+                  }
+                  handleChange={formik.handleChange}
                 />
                 <div className="flex gap-3">
                   <AInputField
-                    type={'text'}
-                    name={'ocrPaid'}
+                    id={'ocrPaid'}
                     label={'OCR Paid'}
+                    value={
+                      formik.values.propertyLoanDetails.propertyValue.ocrPaid
+                    }
+                    error={
+                      formik.values.propertyLoanDetails.propertyValue.ocrPaid
+                    }
+                    handleChange={formik.handleChange}
                   />
-                  <ASingleSelect name={'putPB'} label={'P/B'} options={[]} />
+                  <ASingleSelect
+                    id={'pOrb'}
+                    label={'P/B'}
+                    options={putPB}
+                    value={formik.values.propertyLoanDetails.propertyValue.pOrb}
+                    error={formik.values.propertyLoanDetails.propertyValue.pOrb}
+                    handleChange={formik.handleChange}
+                  />
                 </div>
                 <AInputField
-                  type={'text'}
-                  name={'balanceOcr'}
+                  id={'balanceOcr'}
                   label={'Balance OCR'}
+                  value={
+                    formik.values.propertyLoanDetails.propertyValue.balanceOcr
+                  }
+                  error={
+                    formik.values.propertyLoanDetails.propertyValue.balanceOcr
+                  }
+                  handleChange={formik.handleChange}
                 />
-                <AInputField
-                  type={'text'}
-                  name={'sourceOcr'}
+                <ASingleSelect
+                  id={'sourceOcr'}
                   label={'Source OCR'}
+                  options={sourceOcr}
+                  value={
+                    formik.values.propertyLoanDetails.propertyValue.sourceOcr
+                  }
+                  error={
+                    formik.values.propertyLoanDetails.propertyValue.sourceOcr
+                  }
+                  handleChange={formik.handleChange}
                 />
               </AGroupFields>
             </ASection>
           )}
           <AGroupFields col={2}>
             <AInputField
-              type={'text'}
-              name={'loanApplication'}
+              id={'loanAsPerForm'}
               label={'Loan as per application Form'}
+              value={formik.values.propertyLoanDetails.loanAsPerForm}
+              error={formik.values.propertyLoanDetails.loanAsPerForm}
+              handleChange={formik.handleChange}
             />
           </AGroupFields>
         </div>

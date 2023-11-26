@@ -17,9 +17,16 @@ export const reportSteps = [
 ];
 
 export const yesNoOptions = [
-  { name: 'yes', label: 'Yes' },
-  { name: 'no', label: 'No' },
-  { name: 'noDetail', label: 'Details Not Provided' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
+  { value: 'noDetail', label: 'Details Not Provided' },
+];
+
+export const putPB = [
+  { value: 'p', label: 'p' },
+  { value: 'b', label: 'b' },
+  { value: 'P', label: 'P' },
+  { value: 'B', label: 'B' },
 ];
 
 export const loans = [
@@ -98,7 +105,7 @@ export const residenceStatus = [
   { label: 'Owned by Under Pagadi System', value: 'ownedByPagadiSystem' },
 ];
 
-export const familyBcakgroundRealtion = [
+export const familyRealtion = [
   { label: 'Spouse', value: 'spouse' },
   { label: 'Mother', value: 'mother' },
   { label: 'Father', value: 'father' },
@@ -112,11 +119,21 @@ export const familyBcakgroundRealtion = [
   { label: 'Partner', value: 'partner' },
 ];
 
-export const familyBackgroundEarningStatus = [
+export const earningStatus = [
   { label: 'Earning', value: 'earning' },
   { label: 'Dependent', value: 'dependent' },
   { label: 'NP', value: 'np' },
 ];
+
+export const propertyLoanOptions = [
+  { value: 'loanDetailsNotProvided', label: 'Loan Details Not Provided' },
+  {
+    value: 'propertyValueNotProvided',
+    label: 'Property Vaue Not Provided',
+  },
+  { value: 'bothNotProvided', label: 'Both Not Provided' },
+];
+
 
 export const typesOfLoan = [
   { label: 'Home Loan', value: 'homeLoan' },
@@ -131,7 +148,57 @@ export const typesOfLoan = [
   { label: 'Term Loan', value: 'termLoan' },
 ];
 
-export const remark = [
+export const banksList = [
+  { label: 'Abhyudaya Bank', value: '' },
+  { label: 'AU Small Bank', value: '' },
+  { label: 'Axis Bank', value: '' },
+  { label: 'Bandhan Bank', value: '' },
+  { label: 'Bank Of Baroda', value: '' },
+  { label: 'Bank Of India', value: '' },
+  { label: 'Bank Of Maharastra', value: '' },
+  { label: 'Bassein Catholic Co-Op Bank', value: '' },
+  { label: 'Bharat Bank Mumbai', value: '' },
+  { label: 'Canera Bank', value: '' },
+  { label: 'Centra Bank Of India', value: '' },
+  { label: 'Citi Bank', value: '' },
+  { label: 'DCB Bank', value: '' },
+  { label: 'Deustche Bank', value: '' },
+  { label: 'Dhanlakshmi Bank', value: '' },
+  { label: 'Dombivili Nagari Sahakari Bank', value: '' },
+  { label: 'Federal Bank', value: '' },
+  { label: 'HDFC Bank', value: '' },
+  { label: 'ICICI Bank', value: '' },
+  { label: 'IDBI Bank', value: '' },
+  { label: 'IDFC First Bank', value: '' },
+  { label: 'Indian Bank', value: '' },
+  { label: 'Indian Overseas Bank', value: '' },
+  { label: 'Indusand Bank', value: '' },
+  { label: 'Jankalyan Sahakari Bank', value: '' },
+  { label: 'Karnataka Bank', value: '' },
+  { label: 'Kotak Mahindra Bank', value: '' },
+  { label: 'Nkgsb Bank', value: '' },
+  { label: 'Punjab National Bank', value: '' },
+  { label: 'RBL Bank', value: '' },
+  { label: 'South Indian Bank', value: '' },
+  { label: 'Standard Charted Bank', value: '' },
+  { label: 'State Bank Of India', value: '' },
+  { label: 'suryoday Small Finance Bank', value: '' },
+  { label: 'The Malad Sahakari Bank', value: '' },
+  { label: 'UCO Bank', value: '' },
+  { label: 'Union Bank Of India', value: '' },
+  { label: 'Vasai Janata Sahakari Bank', value: '' },
+  { label: 'Vasai Vikas Shahkari Bank', value: '' },
+  { label: 'Yes Bank', value: '' },
+];
+export const bankTypes = [
+  { label: 'CA', value: '' },
+  { label: 'SA', value: '' },
+  { label: 'OD', value: '' },
+  { label: 'CC', value: '' },
+  { label: 'DOD', value: '' },
+];
+
+export const existingLoanRemark = [
   { label: 'Taken to buy the property', value: 'takenToBuyTheProperty' },
   { label: 'Taken to buy machines', value: 'takenToBuyuMachines' },
   { label: 'Taken for personal reason', value: 'takenForPersonalReason' },
@@ -160,7 +227,7 @@ export const typeOfFacility = [
   { label: 'Dropline Overdraft', value: 'droplineOverdraft' },
 ];
 
-export const particulars = [
+export const particularsCommitment = [
   { label: 'Medium', value: 'medium' },
   { label: 'Term Plan', value: 'termPlan' },
   { label: 'LIC', value: 'lic' },
@@ -170,7 +237,7 @@ export const particulars = [
 ];
 
 export const purchaseYear = [
-  { label: '2022', value: '2022' },
+  { label: 'Last Year', value: 'lastYear' },
   { label: 'Property not yet Finalised', value: 'properyNotYetFinalised' },
   {
     label: 'Property Details not provided',
@@ -255,7 +322,7 @@ export const vicinity = [
   },
 ];
 
-export const howWasTurnoverVerified = [
+export const turnoverVerified = [
   {
     label: 'Turnover is not verified as documents were not provided',
     value: 'turnoverIsNotVerifiedAsDocumentsWereNotProvided',
@@ -295,7 +362,14 @@ export const citiesOfRepresentation = [
   { label: 'India & Abroad', value: 'india&Abroad' },
 ];
 
-export const incomeOfWhichApplicant = [
+export const fixedEmployee = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+  { label: 'Yes but emoloyee not seen', value: '' },
+];
+
+// show list from personal details
+export const applicantIncome = [
   { label: 'Applicant', value: 'Applicant' },
   { label: 'Applicant & Co-Applicant', value: 'Applicant&CoApplicant' },
   { label: 'Co-Applicant', value: 'CoApplicant' },
@@ -307,7 +381,7 @@ export const incomeOfWhichApplicant = [
   { label: 'Co-Applicant 6', value: 'CoApplicant6' },
 ];
 
-export const commentOnTrendOfBusinessOfPast2years = [
+export const trendOfBusiness = [
   {
     label: 'Cannot Comment as data was not provided',
     value: 'cannotCommentAsDataWasNotProvided',
@@ -338,7 +412,7 @@ export const futureProjection = [
   },
 ];
 
-export const particularsN1 = [
+export const particularsAssets = [
   { label: 'Residence', value: 'residence' },
   { label: 'Agricutural Land', value: 'agriculturalLand' },
   { label: 'Banglow', value: 'banglow' },
@@ -360,7 +434,7 @@ export const particularsN1 = [
   { label: 'Truck', value: 'truck' },
 ];
 
-export const statusN1 = [
+export const statusAssets = [
   { label: 'Owned by Applicant', value: 'ownedByApplicant' },
   { label: 'Owned by Co-Applicant', value: 'ownedByCoApplicant' },
   {
@@ -371,12 +445,65 @@ export const statusN1 = [
   { label: 'Self-constructed', value: 'selfConstrucetd' },
 ];
 
-export const purchaseYa = [
+export const particularsInvestment = [
+  { label: 'Bond', value: '' },
+  { label: 'Shares & Stocks (Equity)', value: '' },
+  { label: 'Fixed Deposit', value: '' },
+  { label: 'Mutual Funds', value: '' },
+  { label: 'PF', value: '' },
+  { label: 'Silver', value: '' },
+  { label: 'Gold', value: '' },
+  { label: 'ULIP', value: '' },
+  { label: 'Cryptocurrencies', value: '' },
+];
+
+export const thirdPartyCheck = [
+  { label: 'Positive', value: '' },
+  { label: 'Negative', value: '' },
+  { label: 'Not Done', value: '' },
+];
+
+export const applicantBehaviour = [
+  { label: 'Co-operative', value: '' },
+  { label: 'Reluctant', value: '' },
+  { label: 'Co-operative but did not provide documents', value: '' },
+  {
+    label: 'Co-operative but did not provide Financial Information',
+    value: '',
+  },
+  { label: 'Extremly Reluctant in sharing information', value: '' },
+  { label: 'Extreamlt Rude in sharing information', value: '' },
   { label: '', value: '' },
-  { label: '', value: '' },
-  { label: '', value: '' },
-  { label: '', value: '' },
-  { label: '', value: '' },
-  { label: '', value: '' },
-  { label: '', value: '' },
+];
+
+export const applicantDoing = [
+  { label: 'Applicant was on all with his client', value: '' },
+  { label: 'Applicant was in meeting with his employees', value: '' },
+  { label: 'Applicant was in meeting with his clients', value: '' },
+  { label: 'Applicant was handling customers', value: '' },
+  {
+    label: 'Applicant was not present in office he came for PD afterwards',
+    value: '',
+  },
+  { label: 'Applicant was doing regular business activities', value: '' },
+];
+export const employeeDoing = [
+  { label: 'Employees were working in PC', value: '' },
+  { label: 'Workers were working on Machines', value: '' },
+  { label: 'Employees doing their work', value: '' },
+  { label: 'Employees were handling customers', value: '' },
+];
+export const businessProcess = [
+  { label: 'Trading (B2B)', value: 'tradingB2B' },
+  { label: 'Service (With Purchases)', value: 'serviceWithPurchase' },
+  { label: 'Salaried', value: 'salaried' },
+  { label: 'Service', value: 'service' },
+  { label: 'Retail - Shop', value: 'Retail-Shop' },
+  { label: 'Resturant', value: 'resturant' },
+  { label: 'Resturant & Bar', value: 'resturantBar' },
+  { label: 'Hotel', value: 'hotel' },
+  { label: 'Retail & Wholesale', value: 'retailWholesale' },
+  { label: 'Hospital/Clinic', value: 'hospitalClinic' },
+  { label: 'Manufacturing', value: 'manufacturing' },
+  { label: 'Other', value: 'other' },
 ];

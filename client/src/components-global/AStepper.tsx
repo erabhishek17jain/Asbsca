@@ -40,7 +40,6 @@ export const AStepperPagination = ({
       <AButton
         action={handleNext}
         variant={'secondary'}
-        disabled={activeStep === steps?.length - 1}
         label={activeStep === steps?.length - 1 ? 'Generate Report' : 'Next'}
         icon={
           activeStep === steps?.length - 1 ? (
@@ -60,7 +59,7 @@ export function AStepper({
   setPayloads,
   generateReport,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(11);
+  const [activeStep, setActiveStep] = React.useState(13);
 
   const handleNext = () =>
     activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
@@ -88,7 +87,7 @@ export function AStepper({
               {steps[activeStep].label}
             </div>
           )}
-          {activeStep === 0 && (
+          {activeStep === 0 && ( // done
             <LoanDetails
               steps={steps}
               payloads={payloads}
@@ -218,7 +217,7 @@ export function AStepper({
               handleNext={handleNext}
             />
           )}
-          {activeStep === 13 && (
+          {activeStep === 13 && ( // done
             <DocumentsSeen
               steps={steps}
               payloads={payloads}
@@ -228,7 +227,7 @@ export function AStepper({
               handleNext={handleNext}
             />
           )}
-          {activeStep === 14 && (
+          {activeStep === 14 && ( // done
             <BusinessProcessOf
               steps={steps}
               payloads={payloads}

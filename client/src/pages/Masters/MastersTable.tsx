@@ -45,16 +45,16 @@ export function MastersTable({ type }: any) {
 
   useEffect(() => {
     if (type === 'client') {
-      setData(allClients);
+      setData(allClients?.data);
       setHeaders(CLIENT_TABLE_HEAD);
     } else if (type === 'product') {
-      setData(allProducts);
+      setData(allProducts?.products);
       setHeaders(PRODUCT_TABLE_HEAD);
     } else if (type === 'branch') {
-      setData(allBranchs);
+      setData(allBranchs?.branches);
       setHeaders(BRAND_TABLE_HEAD);
     } else if (type === 'role') {
-      setData(allRoles);
+      setData(allRoles?.roles);
       setHeaders(ROLE_TABLE_HEAD);
     }
   }, [allClients, allBranchs, allProducts, allRoles]);

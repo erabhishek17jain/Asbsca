@@ -9,6 +9,7 @@ import AGroupFields from '../../../components-global/AGroupFields';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { applicantIncome } from '../constants';
 
 const turnoverFooter = [
   {
@@ -40,36 +41,57 @@ const totalEarningFooter = [
 ];
 
 const financials = [
-  { title: 'Turnover/Gross Receipts' },
-  { title: 'Purchases' },
+  { title: 'Turnover/Gross Receipts', value: 'turnoverGrossReciepts' },
+  { title: 'Purchases', value: 'purchases' },
 ];
 
 const expenses = [
-  { title: 'Salary' },
-  { title: 'Maintanance' },
-  { title: 'Transport' },
-  { title: 'Electricity' },
-  { title: 'Travelling Expenses' },
-  { title: 'Fuel' },
-  { title: 'Office Rent' },
-  { title: "Partner's Salary" },
-  { title: "Partner's Remuneration" },
-  { title: 'Other Expenses' },
-  { title: 'Bifercation of Expense not provided, Total Expenses' },
+  { title: 'Salary', value: 'salary' },
+  { title: 'Maintanance', value: 'maintanance' },
+  { title: 'Transport', value: 'transport' },
+  { title: 'Electricity', value: 'electricity' },
+  { title: 'Travelling Expenses', value: 'travelling' },
+  { title: 'Fuel', value: 'fuel' },
+  { title: 'Office Rent', value: 'officeRent' },
+  { title: "Partner's Salary", value: 'partnersSalary' },
+  { title: "Partner's Remuneration", value: 'partnersRemuneration' },
+  { title: 'Other Expenses', value: 'otherExpenses' },
+  { title: 'Bifercation of Expense not provided, Total Expenses', value: 'bifercationOfExpenses' },
 ];
 
 const salaryFromBusiness = [
-  { title: 'Salary from above business' },
-  { title: 'Remuneration from above business' },
-  { title: 'Rent' },
+  { title: 'Salary from above business', value: 'salaryFromBusiness' },
+  {
+    title: 'Remuneration from above business',
+    value: 'remunerationFromBusiness',
+  },
+  { title: 'Rent', value: 'rent' },
 ];
 
-const FinancialType = ({ title }: any) => {
+const FinancialType = ({ formik, title, type, value }: any) => {
   return (
     <AGroupFields col={3} title={title}>
-      <AInputField type={'text'} name={'amountPA'} label={'Amount PA'} />
-      <AInputField type={'text'} name={'amountPM'} label={'Amount PM'} />
-      <AInputField type={'text'} name={'months'} label={'Months'} />
+      <AInputField
+        id={`${value}.amountPA`}
+        label={'Amount PA'}
+        value={formik.values[type][value].amountPA}
+        error={formik.errors[type][value].amountPA}
+        handleChange={formik.handleChange}
+      />
+      <AInputField
+        id={`${value}.amountPM`}
+        label={'Amount PM'}
+        value={formik.values[type][value].amountPM}
+        error={formik.errors[type][value].amountPM}
+        handleChange={formik.handleChange}
+      />
+      <AInputField
+        id={`${value}.months`}
+        label={'Months'}
+        value={formik.values[type][value].months}
+        error={formik.errors[type][value].months}
+        handleChange={formik.handleChange}
+      />
     </AGroupFields>
   );
 };
@@ -84,18 +106,109 @@ const Financials = ({
 }: any) => {
   const [showModal, setShowModal] = useState(false);
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    entityName: '',
+    applicantIncome: '',
+    income: {
+      turnoverGrossReciepts: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      purchases: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalAmountPA: '',
+      totalAmountPM: '',
+    },
+    expenses: {
+      salary: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      maintanance: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      transport: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      electricity: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      travelling: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      fuel: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      officeRent: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      partnersSalary: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      partnersRemuneration: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      otherExpenses: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      bifercationOfExpenses: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalExpensePA: '',
+      totalExpensePM: '',
+      netProfitPA: '',
+      netProfitPM: '',
+      shareOfProfitPA: '',
+      shareOfProfitPM: '',
+    },
+    businessIncome: {
+      salaryFromBusiness: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      remunerationFromBusiness: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      rent: {
+        amountPA: '',
+        amountPM: '',
+        months: 0,
+      },
+      totalIncomePA: '',
+      totalIncomePM: '',
+      totalEarning: '',
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -117,31 +230,50 @@ const Financials = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col py-4">
           <AGroupFields col={2}>
             <AInputField
-              type={'text'}
-              name={'entityName'}
+              id={'entityName'}
               label={'Entity Name'}
+              value={formik.values.entityName}
+              error={formik.errors.entityName}
+              handleChange={formik.handleChange}
             />
             <ASingleSelect
-              name={'incomeOfWhichApplicant'}
+              id={'applicantIncome'}
               label={'Income of which applicant?'}
-              options={[{ label: 'India', value: 'india' }]}
+              options={applicantIncome}
+              value={formik.values.applicantIncome}
+              error={formik.errors.applicantIncome}
+              handleChange={formik.handleChange}
             />
           </AGroupFields>
           <ASection footers={turnoverFooter}>
             {financials.map((item) => (
-              <FinancialType key={item.title} title={item.title} />
+              <FinancialType
+                type={'income'}
+                formik={formik}
+                key={item.value}
+                title={item.title}
+                value={item.value}
+              />
             ))}
           </ASection>
           <ASection>
             {expenses.map((item) => {
-              return <FinancialType key={item.title} title={item.title} />;
+              return (
+                <FinancialType
+                  type={'expenses'}
+                  formik={formik}
+                  key={item.value}
+                  title={item.title}
+                  value={item.value}
+                />
+              );
             })}
             <div className="flex items-center justify-center">
               <AButton
@@ -157,11 +289,7 @@ const Financials = ({
                 title={'Add More Expenses'}
                 closeModal={() => setShowModal(false)}
               >
-                <AInputField
-                  type={'text'}
-                  name={'expenseType'}
-                  label="Expense Type"
-                />
+                <AInputField id={'expenseType'} label="Expense Type" />
               </AModal>
             )}
             <SectionFooter footers={totalExpensesFooter} />
@@ -169,7 +297,15 @@ const Financials = ({
           </ASection>
           <ASection footers={totalEarningFooter}>
             {salaryFromBusiness.map((item) => {
-              return <FinancialType key={item.title} title={item.title} />;
+              return (
+                <FinancialType
+                  type={'businessIncome'}
+                  formik={formik}
+                  key={item.value}
+                  title={item.title}
+                  value={item.value}
+                />
+              );
             })}
             <div className="flex justify-center">
               <AButton
@@ -185,11 +321,7 @@ const Financials = ({
                 title={'Add More Expenses'}
                 closeModal={() => setShowModal(false)}
               >
-                <AInputField
-                  type={'text'}
-                  name={'expenseType'}
-                  label="Expense Type"
-                />
+                <AInputField id={'expenseType'} label="Expense Type" />
               </AModal>
             )}
           </ASection>

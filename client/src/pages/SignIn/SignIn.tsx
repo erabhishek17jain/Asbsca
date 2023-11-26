@@ -113,16 +113,18 @@ const SignIn = () => {
                   id={'email'}
                   type={'email'}
                   label={'Email'}
+                  value={formik.values.email}
                   error={formik.errors.email}
-                  formik={formik.getFieldProps('email')}
+                  handleChange={formik.handleChange}
                   icon={<UserIcon className="h-4 w-4" />}
                 />
                 <AInputField
                   id={'password'}
                   type={showPassword ? 'text' : 'password'}
                   label={'Password'}
+                  value={formik.values.password}
                   error={formik.errors.password}
-                  formik={formik.getFieldProps('password')}
+                  handleChange={formik.handleChange}
                   icon={
                     <div onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? (
@@ -141,9 +143,9 @@ const SignIn = () => {
                     checked={isRembember}
                     handleChecked={(e: any) => setIsRembember(e.target.checked)}
                   />
-                  <a href="#" className="text-sm text-main">
+                  <Link to="/?email" className="text-sm text-main">
                     Forget password?
-                  </a>
+                  </Link>
                 </div>
                 <AButton
                   type={'submit'}

@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
-import ATags, { AddTagButton } from '../../../components-global/ATags';
+import { AddTagButton, AddTagHeader } from '../../../components-global/ATags';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
-import { useSelector } from 'react-redux';
-import { getOptions } from '../../../utils';
-import { yesNoOptions } from '../constants';
+import {
+  banksList,
+  existingLoanRemark,
+  particularsCommitment,
+  typeOfFacility,
+  typesOfLoan,
+  yesNoOptions,
+} from '../constants';
 import AGroupFields from '../../../components-global/AGroupFields';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { FieldArray, FormikProvider, useFormik } from 'formik';
 
 const existingLoanFooter = [
   {
@@ -53,91 +58,12 @@ const commitmentsFooter = [
   },
 ];
 
-const balanceTransferInfo = {
-  isOpen: true,
-  data: [],
-};
-
-const existingLoanInfo = {
-  isOpen: true,
-  data: [],
-};
-
-const existingLoanEMIInfo = {
-  isOpen: true,
-  data: [],
-};
-
-const LoanInformation = () => {
-  const { allClients } = useSelector((state: any) => state.clients);
-  const [clientOptions, setClientOptions] = useState<any>([]);
-  useEffect(() => {
-    setClientOptions(getOptions(allClients, 'name', '_id'));
-  }, [allClients]);
-  return (
-    <AGroupFields>
-      <ASingleSelect
-        name={'typeOfLoan'}
-        label={'Type of Loan'}
-        options={[{ label: 'India', value: 'india' }]}
-      />
-      <ASingleSelect
-        name={'bankName'}
-        label={'Bank Name'}
-        options={clientOptions}
-      />
-      <AInputField
-        type={'number'}
-        name={'loanAmount'}
-        label={'Loan Amount (Lakhs)'}
-      />
-      <AInputField type={'number'} name={'tenure'} label={'Tenure (Months)'} />
-      <AInputField type={'number'} name={'emi'} label={'EMI'} />
-      <AInputField type={'text'} name={'outstanding'} label={'Outstanding'} />
-      <ASingleSelect
-        name={'remark'}
-        label={'Remark'}
-        options={[{ label: 'India', value: 'india' }]}
-      />
-    </AGroupFields>
-  );
-};
-
-const ExistingLoan = () => {
+const ExistingLoan = ({ formik }: any) => {
   const [isExistingLoan, setIsExistingLoan] = useState('yes');
-  const [existingLoan, setExistingLoan] = useState<any>([]);
-  const [existingLoanEMI, setExistingLoanEMI] = useState<any>([]);
-  const [balanceTransfer, setBalanceTransfer] = useState<any>([]);
 
-  const handleExistingLoan = (val: string) => {
+  const handleExistingLoan = (title: string, val: string) => {
     setIsExistingLoan(val);
-  };
-
-  const addBussinessLoan = (tags: any) => {
-    tags.push({
-      ...balanceTransferInfo,
-      id: `app${tags.length + 1}`,
-      title: `Balance Transfer ${tags.length + 1}`,
-    });
-    setBalanceTransfer([...tags]);
-  };
-
-  const addExistingLoan = (tags: any) => {
-    tags.push({
-      ...existingLoanInfo,
-      id: `loan${tags.length + 1}`,
-      title: `Loan ${tags.length + 1}`,
-    });
-    setExistingLoan([...tags]);
-  };
-
-  const addExistingLoanEMI = (tags: any) => {
-    tags.push({
-      ...existingLoanEMIInfo,
-      id: `loanEmi${tags.length + 1}`,
-      title: `Loan ${tags.length + 1}`,
-    });
-    setExistingLoanEMI([...tags]);
+    formik.setFieldValue('existanceLoan.isExistanceLoan', val);
   };
 
   return (
@@ -146,7 +72,7 @@ const ExistingLoan = () => {
         value={isExistingLoan}
         title={'Existing Loan'}
         radioValues={yesNoOptions}
-        handleChecked={handleExistingLoan}
+        handleChange={handleExistingLoan}
       />
       {isExistingLoan === 'yes' && (
         <>
@@ -154,20 +80,146 @@ const ExistingLoan = () => {
             footers={existingLoanFooter}
             title={'Balance Transfer Loans (If Any)'}
           >
-            {balanceTransfer.length > 0 ? (
-              <ATags
-                tags={balanceTransfer}
-                addTag={addBussinessLoan}
-                setTags={setBalanceTransfer}
-              >
-                <LoanInformation />
-              </ATags>
-            ) : (
-              <AddTagButton
-                title={'Add Bussiness Loan'}
-                addLoan={() => addBussinessLoan(balanceTransfer)}
-              />
-            )}
+            <FormikProvider value={formik}>
+              <form>
+                <FieldArray
+                  name="existanceLoan.balanceTransfer"
+                  render={(tag) => (
+                    <div>
+                      {formik.values.existanceLoan.balanceTransfer > 0 ? (
+                        formik.values.existanceLoan.balanceTransfer.map(
+                          (item: any, index: number) => (
+                            <div className="mb-3">
+                              <AddTagHeader
+                                title={item?.title}
+                                removeTag={() => tag.remove(index)}
+                                addTag={() =>
+                                  tag.push({
+                                    ...existingLoanInfo,
+                                    title: 'Balance Transfer',
+                                  })
+                                }
+                              />
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                                <AGroupFields>
+                                  <ASingleSelect
+                                    id={`existanceLoan.balanceTransfer[${index}].typeOfLoan`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].typeOfLoan
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].typeOfLoan
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Type of Loan'}
+                                    options={typesOfLoan}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.balanceTransfer[${index}].bankName`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].bankName
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].bankName
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Bank Name'}
+                                    options={banksList}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.balanceTransfer[${index}].loanAmount`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].loanAmount
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].loanAmount
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Loan Amount (Lakhs)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.balanceTransfer[${index}].tenureMonth`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].tenureMonth
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].tenureMonth
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Tenure (Months)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.balanceTransfer[${index}].emi`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].emi
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].emi
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'EMI'}
+                                  />
+                                  <AInputField
+                                    id={`existanceLoan.balanceTransfer[${index}].outstanding`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].outstanding
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].outstanding
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Outstanding'}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.balanceTransfer[${index}].remark`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].remark
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .balanceTransfer[index].remark
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Remark'}
+                                    options={existingLoanRemark}
+                                  />
+                                </AGroupFields>
+                              </div>
+                            </div>
+                          ),
+                        )
+                      ) : (
+                        <AddTagButton
+                          title={'Add Balance Transfer'}
+                          addTag={() =>
+                            tag.push({
+                              ...existingLoanInfo,
+                              title: 'Balance Transfer',
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
+                />
+              </form>
+            </FormikProvider>
           </ASection>
           <ASection
             footers={existingLoanFooter}
@@ -175,20 +227,159 @@ const ExistingLoan = () => {
               'Existing Loan- Loan which will be closed from Current Applied Loan Amt or which are to be closed within 12 months. (If Any)'
             }
           >
-            {existingLoan.length > 0 ? (
-              <ATags
-                tags={existingLoan}
-                addTag={addExistingLoan}
-                setTags={setExistingLoan}
-              >
-                <LoanInformation />
-              </ATags>
-            ) : (
-              <AddTagButton
-                title={'Add Existing Loan'}
-                addLoan={() => addExistingLoan(existingLoan)}
-              />
-            )}
+            <FormikProvider value={formik}>
+              <form>
+                <FieldArray
+                  name="existanceLoan.existingLoanClosedThisYear"
+                  render={(tag) => (
+                    <div>
+                      {formik.values.existanceLoan.existingLoanClosedThisYear >
+                      0 ? (
+                        formik.values.existanceLoan.existingLoanClosedThisYear.map(
+                          (item: any, index: number) => (
+                            <div className="mb-3">
+                              <AddTagHeader
+                                title={item?.title}
+                                removeTag={() => tag.remove(index)}
+                                addTag={() =>
+                                  tag.push({
+                                    ...existingLoanInfo,
+                                    title: 'Existing Loan Closed',
+                                  })
+                                }
+                              />
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                                <AGroupFields>
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].typeOfLoan`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .typeOfLoan
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .typeOfLoan
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Type of Loan'}
+                                    options={typesOfLoan}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].bankName`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .bankName
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .bankName
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Bank Name'}
+                                    options={banksList}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].loanAmount`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .loanAmount
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .loanAmount
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Loan Amount (Lakhs)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].tenureMonth`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .tenureMonth
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .tenureMonth
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Tenure (Months)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].emi`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index].emi
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index].emi
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'EMI'}
+                                  />
+                                  <AInputField
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].outstanding`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .outstanding
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .outstanding
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Outstanding'}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanClosedThisYear[${index}].remark`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .remark
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanClosedThisYear[index]
+                                        .remark
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Remark'}
+                                    options={existingLoanRemark}
+                                  />
+                                </AGroupFields>
+                              </div>
+                            </div>
+                          ),
+                        )
+                      ) : (
+                        <AddTagButton
+                          title={'Add Existing Loan'}
+                          addTag={() =>
+                            tag.push({
+                              ...existingLoanInfo,
+                              title: 'Existing Loan Closed',
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
+                />
+              </form>
+            </FormikProvider>
           </ASection>
           <ASection
             footers={existingLoanFooter}
@@ -196,20 +387,146 @@ const ExistingLoan = () => {
               'Existing Loan (These EMI will be added in FOIR Ratio calculation)'
             }
           >
-            {existingLoanEMI.length > 0 ? (
-              <ATags
-                tags={existingLoanEMI}
-                addTag={addExistingLoanEMI}
-                setTags={setExistingLoanEMI}
-              >
-                <LoanInformation />
-              </ATags>
-            ) : (
-              <AddTagButton
-                title={'Add Existing Loan'}
-                addLoan={() => addExistingLoanEMI(existingLoanEMI)}
-              />
-            )}
+            <FormikProvider value={formik}>
+              <form>
+                <FieldArray
+                  name="existanceLoan.existingLoanEMI"
+                  render={(tag) => (
+                    <div>
+                      {formik.values.existanceLoan.existingLoanEMI > 0 ? (
+                        formik.values.existanceLoan.existingLoanEMI.map(
+                          (item: any, index: number) => (
+                            <div className="mb-3">
+                              <AddTagHeader
+                                title={item?.title}
+                                removeTag={() => tag.remove(index)}
+                                addTag={() =>
+                                  tag.push({
+                                    ...existingLoanInfo,
+                                    title: 'Existing Loan EMI',
+                                  })
+                                }
+                              />
+                              <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                                <AGroupFields>
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanEMI[${index}].typeOfLoan`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].typeOfLoan
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].typeOfLoan
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Type of Loan'}
+                                    options={typesOfLoan}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanEMI[${index}].bankName`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].bankName
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].bankName
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Bank Name'}
+                                    options={banksList}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanEMI[${index}].loanAmount`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].loanAmount
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].loanAmount
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Loan Amount (Lakhs)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanEMI[${index}].tenureMonth`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].tenureMonth
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].tenureMonth
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Tenure (Months)'}
+                                  />
+                                  <AInputField
+                                    type={'number'}
+                                    id={`existanceLoan.existingLoanEMI[${index}].emi`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].emi
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].emi
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'EMI'}
+                                  />
+                                  <AInputField
+                                    id={`existanceLoan.existingLoanEMI[${index}].outstanding`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].outstanding
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].outstanding
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Outstanding'}
+                                  />
+                                  <ASingleSelect
+                                    id={`existanceLoan.existingLoanEMI[${index}].remark`}
+                                    value={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].remark
+                                    }
+                                    error={
+                                      formik?.values?.existanceLoan
+                                        .existingLoanEMI[index].remark
+                                    }
+                                    handleChange={formik.handleChange}
+                                    label={'Remark'}
+                                    options={existingLoanRemark}
+                                  />
+                                </AGroupFields>
+                              </div>
+                            </div>
+                          ),
+                        )
+                      ) : (
+                        <AddTagButton
+                          title={'Add Existing Loan'}
+                          addTag={() =>
+                            tag.push({
+                              ...existingLoanInfo,
+                              title: 'Existing Loan EMI',
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
+                />
+              </form>
+            </FormikProvider>
           </ASection>
         </>
       )}
@@ -217,26 +534,12 @@ const ExistingLoan = () => {
   );
 };
 
-const ceditFacilityInfo = {
-  isOpen: true,
-  data: [],
-};
-
-const CreditFacility = () => {
+const CreditFacility = ({ formik }: any) => {
   const [isCreditFacility, setIsCreditFacility] = useState('yes');
-  const [creditFacility, setCreditFacility] = useState<any>([]);
 
-  const handleCreditFacility = (val: string) => {
+  const handleCreditFacility = (title: string, val: string) => {
     setIsCreditFacility(val);
-  };
-
-  const addCreditFacility = (tags: any) => {
-    tags.push({
-      ...ceditFacilityInfo,
-      id: `cred${tags.length + 1}`,
-      title: `Credit Details ${tags.length + 1}`,
-    });
-    setCreditFacility([...tags]);
+    formik.setFieldValue('creditFacility.isCreditFacility', val);
   };
 
   return (
@@ -245,83 +548,166 @@ const CreditFacility = () => {
         value={isCreditFacility}
         title={'Credit Facility'}
         radioValues={yesNoOptions}
-        handleChecked={handleCreditFacility}
+        handleChange={handleCreditFacility}
       />
       {isCreditFacility === 'yes' && (
         <ASection
           footers={creditFacilityFooter}
           title={'Credit Facility Details'}
         >
-          {creditFacility.length > 0 ? (
-            <ATags
-              tags={creditFacility}
-              addTag={addCreditFacility}
-              setTags={setCreditFacility}
-            >
-              <AGroupFields>
-                <ASingleSelect
-                  name={'typeOfFacility'}
-                  label={'Type of Facility'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-                <ASingleSelect
-                  name={'bankName'}
-                  label={'Bank Name'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-                <AInputField type={'text'} name={'limit'} label={'Limit'} />
-                <AInputField
-                  type={'text'}
-                  name={'averageUtilization'}
-                  label={'Average Utilization'}
-                />
-                <AInputField type={'text'} name={'emi'} label={'EMI'} />
-                <AInputField
-                  type={'text'}
-                  name={'interestRate'}
-                  label={'Interest Rate (%)'}
-                />
-                <ASingleSelect
-                  name={'remark'}
-                  label={'Remark'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-              </AGroupFields>
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Credit Facility'}
-              addLoan={() => addCreditFacility(creditFacility)}
-            />
-          )}
+          <FormikProvider value={formik}>
+            <form>
+              <FieldArray
+                name="creditFacility.creditDetails"
+                render={(tag) => (
+                  <div>
+                    {formik.values.creditFacility.creditDetails > 0 ? (
+                      formik.values.creditFacility.creditDetails.map(
+                        (item: any, index: number) => (
+                          <div className="mb-3">
+                            <AddTagHeader
+                              title={item?.title}
+                              removeTag={() => tag.remove(index)}
+                              addTag={() =>
+                                tag.push({
+                                  ...ceditFacilityInfo,
+                                  title: 'Credit Facility',
+                                })
+                              }
+                            />
+                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                              <AGroupFields>
+                                <ASingleSelect
+                                  id={`creditFacility.creditDetails[${index}].typeOfFacility`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].typeOfFacility
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].typeOfFacility
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Type of Facility'}
+                                  options={typeOfFacility}
+                                />
+                                <ASingleSelect
+                                  id={`creditFacility.creditDetails[${index}].bankName`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].bankName
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].bankName
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Bank Name'}
+                                  options={banksList}
+                                />
+                                <AInputField
+                                  type={'number'}
+                                  id={`creditFacility.creditDetails[${index}].limit`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].limit
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].limit
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Limit'}
+                                />
+                                <AInputField
+                                  id={`creditFacility.creditDetails[${index}].averageUtilization`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].averageUtilization
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].averageUtilization
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Average Utilization'}
+                                />
+                                <AInputField
+                                  type={'number'}
+                                  id={`creditFacility.creditDetails[${index}].emi`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].emi
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].emi
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'EMI'}
+                                />
+                                <AInputField
+                                  type={'number'}
+                                  id={`creditFacility.creditDetails[${index}].interestRate`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].interestRate
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].interestRate
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Interest Rate (%)'}
+                                />
+                                <ASingleSelect
+                                  id={`creditFacility.creditDetails[${index}].remark`}
+                                  value={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].remark
+                                  }
+                                  error={
+                                    formik?.values?.creditFacility
+                                      .creditDetails[index].remark
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Remark'}
+                                  options={existingLoanRemark}
+                                />
+                              </AGroupFields>
+                            </div>
+                          </div>
+                        ),
+                      )
+                    ) : (
+                      <AddTagButton
+                        title={'Add Credit Facility'}
+                        addTag={() =>
+                          tag.push({
+                            ...ceditFacilityInfo,
+                            title: 'Credit Facility',
+                          })
+                        }
+                      />
+                    )}
+                  </div>
+                )}
+              />
+            </form>
+          </FormikProvider>
         </ASection>
       )}
     </>
   );
 };
 
-const commitmentsInfo = {
-  isOpen: true,
-  data: [],
-};
-
-const OtherCommitments = () => {
+const OtherCommitments = ({ formik }: any) => {
   const [isOtherCommitments, setIsOtherCommitments] = useState('yes');
-  const [otherCommitments, setOtherCommitments] = useState<any>([]);
 
-  const handleOtherCommitments = (val: string) => {
+  const handleOtherCommitments = (title: string, val: string) => {
     setIsOtherCommitments(val);
+    formik.setFieldValue('otherCommitments.isOtherCommitmemts', val);
   };
-  
-  const addOtherCommitments = (tags: any) => {
-    tags.push({
-      ...commitmentsInfo,
-      id: `com${tags.length + 1}`,
-      title: `Comitment Details ${tags.length + 1}`,
-    });
-    setOtherCommitments([...tags]);
-  };
-
 
   return (
     <>
@@ -329,47 +715,131 @@ const OtherCommitments = () => {
         value={isOtherCommitments}
         title={'Other Commitments'}
         radioValues={yesNoOptions}
-        handleChecked={handleOtherCommitments}
+        handleChange={handleOtherCommitments}
       />
       {isOtherCommitments === 'yes' && (
         <ASection
           footers={commitmentsFooter}
           title={'Other Commitments Details'}
         >
-          {otherCommitments.length > 0 ? (
-            <ATags
-              tags={otherCommitments}
-              addTag={addOtherCommitments}
-              setTags={setOtherCommitments}
-            >
-              <AGroupFields col={3}>
-                <ASingleSelect
-                  name={'particulars'}
-                  label={'Particulars'}
-                  options={[{ label: 'India', value: 'india' }]}
-                />
-                <AInputField
-                  type={'text'}
-                  name={'contribution'}
-                  label={'Contribution P.A.'}
-                />
-                <AInputField
-                  type={'text'}
-                  name={'sumAssured'}
-                  label={'Sum Assured/Maturity Value (Rs.)'}
-                />
-              </AGroupFields>
-            </ATags>
-          ) : (
-            <AddTagButton
-              title={'Add Commitments'}
-              addLoan={() => addOtherCommitments(otherCommitments)}
-            />
-          )}
+          <FormikProvider value={formik}>
+            <form>
+              <FieldArray
+                name="otherCommitments.commitmentsDetails"
+                render={(tag) => (
+                  <div>
+                    {formik.values.otherCommitments.commitmentsDetails > 0 ? (
+                      formik.values.otherCommitments.commitmentsDetails.map(
+                        (item: any, index: number) => (
+                          <div className="mb-3">
+                            <AddTagHeader
+                              title={item?.title}
+                              removeTag={() => tag.remove(index)}
+                              addTag={() =>
+                                tag.push({
+                                  ...commitmentsInfo,
+                                  title: 'Other Commitment',
+                                })
+                              }
+                            />
+                            <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3">
+                              <AGroupFields>
+                                <ASingleSelect
+                                  id={`otherCommitments.commitmentsDetails[${index}].particulars`}
+                                  value={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].particulars
+                                  }
+                                  error={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].particulars
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Particulars'}
+                                  options={particularsCommitment}
+                                />
+                                <AInputField
+                                  type={'number'}
+                                  id={`otherCommitments.commitmentsDetails[${index}].contribution`}
+                                  value={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].contribution
+                                  }
+                                  error={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].contribution
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Contribution P.A.'}
+                                />
+                                <AInputField
+                                  type={'number'}
+                                  id={`otherCommitments.commitmentsDetails[${index}].sumAssured`}
+                                  value={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].sumAssured
+                                  }
+                                  error={
+                                    formik?.values?.otherCommitments
+                                      .commitmentsDetails[index].sumAssured
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Sum Assured/Maturity Value (Rs.)'}
+                                />
+                              </AGroupFields>
+                            </div>
+                          </div>
+                        ),
+                      )
+                    ) : (
+                      <AddTagButton
+                        title={'Add Commitment'}
+                        addTag={() =>
+                          tag.push({
+                            ...commitmentsInfo,
+                            title: 'Other Commitment',
+                          })
+                        }
+                      />
+                    )}
+                  </div>
+                )}
+              />
+            </form>
+          </FormikProvider>
         </ASection>
       )}
     </>
   );
+};
+
+const existingLoanInfo = {
+  title: '',
+  typeOfLoan: '',
+  bankName: '',
+  loanAmount: 0,
+  tenureMonth: 0,
+  emi: 0,
+  outstanding: '',
+  remark: '',
+};
+
+const ceditFacilityInfo = {
+  title: '',
+  typeOfFacility: '',
+  bankName: '',
+  limit: 0,
+  averageUtilization: 0,
+  emi: 0,
+  interestRate: 0,
+  remark: '',
+};
+
+const commitmentsInfo = {
+  title: '',
+  particulars: '',
+  contributionPA: 0,
+  sumAssured: 0,
 };
 
 const ExistingLoanCredit = ({
@@ -381,16 +851,23 @@ const ExistingLoanCredit = ({
   setPayloads,
 }: any) => {
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    existanceLoan: {
+      isExistanceLoan: 'yes',
+      balanceTransfer: [],
+      existingLoanClosedThisYear: [],
+      existingLoanEMI: [],
+    },
+    creditFacility: {
+      isCreditFacility: 'yes',
+      creditDetails: [],
+    },
+    otherCommitments: {
+      isOtherCommitmemts: 'yes',
+      commitmentsDetails: [],
+    },
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -417,9 +894,9 @@ const ExistingLoanCredit = ({
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
-          <ExistingLoan />
-          <CreditFacility />
-          <OtherCommitments />
+          <ExistingLoan formik={formik} />
+          <CreditFacility formik={formik} />
+          <OtherCommitments formik={formik} />
         </div>
       </div>
       <AStepperPagination

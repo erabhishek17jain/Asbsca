@@ -129,8 +129,8 @@ const Users = () => {
   };
 
   useEffect(() => {
-    if (allRoles?.length > 0) {
-      setRoleOptions(getOptions(allRoles, 'name', '_id'));
+    if (allRoles?.roles?.length > 0) {
+      setRoleOptions(getOptions(allRoles?.roles, 'name', '_id'));
     }
   }, [allRoles]);
 
@@ -161,7 +161,7 @@ const Users = () => {
       <div className="flex flex-col gap-10">
         <ATable
           loading={loading}
-          data={allUsers}
+          data={allUsers?.users}
           header={
             <UsersHeader
               openUserModal={() => {
@@ -188,58 +188,60 @@ const Users = () => {
         >
           <div className="flex flex-col ">
             <AInputField
-              type="text"
-              label="Name*"
               id="fullName"
+              label="Name*"
+              value={formik.values.fullName}
               error={formik.errors.fullName}
-              formik={formik.getFieldProps('fullName')}
+              handleChange={formik.handleChange}
               icon={<UsersIcon className="h-4 w-4" />}
             />
             <AInputField
-              type="text"
-              label="Emp ID*"
               id="username"
+              label="Emp ID*"
+              value={formik.values.username}
               error={formik.errors.username}
-              formik={formik.getFieldProps('username')}
+              handleChange={formik.handleChange}
               icon={<IdentificationIcon className="h-4 w-4" />}
             />
             <AInputField
-              type="text"
-              label="Email ID*"
               id="email"
+              label="Email ID*"
+              value={formik.values.email}
               error={formik.errors.email}
-              formik={formik.getFieldProps('email')}
+              handleChange={formik.handleChange}
               icon={<EnvelopeIcon className="h-4 w-4" />}
             />
             <AInputField
-              type="text"
-              label="Mobile No.*"
               id="mobile"
+              label="Mobile No.*"
+              value={formik.values.mobile}
               error={formik.errors.mobile}
-              formik={formik.getFieldProps('mobile')}
+              handleChange={formik.handleChange}
               icon={<DevicePhoneMobileIcon className="h-4 w-4" />}
             />
             <AInputField
               id="address"
-              type="text"
               label={'Location*'}
+              value={formik.values.address}
               error={formik.errors.address}
-              formik={formik.getFieldProps('address')}
+              handleChange={formik.handleChange}
               icon={<MapPinIcon className="h-4 w-4" />}
             />
             <ASingleSelect
               id="role"
               label={'Role*'}
+              value={formik.values.role}
               error={formik.errors.role}
-              formik={formik.getFieldProps('role')}
+              handleChange={formik.handleChange}
               icon={<UsersIcon className="h-4 w-4" />}
               options={roleOptions}
             />
             <ASingleSelect
               id="status"
               label={'Status'}
+              value={formik.values.status}
               error={formik.errors.status}
-              formik={formik.getFieldProps('status')}
+              handleChange={formik.handleChange}
               icon={<CheckIcon className="h-4 w-4" />}
               options={statusList}
             />

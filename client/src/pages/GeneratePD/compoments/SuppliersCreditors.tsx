@@ -37,22 +37,25 @@ const SuppliersCreditors = ({
     { ...clientsInfo },
   ]);
 
-  const handleSuppliers = (val: string) => {
+  const handleSuppliers = (title: string, val: string) => {
     setIsSuppliers(val);
   };
 
-  
   const initialValues = {
-    loan: '',
-    loanType: '',
-    bankName: '',
+    isSuppliersDetails: '',
+    suppliersDetails: {
+      noOfSuppliers: '',
+      majorSuppliers: [{ clientName: '', contact: '' }],
+    },
+    creditors: {
+      amount: '',
+      collectionPeriod: '',
+    },
+    creitPeriodAllowed: '',
+    whyCreditorHighThanCredit: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    loan: Yup.string().required('This field is required'),
-    loanType: Yup.string().required('This field is required'),
-    bankName: Yup.string().required('This field is required'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const validateFunction = async (values: any) => {
     console.log(values);
@@ -74,7 +77,7 @@ const SuppliersCreditors = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
-  
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -83,7 +86,7 @@ const SuppliersCreditors = ({
             isReset={true}
             value={isSuppliers}
             title={'Suppliers'}
-            handleChecked={handleSuppliers}
+            handleChange={handleSuppliers}
             radioValues={[]}
           />
           <Section>
@@ -91,7 +94,6 @@ const SuppliersCreditors = ({
               <>
                 <AGroupFields col={2}>
                   <AInputField
-                    type={'text'}
                     name={'noOfClients'}
                     label={'No of Clients/Daily Foot Fall'}
                   />
@@ -104,41 +106,26 @@ const SuppliersCreditors = ({
                 >
                   <AGroupFields col={2}>
                     <AInputField
-                      type={'text'}
                       name={'clientName'}
                       label={'Name of the client'}
                     />
-                    <AInputField
-                      type={'text'}
-                      name={'contactNo'}
-                      label={'Contact No'}
-                    />
+                    <AInputField name={'contactNo'} label={'Contact No'} />
                   </AGroupFields>
                 </ATags>
               </>
             )}
             {suppliers.map((item) => (
               <AGroupFields col={2} title={item.title}>
-                <AInputField
-                  type={'text'}
-                  name={'amountPA'}
-                  label={'Amount P.A.'}
-                />
-                <AInputField
-                  type={'text'}
-                  name={'amountPM'}
-                  label={'Amount P.M.'}
-                />
+                <AInputField name={'amountPA'} label={'Amount P.A.'} />
+                <AInputField name={'amountPM'} label={'Amount P.M.'} />
               </AGroupFields>
             ))}
             <AGroupFields col={2}>
               <AInputField
-                type={'text'}
                 name={'periodAllowedToClient'}
                 label={'Cr. Period allowed to Clients'}
               />
               <AInputField
-                type={'text'}
                 name={'whyCreditorsHigher'}
                 label={'Why Creditors are high than credit period allowed'}
               />

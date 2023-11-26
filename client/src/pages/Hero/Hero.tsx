@@ -2,17 +2,28 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../assets/images/logo/logo.png';
 import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
-import { ResetPassword } from '../ChangePassword/ChangePassword';
+import {
+  ForgotPassword,
+  ResetPassword,
+} from '../ChangePassword/ChangePassword';
 import { useEffect } from 'react';
 import { setToken } from '../../services';
 
 const Hero = () => {
   const location = useLocation();
   const { search } = location;
-  const token = search.slice(7);
+  let token = '',
+    pageType = 'home';
+
+  if (search.includes('email')) {
+    pageType = 'forgotPassword';
+  } else if (search.includes('token')) {
+    pageType = 'resetPassword';
+    token = search.slice(7);
+  }
 
   useEffect(() => {
-    if (token !== '') {
+    if (token !== '' && pageType === 'resetPassword') {
       setToken(token);
     }
   }, [search]);
@@ -27,9 +38,11 @@ const Hero = () => {
                 <img className="hidden" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
-              {token ? (
+              {pageType === 'forgotPassword' && <ForgotPassword />}
+              {pageType === 'resetPassword' && (
                 <ResetPassword isFirstPassword={true} token={token} />
-              ) : (
+              )}
+              {pageType === 'home' && (
                 <>
                   <p className="2xl:px-20">
                     Create Business Analysis Report with us based on Bank Loan

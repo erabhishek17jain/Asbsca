@@ -2,8 +2,9 @@ const ADatePicker = ({
   id,
   label,
   icon,
-  formik,
+  value,
   error = '',
+  handleChange,
   variant = 'vertical',
 }: any) => {
   return (
@@ -23,7 +24,8 @@ const ADatePicker = ({
         <input
           id={id}
           type={'date'}
-          {...formik}
+          value={value}
+          onChange={handleChange}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
         />
         <span className="absolute top-1/2 right-3 -translate-y-1/2">
