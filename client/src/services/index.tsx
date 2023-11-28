@@ -210,6 +210,17 @@ export async function getBranchs(payload: any, { rejectWithValue }: any) {
   }
 }
 
+/** get report */
+export async function getReportData(id: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(`${baseAPI}/cases/reports/${id}`);
+    return response.data;
+  } catch (error: any) {
+    showError(error);
+    return rejectWithValue(error?.response?.data);
+  }
+}
+
 /** Add API Calls */
 /** add user */
 export async function addCase(payload: any) {
@@ -285,6 +296,18 @@ export async function addBranch(payload: any) {
         `${baseAPI}/clients/branch/create`,
         payload,
       );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+/** generate report */
+export async function addReport(payload: any) {
+  try {
+    if (payload) {
+      const { data } = await axios.post(`${baseAPI}/cases/reports`, payload);
       return Promise.resolve({ data });
     }
   } catch (error) {
@@ -411,6 +434,21 @@ export async function updateBranch(payload: any) {
   }
 }
 
+/** update report */
+export async function updateReport(payload: any) {
+  try {
+    if (payload) {
+      const { data } = await axios.put(
+        `${baseAPI}/cases/reports/${payload.caseId}`,
+        payload,
+      );
+      return Promise.resolve({ data });
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
 /** Delete API Calls */
 /**  delete case*/
 export async function deleteCaseById(id: any) {
@@ -487,16 +525,5 @@ export async function deleteBranchById(id: any) {
     }
   } catch (error) {
     showError(error);
-  }
-}
-
-export async function generatePDReport(payload: any) {
-  try {
-    const response = await axios.post(`${baseAPI}/cases/generateReport`, {
-      filters: payload,
-    });
-    return response?.data;
-  } catch (err) {
-    return console.log(err);
   }
 }

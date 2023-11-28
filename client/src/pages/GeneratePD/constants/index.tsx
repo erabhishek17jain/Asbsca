@@ -152,53 +152,53 @@ export const typesOfLoan = [
 ];
 
 export const banksList = [
-  { label: 'Abhyudaya Bank', value: '' },
-  { label: 'AU Small Bank', value: '' },
-  { label: 'Axis Bank', value: '' },
-  { label: 'Bandhan Bank', value: '' },
-  { label: 'Bank Of Baroda', value: '' },
-  { label: 'Bank Of India', value: '' },
-  { label: 'Bank Of Maharastra', value: '' },
-  { label: 'Bassein Catholic Co-Op Bank', value: '' },
-  { label: 'Bharat Bank Mumbai', value: '' },
-  { label: 'Canera Bank', value: '' },
-  { label: 'Centra Bank Of India', value: '' },
-  { label: 'Citi Bank', value: '' },
-  { label: 'DCB Bank', value: '' },
-  { label: 'Deustche Bank', value: '' },
-  { label: 'Dhanlakshmi Bank', value: '' },
-  { label: 'Dombivili Nagari Sahakari Bank', value: '' },
-  { label: 'Federal Bank', value: '' },
-  { label: 'HDFC Bank', value: '' },
-  { label: 'ICICI Bank', value: '' },
-  { label: 'IDBI Bank', value: '' },
-  { label: 'IDFC First Bank', value: '' },
-  { label: 'Indian Bank', value: '' },
-  { label: 'Indian Overseas Bank', value: '' },
-  { label: 'Indusand Bank', value: '' },
-  { label: 'Jankalyan Sahakari Bank', value: '' },
-  { label: 'Karnataka Bank', value: '' },
-  { label: 'Kotak Mahindra Bank', value: '' },
-  { label: 'Nkgsb Bank', value: '' },
-  { label: 'Punjab National Bank', value: '' },
-  { label: 'RBL Bank', value: '' },
-  { label: 'South Indian Bank', value: '' },
-  { label: 'Standard Charted Bank', value: '' },
-  { label: 'State Bank Of India', value: '' },
-  { label: 'suryoday Small Finance Bank', value: '' },
-  { label: 'The Malad Sahakari Bank', value: '' },
-  { label: 'UCO Bank', value: '' },
-  { label: 'Union Bank Of India', value: '' },
-  { label: 'Vasai Janata Sahakari Bank', value: '' },
-  { label: 'Vasai Vikas Shahkari Bank', value: '' },
-  { label: 'Yes Bank', value: '' },
+  { label: 'Abhyudaya Bank', value: 'abhyudayaBank' },
+  { label: 'AU Small Bank', value: 'auSmallBank' },
+  { label: 'Axis Bank', value: 'axisBank' },
+  { label: 'Bandhan Bank', value: 'bandhanBank' },
+  { label: 'Bank Of Baroda', value: 'bankOfBaroda' },
+  { label: 'Bank Of India', value: 'bankOfIndia' },
+  { label: 'Bank Of Maharastra', value: 'bankOFMaharastra' },
+  { label: 'Bassein Catholic Co-Op Bank', value: 'basseinBank' },
+  { label: 'Bharat Bank Mumbai', value: 'bharatBankMumbai' },
+  { label: 'Canera Bank', value: 'caneraBank' },
+  { label: 'Centra Bank Of India', value: 'centralBank' },
+  { label: 'Citi Bank', value: 'citiBank' },
+  { label: 'DCB Bank', value: 'dcbBank' },
+  { label: 'Deustche Bank', value: 'deustcheBank' },
+  { label: 'Dhanlakshmi Bank', value: 'dhanlakshmiBank' },
+  { label: 'Dombivili Nagari Sahakari Bank', value: 'dombiviliBank' },
+  { label: 'Federal Bank', value: 'federalBank' },
+  { label: 'HDFC Bank', value: 'hdfcBank' },
+  { label: 'ICICI Bank', value: 'iciciBank' },
+  { label: 'IDBI Bank', value: 'idbiBank' },
+  { label: 'IDFC First Bank', value: 'idfcBank' },
+  { label: 'Indian Bank', value: 'indianBank' },
+  { label: 'Indian Overseas Bank', value: 'indianOverseasBank' },
+  { label: 'Indusand Bank', value: 'indusandBank' },
+  { label: 'Jankalyan Sahakari Bank', value: 'jankalyanBank' },
+  { label: 'Karnataka Bank', value: 'karnatakaBank' },
+  { label: 'Kotak Mahindra Bank', value: 'kotakBank' },
+  { label: 'Nkgsb Bank', value: 'nkgsbBank' },
+  { label: 'Punjab National Bank', value: 'pnbBank' },
+  { label: 'RBL Bank', value: 'pblBank' },
+  { label: 'South Indian Bank', value: 'souindianBank' },
+  { label: 'Standard Charted Bank', value: 'scbBank' },
+  { label: 'State Bank Of India', value: 'sbiBank' },
+  { label: 'Suryoday Small Finance Bank', value: 'suryodayBank' },
+  { label: 'The Malad Sahakari Bank', value: 'theMaladBank' },
+  { label: 'UCO Bank', value: 'ucoBank' },
+  { label: 'Union Bank Of India', value: 'ubiBank' },
+  { label: 'Vasai Janata Sahakari Bank', value: 'vasaiJanataBank' },
+  { label: 'Vasai Vikas Shahkari Bank', value: 'vasaiVikasBank' },
+  { label: 'Yes Bank', value: 'yesBank' },
 ];
 export const bankTypes = [
-  { label: 'CA', value: '' },
-  { label: 'SA', value: '' },
-  { label: 'OD', value: '' },
-  { label: 'CC', value: '' },
-  { label: 'DOD', value: '' },
+  { label: 'CA', value: 'ca' },
+  { label: 'SA', value: 'sa' },
+  { label: 'OD', value: 'od' },
+  { label: 'CC', value: 'cc' },
+  { label: 'DOD', value: 'dod' },
 ];
 
 export const existingLoanRemark = [
@@ -393,7 +393,7 @@ export const citiesOfRepresentation = [
 export const fixedEmployee = [
   { label: 'Yes', value: 'yes' },
   { label: 'No', value: 'no' },
-  { label: 'Yes but emoloyee not seen', value: '' },
+  { label: 'Yes but emoloyee not seen', value: 'empNotSeen' },
 ];
 
 // show list from personal details
@@ -474,52 +474,69 @@ export const statusAssets = [
 ];
 
 export const particularsInvestment = [
-  { label: 'Bond', value: '' },
-  { label: 'Shares & Stocks (Equity)', value: '' },
-  { label: 'Fixed Deposit', value: '' },
-  { label: 'Mutual Funds', value: '' },
-  { label: 'PF', value: '' },
-  { label: 'Silver', value: '' },
-  { label: 'Gold', value: '' },
-  { label: 'ULIP', value: '' },
-  { label: 'Cryptocurrencies', value: '' },
+  { label: 'Bond', value: 'bond' },
+  { label: 'Shares & Stocks (Equity)', value: 'shares' },
+  { label: 'Fixed Deposit', value: 'fd' },
+  { label: 'Mutual Funds', value: 'mf' },
+  { label: 'PF', value: 'pf' },
+  { label: 'Silver', value: 'silver' },
+  { label: 'Gold', value: 'gold' },
+  { label: 'ULIP', value: 'ulip' },
+  { label: 'Cryptocurrencies', value: 'crypto' },
 ];
 
 export const thirdPartyCheck = [
-  { label: 'Positive', value: '' },
-  { label: 'Negative', value: '' },
-  { label: 'Not Done', value: '' },
+  { label: 'Positive', value: 'positive' },
+  { label: 'Negative', value: 'negative' },
+  { label: 'Not Done', value: 'notDone' },
+];
+
+export const activityReason = [
+  { label: 'As visited residence address', value: 'resiAddress' },
+  { label: 'Visited after working hours', value: 'afterWorkingHours' },
+  { label: 'Activity is generally at site', value: 'activityAtSite' },
+];
+
+export const stockReason = [
+  { label: 'Stock is kept at Godown', value: 'stockAtGodown' },
+  { label: 'Stock is ardered as & when required', value: 'negative' },
+  { label: 'We weew not allowed to see the stock', value: 'notAllowtoSee' },
 ];
 
 export const applicantBehaviour = [
-  { label: 'Co-operative', value: '' },
-  { label: 'Reluctant', value: '' },
-  { label: 'Co-operative but did not provide documents', value: '' },
+  { label: 'Co-operative', value: 'coOperative' },
+  { label: 'Reluctant', value: 'relucant' },
+  {
+    label: 'Co-operative but did not provide documents',
+    value: 'coOperativeButNotdoc',
+  },
   {
     label: 'Co-operative but did not provide Financial Information',
-    value: '',
+    value: 'coOperativeButNotFinancial',
   },
-  { label: 'Extremly Reluctant in sharing information', value: '' },
-  { label: 'Extreamlt Rude in sharing information', value: '' },
-  { label: '', value: '' },
+  {
+    label: 'Extremly Reluctant in sharing information',
+    value: 'extremeReluctant',
+  },
+  { label: 'Extreamlt Rude in sharing information', value: 'extreamlyRude' },
 ];
 
 export const applicantDoing = [
-  { label: 'Applicant was on all with his client', value: '' },
-  { label: 'Applicant was in meeting with his employees', value: '' },
-  { label: 'Applicant was in meeting with his clients', value: '' },
-  { label: 'Applicant was handling customers', value: '' },
+  { label: 'Applicant was on all with his client', value: 'withClient' },
+  { label: 'Applicant was in meeting with his employees', value: 'meetingWithEmp' },
+  { label: 'Applicant was in meeting with his clients', value: 'meetingWithClient' },
+  { label: 'Applicant was handling customers', value: 'handlingCustomers' },
   {
     label: 'Applicant was not present in office he came for PD afterwards',
-    value: '',
+    value: 'notPresent',
   },
-  { label: 'Applicant was doing regular business activities', value: '' },
+  { label: 'Applicant was doing regular business activities', value: 'regBussActivity' },
 ];
 export const employeeDoing = [
-  { label: 'Employees were working in PC', value: '' },
-  { label: 'Workers were working on Machines', value: '' },
-  { label: 'Employees doing their work', value: '' },
-  { label: 'Employees were handling customers', value: '' },
+  { label: 'Employees were working in PC', value: 'workInPC' },
+  { label: 'Workers were working on Machines', value: 'workOnMachine' },
+  { label: 'Employees doing their work', value: 'doingWork' },
+  { label: 'Employees were handling customers', value: 'handlingCustomers' },
 ];
 export const businessProcess = [
   { label: 'Trading (B2B)', value: 'tradingB2B' },

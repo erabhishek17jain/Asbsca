@@ -33,12 +33,6 @@ const LoanDetails = ({
     bankName: Yup.string().required('This field is required'),
   });
 
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
-
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
     setPayloads({ ...payloads, loanDetails: { ...values } });
@@ -47,7 +41,6 @@ const LoanDetails = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,

@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { PlusIcon } from '@heroicons/react/24/solid';
-import AButton from '../../../components-global/AButton';
+import { useEffect, useState } from 'react';
 import AInputField from '../../../components-global/AInputField';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import { AModal } from '../../../components-global/AModal';
@@ -11,36 +9,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { applicantIncome } from '../constants';
 
-const turnoverFooter = [
-  {
-    label: 'Total Amount PA',
-    value: '0',
-  },
-  {
-    label: 'Total Amount PM',
-    value: '0',
-  },
-];
-
-const totalExpensesFooter = [
-  { label: 'Total Expenses P.A.', value: '0' },
-  { label: 'Net Profit P.A.', value: '0' },
-  { label: 'Share of Profit P.A.', value: '0' },
-];
-
-const profitFooter = [
-  { label: 'Total Expenses P.M.', value: '0' },
-  { label: 'Net Profit P.M.', value: '0' },
-  { label: 'Share of Profit P.M.', value: '0' },
-];
-
-const totalEarningFooter = [
-  { label: 'Total P.A.', value: '0' },
-  { label: 'Total P.M.', value: '0' },
-  { label: 'Total Earning', value: '0' },
-];
-
-const financials = [
+const incomes = [
   { title: 'Turnover/Gross Receipts', value: 'turnoverGrossReciepts' },
   { title: 'Purchases', value: 'purchases' },
 ];
@@ -56,7 +25,10 @@ const expenses = [
   { title: "Partner's Salary", value: 'partnersSalary' },
   { title: "Partner's Remuneration", value: 'partnersRemuneration' },
   { title: 'Other Expenses', value: 'otherExpenses' },
-  { title: 'Bifercation of Expense not provided, Total Expenses', value: 'bifercationOfExpenses' },
+  {
+    title: 'Bifercation of Expense not provided, Total Expenses',
+    value: 'bifercationOfExpenses',
+  },
 ];
 
 const salaryFromBusiness = [
@@ -68,28 +40,42 @@ const salaryFromBusiness = [
   { title: 'Rent', value: 'rent' },
 ];
 
-const FinancialType = ({ formik, title, type, value }: any) => {
+const FinancialType = ({ formik, title, type, value, handleAnnualy }: any) => {
+  const errors: any = formik?.errors;
   return (
-    <AGroupFields col={3} title={title}>
+    <AGroupFields col={4} title={title}>
       <AInputField
-        id={`${value}.amountPA`}
+        type={'number'}
+        id={`${type}.${value}.amountPA`}
         label={'Amount PA'}
+        rightLabel={'(Lakhs)'}
         value={formik.values[type][value].amountPA}
-        error={formik.errors[type][value].amountPA}
-        handleChange={formik.handleChange}
+        error={
+          errors[type] && errors[type][value] && errors[type][value].amountPA
+        }
+        handleChange={handleAnnualy}
       />
       <AInputField
-        id={`${value}.amountPM`}
+        type={'number'}
+        disabled={true}
+        id={`${type}.${value}.amountPM`}
         label={'Amount PM'}
+        rightLabel={'(Lakhs)'}
         value={formik.values[type][value].amountPM}
-        error={formik.errors[type][value].amountPM}
+        error={
+          errors[type] && errors[type][value] && errors[type][value].amountPM
+        }
         handleChange={formik.handleChange}
       />
       <AInputField
-        id={`${value}.months`}
+        type={'number'}
+        disabled={true}
+        id={`${type}.${value}.months`}
         label={'Months'}
         value={formik.values[type][value].months}
-        error={formik.errors[type][value].months}
+        error={
+          errors[type] && errors[type][value] && errors[type][value].months
+        }
         handleChange={formik.handleChange}
       />
     </AGroupFields>
@@ -105,116 +91,168 @@ const Financials = ({
   setPayloads,
 }: any) => {
   const [showModal, setShowModal] = useState(false);
+  const [expenseList, setExpenseList] = useState<any>([...expenses]);
+  const [bussinessSalary] = useState<any>([...salaryFromBusiness]);
 
-  const initialValues = {
+  const initialValues: any = {
     entityName: '',
     applicantIncome: '',
     income: {
       turnoverGrossReciepts: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       purchases: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
-      totalAmountPA: '',
-      totalAmountPM: '',
+      totalAmountPA:'',
+      totalAmountPM:'',
     },
     expenses: {
       salary: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       maintanance: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       transport: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       electricity: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       travelling: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       fuel: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       officeRent: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       partnersSalary: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       partnersRemuneration: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       otherExpenses: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       bifercationOfExpenses: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
-      totalExpensePA: '',
-      totalExpensePM: '',
-      netProfitPA: '',
-      netProfitPM: '',
-      shareOfProfitPA: '',
-      shareOfProfitPM: '',
+      totalExpensePA:'',
+      totalExpensePM:'',
+      netProfitPA:'',
+      netProfitPM:'',
+      shareOfProfitPA:'',
+      shareOfProfitPM:'',
     },
     businessIncome: {
       salaryFromBusiness: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       remunerationFromBusiness: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
       rent: {
         amountPA: '',
-        amountPM: '',
-        months: 0,
+        amountPM:'',
+        months: 12,
       },
-      totalIncomePA: '',
-      totalIncomePM: '',
-      totalEarning: '',
+      totalIncomePA:'',
+      totalEarning:'',
     },
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    entityName: Yup.string().required('This field is required'),
+    applicantIncome: Yup.string().required('This field is required'),
+    income: Yup.object({
+      turnoverGrossReciepts: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      purchases: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+    }),
+    expenses: Yup.object({
+      salary: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      maintanance: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      transport: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      electricity: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      travelling: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      fuel: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      officeRent: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      partnersSalary: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      partnersRemuneration: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      otherExpenses: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      bifercationOfExpenses: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+    }),
+    businessIncome: Yup.object({
+      salaryFromBusiness: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      remunerationFromBusiness: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+      rent: Yup.object({
+        amountPA: Yup.number().required('This field is required'),
+      }),
+    }),
+  });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -224,12 +262,95 @@ const Financials = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  const formikAddMore = useFormik({
+    initialValues: {
+      name: '',
+    },
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values: any) => {
+      setShowModal(false);
+      expenseList.push({
+        title: values.name,
+        value: values.name.replaceAll(' ', ''),
+      });
+      setExpenseList([...expenseList]);
+    },
+  });
+
+  const setTotalIncome = () => {
+    const finance: any = formik?.values?.income;
+    const totalAP =
+      finance.turnoverGrossReciepts.amountPA - finance.purchases.amountPA;
+    const totalPM =
+      finance.purchases.amountPA / finance.turnoverGrossReciepts.amountPA;
+    formik.setFieldValue('income.totalAmountPA', totalAP);
+    formik.setFieldValue('income.totalAmountPM', `${(100 - totalPM * 100).toFixed(0)}%`);
+  };
+
+  const setTotalExpenses = () => {
+    let totalAP = 0;
+    const finance: any = formik?.values?.expenses;
+    for (const key in finance) {
+      if (
+        typeof finance[key] !== 'string' &&
+        typeof finance[key]?.amountPA === 'number'
+      ) {
+        totalAP = totalAP + finance[key]?.amountPA;
+      }
+    }
+    formik.setFieldValue('expenses.totalExpensePA', totalAP);
+    formik.setFieldValue('expenses.totalExpensePM', totalAP);
+    formik.setFieldValue(
+      'expenses.netProfitPA',
+      formik.values.income.totalAmountPA - totalAP,
+    );
+    formik.setFieldValue(
+      'expenses.netProfitPM',
+      `${(
+        ((formik.values.income.totalAmountPA - totalAP) * 100) /
+        formik.values.income.turnoverGrossReciepts.amountPA
+      ).toFixed(0)}%`,
+    );
+    formik.setFieldValue(
+      'expenses.shareOfProfitPA',
+      formik.values.income.totalAmountPA - totalAP,
+    );
+    formik.setFieldValue('expenses.shareOfProfitPM', `${100}%`);
+  };
+
+  const setBusinessIncome = () => {
+    let totalAP = formik.values.expenses.shareOfProfitPA;
+    const finance: any = formik?.values?.businessIncome;
+    for (const key in finance) {
+      if (
+        typeof finance[key] !== 'string' &&
+        typeof finance[key]?.amountPA === 'number'
+      ) {
+        totalAP = finance[key]?.amountPA + totalAP;
+      }
+    }
+    formik.setFieldValue('businessIncome.totalIncomePA', totalAP);
+    formik.setFieldValue('businessIncome.totalEarning', totalAP);
+  };
+
+  useEffect(() => {
+    setBusinessIncome();
+    setTotalExpenses();
+    setTotalIncome();
+  }, [formik.values]);
+
+  const handleAnnualy = (e: any) => {
+    const { id, value } = e.target;
+    formik.setFieldValue(`${id.slice(0, -1)}M`, (value / 12).toFixed(2));
+    formik.handleChange(e);
+  };
 
   return (
     <>
@@ -246,25 +367,37 @@ const Financials = ({
             <ASingleSelect
               id={'applicantIncome'}
               label={'Income of which applicant?'}
-              options={applicantIncome}
               value={formik.values.applicantIncome}
               error={formik.errors.applicantIncome}
               handleChange={formik.handleChange}
+              options={applicantIncome}
             />
           </AGroupFields>
-          <ASection footers={turnoverFooter}>
-            {financials.map((item) => (
+          <ASection
+            footers={[
+              {
+                label: 'Total Amount PA',
+                value: formik.values.income.totalAmountPA,
+              },
+              {
+                label: 'Total Amount PM',
+                value: formik.values.income.totalAmountPM,
+              },
+            ]}
+          >
+            {incomes.map((item) => (
               <FinancialType
                 type={'income'}
                 formik={formik}
                 key={item.value}
                 title={item.title}
                 value={item.value}
+                handleAnnualy={handleAnnualy}
               />
             ))}
           </ASection>
           <ASection>
-            {expenses.map((item) => {
+            {expenseList.map((item: any) => {
               return (
                 <FinancialType
                   type={'expenses'}
@@ -272,31 +405,67 @@ const Financials = ({
                   key={item.value}
                   title={item.title}
                   value={item.value}
+                  handleAnnualy={handleAnnualy}
                 />
               );
             })}
-            <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
               <AButton
                 label={'Add More'}
                 variant="small"
-                action={() => setShowModal(true)}
+                action={() => {
+                  setShowModal(true);
+                  setAddType('business');
+                }}
                 icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
               />
-            </div>
-            {showModal && (
-              <AModal
-                saveText={'Add'}
-                title={'Add More Expenses'}
-                closeModal={() => setShowModal(false)}
-              >
-                <AInputField id={'expenseType'} label="Expense Type" />
-              </AModal>
-            )}
-            <SectionFooter footers={totalExpensesFooter} />
-            <SectionFooter footers={profitFooter} />
+            </div> */}
+            <SectionFooter
+              footers={[
+                {
+                  label: 'Total Expenses P.A.',
+                  value: formik.values.expenses.totalExpensePA,
+                },
+                {
+                  label: 'Net Profit P.A.',
+                  value: formik.values.expenses.netProfitPA,
+                },
+                {
+                  label: 'Share of Profit P.A.',
+                  value: formik.values.expenses.shareOfProfitPA,
+                },
+              ]}
+            />
+            <SectionFooter
+              footers={[
+                {
+                  label: 'Total Expenses P.M.',
+                  value: formik.values.expenses.totalExpensePM,
+                },
+                {
+                  label: 'Net Profit P.M.',
+                  value: formik.values.expenses.netProfitPM,
+                },
+                {
+                  label: 'Share of Profit P.M.',
+                  value: formik.values.expenses.shareOfProfitPM,
+                },
+              ]}
+            />
           </ASection>
-          <ASection footers={totalEarningFooter}>
-            {salaryFromBusiness.map((item) => {
+          <ASection
+            footers={[
+              {
+                label: 'Total P.A.',
+                value: formik.values.businessIncome.totalIncomePA,
+              },
+              {
+                label: 'Total Earning',
+                value: formik.values.businessIncome.totalEarning,
+              },
+            ]}
+          >
+            {bussinessSalary.map((item: any) => {
               return (
                 <FinancialType
                   type={'businessIncome'}
@@ -304,29 +473,40 @@ const Financials = ({
                   key={item.value}
                   title={item.title}
                   value={item.value}
+                  handleAnnualy={handleAnnualy}
                 />
               );
             })}
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <AButton
                 label={'Add More'}
                 variant="small"
-                action={() => setShowModal(true)}
+                action={() => {
+                  setShowModal(true);
+                  setAddType('business');
+                }}
                 icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
               />
-            </div>
-            {showModal && (
-              <AModal
-                saveText={'Add'}
-                title={'Add More Expenses'}
-                closeModal={() => setShowModal(false)}
-              >
-                <AInputField id={'expenseType'} label="Expense Type" />
-              </AModal>
-            )}
+            </div> */}
           </ASection>
         </div>
       </div>
+      {showModal && (
+        <AModal
+          saveText={'Add'}
+          title={'Add Expenses'}
+          onSave={formikAddMore.handleSubmit}
+          closeModal={() => setShowModal(false)}
+        >
+          <AInputField
+            id={'name'}
+            label={'Expense Type'}
+            value={formikAddMore.values.name}
+            error={formikAddMore.errors.name}
+            handleChange={formikAddMore.handleChange}
+          />
+        </AModal>
+      )}
       <AStepperPagination
         steps={steps}
         activeStep={activeStep}

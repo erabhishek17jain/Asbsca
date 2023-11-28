@@ -62,9 +62,12 @@ const ExistingLoan = ({ formik }: any) => {
   const [isExistingLoan, setIsExistingLoan] = useState('yes');
 
   const handleExistingLoan = (title: string, val: string) => {
+    console.log(title);
     setIsExistingLoan(val);
     formik.setFieldValue('existanceLoan.isExistanceLoan', val);
   };
+
+  const errors: any = formik?.errors?.existanceLoan;
 
   return (
     <>
@@ -86,7 +89,8 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.balanceTransfer"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.balanceTransfer > 0 ? (
+                      {formik.values.existanceLoan.balanceTransfer.length >
+                      0 ? (
                         formik.values.existanceLoan.balanceTransfer.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
@@ -109,8 +113,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].typeOfLoan
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].typeOfLoan
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Type of Loan'}
@@ -123,8 +127,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].bankName
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].bankName
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].bankName
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Bank Name'}
@@ -138,8 +142,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].loanAmount
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].loanAmount
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].loanAmount
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Loan Amount (Lakhs)'}
@@ -152,8 +156,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].tenureMonth
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].tenureMonth
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].tenureMonth
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Tenure (Months)'}
@@ -166,8 +170,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].emi
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].emi
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
@@ -179,8 +183,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].outstanding
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].outstanding
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].outstanding
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
@@ -192,8 +196,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .balanceTransfer[index].remark
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .balanceTransfer[index].remark
+                                      errors?.balanceTransfer?.length > 0 &&
+                                      errors.balanceTransfer[index].remark
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Remark'}
@@ -233,8 +237,8 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.existingLoanClosedThisYear"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.existingLoanClosedThisYear >
-                      0 ? (
+                      {formik.values.existanceLoan.existingLoanClosedThisYear
+                        .length > 0 ? (
                         formik.values.existanceLoan.existingLoanClosedThisYear.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
@@ -258,8 +262,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .typeOfLoan
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
@@ -274,8 +279,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .bankName
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .bankName
                                     }
                                     handleChange={formik.handleChange}
@@ -291,8 +297,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .loanAmount
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .loanAmount
                                     }
                                     handleChange={formik.handleChange}
@@ -307,8 +314,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .tenureMonth
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .tenureMonth
                                     }
                                     handleChange={formik.handleChange}
@@ -322,8 +330,10 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanClosedThisYear[index].emi
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index].emi
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
+                                        .emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
@@ -336,8 +346,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .outstanding
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .outstanding
                                     }
                                     handleChange={formik.handleChange}
@@ -351,8 +362,9 @@ const ExistingLoan = ({ formik }: any) => {
                                         .remark
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear
+                                        ?.length > 0 &&
+                                      errors.existingLoanClosedThisYear[index]
                                         .remark
                                     }
                                     handleChange={formik.handleChange}
@@ -393,7 +405,8 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.existingLoanEMI"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.existingLoanEMI > 0 ? (
+                      {formik.values.existanceLoan.existingLoanEMI.length >
+                      0 ? (
                         formik.values.existanceLoan.existingLoanEMI.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
@@ -416,8 +429,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].typeOfLoan
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].typeOfLoan
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Type of Loan'}
@@ -430,8 +443,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].bankName
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].bankName
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].bankName
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Bank Name'}
@@ -445,8 +458,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].loanAmount
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].loanAmount
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].loanAmount
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Loan Amount (Lakhs)'}
@@ -459,8 +472,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].tenureMonth
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].tenureMonth
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].tenureMonth
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Tenure (Months)'}
@@ -473,8 +486,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].emi
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].emi
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
@@ -486,8 +499,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].outstanding
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].outstanding
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].outstanding
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
@@ -499,8 +512,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .existingLoanEMI[index].remark
                                     }
                                     error={
-                                      formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].remark
+                                      errors?.existingLoanEMI?.length > 0 &&
+                                      errors.existingLoanEMI[index].remark
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Remark'}
@@ -538,9 +551,12 @@ const CreditFacility = ({ formik }: any) => {
   const [isCreditFacility, setIsCreditFacility] = useState('yes');
 
   const handleCreditFacility = (title: string, val: string) => {
+    console.log(title);
     setIsCreditFacility(val);
     formik.setFieldValue('creditFacility.isCreditFacility', val);
   };
+
+  const errors: any = formik?.errors?.creditFacility;
 
   return (
     <>
@@ -561,7 +577,7 @@ const CreditFacility = ({ formik }: any) => {
                 name="creditFacility.creditDetails"
                 render={(tag) => (
                   <div>
-                    {formik.values.creditFacility.creditDetails > 0 ? (
+                    {formik.values.creditFacility.creditDetails.length > 0 ? (
                       formik.values.creditFacility.creditDetails.map(
                         (item: any, index: number) => (
                           <div className="mb-3">
@@ -584,8 +600,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].typeOfFacility
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].typeOfFacility
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].typeOfFacility
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Type of Facility'}
@@ -598,8 +614,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].bankName
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].bankName
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].bankName
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Bank Name'}
@@ -613,8 +629,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].limit
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].limit
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].limit
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Limit'}
@@ -626,8 +642,9 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].averageUtilization
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].averageUtilization
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index]
+                                      .averageUtilization
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Average Utilization'}
@@ -640,8 +657,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].emi
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].emi
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].emi
                                   }
                                   handleChange={formik.handleChange}
                                   label={'EMI'}
@@ -654,8 +671,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].interestRate
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].interestRate
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].interestRate
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Interest Rate (%)'}
@@ -667,8 +684,8 @@ const CreditFacility = ({ formik }: any) => {
                                       .creditDetails[index].remark
                                   }
                                   error={
-                                    formik?.values?.creditFacility
-                                      .creditDetails[index].remark
+                                    errors?.creditDetails?.length > 0 &&
+                                    errors.creditDetails[index].remark
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Remark'}
@@ -705,9 +722,12 @@ const OtherCommitments = ({ formik }: any) => {
   const [isOtherCommitments, setIsOtherCommitments] = useState('yes');
 
   const handleOtherCommitments = (title: string, val: string) => {
+    console.log(title);
     setIsOtherCommitments(val);
     formik.setFieldValue('otherCommitments.isOtherCommitmemts', val);
   };
+
+  const errors: any = formik?.errors?.otherCommitments;
 
   return (
     <>
@@ -728,7 +748,8 @@ const OtherCommitments = ({ formik }: any) => {
                 name="otherCommitments.commitmentsDetails"
                 render={(tag) => (
                   <div>
-                    {formik.values.otherCommitments.commitmentsDetails > 0 ? (
+                    {formik.values.otherCommitments.commitmentsDetails.length >
+                    0 ? (
                       formik.values.otherCommitments.commitmentsDetails.map(
                         (item: any, index: number) => (
                           <div className="mb-3">
@@ -751,8 +772,9 @@ const OtherCommitments = ({ formik }: any) => {
                                       .commitmentsDetails[index].particulars
                                   }
                                   error={
-                                    formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].particulars
+                                    errors?.commitmentsDetails?.length > 0 &&
+                                    errors?.commitmentsDetails[index]
+                                      .particulars
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Particulars'}
@@ -766,8 +788,9 @@ const OtherCommitments = ({ formik }: any) => {
                                       .commitmentsDetails[index].contribution
                                   }
                                   error={
-                                    formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].contribution
+                                    errors?.commitmentsDetails?.length > 0 &&
+                                    errors?.commitmentsDetails[index]
+                                      .contribution
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Contribution P.A.'}
@@ -780,8 +803,8 @@ const OtherCommitments = ({ formik }: any) => {
                                       .commitmentsDetails[index].sumAssured
                                   }
                                   error={
-                                    formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].sumAssured
+                                    errors?.commitmentsDetails?.length > 0 &&
+                                    errors?.commitmentsDetails[index].sumAssured
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Sum Assured/Maturity Value (Rs.)'}
@@ -817,9 +840,9 @@ const existingLoanInfo = {
   title: '',
   typeOfLoan: '',
   bankName: '',
-  loanAmount: 0,
-  tenureMonth: 0,
-  emi: 0,
+  loanAmount: '',
+  tenureMonth: '',
+  emi: '',
   outstanding: '',
   remark: '',
 };
@@ -828,18 +851,18 @@ const ceditFacilityInfo = {
   title: '',
   typeOfFacility: '',
   bankName: '',
-  limit: 0,
-  averageUtilization: 0,
-  emi: 0,
-  interestRate: 0,
+  limit: '',
+  averageUtilization: '',
+  emi: '',
+  interestRate: '',
   remark: '',
 };
 
 const commitmentsInfo = {
   title: '',
   particulars: '',
-  contributionPA: 0,
-  sumAssured: 0,
+  contribution: '',
+  sumAssured: '',
 };
 
 const ExistingLoanCredit = ({
@@ -853,27 +876,79 @@ const ExistingLoanCredit = ({
   const initialValues = {
     existanceLoan: {
       isExistanceLoan: 'yes',
-      balanceTransfer: [],
-      existingLoanClosedThisYear: [],
-      existingLoanEMI: [],
+      balanceTransfer: [] as any,
+      existingLoanClosedThisYear: [] as any,
+      existingLoanEMI: [] as any,
     },
     creditFacility: {
       isCreditFacility: 'yes',
-      creditDetails: [],
+      creditDetails: [] as any,
     },
     otherCommitments: {
       isOtherCommitmemts: 'yes',
-      commitmentsDetails: [],
+      commitmentsDetails: [] as any,
     },
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    existanceLoan: Yup.object({
+      balanceTransfer: Yup.array().of(
+        Yup.object().shape({
+          typeOfLoan: Yup.string().required('This field is required'),
+          bankName: Yup.string().required('This field is required'),
+          loanAmount: Yup.string().required('This field is required'),
+          tenureMonth: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          outstanding: Yup.string().required('This field is required'),
+          remark: Yup.string().required('This field is required'),
+        }),
+      ),
+      existingLoanClosedThisYear: Yup.array().of(
+        Yup.object().shape({
+          typeOfLoan: Yup.string().required('This field is required'),
+          bankName: Yup.string().required('This field is required'),
+          loanAmount: Yup.string().required('This field is required'),
+          tenureMonth: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          outstanding: Yup.string().required('This field is required'),
+          remark: Yup.string().required('This field is required'),
+        }),
+      ),
+      existingLoanEMI: Yup.array().of(
+        Yup.object().shape({
+          typeOfLoan: Yup.string().required('This field is required'),
+          bankName: Yup.string().required('This field is required'),
+          loanAmount: Yup.string().required('This field is required'),
+          tenureMonth: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          outstanding: Yup.string().required('This field is required'),
+          remark: Yup.string().required('This field is required'),
+        }),
+      ),
+    }),
+    creditFacility: Yup.object({
+      creditDetails: Yup.array().of(
+        Yup.object().shape({
+          typeOfFacility: Yup.string().required('This field is required'),
+          bankName: Yup.string().required('This field is required'),
+          limit: Yup.string().required('This field is required'),
+          averageUtilization: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          interestRate: Yup.string().required('This field is required'),
+          remark: Yup.string().required('This field is required'),
+        }),
+      ),
+    }),
+    otherCommitments: Yup.object({
+      commitmentsDetails: Yup.array().of(
+        Yup.object().shape({
+          particulars: Yup.string().required('This field is required'),
+          contribution: Yup.string().required('This field is required'),
+          sumAssured: Yup.string().required('This field is required'),
+        }),
+      ),
+    }),
+  });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -883,7 +958,6 @@ const ExistingLoanCredit = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,

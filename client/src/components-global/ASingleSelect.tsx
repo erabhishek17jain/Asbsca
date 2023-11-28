@@ -36,7 +36,7 @@ const ASingleSelect = ({
             Select {label}
           </option>
           {options.map((item: any) => (
-            <option key={item?.value} value={item?.value}>
+            <option key={id + item?.value} value={item?.value}>
               {item?.label}
             </option>
           ))}

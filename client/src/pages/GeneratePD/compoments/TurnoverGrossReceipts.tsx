@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import ATags from '../../../components-global/ATags';
 import AInputField from '../../../components-global/AInputField';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AGroupFields from '../../../components-global/AGroupFields';
@@ -7,34 +5,8 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { trendOfBusiness, futureProjection } from '../constants';
-
-const aprilTurnoverInfo = {
-  id: 'trun1',
-  title: 'April Till Date',
-  isOpen: true,
-  data: [],
-};
-
-const lastyearTurnoverInfo = {
-  id: 'trun2',
-  title: 'March-2021 and March-2022 (As per F.S.)',
-  isOpen: true,
-  data: [],
-};
-
-const currentYearTurnoverInfo = {
-  id: 'trun2',
-  title: 'March-2023 (F.S. and Actuals Comparision)',
-  isOpen: true,
-  data: [],
-};
-
-const currentLastCompTurnoverInfo = {
-  id: 'trun3',
-  title: 'March-2023 and March-2022 Comparison (as per Financials)',
-  isOpen: true,
-  data: [],
-};
+import ASection from '../../../components-global/ASection';
+import moment from 'moment';
 
 const TurnoverGrossReceipts = ({
   steps,
@@ -44,20 +16,8 @@ const TurnoverGrossReceipts = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [aprilTurnoverDetails, setAprilTurnoverDetails] = useState([
-    { ...aprilTurnoverInfo },
-  ]);
-  const [lastyearTurnoverDetails, setLastyearTurnoverDetails] = useState([
-    { ...lastyearTurnoverInfo },
-  ]);
-  const [currentYearTurnoverDetails, setCurrentYearTurnoverDetails] = useState([
-    { ...currentYearTurnoverInfo },
-  ]);
-  const [currentLastCompTurnoverDetails, setCurrentLastCompTurnoverDetails] =
-    useState([{ ...currentLastCompTurnoverInfo }]);
-
   const initialValues = {
-    apirilTillDate: {
+    aprilTillDate: {
       idealAprilTillDate: {
         turnover: '',
         netProfit: '',
@@ -97,13 +57,46 @@ const TurnoverGrossReceipts = ({
     futureProjection: '',
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    aprilTillDate: Yup.object({
+      idealAprilTillDate: Yup.object({
+        turnover: Yup.number().required('This field is required'),
+        netProfit: Yup.number().required('This field is required'),
+      }),
+      aprilTillDate: Yup.object({
+        turnover: Yup.number().required('This field is required'),
+        netProfit: Yup.number().required('This field is required'),
+      }),
+      reasonforDiff: Yup.string().required('This field is required'),
+    }),
+    lastYears: Yup.object({
+      firstLastYear: Yup.number().required('This field is required'),
+      secondLastYear: Yup.number().required('This field is required'),
+      changes: Yup.string().required('This field is required'),
+      reasonforDiff: Yup.string().required('This field is required'),
+    }),
+    currentYearActual: Yup.object({
+      actuals: Yup.object({
+        turnover: Yup.number().required('This field is required'),
+        netProfit: Yup.number().required('This field is required'),
+        profitPercentage: Yup.number().required('This field is required'),
+      }),
+      asPerFinancials: Yup.object({
+        turnover: Yup.number().required('This field is required'),
+        netProfit: Yup.number().required('This field is required'),
+        profitPercentage: Yup.number().required('This field is required'),
+      }),
+      financialActualRatio: Yup.string().required('This field is required'),
+    }),
+    currentLastYearComparision: Yup.object({
+      firstLastYear: Yup.number().required('This field is required'),
+      secondLastYear: Yup.number().required('This field is required'),
+      changes: Yup.string().required('This field is required'),
+      reasonforDiff: Yup.string().required('This field is required'),
+    }),
+    bussinessTrendLast2Year: Yup.string().required('This field is required'),
+    futureProjection: Yup.string().required('This field is required'),
+  });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -113,99 +106,237 @@ const TurnoverGrossReceipts = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
   });
 
+  const errors: any = formik.errors;
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col gap-3">
-          <ATags
-            disableAdd={true}
-            tags={aprilTurnoverDetails}
-            setTags={setAprilTurnoverDetails}
-          >
-            <p className="w-full pb-3">Ideal April till date Turnover</p>
-            <AGroupFields col={2}>
-              <AInputField name={'turnover'} label={'Turnover'} />
-              <AInputField name={'netprofit'} label={'Net Profit'} />
+          <ASection>
+            <p className="w-full pb-3">Aprill Till Date:</p>
+            <AGroupFields col={2} title={'Ideal April till date Turnover'}>
+              <AInputField
+                type={'number'}
+                label={'Turnover'}
+                id={'aprilTillDate.idealAprilTillDate.turnover'}
+                value={formik.values.aprilTillDate.idealAprilTillDate.turnover}
+                error={errors?.aprilTillDate?.idealAprilTillDate?.turnover}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                type={'number'}
+                id={'aprilTillDate.idealAprilTillDate.netProfit'}
+                label={'Net Profit'}
+                value={formik.values.aprilTillDate.idealAprilTillDate.netProfit}
+                error={errors?.aprilTillDate?.idealAprilTillDate?.netProfit}
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
-            <p className="w-full pb-3">April till date Turnover</p>
-            <AGroupFields col={2}>
-              <AInputField name={'turnover'} label={'Turnover'} />
-              <AInputField name={'netprofit'} label={'Net Profit'} />
+            <AGroupFields col={2} title={'April till date Turnover'}>
+              <AInputField
+                type={'number'}
+                id={'aprilTillDate.aprilTillDate.turnover'}
+                label={'Turnover'}
+                value={formik.values.aprilTillDate.aprilTillDate.turnover}
+                error={errors?.aprilTillDate?.aprilTillDate?.turnover}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                type={'number'}
+                id={'aprilTillDate.aprilTillDate.netProfit'}
+                label={'Net Profit'}
+                value={formik.values.aprilTillDate.aprilTillDate.netProfit}
+                error={errors?.aprilTillDate?.aprilTillDate?.netProfit}
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
             <AGroupFields col={2}>
-              <AInputField name={'reason'} label={'Reason if major diff'} />
+              <AInputField
+                id={'aprilTillDate.reasonforDiff'}
+                label={'Reason if major diff'}
+                value={formik.values.aprilTillDate.reasonforDiff}
+                error={errors?.aprilTillDate?.reasonforDiff}
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
-          </ATags>
-          <ATags
-            disableAdd={true}
-            tags={lastyearTurnoverDetails}
-            setTags={setLastyearTurnoverDetails}
-          >
+          </ASection>
+          <ASection>
+            <p className="w-full pb-3">
+              March-{moment().subtract(2, 'y').year()} and March-
+              {moment().subtract(1, 'y').year()} (As per F.S.)
+            </p>
             <AGroupFields>
               <AInputField
-                name={'last2year'}
-                label={'March-2021 (As per F.S.)'}
+                type={'number'}
+                label={`March-${moment()
+                  .subtract(2, 'y')
+                  .year()} (As per F.S.)`}
+                id={'lastYears.firstLastYear'}
+                value={formik.values.lastYears.firstLastYear}
+                error={errors?.lastYears?.firstLastYear}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                name={'lastyear'}
-                label={'March-2022 (As per F.S.)'}
+                type={'number'}
+                label={`March-${moment()
+                  .subtract(1, 'y')
+                  .year()} (As per F.S.)`}
+                id={'lastYears.secondLastYear'}
+                value={formik.values.lastYears.secondLastYear}
+                error={errors?.lastYears?.secondLastYear}
+                handleChange={formik.handleChange}
               />
-              <AInputField name={'changes'} label={'Changes'} />
-              <AInputField name={'changes'} label={'Reason if major diff'} />
+              <AInputField
+                label={'Changes'}
+                id={'lastYears.changes'}
+                value={formik.values.lastYears.changes}
+                error={errors?.lastYears?.changes}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                label={'Reason if major diff'}
+                id={'lastYears.reasonforDiff'}
+                value={formik.values.lastYears.reasonforDiff}
+                error={errors?.lastYears?.reasonforDiff}
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
-          </ATags>
-          <ATags
-            disableAdd={true}
-            tags={currentYearTurnoverDetails}
-            setTags={setCurrentYearTurnoverDetails}
-          >
-            <p className="w-full pb-3">Actuals</p>
-            <AGroupFields col={3}>
-              <AInputField name={'turnover'} label={'Turnover'} />
-              <AInputField name={'netprofit'} label={'Net Profit'} />
-              <AInputField name={'percent'} label={'%'} />
+          </ASection>
+          <ASection>
+            <p className="w-full pb-3">
+              March-{moment().year()} (F.S. and Actuals Comparision)
+            </p>
+            <AGroupFields col={3} title={'Actuals'}>
+              <AInputField
+                type={'number'}
+                label={'Turnover'}
+                id={'currentYearActual.actuals.turnover'}
+                value={formik.values.currentYearActual.actuals.turnover}
+                error={errors?.currentYearActual?.actuals?.turnover}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                type={'number'}
+                label={'Net Profit'}
+                id={'currentYearActual.actuals.netProfit'}
+                value={formik.values.currentYearActual.actuals.netProfit}
+                error={errors?.currentYearActual?.actuals?.netProfit}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                label={'%'}
+                type={'number'}
+                rightLabel={'(%)'}
+                id={'currentYearActual.actuals.profitPercentage'}
+                value={formik.values.currentYearActual.actuals.profitPercentage}
+                error={errors?.currentYearActual?.actuals?.profitPercentage}
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
-            <p className="w-full pb-3">As per Financial</p>
-            <AGroupFields col={3}>
-              <AInputField name={'turnover'} label={'Turnover'} />
-              <AInputField name={'netprofit'} label={'Net Profit'} />
-              <AInputField name={'percent'} label={'%'} />
+            <AGroupFields col={3} title={'As per Financial'}>
+              <AInputField
+                type={'number'}
+                label={'Turnover'}
+                id={'currentYearActual.asPerFinancials.turnover'}
+                value={
+                  formik.values.currentYearActual?.asPerFinancials?.turnover
+                }
+                error={errors?.currentYearActual?.asPerFinancials?.turnover}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                type={'number'}
+                label={'Net Profit'}
+                id={'currentYearActual.asPerFinancials.netProfit'}
+                value={
+                  formik.values.currentYearActual.asPerFinancials.netProfit
+                }
+                error={errors?.currentYearActual?.asPerFinancials?.netProfit}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                type={'number'}
+                label={'%'}
+                rightLabel={'(%)'}
+                id={'currentYearActual.asPerFinancials.profitPercentage'}
+                value={
+                  formik.values.currentYearActual?.asPerFinancials
+                    ?.profitPercentage
+                }
+                error={
+                  errors?.currentYearActual?.asPerFinancials?.profitPercentage
+                }
+                handleChange={formik.handleChange}
+              />
             </AGroupFields>
             <AGroupFields col={2}>
               <AInputField
-                name={'fsActual'}
                 label={'F.S./Acutals (Bank Ratio)'}
+                id={'currentYearActual.financialActualRatio'}
+                value={formik.values.currentYearActual.financialActualRatio}
+                error={errors?.currentYearActual?.financialActualRatio}
+                handleChange={formik.handleChange}
               />
             </AGroupFields>
-          </ATags>
-          <ATags
-            disableAdd={true}
-            tags={currentLastCompTurnoverDetails}
-            setTags={setCurrentLastCompTurnoverDetails}
-          >
-            <p className="w-full pb-3">Turnover</p>
+          </ASection>
+          <ASection>
+            <p className="w-full pb-3">
+              March-{moment().year()} and March-
+              {moment().subtract(1, 'y').year()} Comparison (as per Financials):
+            </p>
             <AGroupFields>
-              <AInputField name={'marchlast2'} label={'March-2022'} />
-              <AInputField name={'marchlast1'} label={'March-2023'} />
-              <AInputField name={'changes'} label={'Changes'} />
-              <AInputField name={'changes'} label={'Reason if major diff'} />
+              <AInputField
+                type={'number'}
+                id={'currentLastYearComparision.firstLastYear'}
+                value={formik.values.currentLastYearComparision.firstLastYear}
+                error={errors?.currentLastYearComparision?.firstLastYear}
+                handleChange={formik.handleChange}
+                label={`March-${moment().subtract(1, 'y').year()}`}
+              />
+              <AInputField
+                type={'number'}
+                id={'currentLastYearComparision.secondLastYear'}
+                value={formik.values.currentLastYearComparision.secondLastYear}
+                error={errors?.currentLastYearComparision?.secondLastYear}
+                handleChange={formik.handleChange}
+                label={`March-${moment().year()}`}
+              />
+              <AInputField
+                label={'Changes'}
+                id={'currentLastYearComparision.changes'}
+                value={formik.values.currentLastYearComparision.changes}
+                error={errors?.currentLastYearComparision?.changes}
+                handleChange={formik.handleChange}
+              />
+              <AInputField
+                id={'currentLastYearComparision.reasonforDiff'}
+                value={formik.values.currentLastYearComparision.reasonforDiff}
+                error={errors?.currentLastYearComparision?.reasonforDiff}
+                handleChange={formik.handleChange}
+                label={'Reason if major diff'}
+              />
             </AGroupFields>
-          </ATags>
+          </ASection>
           <AGroupFields col={2}>
             <ASingleSelect
-              name={'comments'}
+              id={'bussinessTrendLast2Year'}
+              value={formik.values.bussinessTrendLast2Year}
+              error={errors?.bussinessTrendLast2Year}
+              handleChange={formik.handleChange}
               label={'Comment on Trend of Business of past 2 years'}
               options={trendOfBusiness}
             />
             <ASingleSelect
-              name={'changes'}
+              id={'futureProjection'}
+              value={formik.values.futureProjection}
+              error={errors?.futureProjection}
+              handleChange={formik.handleChange}
               label={'Future Projection:'}
               options={futureProjection}
             />

@@ -60,7 +60,7 @@ export function AStepper({
   setPayloads,
   generateReport,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(5);
+  const [activeStep, setActiveStep] = React.useState(11);
 
   const handleNext = () =>
     activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);

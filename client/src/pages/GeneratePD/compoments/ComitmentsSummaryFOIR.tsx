@@ -4,17 +4,18 @@ import ASection from '../../../components-global/ASection';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 
 const comitments = [
-  { title: 'Proposed EMI' },
-  { title: 'Existing EMI' },
-  { title: 'BT EMI' },
-  { title: 'Closure EMI' },
-  { title: 'LIC/Med./SIP/TP/Other' },
-  { title: 'House Rent' },
-  { title: 'Total Commitments (Current)' },
-  { title: 'Total Present EMI' },
-  { title: 'Existing Commitments' },
+  { title: 'Proposed EMI', value: 'proposedEMI' },
+  { title: 'Existing EMI', value: 'existingEMI' },
+  { title: 'BT EMI', value: 'btEMI' },
+  { title: 'Closure EMI', value: 'closureEMI' },
+  { title: 'LIC/Med./SIP/TP/Other', value: 'licMedSipTpOther' },
+  { title: 'House Rent', value: 'houseRent' },
+  { title: 'Total Commitments (Current)', value: 'totalCommitments' },
+  { title: 'Total Present EMI', value: 'totalPresentEMI' },
+  { title: 'Existing Commitments', value: 'existingCommitments' },
 ];
 
 const ComitmentsSummaryFOIR = ({
@@ -25,7 +26,7 @@ const ComitmentsSummaryFOIR = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
+  const initialValues: any = {
     proposedEMI: { amountPA: '', amountPM: '' },
     existingEMI: { amountPA: '', amountPM: '' },
     btEMI: { amountPA: '', amountPM: '' },
@@ -40,13 +41,35 @@ const ComitmentsSummaryFOIR = ({
     totalCommitmentsRatio: '',
   };
 
-  const validationSchema = Yup.object().shape({});
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    purchases: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    existingEMI: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    btEMI: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    closureEMI: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    licMedSipTpOther: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    houseRent: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    totalCommitments: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    totalPresentEMI: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+    existingCommitments: Yup.object({
+      amountPM: Yup.number().required('This field is required'),
+    }),
+  });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -56,12 +79,36 @@ const ComitmentsSummaryFOIR = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  const handleMonthly = (e: any) => {
+    const { id, value } = e.target;
+    formik.setFieldValue(`${id.slice(0, -1)}A`, (value * 12) / 100000);
+    formik.handleChange(e);
+  };
+
+  useEffect(() => {
+    const emi = 41822;
+    const yearEmi = ((emi * 12) / 100000).toFixed(2);
+    const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
+    const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
+
+    formik.setFieldValue('proposedEMI.amountPM', emi);
+    formik.setFieldValue('proposedEMI.amountPA', yearEmi);
+    formik.setFieldValue('totalCommitments.amountPM', emi);
+    formik.setFieldValue('totalCommitments.amountPA', yearEmi);
+    formik.setFieldValue('existingCommitments.amountPM', emi);
+    formik.setFieldValue('existingCommitments.amountPA', yearEmi);
+    formik.setFieldValue('onlyEMIRatio', ratioStr);
+    formik.setFieldValue('foirRatio', ratioStr);
+    formik.setFieldValue('totalCommitmentsRatio', ratioStr);
+  }, []);
+
+  const errors: any = formik?.errors;
 
   return (
     <>
@@ -69,34 +116,51 @@ const ComitmentsSummaryFOIR = ({
         <div className="flex flex-col w-full">
           <ASection>
             {comitments.map((item) => (
-              <AGroupFields col={2} title={item.title}>
+              <AGroupFields col={3} title={item.title}>
                 <AInputField
-                  
-                  name={'amountPA'}
-                  label={'Amount P.A.'}
+                  type={'number'}
+                  id={`${item.value}.amountPM`}
+                  label={'Amount PM'}
+                  rightLabel={'(Rs.)'}
+                  value={formik.values[item.value].amountPM}
+                  error={errors[item.value] && errors[item.value].amountPM}
+                  handleChange={handleMonthly}
                 />
                 <AInputField
-                  
-                  name={'amountPM'}
-                  label={'Amount P.M.'}
+                  type={'number'}
+                  id={`${item.value}.amountPA`}
+                  label={'Amount PA'}
+                  rightLabel={'(Lakhs)'}
+                  value={formik.values[item.value].amountPA}
+                  error={errors[item.value] && errors[item.value].amountPA}
+                  handleChange={formik.handleChange}
                 />
               </AGroupFields>
             ))}
             <AGroupFields col={3}>
               <AInputField
-                
-                name={'emiRatio'}
+                disabled={true}
+                id={'onlyEMIRatio'}
                 label={'Only EMI Ratio'}
+                value={formik.values.onlyEMIRatio}
+                error={errors.onlyEMIRatio}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                
-                name={'emiRatio'}
+                disabled={true}
+                id={'foirRatio'}
                 label={'FOIR Ratio (EMI + Other Con.)'}
+                value={formik.values.foirRatio}
+                error={errors.foirRatio}
+                handleChange={formik.handleChange}
               />
               <AInputField
-                
-                name={'emiRatio'}
+                disabled={true}
+                id={'totalCommitmentsRatio'}
                 label={'Total Commitments Ratio'}
+                value={formik.values.totalCommitmentsRatio}
+                error={errors.totalCommitmentsRatio}
+                handleChange={formik.handleChange}
               />
             </AGroupFields>
           </ASection>

@@ -14,12 +14,9 @@ import {
   fixedEmployee,
   citiesOfRepresentation,
   generation,
-  familyRealtion,
   designations,
   designation,
 } from '../constants';
-import { useEffect, useState } from 'react';
-import { getOptions } from '../../../utils';
 
 const shareHolderFooters = [
   {
@@ -41,8 +38,6 @@ const BusinessDetails = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [applicants, setApplicants] = useState<any>([]);
-
   const initialValues = {
     bussinessName: '',
     typeOfEntity: '',
@@ -63,8 +58,8 @@ const BusinessDetails = ({
     competitorsOfBusiness: '',
     noOfVisit: 1,
     doYouHavefixedEmployee: '',
-    empSpecified: 0,
-    empSeen: 0,
+    empSpecified: '',
+    empSeen: '',
     shareHoldings: [
       {
         ownerName: '',
@@ -77,7 +72,7 @@ const BusinessDetails = ({
     resiAddress: Yup.string().required('This field is required'),
     bussinessName: Yup.string().required('This field is required'),
     typeOfEntity: Yup.string().required('This field is required'),
-    yearOfIncorporation: Yup.string().required('This field is required'),
+    yearOfIncorporation: Yup.number().required('This field is required'),
     generation: Yup.string().required('This field is required'),
     gstNumber: Yup.string().required('This field is required'),
     regOfficeAddress: Yup.string().required('This field is required'),
@@ -87,7 +82,7 @@ const BusinessDetails = ({
     pdConductWith: Yup.string().required('This field is required'),
     designation: Yup.string().required('This field is required'),
     mobile: Yup.number().required('This field is required'),
-    familyBusiness: Yup.string().required('This field is required'),
+    familyBusiness: Yup.number().required('This field is required'),
     mainUseproducts: Yup.string().required('This field is required'),
     howTurnoverVerified: Yup.string().required('This field is required'),
     citiesOfReppresentation: Yup.string().required('This field is required'),
@@ -118,12 +113,6 @@ const BusinessDetails = ({
     onSubmit: onSubmit,
   });
 
-  useEffect(() => {
-    setApplicants(
-      getOptions(payloads?.personalDetails?.applicants, 'name', 'name'),
-    );
-  }, []);
-
   const handleTypeOfEntity = (e: any) => {
     const { value } = e.target;
     const design = designation.find((item: any) => item.value === value);
@@ -140,14 +129,14 @@ const BusinessDetails = ({
           <ASection>
             <AGroupFields>
               <AInputField
-                name={'bussinessName'}
+                id={'bussinessName'}
                 label={'Business Name'}
                 value={formik.values.bussinessName}
                 error={formik.errors.bussinessName}
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'typeOfEntity'}
+                id={'typeOfEntity'}
                 label={'Type of Entity'}
                 options={typesOfEntity}
                 value={formik.values.typeOfEntity}
@@ -155,43 +144,44 @@ const BusinessDetails = ({
                 handleChange={handleTypeOfEntity}
               />
               <AInputField
-                name={'yearOfIncorporation'}
+                type={'number'}
+                id={'yearOfIncorporation'}
                 label={'Year of Incorporation'}
                 value={formik.values.yearOfIncorporation}
                 error={formik.errors.yearOfIncorporation}
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'generation'}
+                id={'generation'}
                 label={'Generation'}
                 options={generation}
                 value={formik.values.generation}
                 error={formik.errors.generation}
                 handleChange={formik.handleChange}
               />
-              <AInputField
-                name={'gstNumber'}
+              <AInputField //todo validation
+                id={'gstNumber'}
                 label={'GST Number'}
                 value={formik.values.gstNumber}
                 error={formik.errors.gstNumber}
                 handleChange={formik.handleChange}
               />
               <AInputField
-                name={'regOfficeAddress'}
+                id={'regOfficeAddress'}
                 label={'Registered Office Address'}
                 value={formik.values.regOfficeAddress}
                 error={formik.errors.regOfficeAddress}
                 handleChange={formik.handleChange}
               />
               <AInputField
-                name={'visitedAddress'}
+                id={'visitedAddress'}
                 label={'Visited Address'}
                 value={formik.values.visitedAddress}
                 error={formik.errors.visitedAddress}
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'vicinity'}
+                id={'vicinity'}
                 label={'Vicinity'}
                 options={vicinity}
                 value={formik.values.vicinity}
@@ -199,24 +189,30 @@ const BusinessDetails = ({
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'ownershipOfAddressVisited'}
+                id={'ownershipOfAddressVisited'}
                 label={'Ownership of address Visited'}
                 options={residenceStatus}
                 value={formik.values.ownershipOfAddressVisited}
                 error={formik.errors.ownershipOfAddressVisited}
                 handleChange={formik.handleChange}
               />
-              {/* show applicants list */}
               <ASingleSelect
-                name={'pdConductWith'}
+                id={'pdConductWith'}
                 label={'PD Conducted With'}
-                options={applicants}
                 value={formik.values.pdConductWith}
                 error={formik.errors.pdConductWith}
                 handleChange={formik.handleChange}
+                options={payloads?.personalDetails?.applicants.map(
+                  (item: any) => {
+                    return {
+                      label: item.name,
+                      value: item.name,
+                    };
+                  },
+                )}
               />
               <ASingleSelect
-                name={'designation'}
+                id={'designation'}
                 label={'Designation'}
                 options={designations}
                 value={formik.values.designation}
@@ -224,29 +220,30 @@ const BusinessDetails = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
+                id={'mobile'}
                 type={'number'}
-                name={'mobile'}
                 label={'Mobile No.'}
                 value={formik.values.mobile}
                 error={formik.errors.mobile}
                 handleChange={formik.handleChange}
               />
               <AInputField
-                name={'familyBusiness'}
+                type={'number'}
+                id={'familyBusiness'}
                 label={'Family Members in Business'}
                 value={formik.values.familyBusiness}
                 error={formik.errors.familyBusiness}
                 handleChange={formik.handleChange}
               />
               <AInputField
-                name={'mainUseproducts'}
+                id={'mainUseproducts'}
                 label={'Main use of products/services'}
                 value={formik.values.mainUseproducts}
                 error={formik.errors.mainUseproducts}
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'howTurnoverVerified'}
+                id={'howTurnoverVerified'}
                 label={'How was turnover verified?'}
                 options={turnoverVerified}
                 value={formik.values.howTurnoverVerified}
@@ -254,7 +251,7 @@ const BusinessDetails = ({
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'citiesOfReppresentation'}
+                id={'citiesOfReppresentation'}
                 label={'Cities of Representation'}
                 options={citiesOfRepresentation}
                 value={formik.values.citiesOfReppresentation}
@@ -262,7 +259,7 @@ const BusinessDetails = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                name={'competitorsOfBusiness'}
+                id={'competitorsOfBusiness'}
                 label={'Key Competitors to Business'}
                 value={formik.values.competitorsOfBusiness}
                 error={formik.errors.competitorsOfBusiness}
@@ -270,14 +267,14 @@ const BusinessDetails = ({
               />
               <AInputField
                 type={'number'}
-                name={'noOfVisit'}
+                id={'noOfVisit'}
                 label={'No. of Visit'}
                 value={formik.values.noOfVisit}
                 error={formik.errors.noOfVisit}
                 handleChange={formik.handleChange}
               />
               <ASingleSelect
-                name={'doYouHavefixedEmployee'}
+                id={'doYouHavefixedEmployee'}
                 label={'Do they have fixed employees?'}
                 options={fixedEmployee}
                 value={formik.values.doYouHavefixedEmployee}
@@ -287,7 +284,7 @@ const BusinessDetails = ({
               <div className="flex gap-3">
                 <AInputField
                   type={'number'}
-                  name={'empSpecified'}
+                  id={'empSpecified'}
                   label={'Emp. Specified'}
                   value={formik.values.empSpecified}
                   error={formik.errors.empSpecified}
@@ -295,7 +292,7 @@ const BusinessDetails = ({
                 />
                 <AInputField
                   type={'number'}
-                  name={'empSeen'}
+                  id={'empSeen'}
                   label={'Emp. Seen'}
                   value={formik.values.empSeen}
                   error={formik.errors.empSeen}
@@ -325,7 +322,6 @@ const BusinessDetails = ({
                                 <AGroupFields col={2}>
                                   <ASingleSelect
                                     label={'Name of Owner'}
-                                    options={familyRealtion}
                                     id={`shareHoldings[${index}].ownerName`}
                                     value={
                                       formik?.values?.shareHoldings[index]
@@ -336,6 +332,14 @@ const BusinessDetails = ({
                                       errors[index].ownerName
                                     }
                                     handleChange={formik.handleChange}
+                                    options={payloads?.personalDetails?.applicants.map(
+                                      (item: any) => {
+                                        return {
+                                          label: item.name,
+                                          value: item.name,
+                                        };
+                                      },
+                                    )}
                                   />
                                   <AInputField
                                     label={'% of Holding'}

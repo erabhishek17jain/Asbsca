@@ -27,7 +27,7 @@ const ARadioButtonGroup = ({
           <AButton
             label={'Reset'}
             variant="small"
-            action={() => handleChange('')}
+            action={isReset}
           />
         )}
       </div>

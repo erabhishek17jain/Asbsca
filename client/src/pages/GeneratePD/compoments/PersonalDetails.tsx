@@ -6,7 +6,6 @@ import {
   AddTagHeader,
 } from '../../../components-global/ATags';
 import ADatePicker from '../../../components-global/ADatePicker';
-import ASection from '../../../components-global/ASection';
 import AGroupFields from '../../../components-global/AGroupFields';
 import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
@@ -22,7 +21,7 @@ import {
 import moment from 'moment';
 
 const applicantInfo = {
-  title: 'Applicant',
+  title: 'Applicant Info',
   name: '',
   dobDoi: '',
   qualification: '',
@@ -35,6 +34,21 @@ const applicantInfo = {
   currExp: '',
   pastExp: '',
   overallExp: '',
+} as any;
+
+const resiInfo = {
+  title: 'Residance Info',
+  resiAddress: '',
+  resiStatus: '',
+  resiType: '',
+  resiSince: '',
+  buildArea: '',
+  carpetArea: '',
+  purchaseYear: '',
+  agrimentValue: '',
+  purchaseValue: '',
+  marketValue: '',
+  rentPm: '',
 } as any;
 
 const familyInfo = {
@@ -53,20 +67,8 @@ const PersonalDetails = ({
 }: any) => {
   const initialValues = {
     applicants: [{ ...applicantInfo }] as any,
-    residentInfo: {
-      resiAddress: '',
-      resiStatus: '',
-      resiType: '',
-      resiSince: '',
-      purchaseYear: '',
-      buildArea: '',
-      carpetArea: '',
-      agrimentValue: '',
-      purchaseValue: '',
-      marketValue: '',
-      rentPm: '',
-      familyDetails: [] as any,
-    },
+    residents: [{ ...resiInfo }] as any,
+    familyDetails: [] as any,
   };
 
   const validationSchema = Yup.object().shape({
@@ -76,37 +78,27 @@ const PersonalDetails = ({
         dobDoi: Yup.string().required('This field is required'),
         qualification: Yup.string().required('This field is required'),
         natureOfBusiness: Yup.string().required('This field is required'),
-        birthYear: Yup.number().required('This field is required'),
-        age: Yup.number().required('This field is required'),
         studyFinish: Yup.number().required('This field is required'),
-        study: Yup.number().required('This field is required'),
         businessStart: Yup.number().required('This field is required'),
-        currExp: Yup.number().required('This field is required'),
-        pastExp: Yup.number().required('This field is required'),
-        overallExp: Yup.number().required('This field is required'),
       }),
     ),
-    residentInfo: Yup.object({
-      resiAddress: Yup.string().required('This field is required'),
-      resiStatus: Yup.string().required('This field is required'),
-      resiSince: Yup.string().required('This field is required'),
-      buildArea: Yup.number().required('This field is required'),
-      carpetArea: Yup.number().required('This field is required'),
-      familyDetails: Yup.array().of(
-        Yup.object().shape({
-          name: Yup.string().required('This field is required'),
-          relation: Yup.string().required('This field is required'),
-          earningStatus: Yup.string().required('This field is required'),
-        }),
-      ),
-    }),
+    residents: Yup.array().of(
+      Yup.object().shape({
+        resiAddress: Yup.string().required('This field is required'),
+        resiStatus: Yup.string().required('This field is required'),
+        resiSince: Yup.string().required('This field is required'),
+        buildArea: Yup.number().required('This field is required'),
+        carpetArea: Yup.number().required('This field is required'),
+      }),
+    ),
+    familyDetails: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required('This field is required'),
+        relation: Yup.string().required('This field is required'),
+        earningStatus: Yup.string().required('This field is required'),
+      }),
+    ),
   });
-
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -116,7 +108,6 @@ const PersonalDetails = ({
 
   const formik = useFormik({
     initialValues: initialValues,
-    validate: validateFunction,
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
@@ -174,7 +165,8 @@ const PersonalDetails = ({
   };
 
   const errorsAp: any = formik?.errors?.applicants;
-  const errorsRe: any = formik?.errors?.residentInfo;
+  const errorsRe: any = formik?.errors?.residents;
+  const errorsFd: any = formik?.errors?.familyDetails;
 
   return (
     <>
@@ -249,6 +241,7 @@ const PersonalDetails = ({
                           <div className="flex gap-2">
                             <AInputField
                               type={'number'}
+                              disabled={true}
                               id={`applicants[${index}].birthYear`}
                               label={'Birth Year*'}
                               value={
@@ -258,7 +251,6 @@ const PersonalDetails = ({
                                 errorsAp?.length > 0 &&
                                 errorsAp[index]?.birthYear
                               }
-                              disabled={true}
                               handleChange={formik.handleChange}
                             />
                             <AInputField
@@ -358,187 +350,261 @@ const PersonalDetails = ({
         <p className="w-full text-md text-main font-bold my-3">
           Residential & Ownership Details
         </p>
-        <ASection>
-          <div>
-            <AGroupFields col={3}>
-              <AInputField
-                id={'residentInfo.resiAddress'}
-                label={'Residence Address*'}
-                value={formik?.values?.residentInfo?.resiAddress}
-                error={formik?.errors?.residentInfo?.resiAddress}
-                handleChange={formik.handleChange}
-              />
-              <ASingleSelect
-                id={'residentInfo.resiStatus'}
-                label={'Residence Status*'}
-                options={residenceStatus}
-                value={formik?.values?.residentInfo?.resiStatus}
-                error={formik?.errors?.residentInfo?.resiStatus}
-                handleChange={handleResiStatus}
-              />
-              <ASingleSelect
-                disabled={true}
-                id={'residentInfo.resiType'}
-                label={'Residence Type'}
-                options={residanceType}
-                value={formik?.values?.residentInfo?.resiType}
-                error={formik?.errors?.residentInfo?.resiType}
-                handleChange={formik.handleChange}
-              />
-            </AGroupFields>
-            <p className="w-full mb-3">Ownership Details</p>
-            <AGroupFields>
-              <AInputField
-                id={'residentInfo.resiSince'}
-                label={'Residing Since*'}
-                value={formik?.values?.residentInfo?.resiSince}
-                error={formik?.errors?.residentInfo?.resiSince}
-                handleChange={formik.handleChange}
-              />
-              {formik?.values?.residentInfo.resiStatus !== 'rentaln' && (
-                <AInputField
-                  id={'residentInfo.purchaseYear'}
-                  label={'Purchase Year'}
-                  value={formik?.values?.residentInfo?.purchaseYear}
-                  error={formik?.errors?.residentInfo?.purchaseYear}
-                  handleChange={formik.handleChange}
-                />
-              )}
-              <AInputField
-                type={'number'}
-                id={'residentInfo.buildArea'}
-                label={'Build-up Area*'}
-                rightLabel={'(Sq. Ft.)'}
-                value={formik?.values?.residentInfo?.buildArea}
-                error={formik?.errors?.residentInfo?.buildArea}
-                handleChange={formik.handleChange}
-              />
-              <AInputField
-                type={'number'}
-                id={'residentInfo.carpetArea'}
-                label={'Carpet Area*'}
-                rightLabel={'(Sq. Ft.)'}
-                value={formik?.values?.residentInfo?.carpetArea}
-                error={formik?.errors?.residentInfo?.carpetArea}
-                handleChange={formik.handleChange}
-              />
-              {formik?.values?.residentInfo.resiStatus === 'rentaln' ? (
-                <AInputField
-                  id={'residentInfo.rentPm'}
-                  label={'Rent P.M.'}
-                  value={formik?.values?.residentInfo?.rentPm}
-                  error={formik?.errors?.residentInfo?.rentPm}
-                  handleChange={formik.handleChange}
-                />
-              ) : (
-                <>
-                  <AInputField
-                    id={'residentInfo.agrimentValue'}
-                    label={'Agrmnt. Value'}
-                    rightLabel={'(Lakhs)'}
-                    value={formik?.values?.residentInfo?.agrimentValue}
-                    error={formik?.errors?.residentInfo?.agrimentValue}
-                    handleChange={formik.handleChange}
-                  />
-                  <AInputField
-                    id={'residentInfo.purchaseValue'}
-                    label={'Purchase Value'}
-                    rightLabel={'(Lakhs)'}
-                    value={formik?.values?.residentInfo?.purchaseValue}
-                    error={formik?.errors?.residentInfo?.purchaseValue}
-                    handleChange={formik.handleChange}
-                  />
-                  <AInputField
-                    id={'residentInfo.marketValue'}
-                    label={'Market Value'}
-                    rightLabel={'(Lakhs)'}
-                    value={formik?.values?.residentInfo?.marketValue}
-                    error={formik?.errors?.residentInfo?.marketValue}
-                    handleChange={formik.handleChange}
-                  />
-                </>
-              )}
-            </AGroupFields>
-            <p className="w-full mb-3">Family Details</p>
-            <FormikProvider value={formik}>
-              <form>
-                <FieldArray
-                  name="residentInfo.familyDetails"
-                  render={(tag) => (
-                    <div>
-                      {formik.values.residentInfo.familyDetails.length > 0 ? (
-                        formik.values.residentInfo.familyDetails.map(
-                          (item: any, index: any) => (
-                            <div
-                              key={item?.name}
-                              className="flex items-center w-full gap-3 mb-3"
-                            >
-                              <div className="w-full border-2 rounded-lg pt-3 px-3">
-                                <AGroupFields col={3}>
-                                  <AInputField
-                                    label={'Name*'}
-                                    id={`residentInfo.familyDetails[${index}].name`}
-                                    value={
-                                      formik?.values?.residentInfo
-                                        .familyDetails[index].name
-                                    }
-                                    error={
-                                      errorsRe?.familyDetails.length > 0 &&
-                                      errorsRe?.familyDetails[index].name
-                                    }
-                                    handleChange={formik.handleChange}
-                                  />
-                                  <ASingleSelect
-                                    label={'Reation*'}
-                                    options={familyRealtion}
-                                    id={`residentInfo.familyDetails[${index}].relation`}
-                                    value={
-                                      formik?.values?.residentInfo
-                                        .familyDetails[index].relation
-                                    }
-                                    error={
-                                      errorsRe?.familyDetails.length > 0 &&
-                                      errorsRe?.familyDetails[index].relation
-                                    }
-                                    handleChange={formik.handleChange}
-                                  />
-                                  <ASingleSelect
-                                    label={'Earning Status*'}
-                                    options={earningStatus}
-                                    id={`residentInfo.familyDetails[${index}].earningStatus`}
-                                    value={
-                                      formik?.values?.residentInfo
-                                        .familyDetails[index].earningStatus
-                                    }
-                                    error={
-                                      errorsRe?.familyDetails.length > 0 &&
-                                      errorsRe?.familyDetails[index]
-                                        .earningStatus
-                                    }
-                                    handleChange={formik.handleChange}
-                                  />
-                                </AGroupFields>
-                              </div>
-                              <AddTagFooter
-                                addTag={() => tag.push(familyInfo)}
-                                removeTag={() => tag.remove(index)}
+        <FormikProvider value={formik}>
+          <form>
+            <FieldArray
+              name="residents"
+              render={(tag) => (
+                <div>
+                  {formik.values.residents.map((item: any, index: number) => (
+                    <div className="mb-3">
+                      <AddTagHeader
+                        title={item?.title}
+                        removeTag={() => tag.remove(index)}
+                        addTag={() =>
+                          tag.push({
+                            ...resiInfo,
+                            title: 'Residance Address',
+                          })
+                        }
+                      />
+                      <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
+                        <AGroupFields col={3}>
+                          <AInputField
+                            id={`residents[${index}].resiAddress`}
+                            label={'Residence Address*'}
+                            value={
+                              formik?.values?.residents[index]?.resiAddress
+                            }
+                            error={
+                              errorsRe?.length > 0 &&
+                              errorsRe[index]?.resiAddress
+                            }
+                            handleChange={formik.handleChange}
+                          />
+                          <ASingleSelect
+                            label={'Residence Status*'}
+                            options={residenceStatus}
+                            id={`residents[${index}].resiStatus`}
+                            value={formik?.values?.residents[index]?.resiStatus}
+                            error={
+                              errorsRe?.length > 0 &&
+                              errorsRe[index]?.resiStatus
+                            }
+                            handleChange={handleResiStatus}
+                          />
+                          <ASingleSelect
+                            disabled={true}
+                            label={'Residence Type'}
+                            options={residanceType}
+                            id={`residents[${index}].resiType`}
+                            value={formik?.values?.residents[index]?.resiType}
+                            error={
+                              errorsRe?.length > 0 && errorsRe[index]?.resiType
+                            }
+                            handleChange={formik.handleChange}
+                          />
+                        </AGroupFields>
+                        <p className="w-full mb-3">Ownership Details</p>
+                        <AGroupFields>
+                          <AInputField
+                            type={'number'}
+                            id={`residents[${index}].resiSince`}
+                            label={'Residing Since*'}
+                            value={formik?.values?.residents[index]?.resiSince}
+                            error={
+                              errorsRe?.length > 0 && errorsRe[index]?.resiSince
+                            }
+                            handleChange={formik.handleChange}
+                          />
+                          <AInputField
+                            type={'number'}
+                            id={`residents[${index}].buildArea`}
+                            label={'Build-up Area*'}
+                            rightLabel={'(Sq. Ft.)'}
+                            value={formik?.values?.residents[index]?.buildArea}
+                            error={
+                              errorsRe?.length > 0 && errorsRe[index]?.buildArea
+                            }
+                            handleChange={formik.handleChange}
+                          />
+                          <AInputField
+                            type={'number'}
+                            id={`residents[${index}].carpetArea`}
+                            label={'Carpet Area*'}
+                            rightLabel={'(Sq. Ft.)'}
+                            value={formik?.values?.residents[index]?.carpetArea}
+                            error={
+                              errorsRe?.length > 0 &&
+                              errorsRe[index]?.carpetArea
+                            }
+                            handleChange={formik.handleChange}
+                          />
+                          {formik?.values?.residents[index]?.resiStatus !==
+                          'rentaln' ? (
+                            <>
+                              <AInputField
+                                type={'number'}
+                                id={`residents[${index}].purchaseYear`}
+                                label={'Purchase Year'}
+                                value={
+                                  formik?.values?.residents[index]?.purchaseYear
+                                }
+                                error={
+                                  errorsRe?.length > 0 &&
+                                  errorsRe[index]?.purchaseYear
+                                }
+                                handleChange={formik.handleChange}
                               />
-                            </div>
-                          ),
-                        )
-                      ) : (
-                        <AddTagButton
-                          title={'Add Family Member'}
-                          addTag={() => tag.push(familyInfo)}
-                        />
-                      )}
+                              <AInputField
+                                type={'number'}
+                                rightLabel={'Lakhs'}
+                                id={`residents[${index}].agrimentValue`}
+                                label={'Agreement. Value'}
+                                value={
+                                  formik?.values?.residents[index]
+                                    ?.agrimentValue
+                                }
+                                error={
+                                  errorsRe?.length > 0 &&
+                                  errorsRe[index]?.agrimentValue
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                              <AInputField
+                                type={'number'}
+                                rightLabel={'Lakhs'}
+                                id={`residents[${index}].purchaseValue`}
+                                label={'Purchase Value'}
+                                value={
+                                  formik?.values?.residents[index]
+                                    ?.purchaseValue
+                                }
+                                error={
+                                  errorsRe?.length > 0 &&
+                                  errorsRe[index]?.purchaseValue
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                              <AInputField
+                                type={'number'}
+                                rightLabel={'Lakhs'}
+                                id={`residents[${index}].marketValue`}
+                                label={'Market Value'}
+                                value={
+                                  formik?.values?.residents[index]?.marketValue
+                                }
+                                error={
+                                  errorsRe?.length > 0 &&
+                                  errorsRe[index]?.marketValue
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                            </>
+                          ) : (
+                            <AInputField
+                              type={'number'}
+                              id={`residents[${index}].rentPm`}
+                              label={'Rent P.M.'}
+                              rightLabel={'Rs.'}
+                              value={formik?.values?.residents[index]?.rentPm}
+                              error={
+                                errorsRe?.length > 0 && errorsRe[index]?.rentPm
+                              }
+                              handleChange={formik.handleChange}
+                            />
+                          )}
+                        </AGroupFields>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              )}
+            />
+          </form>
+        </FormikProvider>
+        <p className="w-full mb-3">Family Details</p>
+        <FormikProvider value={formik}>
+          <form>
+            <FieldArray
+              name="familyDetails"
+              render={(tag) => (
+                <div>
+                  {formik.values.familyDetails?.length > 0 ? (
+                    formik.values.familyDetails?.map(
+                      (item: any, index: any) => (
+                        <div
+                          key={item?.name}
+                          className="flex items-center w-full gap-3 mb-3"
+                        >
+                          <div className="w-full border-2 rounded-lg pt-3 px-3">
+                            <AGroupFields col={3}>
+                              <ASingleSelect
+                                label={'Name*'}
+                                id={`familyDetails[${index}].name`}
+                                value={
+                                  formik?.values?.familyDetails[index].name
+                                }
+                                error={
+                                  errorsFd?.length > 0 && errorsFd[index].name
+                                }
+                                options={formik?.values?.applicants.map(
+                                  (item: any) => {
+                                    return {
+                                      label: item.name,
+                                      value: item.name,
+                                    };
+                                  },
+                                )}
+                                handleChange={formik.handleChange}
+                              />
+                              <ASingleSelect
+                                label={'Reation*'}
+                                options={familyRealtion}
+                                id={`familyDetails[${index}].relation`}
+                                value={
+                                  formik?.values?.familyDetails[index].relation
+                                }
+                                error={
+                                  errorsFd?.length > 0 &&
+                                  errorsFd[index].relation
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                              <ASingleSelect
+                                label={'Earning Status*'}
+                                options={earningStatus}
+                                id={`familyDetails[${index}].earningStatus`}
+                                value={
+                                  formik?.values?.familyDetails[index]
+                                    .earningStatus
+                                }
+                                error={
+                                  errorsFd?.length > 0 &&
+                                  errorsFd[index].earningStatus
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                            </AGroupFields>
+                          </div>
+                          <AddTagFooter
+                            addTag={() => tag.push(familyInfo)}
+                            removeTag={() => tag.remove(index)}
+                          />
+                        </div>
+                      ),
+                    )
+                  ) : (
+                    <AddTagButton
+                      title={'Add Family Member'}
+                      addTag={() => tag.push(familyInfo)}
+                    />
                   )}
-                />
-              </form>
-            </FormikProvider>
-          </div>
-        </ASection>
+                </div>
+              )}
+            />
+          </form>
+        </FormikProvider>
       </div>
       <AStepperPagination
         steps={steps}

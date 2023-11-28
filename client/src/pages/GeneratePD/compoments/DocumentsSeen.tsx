@@ -121,7 +121,6 @@ const DocumentsSeen = ({
           {documentList.map((item: any) => (
             <ARadioButtonGroup
               width={'w-1/2'}
-              key={item.value}
               title={item.title}
               value={item.isDoc}
               radioValues={radioValues}
@@ -139,7 +138,7 @@ const DocumentsSeen = ({
           {showModal && (
             <AModal
               saveText={'Add'}
-              title={'Add More Expenses'}
+              title={'Add Document'}
               onSave={formik.handleSubmit}
               closeModal={() => setShowModal(false)}
             >
