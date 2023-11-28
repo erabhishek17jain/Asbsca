@@ -90,7 +90,7 @@ const OtherObservation = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, observations: { ...values } });
     handleNext();
   };
 
@@ -168,7 +168,8 @@ const OtherObservation = ({
                     ? 'Reason for No or NA'
                     : 'How many'
                 }
-                id={`customer?.reasonForNo`}
+                type={'number'}
+                id={`customer.reasonForNo`}
                 disabled={
                   formik?.values?.customer?.exist === '' ||
                   formik?.values?.customer?.exist !== 'yes'
@@ -217,7 +218,7 @@ const OtherObservation = ({
                     ? 'Why Negative?'
                     : 'Why not Done?'
                 }
-                id={`activity.reasonForNo`}
+                id={`thirdPartyCheck.reasonForNo`}
                 disabled={formik?.values?.thirdPartyCheck?.exist === ''}
                 value={formik?.values?.thirdPartyCheck?.reasonForNo}
                 error={errors?.thirdPartyCheck?.reasonForNo}

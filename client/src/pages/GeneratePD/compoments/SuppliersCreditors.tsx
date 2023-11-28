@@ -35,7 +35,7 @@ const SuppliersCreditors = ({
   };
 
   const initialValues = {
-    isSuppliersDetails: '',
+    isSuppliersDetails: 'yes',
     suppliersDetails: {
       noOfSuppliers: '',
       majorSuppliers: [] as any,
@@ -49,7 +49,6 @@ const SuppliersCreditors = ({
   };
 
   const validationSchema = Yup.object().shape({
-    isSuppliersDetails: Yup.string().required('This field is required'),
     suppliersDetails: Yup.object({
       noOfSuppliers: Yup.number().required('This field is required'),
       majorSuppliers: Yup.array().of(
@@ -68,7 +67,7 @@ const SuppliersCreditors = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, suppliers: { ...values } });
     handleNext();
   };
 
@@ -127,7 +126,7 @@ const SuppliersCreditors = ({
                     handleChange={formik.handleChange}
                   />
                 </AGroupFields>
-                {formik.values.suppliersDetails.majorSuppliers.length > 0 && (
+                {formik?.values?.suppliersDetails.majorSuppliers.length > 0 && (
                   <p className="w-full pb-3">Major Suppliers</p>
                 )}
                 <FormikProvider value={formik}>
@@ -136,12 +135,12 @@ const SuppliersCreditors = ({
                       name="suppliersDetails.majorSuppliers"
                       render={(tag) => (
                         <div>
-                          {formik.values.suppliersDetails.majorSuppliers
+                          {formik?.values?.suppliersDetails.majorSuppliers
                             .length > 0 ? (
-                            formik.values.suppliersDetails.majorSuppliers.map(
+                            formik?.values?.suppliersDetails.majorSuppliers.map(
                               (item: any, index: any) => (
                                 <div
-                                  key={item?.clientName}
+                                  key={item}
                                   className="flex items-center w-full gap-3 mb-3"
                                 >
                                   <div className="w-full border-2 rounded-lg pt-3 px-3">
@@ -154,7 +153,8 @@ const SuppliersCreditors = ({
                                             .majorSuppliers[index].clientName
                                         }
                                         error={
-                                          errorsRe?.majorSuppliers?.length > 0 &&
+                                          errorsRe?.majorSuppliers?.length >
+                                            0 &&
                                           errorsRe?.majorSuppliers[index]
                                             .clientName
                                         }
@@ -168,7 +168,8 @@ const SuppliersCreditors = ({
                                             .majorSuppliers[index].contact
                                         }
                                         error={
-                                          errorsRe?.majorSuppliers?.length > 0 &&
+                                          errorsRe?.majorSuppliers?.length >
+                                            0 &&
                                           errorsRe?.majorSuppliers[index]
                                             .contact
                                         }
@@ -200,7 +201,7 @@ const SuppliersCreditors = ({
               footers={[
                 {
                   label: 'Collection Period',
-                  value: formik.values.creditors.collectionPeriod,
+                  value: formik?.values?.creditors.collectionPeriod,
                 },
               ]}
             >
@@ -208,6 +209,7 @@ const SuppliersCreditors = ({
                 <AInputField
                   type={'number'}
                   label={'Creditors Amount'}
+                  rightLabel={'(Lakhs)'}
                   id={`creditors.amount`}
                   value={formik?.values?.creditors.amount}
                   error={formik?.errors?.creditors?.amount}

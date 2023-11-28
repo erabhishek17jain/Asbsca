@@ -145,8 +145,8 @@ const DocumentsSeen = ({
               <AInputField
                 id={'name'}
                 label="Document Name"
-                value={formik.values.name}
-                error={formik.errors.name}
+                value={formik?.values?.name}
+                error={formik?.errors?.name}
                 handleChange={formik.handleChange}
               />
             </AModal>

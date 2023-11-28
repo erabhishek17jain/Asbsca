@@ -79,14 +79,14 @@ const ClientsDebtors = ({
         lessThan6Month: Yup.object().shape({
           amount: Yup.number().required('This field is required'),
         }),
+        whyIrRegular: Yup.string().required('This field is required'),
       }),
-      whyIrRegular: Yup.string().required('This field is required'),
     }),
   });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, clientDebtors: { ...values } });
     handleNext();
   };
 
@@ -117,28 +117,29 @@ const ClientsDebtors = ({
                   type={'number'}
                   id={'clients.clientDetails.noOfClientDaily'}
                   label={'No of Clients/Daily Foot Fall'}
-                  value={formik?.values?.clients.clientDetails.noOfClientDaily}
+                  value={
+                    formik?.values?.clients?.clientDetails?.noOfClientDaily
+                  }
                   error={
                     formik?.errors?.clients?.clientDetails?.noOfClientDaily
                   }
                   handleChange={formik.handleChange}
                 />
               </AGroupFields>
-              {formik.values.clients.clientDetails.majorClient.length > 0 && (
-                <p className="w-full pb-3">Major Clients</p>
-              )}
+              {formik?.values?.clients?.clientDetails?.majorClient?.length >
+                0 && <p className="w-full pb-3">Major Clients</p>}
               <FormikProvider value={formik}>
                 <form>
                   <FieldArray
                     name="clients.clientDetails.majorClient"
                     render={(tag) => (
                       <div>
-                        {formik.values.clients.clientDetails.majorClient
-                          .length > 0 ? (
-                          formik.values.clients.clientDetails.majorClient.map(
+                        {formik?.values?.clients?.clientDetails?.majorClient
+                          ?.length > 0 ? (
+                          formik?.values?.clients?.clientDetails?.majorClient.map(
                             (item: any, index: any) => (
                               <div
-                                key={item?.clientName}
+                                key={item}
                                 className="flex items-center w-full gap-3 mb-3"
                               >
                                 <div className="w-full border-2 rounded-lg pt-3 px-3">
@@ -147,12 +148,12 @@ const ClientsDebtors = ({
                                       label={'Client Name*'}
                                       id={`clients.clientDetails.majorClient[${index}].clientName`}
                                       value={
-                                        formik?.values?.clients.clientDetails
-                                          .majorClient[index].clientName
+                                        formik?.values?.clients?.clientDetails
+                                          ?.majorClient[index]?.clientName
                                       }
                                       error={
-                                        errors?.majorClient.length > 0 &&
-                                        errors?.majorClient[index].clientName
+                                        errors?.majorClient?.length > 0 &&
+                                        errors?.majorClient[index]?.clientName
                                       }
                                       handleChange={formik.handleChange}
                                     />
@@ -161,11 +162,11 @@ const ClientsDebtors = ({
                                       id={`clients.clientDetails.majorClient[${index}].contact`}
                                       value={
                                         formik?.values?.clients.clientDetails
-                                          .majorClient[index].contact
+                                          ?.majorClient[index]?.contact
                                       }
                                       error={
-                                        errors?.majorClient.length > 0 &&
-                                        errors?.majorClient[index].contact
+                                        errors?.majorClient?.length > 0 &&
+                                        errors?.majorClient[index]?.contact
                                       }
                                       handleChange={formik.handleChange}
                                     />
@@ -202,13 +203,13 @@ const ClientsDebtors = ({
               footers={[
                 {
                   label: 'Total Debtors',
-                  value: formik.values.debitors.debitorDetails.totalDebtors,
+                  value: formik?.values?.debitors?.debitorDetails?.totalDebtors,
                 },
                 {
                   label: 'Collection Period',
                   value:
-                    formik.values.debitors.debitorDetails.lessThan6Month
-                      .collectionPeriod,
+                    formik?.values?.debitors?.debitorDetails?.lessThan6Month
+                      ?.collectionPeriod,
                 },
               ]}
             >
@@ -220,8 +221,8 @@ const ClientsDebtors = ({
                     rightLabel={'more than 6 Months (Lakhs)'}
                     id={'debitors.debitorDetails.moreThan6Month.amount'}
                     value={
-                      formik?.values?.debitors.debitorDetails.moreThan6Month
-                        .amount
+                      formik?.values?.debitors?.debitorDetails?.moreThan6Month
+                        ?.amount
                     }
                     error={
                       formik?.errors?.debitors?.debitorDetails?.moreThan6Month
@@ -234,8 +235,8 @@ const ClientsDebtors = ({
                     rightLabel={'more than 6 Months'}
                     id={'debitors.debitorDetails.moreThan6Month.reason'}
                     value={
-                      formik?.values?.debitors.debitorDetails.moreThan6Month
-                        .reason
+                      formik?.values?.debitors?.debitorDetails?.moreThan6Month
+                        ?.reason
                     }
                     error={
                       formik?.errors?.debitors?.debitorDetails?.moreThan6Month
@@ -249,8 +250,8 @@ const ClientsDebtors = ({
                     rightLabel={'less than 6 Months (Lakhs)'}
                     id={'debitors.debitorDetails.lessThan6Month.amount'}
                     value={
-                      formik?.values?.debitors.debitorDetails.lessThan6Month
-                        .amount
+                      formik?.values?.debitors?.debitorDetails?.lessThan6Month
+                        ?.amount
                     }
                     error={
                       formik?.errors?.debitors?.debitorDetails?.lessThan6Month
@@ -262,10 +263,10 @@ const ClientsDebtors = ({
                     type={'number'}
                     rightLabel={'(In months)'}
                     label={'Cr. Period allowed to Clients'}
-                    id={'debitors.debitorDetails.whyIrRegular'}
+                    id={'debitors.debitorDetails.creditPeriodAllowed'}
                     value={
-                      formik?.values?.debitors.debitorDetails
-                        .creditPeriodAllowed
+                      formik?.values?.debitors?.debitorDetails
+                        ?.creditPeriodAllowed
                     }
                     error={
                       formik?.errors?.debitors?.debitorDetails
@@ -276,7 +277,9 @@ const ClientsDebtors = ({
                   <AInputField
                     label={'Why Ir-Regular?'}
                     id={'debitors.debitorDetails.whyIrRegular'}
-                    value={formik?.values?.debitors.debitorDetails.whyIrRegular}
+                    value={
+                      formik?.values?.debitors?.debitorDetails?.whyIrRegular
+                    }
                     error={
                       formik?.errors?.debitors?.debitorDetails?.whyIrRegular
                     }

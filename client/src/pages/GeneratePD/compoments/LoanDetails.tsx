@@ -67,8 +67,8 @@ const LoanDetails = ({
             label={'Bank Name*'}
             options={clientOptions}
             variant={'horizantal'}
-            value={formik.values.bankName}
-            error={formik.values.bankName !== '' ? formik.errors.bankName : ''}
+            value={formik?.values?.bankName}
+            error={formik?.values?.bankName !== '' ? formik.errors.bankName : ''}
             handleChange={formik.handleChange}
           />
           <ASingleSelect
@@ -76,7 +76,7 @@ const LoanDetails = ({
             label={'Loan*'}
             options={loans}
             variant={'horizantal'}
-            value={formik.values.loan}
+            value={formik?.values?.loan}
             error={formik.errors.loan}
             handleChange={formik.handleChange}
           />
@@ -85,7 +85,7 @@ const LoanDetails = ({
             label={'Loan Type*'}
             options={loanTypes}
             variant={'horizantal'}
-            value={formik.values.loanType}
+            value={formik?.values?.loanType}
             error={formik.errors.loanType}
             handleChange={formik.handleChange}
           />

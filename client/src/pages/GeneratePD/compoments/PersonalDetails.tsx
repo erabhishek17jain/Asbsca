@@ -102,7 +102,7 @@ const PersonalDetails = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, personalDetails: { ...values } });
     handleNext();
   };
 
@@ -180,7 +180,7 @@ const PersonalDetails = ({
               name="applicants"
               render={(tag) => (
                 <div>
-                  {formik.values.applicants.map((item: any, index: number) => (
+                  {formik?.values?.applicants.map((item: any, index: number) => (
                     <div className="mb-3">
                       <AddTagHeader
                         title={item?.title}
@@ -356,7 +356,7 @@ const PersonalDetails = ({
               name="residents"
               render={(tag) => (
                 <div>
-                  {formik.values.residents.map((item: any, index: number) => (
+                  {formik?.values?.residents.map((item: any, index: number) => (
                     <div className="mb-3">
                       <AddTagHeader
                         title={item?.title}
@@ -458,7 +458,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'Lakhs'}
+                                rightLabel={'(Lakhs)'}
                                 id={`residents[${index}].agrimentValue`}
                                 label={'Agreement. Value'}
                                 value={
@@ -473,7 +473,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'Lakhs'}
+                                rightLabel={'(Lakhs)'}
                                 id={`residents[${index}].purchaseValue`}
                                 label={'Purchase Value'}
                                 value={
@@ -488,7 +488,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'Lakhs'}
+                                rightLabel={'(Lakhs)'}
                                 id={`residents[${index}].marketValue`}
                                 label={'Market Value'}
                                 value={
@@ -530,8 +530,8 @@ const PersonalDetails = ({
               name="familyDetails"
               render={(tag) => (
                 <div>
-                  {formik.values.familyDetails?.length > 0 ? (
-                    formik.values.familyDetails?.map(
+                  {formik?.values?.familyDetails?.length > 0 ? (
+                    formik?.values?.familyDetails?.map(
                       (item: any, index: any) => (
                         <div
                           key={item?.name}

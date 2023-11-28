@@ -17,47 +17,6 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
 
-const existingLoanFooter = [
-  {
-    label: 'Total Loan Amt',
-    value: '0',
-  },
-  {
-    label: 'Total EMI Amt',
-    value: '0',
-  },
-  {
-    label: 'Total Outstanding Amt',
-    value: '0',
-  },
-];
-
-const creditFacilityFooter = [
-  {
-    label: 'Total Loan Amt',
-    value: '0',
-  },
-  {
-    label: 'Total Limit',
-    value: '0',
-  },
-  {
-    label: 'Average Utilization',
-    value: '0',
-  },
-];
-
-const commitmentsFooter = [
-  {
-    label: 'Total Contribution',
-    value: '0',
-  },
-  {
-    label: 'Total Sum Assured/Maturity',
-    value: '0',
-  },
-];
-
 const ExistingLoan = ({ formik }: any) => {
   const [isExistingLoan, setIsExistingLoan] = useState('yes');
 
@@ -80,7 +39,20 @@ const ExistingLoan = ({ formik }: any) => {
       {isExistingLoan === 'yes' && (
         <>
           <ASection
-            footers={existingLoanFooter}
+            footers={[
+              {
+                label: 'Total Loan Amt',
+                value: formik?.value?.existanceLoan?.totalLoanBt,
+              },
+              {
+                label: 'Total EMI Amt',
+                value: formik?.value?.existanceLoan?.totalLoanBtEmi,
+              },
+              {
+                label: 'Total Outstanding Amt',
+                value: formik?.value?.existanceLoan?.totalLoanBtOut,
+              },
+            ]}
             title={'Balance Transfer Loans (If Any)'}
           >
             <FormikProvider value={formik}>
@@ -89,9 +61,9 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.balanceTransfer"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.balanceTransfer.length >
+                      {formik?.values?.existanceLoan?.balanceTransfer?.length >
                       0 ? (
-                        formik.values.existanceLoan.balanceTransfer.map(
+                        formik?.values?.existanceLoan?.balanceTransfer?.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
                               <AddTagHeader
@@ -110,11 +82,11 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.balanceTransfer[${index}].typeOfLoan`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].typeOfLoan
+                                        ?.balanceTransfer[index]?.typeOfLoan
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].typeOfLoan
+                                      errors?.balanceTransfer[index]?.typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Type of Loan'}
@@ -124,11 +96,11 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.balanceTransfer[${index}].bankName`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].bankName
+                                        ?.balanceTransfer[index]?.bankName
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].bankName
+                                      errors?.balanceTransfer[index]?.bankName
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Bank Name'}
@@ -139,65 +111,71 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.balanceTransfer[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].loanAmount
+                                        ?.balanceTransfer[index]?.loanAmount
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].loanAmount
+                                      errors?.balanceTransfer[index]?.loanAmount
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Loan Amount (Lakhs)'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].tenureMonth
+                                        ?.balanceTransfer[index]?.tenureMonth
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].tenureMonth
+                                      errors?.balanceTransfer[index]
+                                        ?.tenureMonth
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Tenure (Months)'}
+                                    label={'Tenure'}
+                                    rightLabel={'(In Months)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].emi
+                                        ?.balanceTransfer[index]?.emi
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].emi
+                                      errors?.balanceTransfer[index]?.emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
+                                    rightLabel={'(Rs.)'}
                                   />
                                   <AInputField
                                     id={`existanceLoan.balanceTransfer[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].outstanding
+                                        ?.balanceTransfer[index]?.outstanding
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].outstanding
+                                      errors?.balanceTransfer[index]
+                                        ?.outstanding
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.balanceTransfer[${index}].remark`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .balanceTransfer[index].remark
+                                        ?.balanceTransfer[index]?.remark
                                     }
                                     error={
                                       errors?.balanceTransfer?.length > 0 &&
-                                      errors.balanceTransfer[index].remark
+                                      errors?.balanceTransfer[index]?.remark
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Remark'}
@@ -226,7 +204,20 @@ const ExistingLoan = ({ formik }: any) => {
             </FormikProvider>
           </ASection>
           <ASection
-            footers={existingLoanFooter}
+            footers={[
+              {
+                label: 'Total Loan Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEc,
+              },
+              {
+                label: 'Total EMI Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEcEmi,
+              },
+              {
+                label: 'Total Outstanding Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEcOut,
+              },
+            ]}
             title={
               'Existing Loan- Loan which will be closed from Current Applied Loan Amt or which are to be closed within 12 months. (If Any)'
             }
@@ -237,9 +228,9 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.existingLoanClosedThisYear"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.existingLoanClosedThisYear
+                      {formik?.values?.existanceLoan?.existingLoanClosedThisYear
                         .length > 0 ? (
-                        formik.values.existanceLoan.existingLoanClosedThisYear.map(
+                        formik?.values?.existanceLoan?.existingLoanClosedThisYear.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
                               <AddTagHeader
@@ -258,13 +249,13 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].typeOfLoan`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .typeOfLoan
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
@@ -275,13 +266,13 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].bankName`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .bankName
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .bankName
                                     }
                                     handleChange={formik.handleChange}
@@ -293,78 +284,82 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .loanAmount
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .loanAmount
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Loan Amount (Lakhs)'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .tenureMonth
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .tenureMonth
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Tenure (Months)'}
+                                    label={'Tenure'}
+                                    rightLabel={'(In Months)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index].emi
+                                        ?.existingLoanClosedThisYear[index].emi
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
+                                    rightLabel={'(Rs.)'}
                                   />
                                   <AInputField
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .outstanding
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .outstanding
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanClosedThisYear[${index}].remark`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanClosedThisYear[index]
+                                        ?.existingLoanClosedThisYear[index]
                                         .remark
                                     }
                                     error={
                                       errors?.existingLoanClosedThisYear
                                         ?.length > 0 &&
-                                      errors.existingLoanClosedThisYear[index]
+                                      errors?.existingLoanClosedThisYear[index]
                                         .remark
                                     }
                                     handleChange={formik.handleChange}
@@ -394,7 +389,20 @@ const ExistingLoan = ({ formik }: any) => {
             </FormikProvider>
           </ASection>
           <ASection
-            footers={existingLoanFooter}
+            footers={[
+              {
+                label: 'Total Loan Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEm,
+              },
+              {
+                label: 'Total EMI Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEmEmi,
+              },
+              {
+                label: 'Total Outstanding Amt',
+                value: formik?.value?.existanceLoan?.totalLoanEmOut,
+              },
+            ]}
             title={
               'Existing Loan (These EMI will be added in FOIR Ratio calculation)'
             }
@@ -405,9 +413,9 @@ const ExistingLoan = ({ formik }: any) => {
                   name="existanceLoan.existingLoanEMI"
                   render={(tag) => (
                     <div>
-                      {formik.values.existanceLoan.existingLoanEMI.length >
+                      {formik?.values?.existanceLoan?.existingLoanEMI?.length >
                       0 ? (
-                        formik.values.existanceLoan.existingLoanEMI.map(
+                        formik?.values?.existanceLoan?.existingLoanEMI?.map(
                           (item: any, index: number) => (
                             <div className="mb-3">
                               <AddTagHeader
@@ -426,11 +434,11 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanEMI[${index}].typeOfLoan`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].typeOfLoan
+                                        ?.existingLoanEMI[index]?.typeOfLoan
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].typeOfLoan
+                                      errors.existingLoanEMI[index]?.typeOfLoan
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Type of Loan'}
@@ -440,11 +448,11 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanEMI[${index}].bankName`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].bankName
+                                        ?.existingLoanEMI[index]?.bankName
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].bankName
+                                      errors.existingLoanEMI[index]?.bankName
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Bank Name'}
@@ -455,65 +463,69 @@ const ExistingLoan = ({ formik }: any) => {
                                     id={`existanceLoan.existingLoanEMI[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].loanAmount
+                                        ?.existingLoanEMI[index]?.loanAmount
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].loanAmount
+                                      errors.existingLoanEMI[index]?.loanAmount
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Loan Amount (Lakhs)'}
+                                    label={'Loan Amount'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].tenureMonth
+                                        ?.existingLoanEMI[index]?.tenureMonth
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].tenureMonth
+                                      errors.existingLoanEMI[index]?.tenureMonth
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Tenure (Months)'}
+                                    label={'Tenure'}
+                                    rightLabel={'(In Months)'}
                                   />
                                   <AInputField
                                     type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].emi
+                                        ?.existingLoanEMI[index]?.emi
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].emi
+                                      errors.existingLoanEMI[index]?.emi
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
+                                    rightLabel={'(Rs.)'}
                                   />
                                   <AInputField
                                     id={`existanceLoan.existingLoanEMI[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].outstanding
+                                        ?.existingLoanEMI[index]?.outstanding
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].outstanding
+                                      errors.existingLoanEMI[index]?.outstanding
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanEMI[${index}].remark`}
                                     value={
                                       formik?.values?.existanceLoan
-                                        .existingLoanEMI[index].remark
+                                        ?.existingLoanEMI[index]?.remark
                                     }
                                     error={
                                       errors?.existingLoanEMI?.length > 0 &&
-                                      errors.existingLoanEMI[index].remark
+                                      errors.existingLoanEMI[index]?.remark
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Remark'}
@@ -568,7 +580,20 @@ const CreditFacility = ({ formik }: any) => {
       />
       {isCreditFacility === 'yes' && (
         <ASection
-          footers={creditFacilityFooter}
+          footers={[
+            {
+              label: 'Total Loan Amt',
+              value: formik?.values?.creditFacility?.totalLoanCf,
+            },
+            {
+              label: 'Total Limit',
+              value: formik?.values?.creditFacility?.totalLoanCfEmiLimit,
+            },
+            {
+              label: 'Average Utilization',
+              value: formik?.values?.creditFacility?.totalLoanCfOutAu,
+            },
+          ]}
           title={'Credit Facility Details'}
         >
           <FormikProvider value={formik}>
@@ -577,8 +602,9 @@ const CreditFacility = ({ formik }: any) => {
                 name="creditFacility.creditDetails"
                 render={(tag) => (
                   <div>
-                    {formik.values.creditFacility.creditDetails.length > 0 ? (
-                      formik.values.creditFacility.creditDetails.map(
+                    {formik?.values?.creditFacility?.creditDetails.length >
+                    0 ? (
+                      formik?.values?.creditFacility?.creditDetails.map(
                         (item: any, index: number) => (
                           <div className="mb-3">
                             <AddTagHeader
@@ -634,6 +660,7 @@ const CreditFacility = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Limit'}
+                                  rightLabel={'(Lakhs)'}
                                 />
                                 <AInputField
                                   id={`creditFacility.creditDetails[${index}].averageUtilization`}
@@ -648,6 +675,7 @@ const CreditFacility = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Average Utilization'}
+                                  rightLabel={'(Lakhs)'}
                                 />
                                 <AInputField
                                   type={'number'}
@@ -662,6 +690,7 @@ const CreditFacility = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'EMI'}
+                                  rightLabel={'(Rs.)'}
                                 />
                                 <AInputField
                                   type={'number'}
@@ -675,7 +704,8 @@ const CreditFacility = ({ formik }: any) => {
                                     errors.creditDetails[index].interestRate
                                   }
                                   handleChange={formik.handleChange}
-                                  label={'Interest Rate (%)'}
+                                  label={'Interest Rate'}
+                                  rightLabel={'(%)'}
                                 />
                                 <ASingleSelect
                                   id={`creditFacility.creditDetails[${index}].remark`}
@@ -739,7 +769,16 @@ const OtherCommitments = ({ formik }: any) => {
       />
       {isOtherCommitments === 'yes' && (
         <ASection
-          footers={commitmentsFooter}
+          footers={[
+            {
+              label: 'Total Contribution',
+              value: formik?.values?.otherCommitments?.totalCon,
+            },
+            {
+              label: 'Total Sum Assured/Maturity',
+              value: formik?.values?.otherCommitments?.totalSum,
+            },
+          ]}
           title={'Other Commitments Details'}
         >
           <FormikProvider value={formik}>
@@ -748,9 +787,9 @@ const OtherCommitments = ({ formik }: any) => {
                 name="otherCommitments.commitmentsDetails"
                 render={(tag) => (
                   <div>
-                    {formik.values.otherCommitments.commitmentsDetails.length >
-                    0 ? (
-                      formik.values.otherCommitments.commitmentsDetails.map(
+                    {formik?.values?.otherCommitments?.commitmentsDetails
+                      .length > 0 ? (
+                      formik?.values?.otherCommitments?.commitmentsDetails.map(
                         (item: any, index: number) => (
                           <div className="mb-3">
                             <AddTagHeader
@@ -769,7 +808,7 @@ const OtherCommitments = ({ formik }: any) => {
                                   id={`otherCommitments.commitmentsDetails[${index}].particulars`}
                                   value={
                                     formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].particulars
+                                      ?.commitmentsDetails[index].particulars
                                   }
                                   error={
                                     errors?.commitmentsDetails?.length > 0 &&
@@ -785,7 +824,7 @@ const OtherCommitments = ({ formik }: any) => {
                                   id={`otherCommitments.commitmentsDetails[${index}].contribution`}
                                   value={
                                     formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].contribution
+                                      ?.commitmentsDetails[index].contribution
                                   }
                                   error={
                                     errors?.commitmentsDetails?.length > 0 &&
@@ -794,20 +833,22 @@ const OtherCommitments = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Contribution P.A.'}
+                                  rightLabel={'(Lakhs)'}
                                 />
                                 <AInputField
                                   type={'number'}
                                   id={`otherCommitments.commitmentsDetails[${index}].sumAssured`}
                                   value={
                                     formik?.values?.otherCommitments
-                                      .commitmentsDetails[index].sumAssured
+                                      ?.commitmentsDetails[index].sumAssured
                                   }
                                   error={
                                     errors?.commitmentsDetails?.length > 0 &&
                                     errors?.commitmentsDetails[index].sumAssured
                                   }
                                   handleChange={formik.handleChange}
-                                  label={'Sum Assured/Maturity Value (Rs.)'}
+                                  label={'Sum Assured/Maturity Value'}
+                                  rightLabel={'(Rs.)'}
                                 />
                               </AGroupFields>
                             </div>
@@ -877,16 +918,30 @@ const ExistingLoanCredit = ({
     existanceLoan: {
       isExistanceLoan: 'yes',
       balanceTransfer: [] as any,
+      totalLoanBt: '',
+      totalLoanBtEmi: '',
+      totalLoanBtOut: '',
       existingLoanClosedThisYear: [] as any,
+      totalLoanEc: '',
+      totalLoanEcEmi: '',
+      totalLoanEcOut: '',
       existingLoanEMI: [] as any,
+      totalLoanEm: '',
+      totalLoanEmEmi: '',
+      totalLoanEmOut: '',
     },
     creditFacility: {
       isCreditFacility: 'yes',
       creditDetails: [] as any,
+      totalLoanCf: '',
+      totalLoanCfLimit: '',
+      totalLoanCfAu: '',
     },
     otherCommitments: {
       isOtherCommitmemts: 'yes',
       commitmentsDetails: [] as any,
+      totalCon: '',
+      totalSum: '',
     },
   };
 
@@ -952,7 +1007,7 @@ const ExistingLoanCredit = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, existingLoan: { ...values } });
     handleNext();
   };
 

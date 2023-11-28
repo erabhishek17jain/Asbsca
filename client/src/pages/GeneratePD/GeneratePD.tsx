@@ -5,6 +5,7 @@ import { reportSteps } from './constants';
 import { useState } from 'react';
 import { addReport } from '../../services';
 import toast from 'react-hot-toast';
+import { payload } from '../../mockData/mocks';
 
 const GeneratePD = () => {
   const navigate = useNavigate();
@@ -15,11 +16,14 @@ const GeneratePD = () => {
   const generateReport = async () => {
     let values = { caseId: state?.activeItem?._id, data: payloads };
     values = await Object.assign(values);
-    let reportPromise = addReport(values);
+    const sample = await Object.assign(payload);
+    let reportPromise = addReport(sample);
     reportPromise
       .then((res: any) => {
         if (res) {
-          navigate('/finalReport');
+          navigate('/finalReport', {
+            state: { activeItem: state?.activeItem, reportData: res?.data },
+          });
           toast.success(<b>Report created sucessfully.</b>);
         }
       })

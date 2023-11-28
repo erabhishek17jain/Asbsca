@@ -125,7 +125,7 @@ const CasesBody = ({
                 variant="small"
                 label={'Start PD'}
                 action={() =>
-                  navigate('/generatePD', { state: { activeItem: activeItem } })
+                  navigate('/generatePD', { state: { activeItem: item } })
                 }
                 icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
               />

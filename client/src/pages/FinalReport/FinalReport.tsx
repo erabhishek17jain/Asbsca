@@ -1,10 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   ArrowLeftIcon,
   ArrowTopRightOnSquareIcon,
   DocumentChartBarIcon,
   PencilSquareIcon,
-  ShareIcon,
 } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
@@ -14,22 +13,86 @@ import ADropdown from '../../components-global/ADropdown';
 
 const FinalReport = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location?.state;
+
   const { toPDF, targetRef } = usePDF({
     filename: 'usepdf-example.pdf',
     page: { margin: Margin.MEDIUM },
   });
-  const dropdownOptions = [
-    {
-      title: 'PDF',
-      action: toPDF,
-      icon: <DocumentChartBarIcon className="h-5 w-5" />,
-    },
-    {
-      title: 'Word',
-      action: toPDF,
-      icon: <DocumentChartBarIcon className="h-5 w-5" />,
-    },
-  ];
+
+  const sentToReviewCase = () => {};
+  const revertToAssignee = () => {};
+  const caseCompleted = () => {};
+
+  const dropdownOptions = {
+    assigned: [
+      {
+        title: 'Edit Report',
+        action: () =>
+          navigate('/finalReport', {
+            state: {
+              activeItem: state?.activeItem,
+              reportData: state?.reportData,
+            },
+          }),
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Send to Review',
+        action: sentToReviewCase,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Download PDF',
+        action: toPDF,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+    ],
+    review: [
+      {
+        title: 'Edit Report',
+        action: () =>
+          navigate('/finalReport', {
+            state: {
+              activeItem: state?.activeItem,
+              reportData: state?.reportData,
+            },
+          }),
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Revert to Assignee',
+        action: revertToAssignee,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Approve Case',
+        action: caseCompleted,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+      {
+        title: 'Download PDF',
+        action: toPDF,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+    ],
+    completed: [
+      {
+        title: 'Download PDF',
+        action: toPDF,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+    ],
+    sentToBank: [
+      {
+        title: 'Download PDF',
+        action: toPDF,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+    ],
+  } as any;
+
   return (
     <>
       <ABreadcrumb pageName="Preview Report" />
@@ -43,13 +106,12 @@ const FinalReport = () => {
           />
           <div>Preview Report</div>
           <ADropdown
-            options={dropdownOptions}
+            options={dropdownOptions[state?.activeItem?.status]}
             header={
               <div className="flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey">
                 <span className="text-right">
                   <span className="flex gap-1 text-sm font-medium text-main">
-                    <ShareIcon className="h-4 w-4" />
-                    <span>Export</span>
+                    <span>Actions</span>
                   </span>
                 </span>
               </div>

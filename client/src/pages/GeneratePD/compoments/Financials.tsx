@@ -256,7 +256,7 @@ const Financials = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, financials: { ...values } });
     handleNext();
   };
 
@@ -309,24 +309,24 @@ const Financials = ({
     formik.setFieldValue('expenses.totalExpensePM', totalAP);
     formik.setFieldValue(
       'expenses.netProfitPA',
-      formik.values.income.totalAmountPA - totalAP,
+      formik?.values?.income.totalAmountPA - totalAP,
     );
     formik.setFieldValue(
       'expenses.netProfitPM',
       `${(
-        ((formik.values.income.totalAmountPA - totalAP) * 100) /
-        formik.values.income.turnoverGrossReciepts.amountPA
+        ((formik?.values?.income.totalAmountPA - totalAP) * 100) /
+        formik?.values?.income.turnoverGrossReciepts.amountPA
       ).toFixed(0)}%`,
     );
     formik.setFieldValue(
       'expenses.shareOfProfitPA',
-      formik.values.income.totalAmountPA - totalAP,
+      formik?.values?.income.totalAmountPA - totalAP,
     );
     formik.setFieldValue('expenses.shareOfProfitPM', `${100}%`);
   };
 
   const setBusinessIncome = () => {
-    let totalAP = formik.values.expenses.shareOfProfitPA;
+    let totalAP = formik?.values?.expenses.shareOfProfitPA;
     const finance: any = formik?.values?.businessIncome;
     for (const key in finance) {
       if (
@@ -360,14 +360,14 @@ const Financials = ({
             <AInputField
               id={'entityName'}
               label={'Entity Name'}
-              value={formik.values.entityName}
+              value={formik?.values?.entityName}
               error={formik.errors.entityName}
               handleChange={formik.handleChange}
             />
             <ASingleSelect
               id={'applicantIncome'}
               label={'Income of which applicant?'}
-              value={formik.values.applicantIncome}
+              value={formik?.values?.applicantIncome}
               error={formik.errors.applicantIncome}
               handleChange={formik.handleChange}
               options={applicantIncome}
@@ -377,11 +377,11 @@ const Financials = ({
             footers={[
               {
                 label: 'Total Amount PA',
-                value: formik.values.income.totalAmountPA,
+                value: formik?.values?.income.totalAmountPA,
               },
               {
                 label: 'Total Amount PM',
-                value: formik.values.income.totalAmountPM,
+                value: formik?.values?.income.totalAmountPM,
               },
             ]}
           >
@@ -424,15 +424,15 @@ const Financials = ({
               footers={[
                 {
                   label: 'Total Expenses P.A.',
-                  value: formik.values.expenses.totalExpensePA,
+                  value: formik?.values?.expenses.totalExpensePA,
                 },
                 {
                   label: 'Net Profit P.A.',
-                  value: formik.values.expenses.netProfitPA,
+                  value: formik?.values?.expenses.netProfitPA,
                 },
                 {
                   label: 'Share of Profit P.A.',
-                  value: formik.values.expenses.shareOfProfitPA,
+                  value: formik?.values?.expenses.shareOfProfitPA,
                 },
               ]}
             />
@@ -440,15 +440,15 @@ const Financials = ({
               footers={[
                 {
                   label: 'Total Expenses P.M.',
-                  value: formik.values.expenses.totalExpensePM,
+                  value: formik?.values?.expenses.totalExpensePM,
                 },
                 {
                   label: 'Net Profit P.M.',
-                  value: formik.values.expenses.netProfitPM,
+                  value: formik?.values?.expenses.netProfitPM,
                 },
                 {
                   label: 'Share of Profit P.M.',
-                  value: formik.values.expenses.shareOfProfitPM,
+                  value: formik?.values?.expenses.shareOfProfitPM,
                 },
               ]}
             />
@@ -457,11 +457,11 @@ const Financials = ({
             footers={[
               {
                 label: 'Total P.A.',
-                value: formik.values.businessIncome.totalIncomePA,
+                value: formik?.values?.businessIncome.totalIncomePA,
               },
               {
                 label: 'Total Earning',
-                value: formik.values.businessIncome.totalEarning,
+                value: formik?.values?.businessIncome.totalEarning,
               },
             ]}
           >

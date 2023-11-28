@@ -100,7 +100,7 @@ const TurnoverGrossReceipts = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, turnoverDetails: { ...values } });
     handleNext();
   };
 
@@ -124,16 +124,22 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
+                rightLabel={'(Lakhs)'}
                 id={'aprilTillDate.idealAprilTillDate.turnover'}
-                value={formik.values.aprilTillDate.idealAprilTillDate.turnover}
+                value={
+                  formik?.values?.aprilTillDate.idealAprilTillDate.turnover
+                }
                 error={errors?.aprilTillDate?.idealAprilTillDate?.turnover}
                 handleChange={formik.handleChange}
               />
               <AInputField
                 type={'number'}
+                rightLabel={'(%)'}
                 id={'aprilTillDate.idealAprilTillDate.netProfit'}
                 label={'Net Profit'}
-                value={formik.values.aprilTillDate.idealAprilTillDate.netProfit}
+                value={
+                  formik?.values?.aprilTillDate.idealAprilTillDate.netProfit
+                }
                 error={errors?.aprilTillDate?.idealAprilTillDate?.netProfit}
                 handleChange={formik.handleChange}
               />
@@ -143,7 +149,8 @@ const TurnoverGrossReceipts = ({
                 type={'number'}
                 id={'aprilTillDate.aprilTillDate.turnover'}
                 label={'Turnover'}
-                value={formik.values.aprilTillDate.aprilTillDate.turnover}
+                rightLabel={'(Lakhs)'}
+                value={formik?.values?.aprilTillDate.aprilTillDate.turnover}
                 error={errors?.aprilTillDate?.aprilTillDate?.turnover}
                 handleChange={formik.handleChange}
               />
@@ -151,7 +158,8 @@ const TurnoverGrossReceipts = ({
                 type={'number'}
                 id={'aprilTillDate.aprilTillDate.netProfit'}
                 label={'Net Profit'}
-                value={formik.values.aprilTillDate.aprilTillDate.netProfit}
+                rightLabel={'(%)'}
+                value={formik?.values?.aprilTillDate.aprilTillDate.netProfit}
                 error={errors?.aprilTillDate?.aprilTillDate?.netProfit}
                 handleChange={formik.handleChange}
               />
@@ -160,7 +168,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 id={'aprilTillDate.reasonforDiff'}
                 label={'Reason if major diff'}
-                value={formik.values.aprilTillDate.reasonforDiff}
+                value={formik?.values?.aprilTillDate.reasonforDiff}
                 error={errors?.aprilTillDate?.reasonforDiff}
                 handleChange={formik.handleChange}
               />
@@ -177,8 +185,9 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment()
                   .subtract(2, 'y')
                   .year()} (As per F.S.)`}
+                rightLabel={'(Lakhs)'}
                 id={'lastYears.firstLastYear'}
-                value={formik.values.lastYears.firstLastYear}
+                value={formik?.values?.lastYears.firstLastYear}
                 error={errors?.lastYears?.firstLastYear}
                 handleChange={formik.handleChange}
               />
@@ -187,22 +196,23 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment()
                   .subtract(1, 'y')
                   .year()} (As per F.S.)`}
+                rightLabel={'(Lakhs)'}
                 id={'lastYears.secondLastYear'}
-                value={formik.values.lastYears.secondLastYear}
+                value={formik?.values?.lastYears.secondLastYear}
                 error={errors?.lastYears?.secondLastYear}
                 handleChange={formik.handleChange}
               />
               <AInputField
                 label={'Changes'}
                 id={'lastYears.changes'}
-                value={formik.values.lastYears.changes}
+                value={formik?.values?.lastYears.changes}
                 error={errors?.lastYears?.changes}
                 handleChange={formik.handleChange}
               />
               <AInputField
                 label={'Reason if major diff'}
                 id={'lastYears.reasonforDiff'}
-                value={formik.values.lastYears.reasonforDiff}
+                value={formik?.values?.lastYears.reasonforDiff}
                 error={errors?.lastYears?.reasonforDiff}
                 handleChange={formik.handleChange}
               />
@@ -216,16 +226,18 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
+                rightLabel={'(Lakhs)'}
                 id={'currentYearActual.actuals.turnover'}
-                value={formik.values.currentYearActual.actuals.turnover}
+                value={formik?.values?.currentYearActual.actuals.turnover}
                 error={errors?.currentYearActual?.actuals?.turnover}
                 handleChange={formik.handleChange}
               />
               <AInputField
                 type={'number'}
                 label={'Net Profit'}
+                rightLabel={'(Lakhs)'}
                 id={'currentYearActual.actuals.netProfit'}
-                value={formik.values.currentYearActual.actuals.netProfit}
+                value={formik?.values?.currentYearActual.actuals.netProfit}
                 error={errors?.currentYearActual?.actuals?.netProfit}
                 handleChange={formik.handleChange}
               />
@@ -234,7 +246,9 @@ const TurnoverGrossReceipts = ({
                 type={'number'}
                 rightLabel={'(%)'}
                 id={'currentYearActual.actuals.profitPercentage'}
-                value={formik.values.currentYearActual.actuals.profitPercentage}
+                value={
+                  formik?.values?.currentYearActual.actuals.profitPercentage
+                }
                 error={errors?.currentYearActual?.actuals?.profitPercentage}
                 handleChange={formik.handleChange}
               />
@@ -243,9 +257,10 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
+                rightLabel={'(Lakhs)'}
                 id={'currentYearActual.asPerFinancials.turnover'}
                 value={
-                  formik.values.currentYearActual?.asPerFinancials?.turnover
+                  formik?.values?.currentYearActual?.asPerFinancials?.turnover
                 }
                 error={errors?.currentYearActual?.asPerFinancials?.turnover}
                 handleChange={formik.handleChange}
@@ -253,9 +268,10 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Net Profit'}
+                rightLabel={'(Lakhs)'}
                 id={'currentYearActual.asPerFinancials.netProfit'}
                 value={
-                  formik.values.currentYearActual.asPerFinancials.netProfit
+                  formik?.values?.currentYearActual.asPerFinancials.netProfit
                 }
                 error={errors?.currentYearActual?.asPerFinancials?.netProfit}
                 handleChange={formik.handleChange}
@@ -266,7 +282,7 @@ const TurnoverGrossReceipts = ({
                 rightLabel={'(%)'}
                 id={'currentYearActual.asPerFinancials.profitPercentage'}
                 value={
-                  formik.values.currentYearActual?.asPerFinancials
+                  formik?.values?.currentYearActual?.asPerFinancials
                     ?.profitPercentage
                 }
                 error={
@@ -279,7 +295,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 label={'F.S./Acutals (Bank Ratio)'}
                 id={'currentYearActual.financialActualRatio'}
-                value={formik.values.currentYearActual.financialActualRatio}
+                value={formik?.values?.currentYearActual.financialActualRatio}
                 error={errors?.currentYearActual?.financialActualRatio}
                 handleChange={formik.handleChange}
               />
@@ -293,16 +309,20 @@ const TurnoverGrossReceipts = ({
             <AGroupFields>
               <AInputField
                 type={'number'}
+                rightLabel={'(Lakhs)'}
                 id={'currentLastYearComparision.firstLastYear'}
-                value={formik.values.currentLastYearComparision.firstLastYear}
+                value={formik?.values?.currentLastYearComparision.firstLastYear}
                 error={errors?.currentLastYearComparision?.firstLastYear}
                 handleChange={formik.handleChange}
                 label={`March-${moment().subtract(1, 'y').year()}`}
               />
               <AInputField
                 type={'number'}
+                rightLabel={'(Lakhs)'}
                 id={'currentLastYearComparision.secondLastYear'}
-                value={formik.values.currentLastYearComparision.secondLastYear}
+                value={
+                  formik?.values?.currentLastYearComparision.secondLastYear
+                }
                 error={errors?.currentLastYearComparision?.secondLastYear}
                 handleChange={formik.handleChange}
                 label={`March-${moment().year()}`}
@@ -310,13 +330,13 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 label={'Changes'}
                 id={'currentLastYearComparision.changes'}
-                value={formik.values.currentLastYearComparision.changes}
+                value={formik?.values?.currentLastYearComparision.changes}
                 error={errors?.currentLastYearComparision?.changes}
                 handleChange={formik.handleChange}
               />
               <AInputField
                 id={'currentLastYearComparision.reasonforDiff'}
-                value={formik.values.currentLastYearComparision.reasonforDiff}
+                value={formik?.values?.currentLastYearComparision.reasonforDiff}
                 error={errors?.currentLastYearComparision?.reasonforDiff}
                 handleChange={formik.handleChange}
                 label={'Reason if major diff'}
@@ -326,7 +346,7 @@ const TurnoverGrossReceipts = ({
           <AGroupFields col={2}>
             <ASingleSelect
               id={'bussinessTrendLast2Year'}
-              value={formik.values.bussinessTrendLast2Year}
+              value={formik?.values?.bussinessTrendLast2Year}
               error={errors?.bussinessTrendLast2Year}
               handleChange={formik.handleChange}
               label={'Comment on Trend of Business of past 2 years'}
@@ -334,7 +354,7 @@ const TurnoverGrossReceipts = ({
             />
             <ASingleSelect
               id={'futureProjection'}
-              value={formik.values.futureProjection}
+              value={formik?.values?.futureProjection}
               error={errors?.futureProjection}
               handleChange={formik.handleChange}
               label={'Future Projection:'}

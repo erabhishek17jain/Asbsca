@@ -46,7 +46,7 @@ const Stocks = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, stocks: { ...values } });
     handleNext();
   };
 
@@ -73,11 +73,11 @@ const Stocks = ({
               footers={[
                 {
                   label: 'Total Stocks',
-                  value: formik.values.stockDetails.totalStocks,
+                  value: formik?.values?.stockDetails.totalStocks,
                 },
                 {
                   label: 'Stock Holding Period',
-                  value: formik.values.stockDetails.stockHoldingPeriod,
+                  value: formik?.values?.stockDetails.stockHoldingPeriod,
                 },
               ]}
             >

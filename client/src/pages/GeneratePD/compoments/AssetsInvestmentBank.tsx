@@ -10,53 +10,12 @@ import {
   banksList,
   particularsAssets,
   particularsInvestment,
-  qualification,
   statusAssets,
   yesNoOptions,
 } from '../constants';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
-
-const businessAssetFooters = [
-  {
-    label: 'Total Market Value',
-    value: '0',
-  },
-  {
-    label: 'Total Rent P.M',
-    value: '0',
-  },
-];
-
-const personalAssetFooters = [
-  {
-    label: 'Total Market Value',
-    value: '0',
-  },
-  {
-    label: 'Total Rent P.M',
-    value: '0',
-  },
-];
-
-const investmentFooters = [
-  {
-    label: 'Total Contribution',
-    value: '0',
-  },
-  {
-    label: 'Total Market Value',
-    value: '0',
-  },
-];
-
-const bankAccountFooters = [
-  {
-    label: 'Total Balance on Day',
-    value: '0',
-  },
-];
 
 const assetInfo: any = {
   title: 'Asset',
@@ -117,34 +76,33 @@ const AssetsInvestmentBank = ({
   };
 
   const initialValues = {
-    isBussinessAssets: '',
+    isBussinessAssets: 'yes',
     bussinessAssetDetails: {
       bussinessAssets: [] as any,
-      totalMarketValue: '',
-      totalRentPM: '',
+      totalMarketValue: '200',
+      totalRentPM: '30000',
     },
-    isPersonalAssets: '',
+    isPersonalAssets: 'yes',
     personalAssetDetails: {
       personalAssets: [] as any,
-      totalMarketValue: '',
-      totalRentPM: '',
+      totalMarketValue: '120',
+      totalRentPM: '20000',
     },
-    isInvestments: '',
+    isInvestments: 'yes',
     investmentDetails: {
       investments: [] as any,
-      totalContribution: '',
-      totalMarketValue: '',
+      totalContribution: '50',
+      totalMarketValue: '70',
     },
-    isBankAccount: '',
+    isBankAccount: 'yes',
     bankAccountDetails: {
       bankAccounts: [] as any,
-      totalBalance: '',
+      totalBalance: '2.34',
     },
-    totalBalance: '',
   };
 
   const validationSchema = Yup.object().shape({
-    isBussinessAssets: Yup.string().required('This field is required'),
+    // isBussinessAssets: Yup.string().required('This field is required'),
     bussinessAssetDetails: Yup.object({
       bussinessAssets: Yup.array().of(
         Yup.object().shape({
@@ -157,10 +115,10 @@ const AssetsInvestmentBank = ({
           rentPM: Yup.number().required('This field is required'),
         }),
       ),
-      totalMarketValue: Yup.number().required('This field is required'),
-      totalRentPM: Yup.number().required('This field is required'),
+      // totalMarketValue: Yup.number().required('This field is required'),
+      // totalRentPM: Yup.number().required('This field is required'),
     }),
-    isPersonalAssets: Yup.string().required('This field is required'),
+    // isPersonalAssets: Yup.string().required('This field is required'),
     personalAssetDetails: Yup.object({
       personalAssets: Yup.array().of(
         Yup.object().shape({
@@ -173,10 +131,10 @@ const AssetsInvestmentBank = ({
           rentPM: Yup.number().required('This field is required'),
         }),
       ),
-      totalMarketValue: Yup.number().required('This field is required'),
-      totalRentPM: Yup.number().required('This field is required'),
+      // totalMarketValue: Yup.number().required('This field is required'),
+      // totalRentPM: Yup.number().required('This field is required'),
     }),
-    isInvestments: Yup.string().required('This field is required'),
+    // isInvestments: Yup.string().required('This field is required'),
     investmentDetails: Yup.object({
       investments: Yup.array().of(
         Yup.object().shape({
@@ -185,10 +143,10 @@ const AssetsInvestmentBank = ({
           marketValue: Yup.number().required('This field is required'),
         }),
       ),
-      totalMarketValue: Yup.number().required('This field is required'),
-      totalContribution: Yup.number().required('This field is required'),
+      // totalMarketValue: Yup.number().required('This field is required'),
+      // totalContribution: Yup.number().required('This field is required'),
     }),
-    isBankAccount: Yup.string().required('This field is required'),
+    // isBankAccount: Yup.string().required('This field is required'),
     bankAccountDetails: Yup.object({
       bankAccounts: Yup.array().of(
         Yup.object().shape({
@@ -198,13 +156,13 @@ const AssetsInvestmentBank = ({
           balanceOnDay: Yup.number().required('This field is required'),
         }),
       ),
-      totalBalance: Yup.number().required('This field is required'),
+      // totalBalance: Yup.number().required('This field is required'),
     }),
   });
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, assets: { ...values } });
     handleNext();
   };
 
@@ -234,7 +192,17 @@ const AssetsInvestmentBank = ({
           {isBusinessAssets === 'yes' && (
             <ASection
               title={'Business Asset Details'}
-              footers={businessAssetFooters}
+              footers={[
+                {
+                  label: 'Total Market Value',
+                  value:
+                    formik?.values?.bussinessAssetDetails?.totalMarketValue,
+                },
+                {
+                  label: 'Total Rent P?.M',
+                  value: formik?.values?.bussinessAssetDetails?.totalRentPM,
+                },
+              ]}
             >
               <FormikProvider value={formik}>
                 <form>
@@ -242,9 +210,9 @@ const AssetsInvestmentBank = ({
                     name="bussinessAssetDetails.bussinessAssets"
                     render={(tag) => (
                       <div>
-                        {formik.values.bussinessAssetDetails.bussinessAssets
-                          .length > 0 ? (
-                          formik.values.bussinessAssetDetails.bussinessAssets.map(
+                        {formik?.values?.bussinessAssetDetails?.bussinessAssets
+                          ?.length > 0 ? (
+                          formik?.values?.bussinessAssetDetails?.bussinessAssets.map(
                             (item: any, index: number) => (
                               <div className="mb-3">
                                 <AddTagHeader
@@ -307,6 +275,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].carpetArea`}
                                       label={'Carpet Area*'}
+                                      rightLabel={'(Sq. Ft.)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].carpetArea
@@ -321,7 +290,7 @@ const AssetsInvestmentBank = ({
                                     <ASingleSelect
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].status`}
                                       label={'Status*'}
-                                      options={qualification}
+                                      options={statusAssets}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].status
@@ -336,6 +305,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].marketValue`}
                                       label={'Market Value*'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].marketValue
@@ -351,6 +321,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].rentPM`}
                                       label={'Rent P.M.*'}
+                                      rightLabel={'(Rs.)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].rentPM
@@ -393,7 +364,16 @@ const AssetsInvestmentBank = ({
           {isPersonalAssets === 'yes' && (
             <ASection
               title={'Personal Asset Details'}
-              footers={personalAssetFooters}
+              footers={[
+                {
+                  label: 'Total Market Value',
+                  value: formik?.values?.personalAssetDetails?.totalMarketValue,
+                },
+                {
+                  label: 'Total Rent P?.M',
+                  value: formik?.values?.personalAssetDetails?.totalRentPM,
+                },
+              ]}
             >
               <FormikProvider value={formik}>
                 <form>
@@ -401,16 +381,16 @@ const AssetsInvestmentBank = ({
                     name="personalAssetDetails.personalAssets"
                     render={(tag) => (
                       <div>
-                        {formik.values.personalAssetDetails.personalAssets
-                          .length > 0 ? (
-                          formik.values.personalAssetDetails.personalAssets.map(
+                        {formik?.values?.personalAssetDetails?.personalAssets
+                          ?.length > 0 ? (
+                          formik?.values?.personalAssetDetails?.personalAssets?.map(
                             (item: any, index: number) => (
                               <div className="mb-3">
                                 <AddTagHeader
                                   title={item?.title}
-                                  removeTag={() => tag.remove(index)}
+                                  removeTag={() => tag?.remove(index)}
                                   addTag={() =>
-                                    tag.push({
+                                    tag?.push({
                                       ...assetInfo,
                                       title: 'Personal Asset',
                                     })
@@ -438,7 +418,7 @@ const AssetsInvestmentBank = ({
                                       label={'Location*'}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].location
+                                          ?.personalAssets[index]?.location
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -453,7 +433,7 @@ const AssetsInvestmentBank = ({
                                       label={'Purchase Year'}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].purchaseYear
+                                          ?.personalAssets[index]?.purchaseYear
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -466,9 +446,10 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].carpetArea`}
                                       label={'Carpet Area*'}
+                                      rightLabel={'(Sq. Ft.)'}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].carpetArea
+                                          ?.personalAssets[index]?.carpetArea
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -483,7 +464,7 @@ const AssetsInvestmentBank = ({
                                       options={statusAssets}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].status
+                                          ?.personalAssets[index]?.status
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -495,9 +476,10 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].marketValue`}
                                       label={'Market Value*'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].marketValue
+                                          ?.personalAssets[index]?.marketValue
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -510,9 +492,10 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].rentPM`}
                                       label={'Rent P.M.*'}
+                                      rightLabel={'(Rs.)'}
                                       value={
                                         formik?.values?.personalAssetDetails
-                                          ?.personalAssets[index].rentPM
+                                          ?.personalAssets[index]?.rentPM
                                       }
                                       error={
                                         errorsPb?.personalAssets?.length > 0 &&
@@ -550,16 +533,28 @@ const AssetsInvestmentBank = ({
             handleChange={handleInvestments}
           />
           {isInvestments === 'yes' && (
-            <ASection title={'Investment Details'} footers={investmentFooters}>
+            <ASection
+              title={'Investment Details'}
+              footers={[
+                {
+                  label: 'Total Contribution',
+                  value: formik?.values?.investmentDetails?.totalContribution,
+                },
+                {
+                  label: 'Total Market Value',
+                  value: formik?.values?.investmentDetails?.totalMarketValue,
+                },
+              ]}
+            >
               <FormikProvider value={formik}>
                 <form>
                   <FieldArray
                     name="investmentDetails.investments"
                     render={(tag) => (
                       <div>
-                        {formik.values.investmentDetails.investments.length >
-                        0 ? (
-                          formik.values.investmentDetails.investments.map(
+                        {formik?.values?.investmentDetails?.investments
+                          ?.length > 0 ? (
+                          formik?.values?.investmentDetails?.investments?.map(
                             (item: any, index: number) => (
                               <div className="mb-3">
                                 <AddTagHeader
@@ -592,9 +587,10 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].contribution`}
                                       label={'Contribution*'}
+                                      rightLabel={'(Rs.)'}
                                       value={
                                         formik?.values?.investmentDetails
-                                          .investments[index].contribution
+                                          ?.investments[index]?.contribution
                                       }
                                       error={
                                         errorsI?.investments?.length > 0 &&
@@ -606,10 +602,11 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].marketValue`}
-                                      label={'Markrt Year'}
+                                      label={'Market Year'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.investmentDetails
-                                          .investments[index].marketValue
+                                          ?.investments[index]?.marketValue
                                       }
                                       error={
                                         errorsI?.investments?.length > 0 &&
@@ -649,7 +646,12 @@ const AssetsInvestmentBank = ({
           {isBankAccounts === 'yes' && (
             <ASection
               title={'Bank Account Details'}
-              footers={bankAccountFooters}
+              footers={[
+                {
+                  label: 'Total Balance on Day',
+                  value: formik?.values?.bankAccountDetails?.totalBalance,
+                },
+              ]}
             >
               <FormikProvider value={formik}>
                 <form>
@@ -657,9 +659,9 @@ const AssetsInvestmentBank = ({
                     name="bankAccountDetails.bankAccounts"
                     render={(tag) => (
                       <div>
-                        {formik.values.bankAccountDetails.bankAccounts.length >
-                        0 ? (
-                          formik.values.bankAccountDetails.bankAccounts.map(
+                        {formik?.values?.bankAccountDetails?.bankAccounts
+                          ?.length > 0 ? (
+                          formik?.values?.bankAccountDetails?.bankAccounts?.map(
                             (item: any, index: number) => (
                               <div className="mb-3">
                                 <AddTagHeader
@@ -693,7 +695,7 @@ const AssetsInvestmentBank = ({
                                       label={'Branch*'}
                                       value={
                                         formik?.values?.bankAccountDetails
-                                          .bankAccounts[index].branch
+                                          ?.bankAccounts[index]?.branch
                                       }
                                       error={
                                         errorsBa?.bankAccounts?.length > 0 &&
@@ -706,22 +708,23 @@ const AssetsInvestmentBank = ({
                                       label={'Bank Type'}
                                       value={
                                         formik?.values?.bankAccountDetails
-                                          .bankAccounts[index].type
+                                          ?.bankAccounts[index]?.type
                                       }
                                       error={
                                         errorsBa?.bankAccounts?.length > 0 &&
                                         errorsBa?.bankAccounts[index]?.type
                                       }
                                       options={bankTypes}
-                                      handleChange={formik.handleChange}
+                                      handleChange={formik?.handleChange}
                                     />
                                     <AInputField
                                       type={'number'}
                                       id={`bankAccountDetails.bankAccounts[${index}].balanceOnDay`}
                                       label={'Balance on Day*'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.bankAccountDetails
-                                          .bankAccounts[index].balanceOnDay
+                                          ?.bankAccounts[index]?.balanceOnDay
                                       }
                                       error={
                                         errorsBa?.bankAccounts?.length > 0 &&

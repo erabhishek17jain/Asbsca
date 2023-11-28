@@ -22,7 +22,7 @@ const BusinessProcessOf = ({
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
-    setPayloads({ ...payloads, loanDetails: { ...values } });
+    setPayloads({ ...payloads, businessOf: { ...values } });
     handleNext();
   };
 
@@ -43,8 +43,8 @@ const BusinessProcessOf = ({
             label={'Business Process of'}
             variant={'horizantal'}
             options={businessProcess}
-            value={formik.values.bussinessProcessOf}
-            error={formik.errors.bussinessProcessOf}
+            value={formik?.values?.bussinessProcessOf}
+            error={formik?.errors?.bussinessProcessOf}
             handleChange={formik.handleChange}
           />
         </div>

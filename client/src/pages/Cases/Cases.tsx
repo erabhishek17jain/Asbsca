@@ -332,7 +332,9 @@ const Cases = () => {
       {
         title: 'Preview Report',
         action: () =>
-          navigate('/finalReport', { state: { activeItem: activeItem } }),
+          navigate('/finalReport', {
+            state: { activeItem: activeItem, reportData: {} },
+          }),
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
