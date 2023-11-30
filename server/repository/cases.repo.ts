@@ -29,6 +29,12 @@ export default class CaseRepository {
                 filterObj[filter] = values[index];
             });
 
+            if (filterObj["status"]) {
+                filterObj["status"] = {
+                    $in: filterObj["status"].split("_")
+                }
+            }
+
             if (role !== CONFIG.ADMIN_ROLE_ID) {
                 filterObj = {
                     ...filterObj,
@@ -84,6 +90,11 @@ export default class CaseRepository {
             let filterObj: { [key: string]: any; } = {};
             if (filterBy && filterValue) {
                 filterObj[filterBy] = filterValue;
+            }
+            if (filterObj["status"]) {
+                filterObj["status"] = {
+                    $in: filterObj["status"].split("_")
+                }
             }
             if (role !== CONFIG.ADMIN_ROLE_ID) {
                 filterObj = {

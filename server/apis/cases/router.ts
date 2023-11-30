@@ -30,9 +30,9 @@ export default class CasesRouter {
         this.router.put("/:id", Auth.isuser, UpdateDeleteCaseAPI.api.update)
         this.router.delete("/:id", Auth.isuser, UpdateDeleteCaseAPI.api.delete)
 
-        this.router.post("/report", Auth.isuser, ReportAPI.api.post);
-        this.router.get("/report/:caseId", Auth.isuser, ReportAPI.api.get);
-        this.router.put("/report/:caseId", Auth.isuser, ReportAPI.api.put);
+        this.router.post("/reports", Auth.isuser, ReportAPI.api.post);
+        this.router.get("/reports/:caseId", Auth.isuser, ReportAPI.api.get);
+        this.router.put("/reports/:caseId", Auth.isuser, ReportAPI.api.put);
         
     }
 }
