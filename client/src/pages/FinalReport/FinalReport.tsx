@@ -3,18 +3,23 @@ import {
   ArrowLeftIcon,
   ArrowTopRightOnSquareIcon,
   DocumentChartBarIcon,
-  PencilSquareIcon,
 } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
 import ReportData from './ReportData/ReportData';
 import { Margin, usePDF } from 'react-to-pdf';
 import ADropdown from '../../components-global/ADropdown';
+import { useEffect } from 'react';
+import { fetchCaseReportDataAsync } from '../../slices/casesSlice';
+import store from '../../store/store';
+import { useSelector } from 'react-redux';
+import ALoader from '../../components-global/ALoader';
 
 const FinalReport = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location?.state;
+  const { reportData, loading } = useSelector((state: any) => state.cases);
 
   const { toPDF, targetRef } = usePDF({
     filename: 'usepdf-example.pdf',
@@ -24,17 +29,21 @@ const FinalReport = () => {
   const sentToReviewCase = () => {};
   const revertToAssignee = () => {};
   const caseCompleted = () => {};
+  const caseSentToBank = () => {};
+
+  useEffect(() => {
+    if (Object.keys(reportData).length === 0) {
+      store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
+    }
+  }, []);
 
   const dropdownOptions = {
     assigned: [
       {
         title: 'Edit Report',
         action: () =>
-          navigate('/finalReport', {
-            state: {
-              activeItem: state?.activeItem,
-              reportData: state?.reportData,
-            },
+          navigate('/generatePD', {
+            state: { activeItem: state?.activeItem, action: 'edit' },
           }),
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
@@ -53,11 +62,8 @@ const FinalReport = () => {
       {
         title: 'Edit Report',
         action: () =>
-          navigate('/finalReport', {
-            state: {
-              activeItem: state?.activeItem,
-              reportData: state?.reportData,
-            },
+          navigate('/generatePD', {
+            state: { activeItem: state?.activeItem, action: 'edit' },
           }),
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
@@ -78,6 +84,11 @@ const FinalReport = () => {
       },
     ],
     completed: [
+      {
+        title: 'Send To Bank',
+        action: caseSentToBank,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
       {
         title: 'Download PDF',
         action: toPDF,
@@ -108,37 +119,25 @@ const FinalReport = () => {
           <ADropdown
             options={dropdownOptions[state?.activeItem?.status]}
             header={
-              <div className="flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey">
-                <span className="text-right">
-                  <span className="flex gap-1 text-sm font-medium text-main">
-                    <span>Actions</span>
-                  </span>
+              <span className="text-right">
+                <span className="flex gap-1 text-sm font-medium text-main">
+                  <span>Actions</span>
                 </span>
-              </div>
+              </span>
             }
           />
         </div>
-        <div className="mt-3 border-2 border-main p-2">
-          <div ref={targetRef}>
-            <ReportData />
+        {!loading ? (
+          <div className="mt-3 border-2 border-main p-2">
+            <div ref={targetRef}>
+              <ReportData activeItem={state?.activeItem} />
+            </div>
           </div>
-        </div>
-        <div className="mt-3 flex justify-between">
-          <AButton
-            label={'Edit'}
-            variant={'secondary'}
-            action={() => {}}
-            icon={<PencilSquareIcon className="h-5 w-5 stroke-main stroke-1" />}
-          />
-          <AButton
-            label={'Submit'}
-            variant={'secondary'}
-            action={() => {}}
-            icon={
-              <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-main stroke-1" />
-            }
-          />
-        </div>
+        ) : (
+          <div className="w-full h-96 pb-6 flex items-center justify-center">
+            <ALoader />
+          </div>
+        )}
       </div>
     </>
   );

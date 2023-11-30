@@ -7,9 +7,10 @@ import { useFormik } from 'formik';
 import { trendOfBusiness, futureProjection } from '../constants';
 import ASection from '../../../components-global/ASection';
 import moment from 'moment';
+import { useEffect } from 'react';
 
 const TurnoverGrossReceipts = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -111,6 +112,32 @@ const TurnoverGrossReceipts = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'aprilTillDate',
+        payloads.turnoverDetails?.aprilTillDate,
+      );
+      formik.setFieldValue('lastYears', payloads.turnoverDetails?.lastYears);
+      formik.setFieldValue(
+        'currentYearActual',
+        payloads?.turnoverDetails?.currentYearActual,
+      );
+      formik.setFieldValue(
+        'currentLastYearComparision',
+        payloads?.turnoverDetails?.currentLastYearComparision,
+      );
+      formik.setFieldValue(
+        'bussinessTrendLast2Year',
+        payloads?.turnoverDetails?.bussinessTrendLast2Year,
+      );
+      formik.setFieldValue(
+        'futureProjection',
+        payloads?.turnoverDetails?.futureProjection,
+      );
+    }
+  }, [payloads]);
 
   const errors: any = formik.errors;
 
@@ -271,7 +298,7 @@ const TurnoverGrossReceipts = ({
                 rightLabel={'(Lakhs)'}
                 id={'currentYearActual.asPerFinancials.netProfit'}
                 value={
-                  formik?.values?.currentYearActual.asPerFinancials.netProfit
+                  formik?.values?.currentYearActual?.asPerFinancials?.netProfit
                 }
                 error={errors?.currentYearActual?.asPerFinancials?.netProfit}
                 handleChange={formik.handleChange}
@@ -304,7 +331,7 @@ const TurnoverGrossReceipts = ({
           <ASection>
             <p className="w-full pb-3">
               March-{moment().year()} and March-
-              {moment().subtract(1, 'y').year()} Comparison (as per Financials):
+              {moment().subtract(1, 'y').year()} Comparison (as per turnoverDetails):
             </p>
             <AGroupFields>
               <AInputField

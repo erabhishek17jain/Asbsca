@@ -26,8 +26,7 @@ const TopPerformers = ({ topPerfomers }: any) => {
             <div>
               <h5 className="font-medium text-main">{user?.fullName}</h5>
               <p>
-                <span className="text-sm">Last report timing </span>
-                <span className="text-xs">{user?.lastReportTime}</span>
+                <span className="text-sm">{user?.email}</span>
               </p>
             </div>
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-main">

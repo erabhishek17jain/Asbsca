@@ -17,19 +17,19 @@ const AInputField = ({
       }`}
     >
       {label && (
-        <div className="flex justify-between items-end">
-          <label
-            className={`block text-main text-sm ${
-              variant === 'horizantal' ? `min-w-[25%] ${error && 'mb-6'}` : ''
-            }`}
-            htmlFor={id}
-          >
-            {label}
-          </label>
-          {rightLabel !== '' && (
-            <span className="text-main text-xs mr-2">{rightLabel}</span>
-          )}
-        </div>
+        <label
+          className={`block text-main text-sm ${
+            variant === 'horizantal' ? `min-w-[30%] ${error && 'mb-6'}` : ''
+          }`}
+          htmlFor={id}
+        >
+          <div className="flex justify-between items-end">
+            <span>{label}</span>
+            {rightLabel !== '' && (
+              <span className="text-main text-xs mr-2">{rightLabel}</span>
+            )}
+          </div>
+        </label>
       )}
       <div className="relative flex-1">
         <input

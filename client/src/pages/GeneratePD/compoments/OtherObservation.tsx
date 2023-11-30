@@ -13,9 +13,11 @@ import {
   thirdPartyCheck,
   yesNoOptions,
 } from '../constants';
+import { useEffect } from 'react';
 
 const OtherObservation = ({
   steps,
+  action,
   payloads,
   activeStep,
   handlePrev,
@@ -33,7 +35,7 @@ const OtherObservation = ({
     },
     customer: {
       exist: '',
-      reasonForNo:'',
+      reasonForNo: '',
     },
     stock: {
       exist: '',
@@ -101,6 +103,31 @@ const OtherObservation = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'businessPlateName',
+        payloads?.observations?.businessPlateName,
+      );
+      formik.setFieldValue('activity', payloads?.observations?.activity);
+      formik.setFieldValue('customer', payloads?.observations?.customer);
+      formik.setFieldValue('stock', payloads?.observations?.stock);
+      formik.setFieldValue(
+        'thirdPartyCheck',
+        payloads?.observations?.thirdPartyCheck,
+      );
+      formik.setFieldValue(
+        'screenshotOfCCTV',
+        payloads?.observations?.screenshotOfCCTV,
+      );
+      formik.setFieldValue(
+        'behaviourOfApplicant',
+        payloads?.observations?.behaviourOfApplicant,
+      );
+      formik.setFieldValue('duringVist', payloads?.observations?.duringVist);
+    }
+  }, [payloads]);
 
   const errors: any = formik.errors;
 

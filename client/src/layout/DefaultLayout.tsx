@@ -13,7 +13,7 @@ const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const token: any = document.cookie?.replace('token=', '');
   const { userDetails } = useSelector((state: any) => state.users);
-  const [, setNotification] = useState({ title: '', body: '' });
+  const [notification, setNotification] = useState({ title: '', body: '' });
   const [isTokenFound, setTokenFound] = useState(false);
 
   onMessageListener()

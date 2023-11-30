@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import { AddTagButton, AddTagFooter } from '../../../components-global/ATags';
@@ -21,7 +21,7 @@ const Section = ({ title, children }: any) => {
 const clientsInfo = { clientName: '', contact: '' };
 
 const SuppliersCreditors = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -100,6 +100,28 @@ const SuppliersCreditors = ({
     );
     formik.handleChange(e);
   };
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'isSuppliersDetails',
+        payloads?.suppliers?.isSuppliersDetails,
+      );
+      formik.setFieldValue(
+        'suppliersDetails',
+        payloads?.suppliers?.suppliersDetails,
+      );
+      formik.setFieldValue('creditors', payloads?.suppliers?.creditors);
+      formik.setFieldValue(
+        'creitPeriodAllowed',
+        payloads?.suppliers?.creitPeriodAllowed,
+      );
+      formik.setFieldValue(
+        'whyCreditorHighThanCredit',
+        payloads?.suppliers?.whyCreditorHighThanCredit,
+      );
+    }
+  }, [payloads]);
 
   const errorsRe: any = formik?.errors?.suppliersDetails;
 

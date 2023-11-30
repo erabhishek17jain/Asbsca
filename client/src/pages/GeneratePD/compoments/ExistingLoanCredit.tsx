@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
 import { AddTagButton, AddTagHeader } from '../../../components-global/ATags';
@@ -907,7 +907,7 @@ const commitmentsInfo = {
 };
 
 const ExistingLoanCredit = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -1018,6 +1018,23 @@ const ExistingLoanCredit = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'existanceLoan',
+        payloads.existingLoan?.existanceLoan,
+      );
+      formik.setFieldValue(
+        'creditFacility',
+        payloads?.existingLoan?.creditFacility,
+      );
+      formik.setFieldValue(
+        'otherCommitments',
+        payloads?.existingLoan?.otherCommitments,
+      );
+    }
+  }, [payloads]);
 
   return (
     <>

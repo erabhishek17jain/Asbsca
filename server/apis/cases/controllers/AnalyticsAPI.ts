@@ -30,36 +30,37 @@ export default class AnalyticsAPI {
 
             const productiveUsers = await Cases.aggregate([
                 {
-                    $match: matchQuery
+                    $match: matchQuery,
                 },
                 {
                     $group: {
-                        _id: "$assignTo",
-                        completedCases: { $sum: 1 }
-                    }
+                        _id: '$assignTo',
+                        completedCases: { $sum: 1 },
+                    },
                 },
                 {
-                    $sort: { completedCases: -1 }
+                    $sort: { completedCases: -1 },
                 },
                 {
                     $lookup: {
-                        from: "users",
-                        localField: "_id",
-                        foreignField: "_id",
-                        as: "userDetails"
-                    }
+                        from: 'users',
+                        localField: '_id',
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    },
                 },
                 {
-                    $unwind: "$userDetails"
+                    $unwind: '$userDetails',
                 },
                 {
                     $project: {
                         _id: 1,
                         completedCases: 1,
-                        username: "$userDetails.username",
-                        email: "$userDetails.email"
-                    }
-                }
+                        email: '$userDetails.email',
+                        profile: '$userDetails.profile',
+                        fullName: '$userDetails.fullName',
+                    },
+                },
             ]);
 
             return productiveUsers;

@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 const loanInfo = { amount: '', emi: '', roi: '', year: '' };
 const DetailsOfProperty = ({
   steps,
+  action,
   payloads,
   activeStep,
   handlePrev,
@@ -116,9 +117,32 @@ const DetailsOfProperty = ({
   };
 
   useEffect(() => {
-    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].roi`, 8);
-    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].year`, 20);
+    if (action === 'start') {
+      formik.setFieldValue(`propertyLoanDetails.loanDetails[0].roi`, 8);
+      formik.setFieldValue(`propertyLoanDetails.loanDetails[0].year`, 20);
+    }
   }, []);
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'purchaseYear',
+        payloads.detailsOfProp?.purchaseYear,
+      );
+      formik.setFieldValue('buildUpArea', payloads?.detailsOfProp?.buildUpArea);
+      formik.setFieldValue('caretArea', payloads.detailsOfProp?.caretArea);
+      formik.setFieldValue('occupiedBy', payloads?.detailsOfProp?.occupiedBy);
+      formik.setFieldValue(
+        'loanPropertyAddress',
+        payloads.detailsOfProp?.loanPropertyAddress,
+      );
+      formik.setFieldValue('builderName', payloads?.detailsOfProp?.builderName);
+      formik.setFieldValue(
+        'propertyLoanDetails',
+        payloads?.detailsOfProp?.propertyLoanDetails,
+      );
+    }
+  }, [payloads]);
 
   const errors: any = formik?.errors?.propertyLoanDetails;
 
@@ -200,8 +224,8 @@ const DetailsOfProperty = ({
                     name="propertyLoanDetails?.loanDetails"
                     render={(tag) => (
                       <div>
-                        {formik?.values?.propertyLoanDetails?.loanDetails?.length >
-                        0 ? (
+                        {formik?.values?.propertyLoanDetails?.loanDetails
+                          ?.length > 0 ? (
                           formik?.values?.propertyLoanDetails?.loanDetails?.map(
                             (item: any, index: any) => (
                               <div
@@ -323,7 +347,8 @@ const DetailsOfProperty = ({
                   label={'Market Value'}
                   id={'propertyLoanDetails.propertyValue.marketValue'}
                   value={
-                    formik?.values?.propertyLoanDetails?.propertyValue?.marketValue
+                    formik?.values?.propertyLoanDetails?.propertyValue
+                      ?.marketValue
                   }
                   error={errors?.propertyValue?.marketValue}
                   handleChange={formik.handleChange}
@@ -335,7 +360,8 @@ const DetailsOfProperty = ({
                     id={'propertyLoanDetails.propertyValue.ocrPaid'}
                     label={'OCR Paid'}
                     value={
-                      formik?.values?.propertyLoanDetails?.propertyValue?.ocrPaid
+                      formik?.values?.propertyLoanDetails?.propertyValue
+                        ?.ocrPaid
                     }
                     error={errors?.propertyValue?.ocrPaid}
                     handleChange={formik.handleChange}
@@ -344,7 +370,9 @@ const DetailsOfProperty = ({
                     id={'propertyLoanDetails.propertyValue.pOrb'}
                     label={'P/B'}
                     options={putPB}
-                    value={formik?.values?.propertyLoanDetails?.propertyValue?.pOrb}
+                    value={
+                      formik?.values?.propertyLoanDetails?.propertyValue?.pOrb
+                    }
                     error={errors?.propertyValue?.pOrb}
                     handleChange={formik.handleChange}
                   />
@@ -356,7 +384,8 @@ const DetailsOfProperty = ({
                   id={'propertyLoanDetails.propertyValue.balanceOcr'}
                   label={'Balance OCR'}
                   value={
-                    formik?.values?.propertyLoanDetails?.propertyValue?.balanceOcr
+                    formik?.values?.propertyLoanDetails?.propertyValue
+                      ?.balanceOcr
                   }
                   error={errors?.propertyValue?.balanceOcr}
                   handleChange={formik.handleChange}
@@ -366,7 +395,8 @@ const DetailsOfProperty = ({
                   label={'Source OCR'}
                   options={sourceOcr}
                   value={
-                    formik?.values?.propertyLoanDetails?.propertyValue?.sourceOcr
+                    formik?.values?.propertyLoanDetails?.propertyValue
+                      ?.sourceOcr
                   }
                   error={errors?.propertyValue?.sourceOcr}
                   handleChange={formik.handleChange}

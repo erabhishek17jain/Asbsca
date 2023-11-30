@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { getCases, getAanalytics } from '../services';
+import { getCases, getAanalytics, getReportData } from '../services';
 
 export interface ICase {}
 
@@ -14,9 +14,15 @@ export const fetchCasesAsync = createAsyncThunk(
   getCases,
 );
 
+export const fetchCaseReportDataAsync = createAsyncThunk(
+  '/cases/report',
+  getReportData,
+);
+
 export interface ICasesState {
   allCases: any;
   analytics: any;
+  reportData: any;
   loading: boolean;
   error: any;
 }
@@ -24,6 +30,7 @@ export interface ICasesState {
 const initialState: ICasesState = {
   allCases: [],
   analytics: [],
+  reportData: {},
   loading: false,
   error: null,
 };
@@ -37,6 +44,9 @@ export const casesSlice = createSlice({
     },
     analytics: (state: any, payload: any) => {
       state.analytics = payload;
+    },
+    reportData: (state: any, payload: any) => {
+      state.reportData = payload;
     },
   },
   extraReducers: {
@@ -74,9 +84,26 @@ export const casesSlice = createSlice({
         state.error = action.error;
       }
     },
+    [fetchCaseReportDataAsync.pending.type]: (state) => {
+      if (!state.loading) {
+        state.loading = true;
+      }
+    },
+    [fetchCaseReportDataAsync.fulfilled.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.reportData = action.payload;
+      }
+    },
+    [fetchCaseReportDataAsync.rejected.type]: (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.error;
+      }
+    },
   },
 });
 
 export const cases = (state: RootState) => state.cases;
-export const { analytics, allCases } = casesSlice.actions;
+export const { analytics, allCases, reportData } = casesSlice.actions;
 export default casesSlice.reducer;

@@ -96,8 +96,8 @@ const ATable = ({
           <ALoader height={80} />
         </div>
       )}
-      {!pathname.includes('dashboard') && meta?.count > 9 && (
-        <CardFooter className="flex items-center justify-between border-t border-blue-grey-50 p-4">
+      {!pathname.includes('dashboard') && (
+        <CardFooter className="flex items-center justify-between border-t border-stroke p-4">
           <APagination
             meta={meta}
             defaultFilters={defaultFilters}

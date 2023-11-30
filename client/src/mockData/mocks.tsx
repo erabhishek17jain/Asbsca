@@ -114,8 +114,8 @@ export const topPerformerData = [
   },
   {
     fullName: 'Abhishek Jain',
-    lastReportTime: '1 hr 52 mins', 
-    lastMonthReportCount: 15, 
+    lastReportTime: '1 hr 52 mins',
+    lastMonthReportCount: 15,
   },
 ];
 
@@ -445,8 +445,52 @@ export const payload = {
           pastExp: 1,
           overallExp: 6,
         },
+        {
+          title: 'Applicant Info',
+          name: 'Palash Jain',
+          dobDoi: '1995-08-28',
+          qualification: 'graduate',
+          natureOfBusiness: 'professional',
+          birthYear: 1995,
+          age: 28,
+          studyFinish: 2017,
+          study: 6,
+          businessStart: 2018,
+          currExp: 5,
+          pastExp: 1,
+          overallExp: 6,
+        },
+        {
+          title: 'Applicant Info',
+          name: 'Palash Jain',
+          dobDoi: '1995-08-28',
+          qualification: 'graduate',
+          natureOfBusiness: 'professional',
+          birthYear: 1995,
+          age: 28,
+          studyFinish: 2017,
+          study: 6,
+          businessStart: 2018,
+          currExp: 5,
+          pastExp: 1,
+          overallExp: 6,
+        },
       ],
       residents: [
+        {
+          title: 'Residance Info',
+          resiAddress: '167, dayand Ward, Palasiya Indore',
+          resiStatus: 'ownedByApplicantp',
+          resiType: 'p',
+          resiSince: 2014,
+          buildArea: 2100,
+          carpetArea: 1400,
+          purchaseYear: 2012,
+          agrimentValue: 50,
+          purchaseValue: 60,
+          marketValue: 70,
+          rentPm: '',
+        },
         {
           title: 'Residance Info',
           resiAddress: '167, dayand Ward, Palasiya Indore',
@@ -465,6 +509,11 @@ export const payload = {
       familyDetails: [
         {
           name: 'Palash Jain',
+          relation: 'spouse',
+          earningStatus: 'earning',
+        },
+        {
+          name: 'Aadarsh Jain',
           relation: 'spouse',
           earningStatus: 'earning',
         },
@@ -546,7 +595,7 @@ export const payload = {
       caretArea: 100,
       occupiedBy: 'applicant',
       loanPropertyAddress: '167, Goregaon Mumbai',
-      builderName: 'Ramesh Sharma',
+      builderName: 'Rohit Sharma',
       propertyLoanDetails: {
         isLoanProvided: '',
         loanDetails: [
@@ -563,7 +612,7 @@ export const payload = {
           marketValue: 80,
           ocrPaid: 10,
           pOrb: 'P',
-          balanceOcr: '60',
+          balanceOcr: 60,
           sourceOcr: 'savingsInBank',
         },
         loanAsPerForm: '50',
@@ -600,106 +649,208 @@ export const payload = {
       ],
       totalHolding: '',
     },
-    financials: {
-      entityName: 'Abhishek Jain Sagar',
-      applicantIncome: 'Applicant&CoApplicant',
-      income: {
-        turnoverGrossReciepts: {
-          amountPA: 200,
-          amountPM: '16.67',
-          months: 12,
+    financials: [
+      {
+        entityName: 'Abhishek Jain Sagar',
+        applicantIncome: 'Applicant&CoApplicant',
+        income: {
+          turnoverGrossReciepts: {
+            amountPA: 200,
+            amountPM: '16.67',
+            months: 12,
+          },
+          purchases: {
+            amountPA: 45,
+            amountPM: '3.75',
+            months: 12,
+          },
+          totalAmountPA: 155,
+          totalAmountPM: '78%',
         },
-        purchases: {
-          amountPA: 45,
-          amountPM: '3.75',
-          months: 12,
+        expenses: {
+          salary: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          maintanance: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          transport: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          electricity: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          travelling: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          fuel: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          officeRent: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          partnersSalary: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          partnersRemuneration: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          otherExpenses: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          bifercationOfExpenses: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          totalExpensePA: 121,
+          totalExpensePM: 121,
+          netProfitPA: 34,
+          netProfitPM: '17%',
+          shareOfProfitPA: 34,
+          shareOfProfitPM: '100%',
         },
-        totalAmountPA: 155,
-        totalAmountPM: '78%',
+        businessIncome: {
+          salaryFromBusiness: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          remunerationFromBusiness: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          rent: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          totalIncomePA: 67,
+          totalEarning: 67,
+        },
       },
-      expenses: {
-        salary: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
+      {
+        entityName: 'Abhishek Jain Sagar',
+        applicantIncome: 'Applicant&CoApplicant',
+        income: {
+          turnoverGrossReciepts: {
+            amountPA: 200,
+            amountPM: '16.67',
+            months: 12,
+          },
+          purchases: {
+            amountPA: 45,
+            amountPM: '3.75',
+            months: 12,
+          },
+          totalAmountPA: 155,
+          totalAmountPM: '78%',
         },
-        maintanance: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
+        expenses: {
+          salary: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          maintanance: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          transport: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          electricity: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          travelling: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          fuel: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          officeRent: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          partnersSalary: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          partnersRemuneration: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          otherExpenses: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          bifercationOfExpenses: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          totalExpensePA: 121,
+          totalExpensePM: 121,
+          netProfitPA: 34,
+          netProfitPM: '17%',
+          shareOfProfitPA: 34,
+          shareOfProfitPM: '100%',
         },
-        transport: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
+        businessIncome: {
+          salaryFromBusiness: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          remunerationFromBusiness: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          rent: {
+            amountPA: 11,
+            amountPM: '0.92',
+            months: 12,
+          },
+          totalIncomePA: 67,
+          totalEarning: 67,
         },
-        electricity: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        travelling: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        fuel: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        officeRent: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        partnersSalary: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        partnersRemuneration: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        otherExpenses: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        bifercationOfExpenses: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        totalExpensePA: 121,
-        totalExpensePM: 121,
-        netProfitPA: 34,
-        netProfitPM: '17%',
-        shareOfProfitPA: 34,
-        shareOfProfitPM: '100%',
       },
-      businessIncome: {
-        salaryFromBusiness: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        remunerationFromBusiness: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        rent: {
-          amountPA: 11,
-          amountPM: '0.92',
-          months: 12,
-        },
-        totalIncomePA: 67,
-        totalEarning: 67,
-      },
-    },
+    ],
     comitmentSummary: {
       proposedEMI: {
         amountPA: '5.02',
@@ -915,6 +1066,10 @@ export const payload = {
         exist: 'no',
         reasonForNo: '0',
       },
+      employee: {
+        exist: 'yes',
+        reasonForNo: '5',
+      },
       customer: {
         exist: 'yes',
         reasonForNo: '5',
@@ -962,5 +1117,6 @@ export const payload = {
       provisionalFinancialLastYear: 'yes',
       financialsInTally: 'no',
     },
+    businessOf: { bussinessProcessOf: 'salaried' },
   },
 };

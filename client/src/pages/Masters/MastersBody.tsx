@@ -4,16 +4,17 @@ import { TableColumn } from '../../components-global/ATable';
 
 const MastersBody = ({
   type,
+  meta,
   data,
   openAddEditModal,
   openDeleteModal,
 }: any) => {
   return data.map((item: any, index: number) => {
     const isLast = index === data.length - 1;
-    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+    const classes = isLast ? 'p-4' : 'p-4 border-b border-stroke';
     return (
       <tr key={item?.name}>
-        <TableColumn classes={classes} label={index + 1} />
+        <TableColumn classes={classes} label={(meta?.page - 1) * 10 + index + 1} />
         <TableColumn
           classes={classes}
           label={item?.name}

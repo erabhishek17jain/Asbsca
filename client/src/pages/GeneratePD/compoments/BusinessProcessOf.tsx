@@ -3,9 +3,10 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { businessProcess } from '../constants';
+import { useEffect } from 'react';
 
 const BusinessProcessOf = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -33,6 +34,15 @@ const BusinessProcessOf = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+   useEffect(() => {
+     if (action === 'edit') {
+       formik.setFieldValue(
+         'bussinessProcessOf',
+         payloads.businessOf?.bussinessProcessOf,
+       );
+     }
+   }, [payloads]);
   
   return (
     <>

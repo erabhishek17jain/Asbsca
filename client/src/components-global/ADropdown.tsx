@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { useEffect, useRef, useState } from 'react';
 
 const ADropdown = ({
@@ -46,24 +47,40 @@ const ADropdown = ({
   return (
     <div className="relative">
       <button ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)}>
-        {header}
+        {position === 'left' ? (
+          header
+        ) : (
+          <div className="flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey">
+            {header}
+            <ChevronDownIcon
+              className={`h-4 w-4 fill-current stroke-main stroke-2 sm:block ${
+                dropdownOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+        )}
       </button>
       <div
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute ${
-          position == 'left' ? '-bottom-[28px] right-7' : 'top-6 right-0'
-        } mt-3 z-10 flex flex-col w-56 bg-clip-border border border-stroke rounded-lg bg-white text-grey-700 shadow-lg ${
+          position == 'left' ? '-top-3 right-7' : 'top-8 right-0'
+        } flex flex-col w-56 bg-clip-border border border-stroke rounded-lg bg-white text-grey-700 shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
         <ul className="flex flex-col">
-          {options?.map((item: any) => (
-            <li key={item.title} className="px-4 py-3 border-b border-stroke">
+          {options?.map((item: any, index: number) => (
+            <li
+              key={item.title}
+              className={`px-4 py-3 border-stroke ${
+                index !== options.length - 1 && 'border-b'
+              }`}
+            >
               <button
                 onClick={item?.action}
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main lg:text-base"
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-main"
               >
                 {item.icon}
                 {item.title}

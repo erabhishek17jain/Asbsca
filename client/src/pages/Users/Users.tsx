@@ -182,6 +182,7 @@ const Users = () => {
           }
           tableBody={
             <UsersBody
+              meta={allUsers?.meta}
               openUserDeleteModal={handleOpenDeleteModal}
               openUserAddEditModal={openUserAddEditModal}
             />

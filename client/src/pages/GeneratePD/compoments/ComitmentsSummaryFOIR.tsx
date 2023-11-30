@@ -20,6 +20,7 @@ const comitments = [
 
 const ComitmentsSummaryFOIR = ({
   steps,
+  action,
   payloads,
   activeStep,
   handlePrev,
@@ -92,21 +93,67 @@ const ComitmentsSummaryFOIR = ({
   };
 
   useEffect(() => {
-    const emi = 41822;
-    const yearEmi = ((emi * 12) / 100000).toFixed(2);
-    const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
-    const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
+    if (action === 'start') {
+      const emi = 41822;
+      const yearEmi = ((emi * 12) / 100000).toFixed(2);
+      const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
+      const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
 
-    formik.setFieldValue('proposedEMI.amountPM', emi);
-    formik.setFieldValue('proposedEMI.amountPA', yearEmi);
-    formik.setFieldValue('totalCommitments.amountPM', emi);
-    formik.setFieldValue('totalCommitments.amountPA', yearEmi);
-    formik.setFieldValue('existingCommitments.amountPM', emi);
-    formik.setFieldValue('existingCommitments.amountPA', yearEmi);
-    formik.setFieldValue('onlyEMIRatio', ratioStr);
-    formik.setFieldValue('foirRatio', ratioStr);
-    formik.setFieldValue('totalCommitmentsRatio', ratioStr);
+      formik.setFieldValue('proposedEMI.amountPM', emi);
+      formik.setFieldValue('proposedEMI.amountPA', yearEmi);
+      formik.setFieldValue('totalCommitments.amountPM', emi);
+      formik.setFieldValue('totalCommitments.amountPA', yearEmi);
+      formik.setFieldValue('existingCommitments.amountPM', emi);
+      formik.setFieldValue('existingCommitments.amountPA', yearEmi);
+      formik.setFieldValue('onlyEMIRatio', ratioStr);
+      formik.setFieldValue('foirRatio', ratioStr);
+      formik.setFieldValue('totalCommitmentsRatio', ratioStr);
+    }
   }, []);
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'proposedEMI',
+        payloads.comitmentSummary?.proposedEMI,
+      );
+      formik.setFieldValue(
+        'existingEMI',
+        payloads?.comitmentSummary?.existingEMI,
+      );
+      formik.setFieldValue('btEMI', payloads?.comitmentSummary?.btEMI);
+      formik.setFieldValue(
+        'closureEMI',
+        payloads?.comitmentSummary?.closureEMI,
+      );
+      formik.setFieldValue(
+        'licMedSipTpOther',
+        payloads.comitmentSummary?.licMedSipTpOther,
+      );
+      formik.setFieldValue('houseRent', payloads?.comitmentSummary?.houseRent);
+      formik.setFieldValue(
+        'totalCommitments',
+        payloads?.comitmentSummary?.totalCommitments,
+      );
+      formik.setFieldValue(
+        'totalPresentEMI',
+        payloads.comitmentSummary?.totalPresentEMI,
+      );
+      formik.setFieldValue(
+        'existingCommitments',
+        payloads?.comitmentSummary?.existingCommitments,
+      );
+      formik.setFieldValue(
+        'onlyEMIRatio',
+        payloads.comitmentSummary?.onlyEMIRatio,
+      );
+      formik.setFieldValue('foirRatio', payloads?.comitmentSummary?.foirRatio);
+      formik.setFieldValue(
+        'totalCommitmentsRatio',
+        payloads?.comitmentSummary?.totalCommitmentsRatio,
+      );
+    }
+  }, [payloads]);
 
   const errors: any = formik?.errors;
 

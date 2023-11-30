@@ -11,6 +11,7 @@ import store from '../../../store/store';
 
 const LoanDetails = ({
   steps,
+  action,
   payloads,
   activeItem,
   activeStep,
@@ -58,6 +59,14 @@ const LoanDetails = ({
     store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));
   }, []);
 
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue('loan', payloads.loanDetails?.loan);
+      formik.setFieldValue('loanType', payloads?.loanDetails?.loanType);
+      formik.setFieldValue('bankName', payloads?.loanDetails?.bankName);
+    }
+  }, [payloads]);
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
@@ -68,7 +77,9 @@ const LoanDetails = ({
             options={clientOptions}
             variant={'horizantal'}
             value={formik?.values?.bankName}
-            error={formik?.values?.bankName !== '' ? formik.errors.bankName : ''}
+            error={
+              formik?.values?.bankName !== '' ? formik.errors.bankName : ''
+            }
             handleChange={formik.handleChange}
           />
           <ASingleSelect

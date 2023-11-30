@@ -19,7 +19,7 @@ const ASingleSelect = ({
     >
       <label
         className={`block text-main text-sm ${
-          variant === 'horizantal' ? `min-w-[25%] ${error && 'mb-6'}` : ''
+          variant === 'horizantal' ? `min-w-[30%] ${error && 'mb-6'}` : ''
         }`}
       >
         {label}

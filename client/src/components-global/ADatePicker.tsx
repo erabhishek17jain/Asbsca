@@ -14,7 +14,7 @@ const ADatePicker = ({
     >
       <label
         className={`block text-main text-sm ${
-          variant === 'horizantal' ? 'min-w-[25%]' : ''
+          variant === 'horizantal' ? 'min-w-[30%]' : ''
         }`}
       >
         {label}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import AInputField from '../../../components-global/AInputField';
 import { AddTagButton, AddTagFooter } from '../../../components-global/ATags';
@@ -12,7 +12,7 @@ import { yesNoOptions } from '../constants';
 const clientsInfo = { clientName: '', contact: '' };
 
 const ClientsDebtors = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -97,6 +97,13 @@ const ClientsDebtors = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+   useEffect(() => {
+     if (action === 'edit') {
+       formik.setFieldValue('clients', payloads?.clientDebtors?.clients);
+       formik.setFieldValue('debitors', payloads?.clientDebtors?.debitors);
+     }
+   }, [payloads]);
 
   const errors: any = formik?.errors?.clients?.clientDetails;
 

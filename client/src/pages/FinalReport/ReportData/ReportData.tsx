@@ -1,6 +1,10 @@
+import { useSelector } from 'react-redux';
 import './ReportData.css';
+import { payload } from '../../../mockData/mocks';
+import moment from 'moment';
 
-const ReportData = () => {
+const ReportData = (activeItem: any) => {
+  const { reportData } = useSelector((state: any) => state.cases);
   return (
     <div className="flex flex-col text-sm">
       <table className="mb-1.5" cellSpacing={0}>
@@ -12,7 +16,10 @@ const ReportData = () => {
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
-              <p>Home Loan: Fresh</p>
+              <p>
+                {reportData?.loanDetails?.loan}:{' '}
+                {payload?.data?.loanDetails?.loanType}
+              </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
@@ -20,148 +27,110 @@ const ReportData = () => {
               <p>PERSONAL DATA</p>
             </td>
           </tr>
-          <tr className="bg font-bold text-center">
-            <td></td>
-            <td colSpan={3}>
-              <p>Applicant</p>
-            </td>
-            <td colSpan={2}>
-              <p>Co-Applicant 1</p>
-            </td>
-            <td colSpan={2}>
-              <p>Co-Applicant 2</p>
+          <tr>
+            <td colSpan={8}>
+              <div className="flex w-full -m-[1px]">
+                <div className="w-1/4">
+                  <div className="border-r-[1.5px] border-black">
+                    <p className="bg pl-1 border-b-[1.5px] border-black text-center h-6"></p>
+                    <p className="pl-1 border-b-[1.5px] border-black">Name</p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Date of Birth
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Qualifications
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Current Experience
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Overall Experience
+                    </p>
+                    <p className="pl-1">Nature of Business</p>
+                  </div>
+                </div>
+                <div
+                  className={`w-3/4 grid grid-cols-${payload.data.personalDetails.applicants.length}`}
+                >
+                  {payload.data.personalDetails.applicants.map(
+                    (item: any, index: number) => (
+                      <div className="border-r-[1.5px] border-black">
+                        <p className="bg pl-1 border-b-[1.5px] border-black text-center font-bold h-6">
+                          {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
+                        </p>
+                        <p className="pl-1 border-b-[1.5px] border-black">
+                          {item.name}
+                        </p>
+                        <p className="pl-1 border-b-[1.5px] border-black">
+                          {item.dobDoi}
+                        </p>
+                        <p className="pl-1 border-b-[1.5px] border-black">
+                          {item.qualification}
+                        </p>
+                        <p className="pl-1 border-b-[1.5px] border-black">
+                          {item.currExp} Years
+                        </p>
+                        <p className="pl-1 border-b-[1.5px] border-black">
+                          {item.overallExp} Years
+                        </p>
+                        <p className="pl-1">{item.natureOfBusiness}</p>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
-            <td>
-              <p>Name</p>
-            </td>
-            <td colSpan={3}>
-              <p>X</p>
-            </td>
-            <td colSpan={2}>
-              <p>Y</p>
-            </td>
-            <td colSpan={2}>
-              <p>Z</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Date of Birth</p>
-            </td>
-            <td colSpan={3}>
-              <p>01-01-1990</p>
-            </td>
-            <td colSpan={2}>
-              <p>01-02-1990</p>
-            </td>
-            <td colSpan={2}>
-              <p>02-02-1990</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Qualifications</p>
-            </td>
-            <td colSpan={3}>
-              <p>Post Graduate</p>
-            </td>
-            <td colSpan={2}>
-              <p>Post Graduate</p>
-            </td>
-            <td colSpan={2}>
-              <p>H.S.C.</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Current Experience</p>
-            </td>
-            <td colSpan={3}>
-              <p>4 Years</p>
-            </td>
-            <td colSpan={2}>
-              <p>4 Years</p>
-            </td>
-            <td colSpan={2}>
-              <p>
-                <br />
-              </p>
+            <td colSpan={8}>
+              <div className="flex w-full -m-[1px]">
+                <div className="w-1/4">
+                  <div className="border-r-[1.5px] border-black">
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Residence Address
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Residence Status
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black">
+                      Residing Since
+                    </p>
+                    <p className="pl-1 border-b-[1.5px] border-black h-10">
+                      Residential Area
+                    </p>
+                    <p className="pl-1 h-10">Residential Value (Rs.)</p>
+                  </div>
+                </div>
+                <div
+                  className={`w-3/4 grid grid-cols-${payload.data.personalDetails.residents.length}`}
+                >
+                  {payload.data.personalDetails.residents.map((item: any) => (
+                    <div className="border-r-[1.5px] border-black">
+                      <p className="pl-1 border-b-[1.5px] border-black">
+                        {item.resiAddress}
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black">
+                        {item.resiStatus}
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black">
+                        {item.resiSince}
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-10">
+                        Buildup Area: {item.buildArea} Sq. Ft. <br />
+                        Carpet Area: {item.carpetArea} Sq. Ft.
+                      </p>
+                      <p className="pl-1 h-10">
+                        Purchase Value: {item.purchaseValue} Lakhs <br />
+                        Market Value: {item.marketValue} Lakhs
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
-            <td>
-              <p>Overall Experience</p>
-            </td>
-            <td colSpan={3}>
-              <p>11 Years</p>
-            </td>
-            <td colSpan={2}>
-              <p>16 Years</p>
-            </td>
-            <td colSpan={2}>
-              <p>55 Years</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Nature of Business</p>
-            </td>
-            <td colSpan={3}>
-              <p>Service</p>
-            </td>
-            <td colSpan={2}>
-              <p>Service</p>
-            </td>
-            <td colSpan={2}>
-              <p>Retired</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Residence Address</p>
-            </td>
-            <td colSpan={7}>
-              <p>XYZ Colony 401108</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Residence Status</p>
-            </td>
-            <td colSpan={7}>
-              <p>Owned by Co-Applicant</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Residing Since</p>
-            </td>
-            <td colSpan={7}>
-              <p>2010</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Residential Area</p>
-            </td>
-            <td colSpan={7}>
-              <p>Buildup Area: 880 Sq. Ft.</p>
-              <p>Carpet Area: 600 Sq. Ft.</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Residential Value (Rs.)</p>
-            </td>
-            <td colSpan={7}>
-              <p>Purchase Value: 30 Lakhs</p>
-              <p>Market Value: 22 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan={3}>
+            <td rowSpan={3} className="w-1/4">
               <p>Family Background</p>
             </td>
             <td className="bg font-bold text-center" colSpan={2}>
@@ -174,29 +143,20 @@ const ReportData = () => {
               <p>Earning/Dependent</p>
             </td>
           </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>Y</p>
-            </td>
-            <td colSpan={3} className="text-center">
-              <p>Spouse</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>Earning</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>Z</p>
-            </td>
-            <td colSpan={3} className="text-center">
-              <p>Father-in-Law</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>Earning</p>
-            </td>
-          </tr>
-          <tr className="font-bold text-center h-10">
+          {payload.data.personalDetails.familyDetails.map((item: any) => (
+            <tr>
+              <td colSpan={2}>
+                <p>{item.name}</p>
+              </td>
+              <td colSpan={3} className="text-center">
+                <p>{item.relation}</p>
+              </td>
+              <td colSpan={2} className="text-center">
+                <p>{item.earningStatus}</p>
+              </td>
+            </tr>
+          ))}
+          <tr className="font-bold text-center">
             <td colSpan={8}>
               <p className="mt-2">BUSINESS DATA</p>
             </td>
@@ -854,142 +814,90 @@ const ReportData = () => {
               <p>2 Lakhs</p>
             </td>
           </tr>
-          <tr className="font-bold text-center h-10">
+          <tr className="font-bold text-center">
             <td colSpan={8}>
               <p className="mt-2">FINANCIAL DATA</p>
             </td>
           </tr>
-          <tr className="bg font-bold">
-            <td></td>
-            <td></td>
-            <td colSpan={2}>
-              <p>Applicant</p>
-            </td>
-            <td colSpan={2}>
-              <p>Co-Applicant 1</p>
-            </td>
-            <td colSpan={2}>
-              <p>Co-Applicant 3</p>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan={2}>
-              <p>Turnover (Rs.)</p>
-            </td>
-            <td>
-              <p>Monthly</p>
-            </td>
-            <td colSpan={2}>
-              <p>14.17 Lakhs</p>
-            </td>
-            <td colSpan={2}>
-              <p>64,000</p>
-            </td>
-            <td colSpan={2}>
-              <p>33,000</p>
-            </td>
-          </tr>
           <tr>
             <td>
-              <p>Annual</p>
-            </td>
-            <td colSpan={2}>
-              <p>1.7 Cr.</p>
-            </td>
-            <td colSpan={2}>
-              <p>7.7 Lakhs</p>
-            </td>
-            <td colSpan={2}>
-              <p>3.96 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan={2}>
-              <p>Purchases (Rs.)</p>
-            </td>
-            <td>
-              <p>Monthly</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Annual</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Total Expenses (Rs.)</p>
+              <div className="-m-[1px]">
+                <p className="bg border-b-[1.5px] border-black h-6"></p>
+                <p className="border-b-[1.5px] border-black h-10">
+                  Turnover (Rs.)
+                </p>
+                <p className="border-b-[1.5px] border-black h-10">
+                  Purchases (Rs.)
+                </p>
+                <p className="border-b-[1.5px] border-black h-10">Net Margin</p>
+                <p className="border-b-[1.5px] border-black h-5">
+                  Other Income (Rs.)
+                </p>
+                <p className="h-auto">Total Expenses (Rs.)</p>
+              </div>
             </td>
             <td>
-              <p>Annual</p>
+              <div className="-m-[1px]">
+                <p className="bg pl-1 border-b-[1.5px] border-black text-center h-6"></p>
+                <p className="pl-1 border-b-[1.5px] border-black h-5">
+                  Monthly
+                </p>
+                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
+                <p className="pl-1 border-b-[1.5px] border-black h-5">
+                  Monthly
+                </p>
+                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
+                <p className="pl-1 border-b-[1.5px] border-black h-10">
+                  Value: <br />
+                  Percentage:
+                </p>
+                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
+                <p className="pl-1 h-5">Annual</p>
+              </div>
             </td>
-            <td colSpan={2}>
-              <p>Salary: 2 Lakhs</p>
-              <p>Electricity: 18,000</p>
-              <p>Travelling Expenses: 2.5 Lakhs</p>
-              <p>Total Expenses: 4.68 Lakhs</p>
-            </td>
-            <td colSpan={2}>
-              <p>Salary: 4 Lakhs</p>
-              <p>Electricity: 18,000</p>
-              <p>Travelling Expenses: 3 Lakhs</p>
-              <p>Total Expenses: 7.18 Lakhs</p>
-            </td>
-            <td colSpan={2}></td>
-          </tr>
-          <tr>
-            <td>
-              <p>Net Margin</p>
-            </td>
-            <td>
-              <p>Value: Percentage:</p>
-            </td>
-            <td colSpan={2}>
-              <p>1.65 Cr.</p>
-              <p>97.25%</p>
-            </td>
-            <td colSpan={2}>
-              <p>52,000</p>
-              <p>6.75%</p>
-            </td>
-            <td colSpan={2}>
-              <p>3.96 Lakhs</p>
-              <p>100%</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Other Income (Rs.)</p>
-            </td>
-            <td>
-              <p>Annual</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
-            </td>
-            <td colSpan={2}>
-              <p>Nil</p>
+            <td colSpan={6}>
+              <div className="flex w-full -m-[1px]">
+                <div className="w-2/10"></div>
+                <div
+                  className={`w-5/10 grid grid-cols-${payload.data.financials.length}`}
+                >
+                  {payload.data.financials.map((item: any, index: number) => (
+                    <div className="border-r-[1.5px] border-black">
+                      <p className="bg pl-1 border-b-[1.5px] border-black text-center font-bold h-6">
+                        {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                        {item.income.turnoverGrossReciepts.amountPM} Lakhs
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                        {item.income.turnoverGrossReciepts.amountPA / 100} Cr.
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                        {item.income.purchases.amountPM} Lakhs
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                        {item.income.purchases.amountPA / 100} Cr.
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-10">
+                        {item.income.purchases.amountPM} Lakhs
+                      </p>
+                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                        {item.income.purchases.amountPA / 100} Cr.
+                      </p>
+                      <p className="pl-1">
+                        Salary: {item.income.purchases.amountPM} Lakhs <br />
+                        Electricity: {item.income.purchases.amountPM} <br />
+                        Travelling Expenses: {
+                          item.income.purchases.amountPM
+                        }{' '}
+                        Lakhs
+                        <br />
+                        TotalExpenses: {item.income.purchases.amountPM} Lakhs
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
@@ -997,7 +905,7 @@ const ReportData = () => {
               <p>Assets in Value (Rs.)</p>
             </td>
             <td colSpan={7}>
-              <div className="my-2 mx-6">
+              <div className="my-2 mx-3">
                 <p className="font-bold">Business Assets:</p>
                 <p>No Business Assets</p>
                 <p className="font-bold my-4">Personal Assets:</p>
@@ -1005,88 +913,66 @@ const ReportData = () => {
                   <tbody>
                     <tr className="bg">
                       <td>
-                        <p>
-                          <br />
-                        </p>
                         <p>Particulars</p>
                       </td>
                       <td>
-                        <p>Location /</p>
-                        <p
-                          style={{
-                            textIndent: '-7pt',
-                          }}
-                        >
-                          Company Name
-                        </p>
+                        <p>Location / Company Name</p>
                       </td>
                       <td>
-                        <p
-                          style={{
-                            textIndent: '4pt',
-                          }}
-                        >
-                          Year of Purchase
-                        </p>
+                        <p>Year of Purchase</p>
                       </td>
                       <td>
-                        <p
-                          style={{
-                            textIndent: '2pt',
-                          }}
-                        >
-                          Area (in sq. Feet)
-                        </p>
+                        <p>Area (in sq. Feet)</p>
                       </td>
                       <td>
-                        <p>Status of property</p>
-                        <p>(Self acquired/ Parental)</p>
+                        <p>Status of property (Self acquired/ Parental)</p>
                       </td>
                       <td>
                         <p>Market Value (Rs.)</p>
                       </td>
                     </tr>
-                    <tr>
-                      <td>
-                        <p>
-                          <br />
-                        </p>
-                        <p>Residence</p>
-                      </td>
-                      <td>
-                        <p>
-                          <br />
-                        </p>
-                        <p>Bhayendar</p>
-                      </td>
-                      <td>
-                        <p>
-                          <br />
-                        </p>
-                        <p>2012</p>
-                      </td>
-                      <td>
-                        <p>
-                          <br />
-                        </p>
-                        <p>600</p>
-                      </td>
-                      <td>
-                        <p>Owned by Co-Applicant</p>
-                      </td>
-                      <td>
-                        <p>
-                          <br />
-                        </p>
-                        <p>22 Lakhs</p>
-                      </td>
-                    </tr>
+                    {payload.data.assets.bussinessAssetDetails.bussinessAssets.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.particulars}</p>
+                          </td>
+                          <td>
+                            <p>
+                              <br />
+                            </p>
+                            <p>{item.location}</p>
+                          </td>
+                          <td>
+                            <p>
+                              <br />
+                            </p>
+                            <p>{item.purchaseYear}</p>
+                          </td>
+                          <td>
+                            <p>
+                              <br />
+                            </p>
+                            <p>{item.carpetArea}</p>
+                          </td>
+                          <td>
+                            <p>{item.status}</p>
+                          </td>
+                          <td>
+                            <p>
+                              <br />
+                            </p>
+                            <p>{item.marketValue} Lakhs</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
                     <tr>
                       <td colSpan={5}>
                         <p>Total</p>
                       </td>
                       <td>
-                        <p>22 Lakhs</p>
+                        <p>{payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs</p>
                       </td>
                     </tr>
                   </tbody>
@@ -1278,7 +1164,7 @@ const ReportData = () => {
               <p>NA</p>
             </td>
           </tr>
-          <tr className="font-bold text-center h-10">
+          <tr className="font-bold text-center">
             <td colSpan={8}>
               <p className="mt-2">Details of Property to be mortgage</p>
             </td>
@@ -1288,7 +1174,7 @@ const ReportData = () => {
               <p>Name of the Builder (If Under Construction Property)</p>
             </td>
             <td colSpan={7}>
-              <p>NA</p>
+              <p>{payload.data.detailsOfProp.builderName}</p>
             </td>
           </tr>
           <tr>
@@ -1296,7 +1182,7 @@ const ReportData = () => {
               <p>Address of the Property</p>
             </td>
             <td colSpan={7}>
-              <p>Axis APF Project, Near RBK School , Bhayendar East 401105</p>
+              <p>{payload.data.detailsOfProp.loanPropertyAddress}</p>
             </td>
           </tr>
           <tr>
@@ -1304,7 +1190,7 @@ const ReportData = () => {
               <p>Date of Purchase</p>
             </td>
             <td colSpan={7}>
-              <p>2023</p>
+              <p>{payload.data.detailsOfProp.purchaseYear}</p>
             </td>
           </tr>
           <tr>
@@ -1312,8 +1198,10 @@ const ReportData = () => {
               <p>Area</p>
             </td>
             <td colSpan={7}>
-              <p>Built-up Area: 1300 Sq. Ft.</p>
-              <p> Carpet Area: 900 Sq. Ft.</p>
+              <p>
+                Built-up Area: {payload.data.detailsOfProp.buildUpArea} Sq. Ft.
+              </p>
+              <p>Carpet Area: {payload.data.detailsOfProp.caretArea} Sq. Ft.</p>
             </td>
           </tr>
           <tr>
@@ -1324,7 +1212,11 @@ const ReportData = () => {
               <p>Agreement Value (Rs.)</p>
             </td>
             <td colSpan={4}>
-              <p>1.45 Cr.</p>
+              <p>
+                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  .agreementValue / 100}{' '}
+                Cr.
+              </p>
             </td>
           </tr>
           <tr>
@@ -1332,7 +1224,11 @@ const ReportData = () => {
               <p>Purchase Value (Rs.)</p>
             </td>
             <td colSpan={4}>
-              <p>1.65 Cr.</p>
+              <p>
+                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  .purchaseValue / 100}{' '}
+                Cr.
+              </p>
             </td>
           </tr>
           <tr>
@@ -1340,7 +1236,11 @@ const ReportData = () => {
               <p>Market Value (Rs.)</p>
             </td>
             <td colSpan={4}>
-              <p>1.65 Cr.</p>
+              <p>
+                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  .marketValue / 100}{' '}
+                Cr.
+              </p>
             </td>
           </tr>
           <tr>
@@ -1348,7 +1248,11 @@ const ReportData = () => {
               <p>OCR Already Paid (Rs.)</p>
             </td>
             <td colSpan={4}>
-              <p>Nil</p>
+              <p>
+                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  .ocrPaid / 100}{' '}
+                Cr.
+              </p>
             </td>
           </tr>
           <tr>
@@ -1364,7 +1268,13 @@ const ReportData = () => {
               <p>Balance OCR</p>
             </td>
             <td colSpan={4}>
-              <p>50 Lakhs</p>
+              <p>
+                {
+                  payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                    .balanceOcr
+                }{' '}
+                Lakhs
+              </p>
             </td>
           </tr>
           <tr>
@@ -1372,7 +1282,12 @@ const ReportData = () => {
               <p>Source of Balance OCR</p>
             </td>
             <td colSpan={4}>
-              <p>Not Disclosed</p>
+              <p>
+                {
+                  payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                    .sourceOcr
+                }
+              </p>
             </td>
           </tr>
           <tr>
@@ -1380,10 +1295,10 @@ const ReportData = () => {
               <p>Occupied By</p>
             </td>
             <td colSpan={7}>
-              <p>Vacant</p>
+              <p>{payload.data.detailsOfProp.occupiedBy}</p>
             </td>
           </tr>
-          <tr className="font-bold text-center h-10">
+          <tr className="font-bold text-center">
             <td colSpan={8}>
               <p className="mt-2">
                 Observation noted at the time of visit and final recommendation
@@ -1403,49 +1318,76 @@ const ReportData = () => {
               <p>Other Observation (Yes/No)</p>
             </td>
             <td colSpan={7}>
-              <p>1.Business Plate name seen: No</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>2.Activtity Seen: No (As visited residence address)</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>3.Employees Seen: Yes</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>4.Customer Seen: No</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>5.Stock seen: NA</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>6. During Visit:- Applicant was on call with his client.</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>7.Third Party Check: Positive (Done with Near By Neighbour)</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={7}>
-              <p>8. Screenshot of CCTV of premises other than Visited: No</p>
+              <p>
+                1.Business Plate name seen:{' '}
+                {payload.data.observations.businessPlateName.exist} (
+                {payload.data.observations.businessPlateName.reasonForNo})
+              </p>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
               <p>
-                9. Behaviour of applicant: Co-operative but did not provide
-                documents.
+                2.Activtity Seen: {payload.data.observations.activity.exist} (
+                {payload.data.observations.activity.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                3.Employees Seen: {payload.data.observations?.employee?.exist} (
+                {payload.data.observations?.employee?.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                4.Customer Seen: {payload.data.observations.customer.exist} (
+                {payload.data.observations.customer.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                5.Stock seen: {payload.data.observations.stock.exist} (
+                {payload.data.observations.stock.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                6. During Visit:-{' '}
+                {payload.data.observations.duringVist.applicantDoing}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                7.Third Party Check:
+                {payload.data.observations.thirdPartyCheck.exist} (
+                {payload.data.observations.thirdPartyCheck.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                8. Screenshot of CCTV of premises other than Visited:{' '}
+                {payload.data.observations.screenshotOfCCTV.exist} (
+                {payload.data.observations.screenshotOfCCTV.reasonForNo})
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>
+              <p>
+                9. Behaviour of applicant:{' '}
+                {payload.data.observations.behaviourOfApplicant}
               </p>
             </td>
           </tr>
@@ -1468,15 +1410,11 @@ const ReportData = () => {
         <h1>Chartered Accountants</h1>
       </div>
       <br />
-      <img
-        width={50}
-        height={50}
-        src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
-      />
+      <img width={50} height={50} src={activeItem?.assignTo?.profile} />
       <br />
       <div className="my-4">
         <h1>Authorised Signatory</h1>
-        <h1>Date: 11-09-2023</h1>
+        <h1>Date: 11-09-2023 {moment().format('DD-MM-YYYY')}</h1>
       </div>
       <p>
         <br />
@@ -1493,7 +1431,7 @@ const ReportData = () => {
               <p>Name:</p>
             </td>
             <td>
-              <p>Mr. Arjun Singh</p>
+              <p>Mr. {activeItem?.assignTo?.name}</p>
             </td>
           </tr>
           <tr>
@@ -1501,7 +1439,7 @@ const ReportData = () => {
               <p>Contact No:</p>
             </td>
             <td>
-              <p>7507388041</p>
+              <p>{activeItem?.assignTo?.mobile}</p>
             </td>
           </tr>
           <tr className="bg">
@@ -1514,7 +1452,15 @@ const ReportData = () => {
               <p>Name:</p>
             </td>
             <td>
-              <p>Mr. Pankaj Punia</p>
+              <p>Mr. {activeItem?.reviewer?.name}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Contact No:</p>
+            </td>
+            <td>
+              <p>{activeItem?.reviewer?.mobile}</p>
             </td>
           </tr>
         </tbody>

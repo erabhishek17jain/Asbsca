@@ -84,6 +84,7 @@ const FinancialType = ({ formik, title, type, value, handleAnnualy }: any) => {
 
 const Financials = ({
   steps,
+  action,
   payloads,
   activeStep,
   handlePrev,
@@ -100,98 +101,98 @@ const Financials = ({
     income: {
       turnoverGrossReciepts: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       purchases: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
-      totalAmountPA:'',
-      totalAmountPM:'',
+      totalAmountPA: '',
+      totalAmountPM: '',
     },
     expenses: {
       salary: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       maintanance: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       transport: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       electricity: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       travelling: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       fuel: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       officeRent: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       partnersSalary: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       partnersRemuneration: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       otherExpenses: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       bifercationOfExpenses: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
-      totalExpensePA:'',
-      totalExpensePM:'',
-      netProfitPA:'',
-      netProfitPM:'',
-      shareOfProfitPA:'',
-      shareOfProfitPM:'',
+      totalExpensePA: '',
+      totalExpensePM: '',
+      netProfitPA: '',
+      netProfitPM: '',
+      shareOfProfitPA: '',
+      shareOfProfitPM: '',
     },
     businessIncome: {
       salaryFromBusiness: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       remunerationFromBusiness: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
       rent: {
         amountPA: '',
-        amountPM:'',
+        amountPM: '',
         months: 12,
       },
-      totalIncomePA:'',
-      totalEarning:'',
+      totalIncomePA: '',
+      totalEarning: '',
     },
   };
 
@@ -291,7 +292,10 @@ const Financials = ({
     const totalPM =
       finance.purchases.amountPA / finance.turnoverGrossReciepts.amountPA;
     formik.setFieldValue('income.totalAmountPA', totalAP);
-    formik.setFieldValue('income.totalAmountPM', `${(100 - totalPM * 100).toFixed(0)}%`);
+    formik.setFieldValue(
+      'income.totalAmountPM',
+      `${(100 - totalPM * 100).toFixed(0)}%`,
+    );
   };
 
   const setTotalExpenses = () => {
@@ -340,17 +344,33 @@ const Financials = ({
     formik.setFieldValue('businessIncome.totalEarning', totalAP);
   };
 
+  const handleAnnualy = (e: any) => {
+    const { id, value } = e.target;
+    formik.setFieldValue(`${id.slice(0, -1)}M`, (value / 12).toFixed(2));
+    formik.handleChange(e);
+  };
+
   useEffect(() => {
     setBusinessIncome();
     setTotalExpenses();
     setTotalIncome();
   }, [formik.values]);
 
-  const handleAnnualy = (e: any) => {
-    const { id, value } = e.target;
-    formik.setFieldValue(`${id.slice(0, -1)}M`, (value / 12).toFixed(2));
-    formik.handleChange(e);
-  };
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue('entityName', payloads.financials?.entityName);
+      formik.setFieldValue(
+        'applicantIncome',
+        payloads?.financials?.applicantIncome,
+      );
+      formik.setFieldValue('income', payloads?.financials?.income);
+      formik.setFieldValue('expenses', payloads?.financials?.expenses);
+      formik.setFieldValue(
+        'businessIncome',
+        payloads?.financials?.businessIncome,
+      );
+    }
+  }, [payloads]);
 
   return (
     <>

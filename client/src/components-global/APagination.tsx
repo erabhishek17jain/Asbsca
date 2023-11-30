@@ -2,11 +2,11 @@ import AButton from "./AButton";
 
 const APagination = ({ meta, defaultFilters, setDefaultFilters }: any) => {
   const nextPage = () => {
-    setDefaultFilters({ ...defaultFilters, page: parseInt(meta.page) + 1 });
+    setDefaultFilters({ ...defaultFilters, page: parseInt(meta?.page) + 1 });
   };
 
   const previousPage = () => {
-    setDefaultFilters({ ...defaultFilters, page: parseInt(meta.page) - 1 });
+    setDefaultFilters({ ...defaultFilters, page: parseInt(meta?.page) - 1 });
   };
 
   return (

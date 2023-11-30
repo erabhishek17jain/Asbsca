@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AButton from '../../../components-global/AButton';
 import AInputField from '../../../components-global/AInputField';
 import { AModal } from '../../../components-global/AModal';
@@ -73,6 +73,7 @@ const documents = [
 
 const DocumentsSeen = ({
   steps,
+  action,
   payloads,
   activeStep,
   handlePrev,
@@ -107,12 +108,23 @@ const DocumentsSeen = ({
 
   const submitDocuments = () => {
     const documents = documentList.reduce(
-      (obj:any, cur:any) => ({ ...obj, [cur.value]: cur.isDoc }),
+      (obj: any, cur: any) => ({ ...obj, [cur.value]: cur.isDoc }),
       {},
     );
     setPayloads({ ...payloads, documentsSeen: documents });
     handleNext();
   };
+
+  useEffect(() => {
+    if (action === 'edit') {
+      const docsData = [];
+      for (const key in payloads.documentsSeen) {
+        const doc = documents.find((item) => item.value === key);
+        docsData.push({ ...doc, isDoc: payloads.documentsSeen[key] });
+      }
+      setDocumentList([...docsData]);
+    }
+  }, [payloads]);
 
   return (
     <>

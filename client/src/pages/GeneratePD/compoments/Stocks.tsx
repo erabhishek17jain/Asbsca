@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import { yesNoOptions } from '../constants';
 
 const Stocks = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -24,7 +24,7 @@ const Stocks = ({
   };
 
   const initialValues = {
-    isStockDetails: '',
+    isStockDetails: 'yes',
     stockDetails: {
       rawMaterialAmount: '',
       wipAmount: '',
@@ -57,6 +57,13 @@ const Stocks = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue('isStockDetails', payloads?.stocks?.isStockDetails);
+      formik.setFieldValue('stockDetails', payloads?.stocks?.stockDetails);
+    }
+  }, [payloads]);
 
   return (
     <>

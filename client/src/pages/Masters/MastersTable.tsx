@@ -93,6 +93,7 @@ export function MastersTable({ type, defaultFilters, setDefaultFilters }: any) {
         tableBody={
           <MastersBody
             type={type}
+            meta={meta}
             data={data}
             openAddEditModal={openAddEditModal}
             openDeleteModal={openDeleteModal}

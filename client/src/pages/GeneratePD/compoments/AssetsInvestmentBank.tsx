@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AGroupFields from '../../../components-global/AGroupFields';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
@@ -44,7 +44,7 @@ const bankAccountInfo: any = {
 };
 
 const AssetsInvestmentBank = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -173,6 +173,37 @@ const AssetsInvestmentBank = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue(
+        'isBussinessAssets',
+        payloads?.assets?.isBussinessAssets,
+      );
+      formik.setFieldValue(
+        'bussinessAssetDetails',
+        payloads?.assets?.bussinessAssetDetails,
+      );
+      formik.setFieldValue(
+        'isPersonalAssets',
+        payloads?.assets?.isPersonalAssets,
+      );
+      formik.setFieldValue(
+        'personalAssetDetails',
+        payloads?.assets?.personalAssetDetails,
+      );
+      formik.setFieldValue('isInvestments', payloads?.assets?.isInvestments);
+      formik.setFieldValue(
+        'investmentDetails',
+        payloads?.assets?.investmentDetails,
+      );
+      formik.setFieldValue('isBankAccount', payloads?.assets?.isBankAccount);
+      formik.setFieldValue(
+        'bankAccountDetails',
+        payloads?.assets?.bankAccountDetails,
+      );
+    }
+  }, [payloads]);
 
   const errorsBd: any = formik?.errors?.bussinessAssetDetails;
   const errorsPb: any = formik?.errors?.personalAssetDetails;

@@ -19,6 +19,7 @@ import {
   residenceStatus,
 } from '../constants';
 import moment from 'moment';
+import { useEffect } from 'react';
 
 const applicantInfo = {
   title: 'Applicant Info',
@@ -58,7 +59,7 @@ const familyInfo = {
 } as any;
 
 const PersonalDetails = ({
-  steps,
+  steps, action,
   payloads,
   activeStep,
   handlePrev,
@@ -163,6 +164,17 @@ const PersonalDetails = ({
     );
     formik.handleChange(e);
   };
+
+  useEffect(() => {
+    if (action === 'edit') {
+      formik.setFieldValue('applicants', payloads.personalDetails?.applicants);
+      formik.setFieldValue('residents', payloads?.personalDetails?.residents);
+      formik.setFieldValue(
+        'familyDetails',
+        payloads?.personalDetails?.familyDetails,
+      );
+    }
+  }, [payloads]);
 
   const errorsAp: any = formik?.errors?.applicants;
   const errorsRe: any = formik?.errors?.residents;

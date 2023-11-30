@@ -55,12 +55,13 @@ export const AStepperPagination = ({
 
 export function AStepper({
   steps,
+  action,
   payloads,
   activeItem,
   setPayloads,
   generateReport,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(14);
+  const [activeStep, setActiveStep] = React.useState(12);
 
   const handleNext = () =>
     activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
@@ -91,6 +92,7 @@ export function AStepper({
           {activeStep === 0 && ( // done
             <LoanDetails
               steps={steps}
+              action={action}
               payloads={payloads}
               activeItem={activeItem}
               activeStep={activeStep}
@@ -102,6 +104,7 @@ export function AStepper({
           {activeStep === 1 && (
             <PersonalDetails
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -112,6 +115,7 @@ export function AStepper({
           {activeStep === 2 && (
             <ExistingLoanCredit
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -122,6 +126,7 @@ export function AStepper({
           {activeStep === 3 && (
             <DetailsOfProperty
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -132,6 +137,7 @@ export function AStepper({
           {activeStep === 4 && (
             <BusinessDetails
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -142,6 +148,7 @@ export function AStepper({
           {activeStep === 5 && (
             <Financials
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -152,6 +159,7 @@ export function AStepper({
           {activeStep === 6 && (
             <ComitmentsSummaryFOIR
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -162,6 +170,7 @@ export function AStepper({
           {activeStep === 7 && (
             <TurnoverGrossReceipts
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -172,6 +181,7 @@ export function AStepper({
           {activeStep === 8 && (
             <ClientsDebtors
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -182,6 +192,7 @@ export function AStepper({
           {activeStep === 9 && (
             <Stocks
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -192,6 +203,7 @@ export function AStepper({
           {activeStep === 10 && (
             <SuppliersCreditors
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -202,6 +214,7 @@ export function AStepper({
           {activeStep === 11 && (
             <AssetsInvestmentBank
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -212,6 +225,7 @@ export function AStepper({
           {activeStep === 12 && (
             <OtherObservation
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -222,6 +236,7 @@ export function AStepper({
           {activeStep === 13 && ( // done
             <DocumentsSeen
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}
@@ -232,6 +247,7 @@ export function AStepper({
           {activeStep === 14 && ( // done
             <BusinessProcessOf
               steps={steps}
+              action={action}
               payloads={payloads}
               activeStep={activeStep}
               handlePrev={handlePrev}

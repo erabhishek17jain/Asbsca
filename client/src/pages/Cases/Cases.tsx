@@ -10,7 +10,6 @@ import {
   casesTypes,
 } from '../../constants';
 import {
-  ArrowDownTrayIcon,
   ArrowTopRightOnSquareIcon,
   PencilSquareIcon,
   PlusIcon,
@@ -84,7 +83,9 @@ const Cases = () => {
         setActiveItem(null);
         closeAssignCaseModal();
         formikAssigned.resetForm();
-        store.dispatch(fetchCasesAsync({ ...defaultFilters }));
+        store.dispatch(
+          fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
+        );
         toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
@@ -99,8 +100,11 @@ const Cases = () => {
         setActiveItem(null);
         closeUpdateStatusModal();
         formikStatus.resetForm();
-        store.dispatch(fetchCasesAsync(''));
-        toast.success(<b>{successMessages[values?.status]}</b>);
+        store.dispatch(
+          fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
+        );
+        if (successMessages[values?.status])
+          toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);
@@ -185,12 +189,16 @@ const Cases = () => {
     if (activeItem?.status === 'assigned') {
       const values = { appoinmentStatus: 'visited' };
       updateCaseStatus(activeItem?._id, values);
-      navigate('/generatePD', { state: { activeItem: activeItem } });
+      navigate('/generatePD', {
+        state: { activeItem: activeItem, action: 'start' },
+      });
     } else {
-      navigate('/generatePD', { state: { activeItem: activeItem } });
+      navigate('/generatePD', {
+        state: { activeItem: activeItem, action: 'edit' },
+      });
     }
   };
-  
+
   const sentToReviewCase = () => {
     setShowAssignCase(true);
     setActionType('review');
@@ -276,6 +284,8 @@ const Cases = () => {
     setTableRaw({ ...raw });
     if (status === 'cases') {
       setFilters({});
+    } else if (status === 'assigned') {
+      setFilters({ ...filters, ...{ status: 'assigned' } }); // assigned_query
     } else {
       setFilters({ ...filters, ...{ status: status } });
     }
@@ -332,14 +342,7 @@ const Cases = () => {
       {
         title: 'Preview Report',
         action: () =>
-          navigate('/finalReport', {
-            state: { activeItem: activeItem, reportData: {} },
-          }),
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Edit Report',
-        action: startPD,
+          navigate('/finalReport', { state: { activeItem: activeItem } }),
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
@@ -352,11 +355,6 @@ const Cases = () => {
         action: caseCompleted,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
-      {
-        title: 'Send To Bank',
-        action: caseSentToBank,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
     ],
     completed: [
       {
@@ -366,9 +364,9 @@ const Cases = () => {
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
       {
-        title: 'Download Report',
-        action: () => {},
-        icon: <ArrowDownTrayIcon className="h-5 w-5 stroke-2" />,
+        title: 'Send To Bank',
+        action: caseSentToBank,
+        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
     ],
     sentToBank: [
@@ -377,11 +375,6 @@ const Cases = () => {
         action: () =>
           navigate('/finalReport', { state: { activeItem: activeItem } }),
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Download Report',
-        action: () => {},
-        icon: <ArrowDownTrayIcon className="h-5 w-5 stroke-2" />,
       },
     ],
   };
@@ -428,6 +421,7 @@ const Cases = () => {
           }
           tableBody={
             <CasesBody
+              meta={allCases?.meta}
               selectCase={selectCase}
               activeItem={activeItem}
               allcases={allCases?.cases}

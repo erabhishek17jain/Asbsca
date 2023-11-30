@@ -1,4 +1,7 @@
-import { ArrowTopRightOnSquareIcon, EllipsisVerticalIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowTopRightOnSquareIcon,
+  EllipsisVerticalIcon,
+} from '@heroicons/react/24/solid';
 import { TableColumn } from '../../components-global/ATable';
 import moment from 'moment';
 import ADropdown from '../../components-global/ADropdown';
@@ -12,6 +15,7 @@ import AButton from '../../components-global/AButton';
 import { useNavigate } from 'react-router-dom';
 
 const CasesBody = ({
+  meta,
   status,
   allcases,
   activeItem,
@@ -21,7 +25,7 @@ const CasesBody = ({
   const navigate = useNavigate();
   return allcases?.map((item: any, index: number) => {
     const isLast = index === allcases.length - 1;
-    const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-grey-50';
+    const classes = isLast ? 'p-4' : 'p-4 border-b border-stroke';
     const caseStatus: any = caseStatusList.find(
       (el: any) => el.value === item?.status,
     );
@@ -37,7 +41,10 @@ const CasesBody = ({
 
     return (
       <tr key={index}>
-        <TableColumn classes={classes} label={index + 1} />
+        <TableColumn
+          classes={classes}
+          label={(meta?.page - 1) * 10 + index + 1}
+        />
         <TableColumn
           classes={classes}
           label={item?.bankName?.name}
@@ -66,7 +73,7 @@ const CasesBody = ({
           status === 'sentToBank') && (
           <TableColumn classes={classes} label={caseType.label} />
         )}
-        {status === 'cases' && (
+        {(status === 'cases' || status === 'assigned' || status === 'dashboard') && (
           <TableColumn
             classes={classes}
             label={caseStatus?.label}
@@ -125,7 +132,9 @@ const CasesBody = ({
                 variant="small"
                 label={'Start PD'}
                 action={() =>
-                  navigate('/generatePD', { state: { activeItem: item } })
+                  navigate('/generatePD', {
+                    state: { activeItem: item, action: 'start' },
+                  })
                 }
                 icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
               />
