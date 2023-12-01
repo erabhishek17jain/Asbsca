@@ -65,8 +65,8 @@ const ADropdown = ({
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
         className={`absolute ${
-          position == 'left' ? '-top-3 right-7' : 'top-8 right-0'
-        } flex flex-col w-56 bg-clip-border border border-stroke rounded-lg bg-white text-grey-700 shadow-lg ${
+          position == 'left' ? '-top-[35px] right-7' : 'top-11 right-0'
+        } flex flex-col w-56 bg-clip-border border border-stroke rounded-lg bg-white shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >

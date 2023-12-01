@@ -10,7 +10,7 @@ import moment from 'moment';
 import { useEffect } from 'react';
 
 const TurnoverGrossReceipts = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
@@ -114,7 +114,7 @@ const TurnoverGrossReceipts = ({
   });
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.turnoverDetails) {
       formik.setFieldValue(
         'aprilTillDate',
         payloads.turnoverDetails?.aprilTillDate,

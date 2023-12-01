@@ -21,21 +21,21 @@ const Section = ({ title, children }: any) => {
 const clientsInfo = { clientName: '', contact: '' };
 
 const SuppliersCreditors = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
-  const [isSuppliers, setIsSuppliers] = useState('yes');
+  const [isSuppliers, setIsSuppliers] = useState('Yes');
   const handleSuppliers = (title: string, val: string) => {
     console.log(title);
     setIsSuppliers(val);
   };
 
   const initialValues = {
-    isSuppliersDetails: 'yes',
+    isSuppliersDetails: 'Yes',
     suppliersDetails: {
       noOfSuppliers: '',
       majorSuppliers: [] as any,
@@ -102,7 +102,7 @@ const SuppliersCreditors = ({
   };
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.suppliers) {
       formik.setFieldValue(
         'isSuppliersDetails',
         payloads?.suppliers?.isSuppliersDetails,
@@ -136,7 +136,7 @@ const SuppliersCreditors = ({
             handleChange={handleSuppliers}
           />
           <Section>
-            {isSuppliers == 'yes' && (
+            {isSuppliers == 'Yes' && (
               <div className="mb-4">
                 <AGroupFields col={2}>
                   <AInputField

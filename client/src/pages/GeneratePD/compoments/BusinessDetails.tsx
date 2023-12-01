@@ -26,7 +26,7 @@ const shareInfo = {
 
 const BusinessDetails = ({
   steps,
-  action,
+  
   payloads,
   activeStep,
   handlePrev,
@@ -42,7 +42,7 @@ const BusinessDetails = ({
     regOfficeAddress: '',
     visitedAddress: '',
     vicinity: '',
-    ownershipOfAddressVisited: '',
+    ownership: '',
     pdConductWith: '',
     designation: '',
     mobile: '',
@@ -73,7 +73,7 @@ const BusinessDetails = ({
     regOfficeAddress: Yup.string().required('This field is required'),
     visitedAddress: Yup.string().required('This field is required'),
     vicinity: Yup.string().required('This field is required'),
-    ownershipOfAddressVisited: Yup.string().required('This field is required'),
+    ownership: Yup.string().required('This field is required'),
     pdConductWith: Yup.string().required('This field is required'),
     designation: Yup.string().required('This field is required'),
     mobile: Yup.number().required('This field is required'),
@@ -116,7 +116,7 @@ const BusinessDetails = ({
   };
 
    useEffect(() => {
-     if (action === 'edit') {
+     if (payloads.businessDetails) {
        formik.setFieldValue(
          'bussinessName',
          payloads.businessDetails?.bussinessName,
@@ -144,8 +144,8 @@ const BusinessDetails = ({
        );
        formik.setFieldValue('vicinity', payloads.businessDetails?.vicinity);
        formik.setFieldValue(
-         'ownershipOfAddressVisited',
-         payloads?.businessDetails?.ownershipOfAddressVisited,
+         'ownership',
+         payloads?.businessDetails?.ownership,
        );
        formik.setFieldValue(
          'pdConductWith',
@@ -266,11 +266,11 @@ const BusinessDetails = ({
                 handleChange={formik?.handleChange}
               />
               <ASingleSelect
-                id={'ownershipOfAddressVisited'}
+                id={'ownership'}
                 label={'Ownership of address Visited'}
                 options={residenceStatus}
-                value={formik?.values?.ownershipOfAddressVisited}
-                error={formik?.errors?.ownershipOfAddressVisited}
+                value={formik?.values?.ownership}
+                error={formik?.errors?.ownership}
                 handleChange={formik?.handleChange}
               />
               <ASingleSelect

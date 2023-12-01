@@ -19,7 +19,7 @@ const AddBulkCaseBody = ({ data }: any) => {
         <TableColumn classes={classes} label={item?.type} />
         <TableColumn classes={classes} label={item?.bankName} />
         <TableColumn classes={classes} label={item?.branch} />
-        <TableColumn classes={classes} label={item?.recievedDate} />
+        <TableColumn classes={classes} label={item?.receivedDate} />
         <td className={classes}>
           <Tooltip content="Delete Case">
             <TrashIcon className="h-6 w-6" fill="#02385e" />

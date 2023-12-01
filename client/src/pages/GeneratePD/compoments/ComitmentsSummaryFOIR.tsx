@@ -20,7 +20,7 @@ const comitments = [
 
 const ComitmentsSummaryFOIR = ({
   steps,
-  action,
+
   payloads,
   activeStep,
   handlePrev,
@@ -93,26 +93,23 @@ const ComitmentsSummaryFOIR = ({
   };
 
   useEffect(() => {
-    if (action === 'start') {
-      const emi = 41822;
-      const yearEmi = ((emi * 12) / 100000).toFixed(2);
-      const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
-      const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
-
-      formik.setFieldValue('proposedEMI.amountPM', emi);
-      formik.setFieldValue('proposedEMI.amountPA', yearEmi);
-      formik.setFieldValue('totalCommitments.amountPM', emi);
-      formik.setFieldValue('totalCommitments.amountPA', yearEmi);
-      formik.setFieldValue('existingCommitments.amountPM', emi);
-      formik.setFieldValue('existingCommitments.amountPA', yearEmi);
-      formik.setFieldValue('onlyEMIRatio', ratioStr);
-      formik.setFieldValue('foirRatio', ratioStr);
-      formik.setFieldValue('totalCommitmentsRatio', ratioStr);
-    }
+    const emi = 41822;
+    const yearEmi = ((emi * 12) / 100000).toFixed(2);
+    const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
+    const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
+    formik.setFieldValue('proposedEMI.amountPM', emi);
+    formik.setFieldValue('proposedEMI.amountPA', yearEmi);
+    formik.setFieldValue('totalCommitments.amountPM', emi);
+    formik.setFieldValue('totalCommitments.amountPA', yearEmi);
+    formik.setFieldValue('existingCommitments.amountPM', emi);
+    formik.setFieldValue('existingCommitments.amountPA', yearEmi);
+    formik.setFieldValue('onlyEMIRatio', ratioStr);
+    formik.setFieldValue('foirRatio', ratioStr);
+    formik.setFieldValue('totalCommitmentsRatio', ratioStr);
   }, []);
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.comitmentSummary) {
       formik.setFieldValue(
         'proposedEMI',
         payloads.comitmentSummary?.proposedEMI,

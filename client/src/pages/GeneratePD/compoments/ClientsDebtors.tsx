@@ -12,15 +12,15 @@ import { yesNoOptions } from '../constants';
 const clientsInfo = { clientName: '', contact: '' };
 
 const ClientsDebtors = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
-  const [isClients, setIsClients] = useState('yes');
-  const [isDebtors, setIsDebtors] = useState('yes');
+  const [isClients, setIsClients] = useState('Yes');
+  const [isDebtors, setIsDebtors] = useState('Yes');
 
   const handleClients = (title: string, val: string) => {
     console.log(title);
@@ -99,7 +99,7 @@ const ClientsDebtors = ({
   });
 
    useEffect(() => {
-     if (action === 'edit') {
+     if (payloads.clientDebtors) {
        formik.setFieldValue('clients', payloads?.clientDebtors?.clients);
        formik.setFieldValue('debitors', payloads?.clientDebtors?.debitors);
      }
@@ -117,7 +117,7 @@ const ClientsDebtors = ({
             handleChange={handleClients}
             radioValues={yesNoOptions}
           />
-          {isClients == 'yes' && (
+          {isClients == 'Yes' && (
             <ASection>
               <AGroupFields col={2}>
                 <AInputField
@@ -205,7 +205,7 @@ const ClientsDebtors = ({
             handleChange={handleDebtors}
             radioValues={yesNoOptions}
           />
-          {isDebtors == 'yes' && (
+          {isDebtors == 'Yes' && (
             <ASection
               footers={[
                 {

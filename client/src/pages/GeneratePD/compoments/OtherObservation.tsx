@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 
 const OtherObservation = ({
   steps,
-  action,
+  
   payloads,
   activeStep,
   handlePrev,
@@ -105,7 +105,7 @@ const OtherObservation = ({
   });
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.observations) {
       formik.setFieldValue(
         'businessPlateName',
         payloads?.observations?.businessPlateName,
@@ -150,7 +150,7 @@ const OtherObservation = ({
                 options={yesNoOptions}
                 disabled={
                   formik?.values?.businessPlateName?.exist === '' ||
-                  formik?.values?.businessPlateName?.exist === 'yes'
+                  formik?.values?.businessPlateName?.exist === 'Yes'
                 }
                 id={`businessPlateName.reasonForNo`}
                 value={formik?.values?.businessPlateName?.reasonForNo}
@@ -173,7 +173,7 @@ const OtherObservation = ({
                 id={`activity.reasonForNo`}
                 disabled={
                   formik?.values?.activity?.exist === '' ||
-                  formik?.values?.activity?.exist === 'yes'
+                  formik?.values?.activity?.exist === 'Yes'
                 }
                 value={formik?.values?.activity?.reasonForNo}
                 error={errors?.activity?.reasonForNo}
@@ -191,7 +191,7 @@ const OtherObservation = ({
               />
               <AInputField
                 label={
-                  formik?.values?.customer?.exist !== 'yes'
+                  formik?.values?.customer?.exist !== 'Yes'
                     ? 'Reason for No or NA'
                     : 'How many'
                 }
@@ -199,7 +199,7 @@ const OtherObservation = ({
                 id={`customer.reasonForNo`}
                 disabled={
                   formik?.values?.customer?.exist === '' ||
-                  formik?.values?.customer?.exist !== 'yes'
+                  formik?.values?.customer?.exist !== 'Yes'
                 }
                 value={formik?.values?.customer?.reasonForNo}
                 error={errors?.customer?.reasonForNo}
@@ -221,7 +221,7 @@ const OtherObservation = ({
                 id={`stock.reasonForNo`}
                 disabled={
                   formik?.values?.stock?.exist === '' ||
-                  formik?.values?.stock?.exist === 'yes'
+                  formik?.values?.stock?.exist === 'Yes'
                 }
                 value={formik?.values?.stock?.reasonForNo}
                 error={errors?.stock?.reasonForNo}
@@ -266,7 +266,7 @@ const OtherObservation = ({
               />
               <AInputField
                 label={'Reason for No or NA'}
-                disabled={formik?.values?.screenshotOfCCTV?.exist === 'yes'}
+                disabled={formik?.values?.screenshotOfCCTV?.exist === 'Yes'}
                 id={`screenshotOfCCTV.reasonForNo`}
                 value={formik?.values?.screenshotOfCCTV?.reasonForNo}
                 error={errors?.screenshotOfCCTV?.reasonForNo}

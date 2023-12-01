@@ -147,16 +147,16 @@ export function AddEditDeleteClient({
               label={'Client Logo'}
               value={formikClient.values.logo}
               error={formikClient.errors.logo}
-              formik={formikClient.getFieldProps('logo')}
-              icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
+              formik={formikClient}
+              icon={<BuildingLibraryIcon className="w-10 h-10" />}
             />
             <AFileUpload
               id={'signature'}
               label={'Signature'}
               value={formikClient.values.signature}
               error={formikClient.errors.signature}
-              formik={formikClient.getFieldProps('signature')}
-              icon={<BuildingLibraryIcon className="w-15 h-15 -mt-2" />}
+              formik={formikClient}
+              icon={<BuildingLibraryIcon className="w-10 h-10" />}
             />
             <ASingleSelect
               id="status"

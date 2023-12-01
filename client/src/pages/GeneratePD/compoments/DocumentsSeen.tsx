@@ -8,72 +8,63 @@ import { useFormik } from 'formik';
 import { AStepperPagination } from '../../../components-global/AStepper';
 
 const radioValues = [
-  { value: 'yes', label: 'Yes' },
+  { value: 'Yes', label: 'Yes' },
   { value: 'no', label: 'No' },
 ];
 
 const documents = [
   {
-    title: 'Documents were not handy during PD.',
-    value: 'documentHandyDuringPD',
-    isDoc: 'no',
+    label: 'Documents were not handy during PD.',
+    isDoc: 'Yes',
   },
   {
-    title:
+    label:
       'No documents provided & applicant said Documents are already given to bank.',
-    value: 'documentProvidedToBank',
-    isDoc: 'no',
+    isDoc: 'Yes',
   },
-  { title: 'GST Returns', value: 'gstReturns', isDoc: 'no' },
+  { label: 'GST Returns', isDoc: 'Yes' },
   {
-    title: 'GST Registration Certificate',
-    value: 'gstRegistrationCertificate',
-    isDoc: 'no',
+    label: 'GST Registration Certificate',
+    isDoc: 'Yes',
   },
   {
-    title: 'Financial Statements of March Current Year',
-    value: 'currentYearFinancialStatement',
+    label: 'Financial Statements of March Current Year',
     isDoc: 'no',
   },
   {
-    title: 'Financial Statements of March Last Year',
-    value: 'lastYearFinancialStatement',
+    label: 'Financial Statements of March Last Year',
     isDoc: 'no',
   },
   {
-    title: 'Financial Statements of March Second Last Year',
-    value: 'secondLastYearFinancialStatement',
+    label: 'Financial Statements of March Second Last Year',
     isDoc: 'no',
   },
-  { title: 'Sales Bills', value: 'salesBills', isDoc: 'no' },
-  { title: 'Purchase Bills', value: 'purchaseBils', isDoc: 'no' },
-  { title: 'ITR for March Current Year', value: 'currentYearITR', isDoc: 'no' },
-  { title: 'ITR for March Last Year', value: 'lastYearITR', isDoc: 'no' },
+  { label: 'Sales Bills', isDoc: 'no' },
+  { label: 'Purchase Bills', isDoc: 'no' },
+  { label: 'ITR for March Current Year', isDoc: 'no' },
+  { label: 'ITR for March Last Year', isDoc: 'no' },
   {
-    title: 'ITR for March Second Last Year',
-    value: 'secondLastYearITR',
+    label: 'ITR for March Second Last Year',
     isDoc: 'no',
   },
-  { title: 'Udyam Aadhar', value: 'udhyamAadhar', isDoc: 'no' },
+  { label: 'Udyam Aadhar', isDoc: 'no' },
   {
-    title: 'Vehicle Registration (RC Book)',
-    value: 'vechicleRegistration',
+    label: 'Vehicle Registration (RC Book)',
     isDoc: 'no',
   },
-  { title: 'Gumasta', value: 'gumasta', isDoc: 'no' },
-  { title: 'RC Book', value: 'rcBook', isDoc: 'no' },
-  { title: 'Salary Slip', value: 'salarySlip', isDoc: 'no' },
+  { label: 'Gumasta', isDoc: 'Yes' },
+  { label: 'RC Book', isDoc: 'Yes' },
+  { label: 'Salary Slip', isDoc: 'no' },
   {
-    title: 'Provisional Financials for March Last Year',
-    value: 'provisionalFinancialLastYear',
+    label: 'Provisional Financials for March Last Year',
     isDoc: 'no',
   },
-  { title: 'Financials in Tally', value: 'financialsInTally', isDoc: 'no' },
+  { label: 'Financials in Tally', isDoc: 'no' },
 ];
 
 const DocumentsSeen = ({
   steps,
-  action,
+  
   payloads,
   activeStep,
   handlePrev,
@@ -92,37 +83,27 @@ const DocumentsSeen = ({
     onSubmit: async (values: any) => {
       setShowModal(false);
       documentList.push({
-        title: values.name,
-        value: values.name.replaceAll(' ', ''),
+        label: values.name,
         isDoc: 'no',
       });
       setDocumentList([...documentList]);
     },
   });
 
-  const selectDocuments = (title: string, val: string) => {
-    const index = documentList.findIndex((item: any) => item.title === title);
+  const selectDocuments = (label: string, val: string) => {
+    const index = documentList.findIndex((item: any) => item.label === label);
     documentList[index].isDoc = val;
     setDocumentList([...documentList]);
   };
 
   const submitDocuments = () => {
-    const documents = documentList.reduce(
-      (obj: any, cur: any) => ({ ...obj, [cur.value]: cur.isDoc }),
-      {},
-    );
     setPayloads({ ...payloads, documentsSeen: documents });
     handleNext();
   };
 
   useEffect(() => {
-    if (action === 'edit') {
-      const docsData = [];
-      for (const key in payloads.documentsSeen) {
-        const doc = documents.find((item) => item.value === key);
-        docsData.push({ ...doc, isDoc: payloads.documentsSeen[key] });
-      }
-      setDocumentList([...docsData]);
+    if (payloads.documentsSeen) {
+      setDocumentList([...payloads.documentsSeen]);
     }
   }, [payloads]);
 
@@ -133,7 +114,7 @@ const DocumentsSeen = ({
           {documentList.map((item: any) => (
             <ARadioButtonGroup
               width={'w-1/2'}
-              title={item.title}
+              title={item.label}
               value={item.isDoc}
               radioValues={radioValues}
               handleChange={selectDocuments}

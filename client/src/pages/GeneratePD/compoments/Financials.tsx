@@ -84,7 +84,7 @@ const FinancialType = ({ formik, title, type, value, handleAnnualy }: any) => {
 
 const Financials = ({
   steps,
-  action,
+  
   payloads,
   activeStep,
   handlePrev,
@@ -357,7 +357,7 @@ const Financials = ({
   }, [formik.values]);
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.financials) {
       formik.setFieldValue('entityName', payloads.financials?.entityName);
       formik.setFieldValue(
         'applicantIncome',

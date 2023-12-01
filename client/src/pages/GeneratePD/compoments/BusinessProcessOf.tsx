@@ -6,7 +6,7 @@ import { businessProcess } from '../constants';
 import { useEffect } from 'react';
 
 const BusinessProcessOf = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
@@ -36,7 +36,7 @@ const BusinessProcessOf = ({
   });
 
    useEffect(() => {
-     if (action === 'edit') {
+     if (payloads.businessOf) {
        formik.setFieldValue(
          'bussinessProcessOf',
          payloads.businessOf?.bussinessProcessOf,

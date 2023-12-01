@@ -121,6 +121,18 @@ export async function getCases(payload: any, { rejectWithValue }: any) {
   }
 }
 
+export async function getExportCases(payload: any, { rejectWithValue }: any) {
+  try {
+    const response = await axios.get(
+      `${baseAPI}/cases/list?${setFilters(payload)}`,
+    );
+    return response.data;
+  } catch (error: any) {
+    showError(error);
+    return rejectWithValue(error?.response?.data);
+  }
+}
+
 /** all user list */
 export async function getUsers(payload: any, { rejectWithValue }: any) {
   try {

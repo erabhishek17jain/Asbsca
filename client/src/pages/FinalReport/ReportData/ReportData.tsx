@@ -1,24 +1,23 @@
-import { useSelector } from 'react-redux';
 import './ReportData.css';
 import { payload } from '../../../mockData/mocks';
 import moment from 'moment';
 
-const ReportData = (activeItem: any) => {
-  const { reportData } = useSelector((state: any) => state.cases);
+const ReportData = () => {
   return (
     <div className="flex flex-col text-sm">
       <table className="mb-1.5" cellSpacing={0}>
         <tbody>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
-              <p>AXIS PD REPORT_X _Bhayendar_Mira Road ALC_09-09-2023</p>
+              <p>
+                {`${payload?.data?.loanDetails?.bankName}_PD_REPORT_${payload?.data?.personalDetails?.applicants[0]?.name}_${payload?.data?.pdDetails?.location}_${payload?.data?.loanDetails?.alc}_${payload?.data?.pdDetails?.pdVisitDate}`}
+              </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
               <p>
-                {reportData?.loanDetails?.loan}:{' '}
-                {payload?.data?.loanDetails?.loanType}
+                {`${payload?.data?.loanDetails?.loan}: ${payload?.data?.loanDetails?.loanType}`}
               </p>
             </td>
           </tr>
@@ -172,122 +171,93 @@ const ReportData = (activeItem: any) => {
               </div>
               <table cellSpacing={0} className="w-10/12 mt-4 mx-auto">
                 <tbody>
-                  <tr className="bg font-bold text-center">
-                    <td>
-                      <p>Particulars</p>
-                    </td>
-                    <td>
-                      <p>Applicant</p>
-                    </td>
-                    <td>
-                      <p>Co-Applicant 1</p>
-                    </td>
-                    <td>
-                      <p>Co-Applicant 3</p>
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <p>Turnover</p>
-                    </td>
-                    <td>
-                      <p>1.7 Cr.</p>
-                    </td>
-                    <td>
-                      <p>7.7 Lakhs</p>
-                    </td>
-                    <td>
-                      <p>3.96 Lakhs</p>
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <p>Entity</p>
-                    </td>
-                    <td>
-                      <p>x</p>
-                    </td>
-                    <td>
-                      <p>y</p>
-                    </td>
-                    <td>
-                      <p>z</p>
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <p>Gross Profit</p>
-                    </td>
-                    <td>
-                      <p>1.7 Cr. (100%)</p>
-                    </td>
-                    <td>
-                      <p>7.7 Lakhs (100%)</p>
-                    </td>
-                    <td>
-                      <p>3.96 Lakhs (100%)</p>
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <p>
-                        <br />
-                      </p>
-                      <p>Net Margin</p>
-                    </td>
-                    <td>
-                      <p>
-                        <br />
-                      </p>
-                      <p>1.65 Cr. (97.25%)</p>
-                    </td>
-                    <td>
-                      <p>
-                        <br />
-                      </p>
-                      <p>52,000 (6.75%)</p>
-                    </td>
-                    <td>
-                      <p>
-                        <br />
-                      </p>
-                      <p>3.96 Lakhs (100%)</p>
-                    </td>
-                  </tr>
-                  <tr className="text-center">
-                    <td>
-                      <p>Share of Profit</p>
-                    </td>
-                    <td>
-                      <p>1.65 Cr. (100%)</p>
-                    </td>
-                    <td>
-                      <p>52,000 (100%)</p>
-                    </td>
-                    <td>
-                      <p>3.96 Lakhs (100%)</p>
-                    </td>
-                  </tr>
-                  <tr className="font-bold text-center">
-                    <td>
-                      <p>Total</p>
-                    </td>
-                    <td>
-                      <p>1.65 Cr.</p>
-                    </td>
-                    <td>
-                      <p>52,000</p>
-                    </td>
-                    <td>
-                      <p>3.96 Lakhs</p>
-                    </td>
-                  </tr>
-                  <tr className="font-bold text-center">
-                    <td>
-                      <p>Grand Total</p>
-                    </td>
-                    <td colSpan={3}>
-                      <p>1.7 Cr.</p>
+                  <tr>
+                    <td colSpan={8}>
+                      <div className="flex w-full -m-[1px]">
+                        <div className="w-1/4">
+                          <div className="border-r-[1.5px] border-black text-center">
+                            <p className="bg pl-1 border-b-[1.5px] border-black h-6 font-bold">
+                              Particulars
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Turnover
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Entity
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Gross Profit
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Net Margin
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Share of Profit
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Partner's Salary
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black">
+                              Partner's Remuneration
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black font-bold">
+                              Other Income
+                            </p>
+                            <p className="pl-1 border-b-[1.5px] border-black font-bold">
+                              Total
+                            </p>
+                            <p className="pl-1 font-bold">Grand Total</p>
+                          </div>
+                        </div>
+                        <div
+                          className={`w-3/4 grid grid-cols-${payload.data.financials.length} text-center`}
+                        >
+                          {payload.data.financials.map((item: any) => (
+                            <div className="border-r-[1.5px] border-black">
+                              <p className="bg pl-1 border-b-[1.5px] border-black font-bold h-6">
+                                {item.applicantIncome}
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.income.turnoverGrossReciepts.amountPA}
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.entityName}
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.income.totalAmountPA} (
+                                {item.income.totalAmountPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.netProfitPA} (
+                                {item.expenses.netProfitPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.shareOfProfitPA} (
+                                {item.expenses.shareOfProfitPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.shareOfProfitPA} (
+                                {item.expenses.shareOfProfitPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.shareOfProfitPA} (
+                                {item.expenses.shareOfProfitPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.shareOfProfitPA} (
+                                {item.expenses.shareOfProfitPM})
+                              </p>
+                              <p className="pl-1 border-b-[1.5px] border-black">
+                                {item.expenses.shareOfProfitPA} (
+                                {item.expenses.shareOfProfitPM})
+                              </p>
+                              <p className="pl-1">
+                                {item.expenses.shareOfProfitPA}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -296,7 +266,7 @@ const ReportData = (activeItem: any) => {
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    - Turnover is not verified as documents were not provided.
+                    - {payload?.data?.businessDetails?.howTurnoverVerified}
                   </li>
                   <li>
                     - It’s advised to cross check income with ITR &amp;
@@ -572,7 +542,7 @@ const ReportData = (activeItem: any) => {
               <p>Name of Entity</p>
             </td>
             <td colSpan={7}>
-              <p>XYZ Colony</p>
+              <p>{payload?.data?.businessDetails?.bussinessName}</p>
             </td>
           </tr>
           <tr>
@@ -580,7 +550,7 @@ const ReportData = (activeItem: any) => {
               <p>Type of Entity</p>
             </td>
             <td colSpan={7}>
-              <p>Proprietorship</p>
+              <p>{payload?.data?.businessDetails?.typeOfEntity}</p>
             </td>
           </tr>
           <tr>
@@ -588,7 +558,10 @@ const ReportData = (activeItem: any) => {
               <p>Age of Entity (Years)</p>
             </td>
             <td colSpan={7}>
-              <p>4 Years</p>
+              <p>
+                {moment().year() -
+                  payload?.data?.businessDetails?.yearOfIncorporation}
+              </p>
             </td>
           </tr>
           <tr>
@@ -596,7 +569,7 @@ const ReportData = (activeItem: any) => {
               <p>PD Conducted with</p>
             </td>
             <td colSpan={7}>
-              <p>Y</p>
+              <p>{payload?.data?.businessDetails?.pdConductWith}</p>
             </td>
           </tr>
           <tr>
@@ -604,7 +577,7 @@ const ReportData = (activeItem: any) => {
               <p>Designation</p>
             </td>
             <td colSpan={7}>
-              <p>Proprietor</p>
+              <p>{payload?.data?.businessDetails?.designation}</p>
             </td>
           </tr>
           <tr>
@@ -612,7 +585,7 @@ const ReportData = (activeItem: any) => {
               <p>Office Address</p>
             </td>
             <td colSpan={7}>
-              <p>XYZ Colony</p>
+              <p>{payload?.data?.businessDetails?.regOfficeAddress}</p>
             </td>
           </tr>
           <tr>
@@ -620,7 +593,7 @@ const ReportData = (activeItem: any) => {
               <p>Visited Address</p>
             </td>
             <td colSpan={7}>
-              <p>XYZ Colony</p>
+              <p>{payload?.data?.businessDetails?.visitedAddress}</p>
             </td>
           </tr>
           <tr>
@@ -628,7 +601,7 @@ const ReportData = (activeItem: any) => {
               <p>Vicinity</p>
             </td>
             <td colSpan={7}>
-              <p>Commercial (Easily Accessible)</p>
+              <p>{payload?.data?.businessDetails?.vicinity}</p>
             </td>
           </tr>
           <tr>
@@ -636,7 +609,7 @@ const ReportData = (activeItem: any) => {
               <p>Ownership</p>
             </td>
             <td colSpan={7}>
-              <p>Owned by Co-Applicant</p>
+              <p>{payload?.data?.businessDetails?.ownership}</p>
             </td>
           </tr>
           <tr>
@@ -644,7 +617,7 @@ const ReportData = (activeItem: any) => {
               <p>Phone Number</p>
             </td>
             <td colSpan={7}>
-              <p>9819353590</p>
+              <p>{payload?.data?.businessDetails?.mobile}</p>
             </td>
           </tr>
           <tr>
@@ -652,7 +625,10 @@ const ReportData = (activeItem: any) => {
               <p>Visit Date and Time</p>
             </td>
             <td colSpan={7}>
-              <p>09-09-2023 at 03:00 PM</p>
+              <p>
+                {payload?.data?.pdDetails?.pdVisitDate} :{' '}
+                {payload?.data?.pdDetails?.pdConductTime}
+              </p>
             </td>
           </tr>
           <tr>
@@ -660,7 +636,7 @@ const ReportData = (activeItem: any) => {
               <p>No. of Visits</p>
             </td>
             <td colSpan={7}>
-              <p>1</p>
+              <p>{payload?.data?.businessDetails?.noOfVisit}</p>
             </td>
           </tr>
           <tr>
@@ -671,7 +647,12 @@ const ReportData = (activeItem: any) => {
               <p>Loan Applied (As per Application Form)</p>
             </td>
             <td colSpan={4}>
-              <p>1.15 Cr.</p>
+              <p>
+                {
+                  payload?.data?.detailsOfProp?.propertyLoanDetails
+                    ?.loanAsPerForm
+                }
+              </p>
             </td>
           </tr>
           <tr>
@@ -679,7 +660,12 @@ const ReportData = (activeItem: any) => {
               <p>Loan Applied (As per P.D.)</p>
             </td>
             <td colSpan={4}>
-              <p>1.15 Cr.</p>
+              <p>
+                {
+                  payload?.data?.detailsOfProp?.propertyLoanDetails
+                    ?.loanDetails[0].amount
+                }
+              </p>
             </td>
           </tr>
           <tr>
@@ -687,16 +673,15 @@ const ReportData = (activeItem: any) => {
               <p>Purpose of LAP/Topup</p>
             </td>
             <td colSpan={7}>
-              <p>NA</p>
+              <p>{payload?.data?.businessDetails?.pdConductWith}</p>
             </td>
           </tr>
           <tr>
             <td>
-              <p>Family Members in</p>
-              <p>Business</p>
+              <p>Family Members in Business</p>
             </td>
             <td colSpan={7}>
-              <p>None Mentioned</p>
+              <p>{payload?.data?.businessDetails?.familyBusiness}</p>
             </td>
           </tr>
           <tr>
@@ -704,7 +689,7 @@ const ReportData = (activeItem: any) => {
               <p>Generation</p>
             </td>
             <td colSpan={7}>
-              <p>First Generation</p>
+              <p>{payload?.data?.businessDetails?.generation}</p>
             </td>
           </tr>
           <tr>
@@ -721,23 +706,26 @@ const ReportData = (activeItem: any) => {
               <p>Share Holding (%)</p>
             </td>
           </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>XYZ Colony</p>
-            </td>
-            <td colSpan={2}>
-              <p>X</p>
-            </td>
-            <td colSpan={3}>
-              <p>100%</p>
-            </td>
-          </tr>
+          {payload.data.businessDetails.shareHoldings.map((item: any) => (
+            <tr>
+              <td colSpan={2}>
+                <p>{payload?.data?.businessDetails?.bussinessName}</p>
+              </td>
+              <td colSpan={2}>
+                <p>{item?.ownerName}</p>
+              </td>
+              <td colSpan={3}>
+                <p>{item?.shareHolding}</p>
+              </td>
+            </tr>
+          ))}
+
           <tr>
             <td width={160}>
               <p>Main use of products/services</p>
             </td>
             <td colSpan={7}>
-              <p>Providing Financial Service</p>
+              <p>{payload?.data?.businessDetails?.mainUseproducts}</p>
             </td>
           </tr>
           <tr>
@@ -746,12 +734,16 @@ const ReportData = (activeItem: any) => {
             </td>
             <td colSpan={7}>
               <ul id="l2">
+                {payload?.data?.documentsSeen.map((item: any) => {
+                  return (
+                    item?.isDoc === 'Yes' && (
+                      <li data-list-text="-">- {item?.label}</li>
+                    )
+                  );
+                })}
                 <li>
                   - No documents provided &amp; applicant said Documents are
                   already given to bank.
-                </li>
-                <li data-list-text="-">
-                  - Documents were not handy during PD.
                 </li>
               </ul>
             </td>
@@ -761,7 +753,7 @@ const ReportData = (activeItem: any) => {
               <p>Cities of Representation of Business</p>
             </td>
             <td colSpan={7}>
-              <p>Mumbai &amp; Gujurat</p>
+              <p>{payload?.data?.businessDetails?.citiesOfReppresentation}</p>
             </td>
           </tr>
           <tr>
@@ -785,7 +777,7 @@ const ReportData = (activeItem: any) => {
               <p>Key Competitors to Business</p>
             </td>
             <td colSpan={7}>
-              <p>None Mentioned</p>
+              <p>{payload?.data?.businessDetails?.competitorsOfBusiness}</p>
             </td>
           </tr>
           <tr>
@@ -796,8 +788,7 @@ const ReportData = (activeItem: any) => {
               <p>No. of Employees seen</p>
             </td>
             <td colSpan={3} className="bg">
-              <p>No. Of Employees specified by</p>
-              <p>applicant</p>
+              <p>No. Of Employees specified by applicant</p>
             </td>
             <td colSpan={2} className="bg">
               <p>Total Salary (Rs. p.a.)</p>
@@ -805,10 +796,10 @@ const ReportData = (activeItem: any) => {
           </tr>
           <tr>
             <td colSpan={2}>
-              <p>2</p>
+              <p>{payload?.data?.businessDetails?.empSpecified}</p>
             </td>
             <td colSpan={3}>
-              <p>2</p>
+              <p>{payload?.data?.businessDetails?.empSeen}</p>
             </td>
             <td colSpan={2}>
               <p>2 Lakhs</p>
@@ -907,76 +898,157 @@ const ReportData = (activeItem: any) => {
             <td colSpan={7}>
               <div className="my-2 mx-3">
                 <p className="font-bold">Business Assets:</p>
-                <p>No Business Assets</p>
+                {payload.data.assets.bussinessAssetDetails.bussinessAssets
+                  .length > 0 ? (
+                  <table cellSpacing={0} className="w-full mt-4 mx-auto">
+                    <tbody>
+                      <tr className="bg">
+                        <td>
+                          <p>Particulars</p>
+                        </td>
+                        <td>
+                          <p>Location / Company Name</p>
+                        </td>
+                        <td>
+                          <p>Year of Purchase</p>
+                        </td>
+                        <td>
+                          <p>Area (in sq. Feet)</p>
+                        </td>
+                        <td>
+                          <p>Status of property (Self acquired/ Parental)</p>
+                        </td>
+                        <td>
+                          <p>Market Value (Rs.)</p>
+                        </td>
+                      </tr>
+                      {payload.data.assets.bussinessAssetDetails.bussinessAssets.map(
+                        (item: any, index: number) => (
+                          <tr key={index}>
+                            <td>
+                              <p>{item.particulars}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.location}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.purchaseYear}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.carpetArea}</p>
+                            </td>
+                            <td>
+                              <p>{item.status}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.marketValue} Lakhs</p>
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                      <tr>
+                        <td colSpan={5}>
+                          <p>Total</p>
+                        </td>
+                        <td>
+                          <p>
+                            {`${payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No Business Assets</p>
+                )}
                 <p className="font-bold my-4">Personal Assets:</p>
-                <table cellSpacing={0} className="w-full mt-4 mx-auto">
-                  <tbody>
-                    <tr className="bg">
-                      <td>
-                        <p>Particulars</p>
-                      </td>
-                      <td>
-                        <p>Location / Company Name</p>
-                      </td>
-                      <td>
-                        <p>Year of Purchase</p>
-                      </td>
-                      <td>
-                        <p>Area (in sq. Feet)</p>
-                      </td>
-                      <td>
-                        <p>Status of property (Self acquired/ Parental)</p>
-                      </td>
-                      <td>
-                        <p>Market Value (Rs.)</p>
-                      </td>
-                    </tr>
-                    {payload.data.assets.bussinessAssetDetails.bussinessAssets.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.particulars}</p>
-                          </td>
-                          <td>
-                            <p>
-                              <br />
-                            </p>
-                            <p>{item.location}</p>
-                          </td>
-                          <td>
-                            <p>
-                              <br />
-                            </p>
-                            <p>{item.purchaseYear}</p>
-                          </td>
-                          <td>
-                            <p>
-                              <br />
-                            </p>
-                            <p>{item.carpetArea}</p>
-                          </td>
-                          <td>
-                            <p>{item.status}</p>
-                          </td>
-                          <td>
-                            <p>
-                              <br />
-                            </p>
-                            <p>{item.marketValue} Lakhs</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    <tr>
-                      <td colSpan={5}>
-                        <p>Total</p>
-                      </td>
-                      <td>
-                        <p>{payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {payload.data.assets.personalAssetDetails.personalAssets
+                  .length > 0 ? (
+                  <table cellSpacing={0} className="w-full mt-4 mx-auto">
+                    <tbody>
+                      <tr className="bg">
+                        <td>
+                          <p>Particulars</p>
+                        </td>
+                        <td>
+                          <p>Location / Company Name</p>
+                        </td>
+                        <td>
+                          <p>Year of Purchase</p>
+                        </td>
+                        <td>
+                          <p>Area (in sq. Feet)</p>
+                        </td>
+                        <td>
+                          <p>Status of property (Self acquired/ Parental)</p>
+                        </td>
+                        <td>
+                          <p>Market Value (Rs.)</p>
+                        </td>
+                      </tr>
+                      {payload.data.assets.personalAssetDetails.personalAssets.map(
+                        (item: any, index: number) => (
+                          <tr key={index}>
+                            <td>
+                              <p>{item.particulars}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.location}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.purchaseYear}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.carpetArea}</p>
+                            </td>
+                            <td>
+                              <p>{item.status}</p>
+                            </td>
+                            <td>
+                              <p>
+                                <br />
+                              </p>
+                              <p>{item.marketValue} Lakhs</p>
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                      <tr>
+                        <td colSpan={5}>
+                          <p>Total</p>
+                        </td>
+                        <td>
+                          <p>
+                            {`${payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No Business Assets</p>
+                )}
               </div>
             </td>
           </tr>
@@ -1021,115 +1093,112 @@ const ReportData = (activeItem: any) => {
             </td>
           </tr>
           <tr>
-            <td rowSpan={4}>
+            <td>
               <p>Bank Account Details</p>
             </td>
-            <td colSpan={2} className="bg">
-              <p>Bank Name</p>
-            </td>
-            <td colSpan={2} className="bg">
-              <p>Branch</p>
-            </td>
-            <td colSpan={2} className="bg">
-              <p>Type</p>
-            </td>
-            <td colSpan={3} className="bg">
-              <p>Balance as on date</p>
-              <p>(Rs.)</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>Axis Bank</p>
-            </td>
-            <td colSpan={2}>
-              <p>NP</p>
-            </td>
-            <td colSpan={2}>
-              <p>SA</p>
-            </td>
-            <td colSpan={3} className="text-center">
-              <p>7.6 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>ICICI Bank</p>
-            </td>
-            <td colSpan={2}>
-              <p>NP</p>
-            </td>
-            <td colSpan={2}>
-              <p>SA</p>
-            </td>
-            <td colSpan={3} className="text-center">
-              <p>2 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={6} className="font-bold">
-              <p>Total</p>
-            </td>
-            <td className="font-bold text-center">
-              <p>9.6 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan={5}>
-              <p>Investment</p>
-            </td>
-            <td colSpan={3} className="bg">
-              <p>Particulars</p>
-            </td>
-            <td colSpan={2} className="bg">
-              <p>Contribution (Rs.)</p>
-            </td>
-            <td colSpan={2} className="bg">
-              <p>Market Value (Rs.)</p>
+            <td colSpan={7}>
+              {payload.data.assets.bankAccountDetails.bankAccounts.length >
+              0 ? (
+                <table cellSpacing={0} className="w-full">
+                  <tbody>
+                    <tr className="bg">
+                      <td>
+                        <p>Bank Name</p>
+                      </td>
+                      <td>
+                        <p>Branch</p>
+                      </td>
+                      <td>
+                        <p>Type</p>
+                      </td>
+                      <td>
+                        <p>Balance as on date (Rs.)</p>
+                      </td>
+                    </tr>
+                    {payload.data.assets.bankAccountDetails.bankAccounts.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.bankName}</p>
+                          </td>
+                          <td>
+                            <p>{item.branch}</p>
+                          </td>
+                          <td>
+                            <p>{item.type}</p>
+                          </td>
+                          <td>
+                            <p>{item.balanceOnDay}</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
+                    <tr>
+                      <td colSpan={3}>
+                        <p>Total</p>
+                      </td>
+                      <td>
+                        <p>
+                          {`${payload.data.assets.bankAccountDetails.totalBalance} Lakhs`}
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <p>No Bank Accounts</p>
+              )}
             </td>
           </tr>
           <tr>
-            <td colSpan={3}>
-              <p>Mutual Funds</p>
+            <td>
+              <p>Investments</p>
             </td>
-            <td colSpan={2} className="text-center">
-              <p>NP</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>28 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={3}>
-              <p>Shares &amp; Stocks (Equity)</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>NP</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>33 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={3}>
-              <p>Fixed Deposit</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>NP</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>33 Lakhs</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={3} className="font-bold">
-              <p>Total</p>
-            </td>
-            <td colSpan={2} className="text-center">
-              <p>-</p>
-            </td>
-            <td colSpan={2} className="font-bold text-center">
-              <p>94 Lakhs</p>
+            <td colSpan={7}>
+              {payload.data.assets.investmentDetails.investments.length > 0 ? (
+                <table cellSpacing={0} className="w-full">
+                  <tbody>
+                    <tr className="bg">
+                      <td>
+                        <p>Particulars</p>
+                      </td>
+                      <td>
+                        <p>Contribution (Rs.)</p>
+                      </td>
+                      <td>
+                        <p>Market Value (Rs.)</p>
+                      </td>
+                    </tr>
+                    {payload.data.assets.investmentDetails.investments.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.particulars}</p>
+                          </td>
+                          <td>
+                            <p>{item.contribution}</p>
+                          </td>
+                          <td>
+                            <p>{item.marketValue}</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
+                    <tr>
+                      <td colSpan={2}>
+                        <p>Total</p>
+                      </td>
+                      <td>
+                        <p>
+                          {`${payload.data.assets.investmentDetails.totalMarketValue} Lakhs`}
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <p>No Investments</p>
+              )}
             </td>
           </tr>
           <tr>
@@ -1137,7 +1206,75 @@ const ReportData = (activeItem: any) => {
               <p>Loan Details</p>
             </td>
             <td colSpan={7}>
-              <p>No Loans</p>
+              {payload.data.existingLoan.existingLoan.existingLoanDetails
+                .length > 0 ? (
+                <table cellSpacing={0} className="w-full">
+                  <tbody>
+                    <tr className="bg">
+                      <td>
+                        <p>Type of Facility</p>
+                      </td>
+                      <td>
+                        <p>Bank Name</p>
+                      </td>
+                      <td>
+                        <p>Limit (Rs.)</p>
+                      </td>
+                      <td>
+                        <p>Average Utilization (Rs.)</p>
+                      </td>
+                      <td>
+                        <p>Interest Rate (%)</p>
+                      </td>
+                      <td>
+                        <p>Remarks</p>
+                      </td>
+                    </tr>
+                    {payload.data.existingLoan.existingLoan.existingLoanDetails.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.typeOfFacility}</p>
+                          </td>
+                          <td>
+                            <p>{item.bankName}</p>
+                          </td>
+                          <td>
+                            <p>{item.limit}</p>
+                          </td>
+                          <td>
+                            <p>{item.averageUtilization}</p>
+                          </td>
+                          <td>
+                            <p>{item.interestRate}</p>
+                          </td>
+                          <td>
+                            <p>{item.remark}</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
+                    <tr>
+                      <td colSpan={2}>
+                        <p>Total</p>
+                      </td>
+                      <td colSpan={2}>
+                        <p>
+                          {`${payload.data.existingLoan.existingLoan.totalLoan}`}
+                        </p>
+                      </td>
+                      <td>
+                        <p>{`${payload.data.existingLoan.existingLoan.totalLoanEmi}`}</p>
+                      </td>
+                      <td>
+                        <p>{`${payload.data.existingLoan.existingLoan.totalLoanOut}`}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <p>No Loans</p>
+              )}
             </td>
           </tr>
           <tr>
@@ -1145,7 +1282,76 @@ const ReportData = (activeItem: any) => {
               <p>Credit Facility</p>
             </td>
             <td colSpan={7}>
-              <p>No Credit Facility</p>
+              <td colSpan={7}>
+                {payload.data.existingLoan.creditFacility.creditDetails.length >
+                0 ? (
+                  <table cellSpacing={0} className="w-full">
+                    <tbody>
+                      <tr className="bg">
+                        <td>
+                          <p>Type of Facility</p>
+                        </td>
+                        <td>
+                          <p>Bank Name</p>
+                        </td>
+                        <td>
+                          <p>Limit (Rs.)</p>
+                        </td>
+                        <td>
+                          <p>Average Utilization (Rs.)</p>
+                        </td>
+                        <td>
+                          <p>Interest Rate (%)</p>
+                        </td>
+                        <td>
+                          <p>Remarks</p>
+                        </td>
+                      </tr>
+                      {payload.data.existingLoan.creditFacility.creditDetails.map(
+                        (item: any, index: number) => (
+                          <tr key={index}>
+                            <td>
+                              <p>{item.typeOfFacility}</p>
+                            </td>
+                            <td>
+                              <p>{item.bankName}</p>
+                            </td>
+                            <td>
+                              <p>{item.limit}</p>
+                            </td>
+                            <td>
+                              <p>{item.averageUtilization}</p>
+                            </td>
+                            <td>
+                              <p>{item.interestRate}</p>
+                            </td>
+                            <td>
+                              <p>{item.remark}</p>
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                      <tr>
+                        <td colSpan={2}>
+                          <p>Total</p>
+                        </td>
+                        <td colSpan={2}>
+                          <p>
+                            {`${payload.data.existingLoan.creditFacility.totalLoanCfLimit}`}
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                            {`${payload.data.existingLoan.creditFacility.totalLoanCfAu}`}
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No Credit Facility</p>
+                )}
+              </td>
             </td>
           </tr>
           <tr>
@@ -1153,7 +1359,58 @@ const ReportData = (activeItem: any) => {
               <p>Other Commitments</p>
             </td>
             <td colSpan={7}>
-              <p>No other commitments</p>
+              <td colSpan={7}>
+                {payload.data.existingLoan.otherCommitments.commitmentsDetails
+                  .length > 0 ? (
+                  <table cellSpacing={0} className="w-full">
+                    <tbody>
+                      <tr className="bg">
+                        <td>
+                          <p>Particulars</p>
+                        </td>
+                        <td>
+                          <p>Contribution P.A. (Rs.)</p>
+                        </td>
+                        <td>
+                          <p>Sum Assured/Maturity Value (Rs.)</p>
+                        </td>
+                      </tr>
+                      {payload.data.existingLoan.otherCommitments.commitmentsDetails.map(
+                        (item: any, index: number) => (
+                          <tr key={index}>
+                            <td>
+                              <p>{item.particulars}</p>
+                            </td>
+                            <td>
+                              <p>{item.contribution}</p>
+                            </td>
+                            <td>
+                              <p>{item.sumAssured}</p>
+                            </td>
+                          </tr>
+                        ),
+                      )}
+                      <tr>
+                        <td colSpan={2}>
+                          <p>Total</p>
+                        </td>
+                        <td colSpan={2}>
+                          <p>
+                            {`${payload.data.existingLoan.otherCommitments.totalCon}`}
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                            {`${payload.data.existingLoan.otherCommitments.totalSum}`}
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No other commitments</p>
+                )}
+              </td>
             </td>
           </tr>
           <tr>
@@ -1161,7 +1418,7 @@ const ReportData = (activeItem: any) => {
               <p>GSTIN</p>
             </td>
             <td colSpan={7}>
-              <p>NA</p>
+              <p>{payload.data.businessDetails.gstNumber}</p>
             </td>
           </tr>
           <tr className="font-bold text-center">
@@ -1319,9 +1576,8 @@ const ReportData = (activeItem: any) => {
             </td>
             <td colSpan={7}>
               <p>
-                1.Business Plate name seen:{' '}
-                {payload.data.observations.businessPlateName.exist} (
-                {payload.data.observations.businessPlateName.reasonForNo})
+                1.Business Plate name seen:
+                {payload.data.observations.businessPlateName.exist}
               </p>
             </td>
           </tr>
@@ -1336,8 +1592,10 @@ const ReportData = (activeItem: any) => {
           <tr>
             <td colSpan={7}>
               <p>
-                3.Employees Seen: {payload.data.observations?.employee?.exist} (
-                {payload.data.observations?.employee?.reasonForNo})
+                3.Employees Seen:{' '}
+                {payload.data.businessDetails?.empSeen === 0
+                  ? 'No'
+                  : `Yes (${payload.data.businessDetails.empSeen})`}
               </p>
             </td>
           </tr>
@@ -1360,8 +1618,18 @@ const ReportData = (activeItem: any) => {
           <tr>
             <td colSpan={7}>
               <p>
-                6. During Visit:-{' '}
-                {payload.data.observations.duringVist.applicantDoing}
+                6. During Visit:- <br />
+                <span>
+                  - {payload.data.observations.duringVist.applicantDoing}
+                </span>
+                <br />
+                <span>
+                  - {payload.data.observations.duringVist.employeesDoing}
+                </span>
+                <br />
+                <span>
+                  - {payload.data.observations.duringVist.otherObservation}
+                </span>
               </p>
             </td>
           </tr>
@@ -1410,11 +1678,11 @@ const ReportData = (activeItem: any) => {
         <h1>Chartered Accountants</h1>
       </div>
       <br />
-      <img width={50} height={50} src={activeItem?.assignTo?.profile} />
-      <br />
+      {/* <img width={50} height={50} src={activeItem?.assignTo?.profile} />
+      <br /> */}
       <div className="my-4">
         <h1>Authorised Signatory</h1>
-        <h1>Date: 11-09-2023 {moment().format('DD-MM-YYYY')}</h1>
+        <h1>Date: {moment().format('DD-MM-YYYY')}</h1>
       </div>
       <p>
         <br />
@@ -1431,7 +1699,7 @@ const ReportData = (activeItem: any) => {
               <p>Name:</p>
             </td>
             <td>
-              <p>Mr. {activeItem?.assignTo?.name}</p>
+              <p>{payload?.data?.pdDetails?.reporterName}</p>
             </td>
           </tr>
           <tr>
@@ -1439,7 +1707,7 @@ const ReportData = (activeItem: any) => {
               <p>Contact No:</p>
             </td>
             <td>
-              <p>{activeItem?.assignTo?.mobile}</p>
+              <p>{payload?.data?.pdDetails?.reporterContact}</p>
             </td>
           </tr>
           <tr className="bg">
@@ -1452,7 +1720,7 @@ const ReportData = (activeItem: any) => {
               <p>Name:</p>
             </td>
             <td>
-              <p>Mr. {activeItem?.reviewer?.name}</p>
+              <p>{payload?.data?.pdDetails?.reviewerName}</p>
             </td>
           </tr>
           <tr>
@@ -1460,7 +1728,7 @@ const ReportData = (activeItem: any) => {
               <p>Contact No:</p>
             </td>
             <td>
-              <p>{activeItem?.reviewer?.mobile}</p>
+              <p>{payload?.data?.pdDetails?.reviewerContact}</p>
             </td>
           </tr>
         </tbody>

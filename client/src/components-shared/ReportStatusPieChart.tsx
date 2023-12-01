@@ -8,7 +8,7 @@ const options: ApexOptions = {
     type: 'donut',
   },
   colors: ['#10B981', '#375E83', '#FFA70B', '#8FD0EF'],
-  labels: ['Recieved', 'Assigned', 'Reviewing', 'Sent to Bank'],
+  labels: ['Assigned', 'Reviewing', 'Completed', 'Sent to Bank'],
   legend: {
     show: true,
     position: 'bottom',
@@ -52,16 +52,16 @@ const ReportStatusPieChart: React.FC = () => {
   useEffect(() => {
     if (analytics) {
       setSeries([
-        analytics?.cases ? analytics?.cases : 0,
         analytics?.assignedCases ? analytics?.assignedCases : 0,
         analytics?.reviewedCases ? analytics?.reviewedCases : 0,
+        analytics?.completedCases ? analytics?.completedCases : 0,
         analytics?.sentToBank ? analytics?.sentToBank : 0,
       ]);
     }
   }, [analytics]);
 
   return (
-    <div className="col-span-12 bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5 sm:px-7.5 xl:col-span-5">
+    <div className="col-span-12 bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5 sm:px-7.5 xl:col-span-5">
       <div className="mb-3 justify-between gap-3 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-main">Report Status</h5>
@@ -70,11 +70,7 @@ const ReportStatusPieChart: React.FC = () => {
 
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="donut"
-          />
+          <ReactApexChart options={options} series={series} type="donut" />
         </div>
       </div>
     </div>

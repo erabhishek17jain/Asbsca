@@ -41,7 +41,7 @@ const StatsCard = () => {
     analytics &&
     statsData.map((item: any) => (
       <div
-        className="flex flex-col justify-between bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg p-4 shadow-default"
+        className="flex flex-col justify-between bg-clip-border rounded-xl bg-white shadow-lg p-4 shadow-default"
         key={item?.path}
       >
         <div className="flex justify-between">

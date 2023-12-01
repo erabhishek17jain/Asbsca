@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/logo/logo.png';
 import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
@@ -6,25 +6,34 @@ import {
   ForgotPassword,
   ResetPassword,
 } from '../ChangePassword/ChangePassword';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { setToken } from '../../services';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { search } = location;
-  let token = '',
+  const token: any = document.cookie?.replace('token=', '');
+  let resetToken = '',
     pageType = 'home';
 
   if (search.includes('email')) {
     pageType = 'forgotPassword';
   } else if (search.includes('token')) {
     pageType = 'resetPassword';
-    token = search.slice(7);
+    resetToken = search.slice(7);
   }
 
-  useEffect(() => {
-    if (token !== '' && pageType === 'resetPassword') {
-      setToken(token);
+  useLayoutEffect(() => {
+    if (pageType === 'forgotPassword') {
+      setToken('');
+    } else if (resetToken !== '' && pageType === 'resetPassword') {
+      setToken(resetToken);
+    } else {
+      if (token !== '') {
+        setToken(token);
+        navigate('/dashboard');
+      }
     }
   }, [search]);
 

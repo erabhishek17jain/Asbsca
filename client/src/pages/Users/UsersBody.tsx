@@ -1,6 +1,5 @@
 import { Tooltip } from '@material-tailwind/react';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { usersData } from '../../mockData/mocks';
 import { TableColumn } from '../../components-global/ATable';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +11,7 @@ const UsersBody = ({
   const { allUsers } = useSelector((state: any) => state.users);
 
   return allUsers?.users?.map((item: any, index: number) => {
-    const isLast = index === usersData.length - 1;
+    const isLast = index === allUsers?.users.length - 1;
     const classes = isLast ? 'p-4' : 'p-4 border-b border-stroke';
     return (
       <tr key={item?.email}>

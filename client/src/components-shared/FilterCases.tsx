@@ -17,10 +17,17 @@ import { Tooltip } from '@material-tailwind/react';
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
 import { getOptions } from '../utils';
-import { appoinmentStatusList, caseStatusList } from '../constants';
+import {
+  appoinmentStatusList,
+  caseStatusList,
+  caseTypeList,
+  exportHeaders,
+  localOrOGLList,
+} from '../constants';
 import store from '../store/store';
 import { fetchAllClientsAsync } from '../slices/clientsSlice';
 import { fetchAllUsersAsync } from '../slices/usersSlice';
+import moment from 'moment';
 
 export const FilterButtons = ({
   showFilter,
@@ -29,7 +36,7 @@ export const FilterButtons = ({
   setDefaultFilters,
 }: any) => {
   const { userDetails } = useSelector((state: any) => state.users);
-  const rows: any = [];
+  const { exportCases } = useSelector((state: any) => state.cases);
 
   const formik = useFormik({
     initialValues: {
@@ -41,6 +48,38 @@ export const FilterButtons = ({
       setDefaultFilters({ ...defaultFilters, q: values?.search });
     },
   });
+
+  const [exportData, setExportData] = useState<any>([]);
+  useEffect(() => {
+    if (exportCases?.cases?.length > 0) {
+      const exports: any = [];
+      exportCases.cases.map((item: any) => {
+        exports.push({
+          bankName: item?.bankName?.name,
+          referenceId: item?.referenceId,
+          receivedDate: moment(item?.receivedDate).format('DD-MM-YYYY'),
+          name: item?.name,
+          mobile: item?.mobile,
+          address: item?.address,
+          city: item?.city,
+          branch: item?.branch.name,
+          loanAmount: item?.loanAmount,
+          localOrOGL: localOrOGLList.find((el) => el.value === item?.localOrOGL)
+            ?.label,
+          type: caseTypeList.find((el) => el.value === item?.type)?.label,
+          status: caseStatusList.find((el) => el.value === item?.status)?.label,
+          appoinmentStatus: appoinmentStatusList.find(
+            (el) => el.value === item?.appoinmentStatus,
+          )?.label,
+          remark: item?.remark,
+          assignTo: item?.assignTo?.fullName,
+          reviewer: item?.reviewer?.fullName,
+        });
+      });
+      setExportData([...exports]);
+    }
+  }, [exportCases]);
+
   return (
     <>
       <div className="flex gap-1 w-full md:w-72">
@@ -61,8 +100,8 @@ export const FilterButtons = ({
         </div>
       </div>
       {userDetails?.role?.name === 'Admin' && (
-        <Tooltip content="Edit Case">
-          <CSVLink data={rows} filename={'Reports'}>
+        <Tooltip content="Download Cases">
+          <CSVLink data={exportData} headers={exportHeaders} filename={'Cases'}>
             <div
               className={`flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey`}
             >
@@ -96,8 +135,9 @@ export const FilterCases = ({
 
   useEffect(() => {
     if (allClients?.data?.length > 0) {
-    setClientOptions(getOptions(allClients?.data, 'name', '_id'));
-  }  }, [allClients]);
+      setClientOptions(getOptions(allClients?.data, 'name', '_id'));
+    }
+  }, [allClients]);
 
   useEffect(() => {
     setAssignOptions(getOptions(allUsers?.users, 'fullName', '_id'));

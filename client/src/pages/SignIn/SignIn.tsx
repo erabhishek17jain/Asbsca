@@ -14,7 +14,7 @@ import {
   EyeSlashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -36,8 +36,8 @@ const SignIn = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'erabhishek17jain@gmail.com',
-      password: 'abhishek@123',
+      email: '',
+      password: '',
     },
     validateOnBlur: false,
     validateOnChange: false,
@@ -59,7 +59,7 @@ const SignIn = () => {
     },
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (token !== '') {
       navigate('/dashboard');
     } else {

@@ -19,7 +19,7 @@ import {
 import AButton from '../../components-global/AButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import store from '../../store/store';
-import { fetchCasesAsync } from '../../slices/casesSlice';
+import { fetchCasesAsync, fetchExporCasesAsync } from '../../slices/casesSlice';
 import { AModal } from '../../components-global/AModal';
 import { assignCase, deleteCaseById, statusUpdateCase } from '../../services';
 import toast from 'react-hot-toast';
@@ -74,18 +74,13 @@ const Cases = () => {
   };
 
   const updateAssigneeReviewer = (values: any) => {
-    if (values?.status === 'assigned') {
-      values.remark = '';
-    }
     let assignCasePromise = assignCase(values);
     assignCasePromise
       .then(() => {
         setActiveItem(null);
         closeAssignCaseModal();
         formikAssigned.resetForm();
-        store.dispatch(
-          fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
-        );
+        setDefaultFilters({...defaultFilters})
         toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
@@ -100,9 +95,7 @@ const Cases = () => {
         setActiveItem(null);
         closeUpdateStatusModal();
         formikStatus.resetForm();
-        store.dispatch(
-          fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
-        );
+        setDefaultFilters({ ...defaultFilters });
         if (successMessages[values?.status])
           toast.success(<b>{successMessages[values?.status]}</b>);
       })
@@ -177,7 +170,7 @@ const Cases = () => {
     setActionType('assigned');
     formikAssigned.setFieldValue('caseId', activeItem?._id);
     formikAssigned.setFieldValue('status', 'assigned');
-    formikAssigned.setFieldValue('remark', 'assigned');
+    formikAssigned.setFieldValue('remark', 'Assigned');
   };
 
   const updateStatusCase = () => {
@@ -197,38 +190,6 @@ const Cases = () => {
         state: { activeItem: activeItem, action: 'edit' },
       });
     }
-  };
-
-  const sentToReviewCase = () => {
-    setShowAssignCase(true);
-    setActionType('review');
-    formikAssigned.setFieldValue('status', 'review');
-    formikAssigned.setFieldValue('caseId', activeItem?._id);
-    formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
-    formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
-  };
-
-  const revertToAssignee = () => {
-    setShowAssignCase(true);
-    setActionType('query');
-    formikAssigned.setFieldValue('status', 'query');
-    formikAssigned.setFieldValue('caseId', activeItem?._id);
-    formikAssigned.setFieldValue('assigneeId', activeItem?.assignTo?._id);
-    formikAssigned.setFieldValue('reviewerId', activeItem?.reviewer?._id);
-  };
-
-  const caseCompleted = () => {
-    setActionType('completed');
-    setShowStatusCase(true);
-    formikStatus.setFieldValue('status', 'completed');
-    formikStatus.setFieldValue('appoinmentStatus', 'visited');
-  };
-
-  const caseSentToBank = () => {
-    setActionType('sentToBank');
-    setShowStatusCase(true);
-    formikStatus.setFieldValue('status', 'sentToBank');
-    formikStatus.setFieldValue('appoinmentStatus', 'visited');
   };
 
   const openDeleteModal = () => {
@@ -276,6 +237,13 @@ const Cases = () => {
     store.dispatch(
       fetchCasesAsync({ ...defaultFilters, ...{ filter: filters } }),
     );
+    store.dispatch(
+      fetchExporCasesAsync({
+        ...defaultFilters,
+        ...{ filter: filters },
+        limit: 200,
+      }),
+    );
   }, [filters, defaultFilters]);
 
   useEffect(() => {
@@ -285,7 +253,7 @@ const Cases = () => {
     if (status === 'cases') {
       setFilters({});
     } else if (status === 'assigned') {
-      setFilters({ ...filters, ...{ status: 'assigned' } }); // assigned_query
+      setFilters({ ...filters, ...{ status: 'assigned_query' } }); // assigned_query
     } else {
       setFilters({ ...filters, ...{ status: status } });
     }
@@ -330,50 +298,6 @@ const Cases = () => {
       {
         title: 'Update Status',
         action: updateStatusCase,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Send To Review',
-        action: sentToReviewCase,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-    ],
-    review: [
-      {
-        title: 'Preview Report',
-        action: () =>
-          navigate('/finalReport', { state: { activeItem: activeItem } }),
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Revert to Assignee',
-        action: revertToAssignee,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Approve Case',
-        action: caseCompleted,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-    ],
-    completed: [
-      {
-        title: 'Preview Report',
-        action: () =>
-          navigate('/finalReport', { state: { activeItem: activeItem } }),
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-      {
-        title: 'Send To Bank',
-        action: caseSentToBank,
-        icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
-      },
-    ],
-    sentToBank: [
-      {
-        title: 'Preview Report',
-        action: () =>
-          navigate('/finalReport', { state: { activeItem: activeItem } }),
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
     ],
@@ -433,7 +357,7 @@ const Cases = () => {
       </div>
       {showAssignCase && (
         <AModal
-          saveText={'Assign'}
+          saveText={actionType === 'assigned' ? 'Assign' : 'Send to Review'}
           title={modalTitle[actionType]}
           onSave={formikAssigned.handleSubmit}
           closeModal={closeAssignCaseModal}

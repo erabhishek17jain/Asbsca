@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 const loanInfo = { amount: '', emi: '', roi: '', year: '' };
 const DetailsOfProperty = ({
   steps,
-  action,
+
   payloads,
   activeStep,
   handlePrev,
@@ -117,14 +117,12 @@ const DetailsOfProperty = ({
   };
 
   useEffect(() => {
-    if (action === 'start') {
-      formik.setFieldValue(`propertyLoanDetails.loanDetails[0].roi`, 8);
-      formik.setFieldValue(`propertyLoanDetails.loanDetails[0].year`, 20);
-    }
+    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].roi`, 8);
+    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].year`, 20);
   }, []);
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.detailsOfProp) {
       formik.setFieldValue(
         'purchaseYear',
         payloads.detailsOfProp?.purchaseYear,

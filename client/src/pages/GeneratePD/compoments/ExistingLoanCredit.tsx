@@ -18,7 +18,7 @@ import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
 
 const ExistingLoan = ({ formik }: any) => {
-  const [isExistingLoan, setIsExistingLoan] = useState('yes');
+  const [isExistingLoan, setIsExistingLoan] = useState('Yes');
 
   const handleExistingLoan = (title: string, val: string) => {
     console.log(title);
@@ -36,7 +36,7 @@ const ExistingLoan = ({ formik }: any) => {
         radioValues={yesNoOptions}
         handleChange={handleExistingLoan}
       />
-      {isExistingLoan === 'yes' && (
+      {isExistingLoan === 'Yes' && (
         <>
           <ASection
             footers={[
@@ -560,7 +560,7 @@ const ExistingLoan = ({ formik }: any) => {
 };
 
 const CreditFacility = ({ formik }: any) => {
-  const [isCreditFacility, setIsCreditFacility] = useState('yes');
+  const [isCreditFacility, setIsCreditFacility] = useState('Yes');
 
   const handleCreditFacility = (title: string, val: string) => {
     console.log(title);
@@ -578,7 +578,7 @@ const CreditFacility = ({ formik }: any) => {
         radioValues={yesNoOptions}
         handleChange={handleCreditFacility}
       />
-      {isCreditFacility === 'yes' && (
+      {isCreditFacility === 'Yes' && (
         <ASection
           footers={[
             {
@@ -749,7 +749,7 @@ const CreditFacility = ({ formik }: any) => {
 };
 
 const OtherCommitments = ({ formik }: any) => {
-  const [isOtherCommitments, setIsOtherCommitments] = useState('yes');
+  const [isOtherCommitments, setIsOtherCommitments] = useState('Yes');
 
   const handleOtherCommitments = (title: string, val: string) => {
     console.log(title);
@@ -767,7 +767,7 @@ const OtherCommitments = ({ formik }: any) => {
         radioValues={yesNoOptions}
         handleChange={handleOtherCommitments}
       />
-      {isOtherCommitments === 'yes' && (
+      {isOtherCommitments === 'Yes' && (
         <ASection
           footers={[
             {
@@ -907,7 +907,7 @@ const commitmentsInfo = {
 };
 
 const ExistingLoanCredit = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
@@ -916,7 +916,7 @@ const ExistingLoanCredit = ({
 }: any) => {
   const initialValues = {
     existanceLoan: {
-      isExistanceLoan: 'yes',
+      isExistanceLoan: 'Yes',
       balanceTransfer: [] as any,
       totalLoanBt: '',
       totalLoanBtEmi: '',
@@ -931,14 +931,14 @@ const ExistingLoanCredit = ({
       totalLoanEmOut: '',
     },
     creditFacility: {
-      isCreditFacility: 'yes',
+      isCreditFacility: 'Yes',
       creditDetails: [] as any,
       totalLoanCf: '',
       totalLoanCfLimit: '',
       totalLoanCfAu: '',
     },
     otherCommitments: {
-      isOtherCommitmemts: 'yes',
+      isOtherCommitmemts: 'Yes',
       commitmentsDetails: [] as any,
       totalCon: '',
       totalSum: '',
@@ -1020,18 +1020,18 @@ const ExistingLoanCredit = ({
   });
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads) {
       formik.setFieldValue(
         'existanceLoan',
-        payloads.existingLoan?.existanceLoan,
+        payloads.existingLoan,
       );
       formik.setFieldValue(
         'creditFacility',
-        payloads?.existingLoan?.creditFacility,
+        payloads?.creditFacility,
       );
       formik.setFieldValue(
         'otherCommitments',
-        payloads?.existingLoan?.otherCommitments,
+        payloads?.otherCommitments,
       );
     }
   }, [payloads]);

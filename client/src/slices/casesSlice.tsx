@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
-import { getCases, getAanalytics, getReportData } from '../services';
+import {
+  getCases,
+  getAanalytics,
+  getReportData,
+  getExportCases,
+} from '../services';
 
 export interface ICase {}
 
@@ -9,9 +14,11 @@ export const fetchCasesAnalyticsAsync = createAsyncThunk(
   getAanalytics,
 );
 
-export const fetchCasesAsync = createAsyncThunk(
-  '/cases/allCases',
-  getCases,
+export const fetchCasesAsync = createAsyncThunk('/cases/allCases', getCases);
+
+export const fetchExporCasesAsync = createAsyncThunk(
+  '/cases/exportCases',
+  getExportCases,
 );
 
 export const fetchCaseReportDataAsync = createAsyncThunk(
@@ -23,6 +30,7 @@ export interface ICasesState {
   allCases: any;
   analytics: any;
   reportData: any;
+  exportCases: any;
   loading: boolean;
   error: any;
 }
@@ -30,6 +38,7 @@ export interface ICasesState {
 const initialState: ICasesState = {
   allCases: [],
   analytics: [],
+  exportCases: [],
   reportData: {},
   loading: false,
   error: null,
@@ -42,6 +51,9 @@ export const casesSlice = createSlice({
     allCases: (state: any, payload: any) => {
       state.allCases = payload;
     },
+    exportCases: (state: any, payload: any) => {
+      state.exportCases = payload;
+    },
     analytics: (state: any, payload: any) => {
       state.analytics = payload;
     },
@@ -53,6 +65,7 @@ export const casesSlice = createSlice({
     [fetchCasesAsync.pending.type]: (state) => {
       if (!state.loading) {
         state.loading = true;
+        state.allCases = [];
       }
     },
     [fetchCasesAsync.fulfilled.type]: (state, action) => {
@@ -101,9 +114,16 @@ export const casesSlice = createSlice({
         state.error = action.error;
       }
     },
+    [fetchExporCasesAsync.fulfilled.type]: (state, action) => {
+      state.exportCases = action.payload;
+    },
+    [fetchExporCasesAsync.rejected.type]: (state, action) => {
+      state.error = action.error;
+    },
   },
 });
 
 export const cases = (state: RootState) => state.cases;
-export const { analytics, allCases, reportData } = casesSlice.actions;
+export const { analytics, allCases, exportCases, reportData } =
+  casesSlice.actions;
 export default casesSlice.reducer;

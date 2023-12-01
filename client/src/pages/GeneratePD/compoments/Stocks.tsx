@@ -9,14 +9,14 @@ import { useFormik } from 'formik';
 import { yesNoOptions } from '../constants';
 
 const Stocks = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
-  const [isStocks, setIsStocks] = useState('yes');
+  const [isStocks, setIsStocks] = useState('Yes');
 
   const handleStocks = (title: string, val: string) => {
     console.log(title);
@@ -24,7 +24,7 @@ const Stocks = ({
   };
 
   const initialValues = {
-    isStockDetails: 'yes',
+    isStockDetails: 'Yes',
     stockDetails: {
       rawMaterialAmount: '',
       wipAmount: '',
@@ -59,7 +59,7 @@ const Stocks = ({
   });
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.stocks) {
       formik.setFieldValue('isStockDetails', payloads?.stocks?.isStockDetails);
       formik.setFieldValue('stockDetails', payloads?.stocks?.stockDetails);
     }
@@ -75,7 +75,7 @@ const Stocks = ({
             handleChange={handleStocks}
             radioValues={yesNoOptions}
           />
-          {isStocks === 'yes' && (
+          {isStocks === 'Yes' && (
             <ASection
               footers={[
                 {

@@ -1,5 +1,6 @@
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid';
 import Papa from 'papaparse';
+import { addBulkCsvHeaders } from '../constants';
 
 const AFileDragAndUpload = ({
   id,
@@ -13,8 +14,17 @@ const AFileDragAndUpload = ({
     if (file) {
       Papa.parse(file, {
         complete: (result: any) => {
-          var data = result.data;
-          setData(data);
+          const parsedData = result.data.map((item: any) => {
+            const obj: any = {};
+            for (const key in item) {
+              const field: any = addBulkCsvHeaders.find(
+                (el: any) => el.label === key,
+              );
+              obj[field.key] = item[key];
+            }
+            return obj;
+          });
+          setData(parsedData);
         },
         header: true,
       });

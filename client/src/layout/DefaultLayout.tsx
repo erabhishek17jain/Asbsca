@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Header from '../components-shared/Header';
 import Sidebar from '../components-shared/Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -39,14 +39,14 @@ const DefaultLayout = () => {
     }
   }, [userDetails]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (token !== '') {
       setToken(token);
       store.dispatch(fetchUserAsync(''));
     } else {
       navigate('/signin');
     }
-  }, []);
+  }, [token]);
 
   return (
     <div>

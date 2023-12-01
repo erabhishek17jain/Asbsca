@@ -55,7 +55,7 @@ const AFileUpload = ({
             className="w-13 h-13 -mt-1 rounded-full p-1"
           />
         ) : (
-          icon
+          <div className="w-13 h-13 -mt-1 rounded-full p-1">{icon}</div>
         )}
       </div>
       {error && <span className="ml-1 text-xs text-meta1">{error}</span>}

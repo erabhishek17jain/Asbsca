@@ -44,57 +44,57 @@ const bankAccountInfo: any = {
 };
 
 const AssetsInvestmentBank = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
-  const [isBusinessAssets, setIsBusinessAssets] = useState('yes');
+  const [isBusinessAssets, setIsBusinessAssets] = useState('Yes');
   const handleBusinessAssets = (title: string, val: string) => {
     console.log(title);
     setIsBusinessAssets(val);
   };
 
-  const [isPersonalAssets, setIsPersonalAssets] = useState('yes');
+  const [isPersonalAssets, setIsPersonalAssets] = useState('Yes');
   const handlePersonalAssets = (title: string, val: string) => {
     console.log(title);
     setIsPersonalAssets(val);
   };
 
-  const [isInvestments, setIsInvestments] = useState('yes');
+  const [isInvestments, setIsInvestments] = useState('Yes');
   const handleInvestments = (title: string, val: string) => {
     console.log(title);
     setIsInvestments(val);
   };
 
-  const [isBankAccounts, setIsBankAccounts] = useState('yes');
+  const [isBankAccounts, setIsBankAccounts] = useState('Yes');
   const handleBankAccounts = (title: string, val: string) => {
     console.log(title);
     setIsBankAccounts(val);
   };
 
   const initialValues = {
-    isBussinessAssets: 'yes',
+    isBussinessAssets: 'Yes',
     bussinessAssetDetails: {
       bussinessAssets: [] as any,
       totalMarketValue: '200',
       totalRentPM: '30000',
     },
-    isPersonalAssets: 'yes',
+    isPersonalAssets: 'Yes',
     personalAssetDetails: {
       personalAssets: [] as any,
       totalMarketValue: '120',
       totalRentPM: '20000',
     },
-    isInvestments: 'yes',
+    isInvestments: 'Yes',
     investmentDetails: {
       investments: [] as any,
       totalContribution: '50',
       totalMarketValue: '70',
     },
-    isBankAccount: 'yes',
+    isBankAccount: 'Yes',
     bankAccountDetails: {
       bankAccounts: [] as any,
       totalBalance: '2.34',
@@ -175,7 +175,7 @@ const AssetsInvestmentBank = ({
   });
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.assets) {
       formik.setFieldValue(
         'isBussinessAssets',
         payloads?.assets?.isBussinessAssets,
@@ -220,7 +220,7 @@ const AssetsInvestmentBank = ({
             radioValues={yesNoOptions}
             handleChange={handleBusinessAssets}
           />
-          {isBusinessAssets === 'yes' && (
+          {isBusinessAssets === 'Yes' && (
             <ASection
               title={'Business Asset Details'}
               footers={[
@@ -392,7 +392,7 @@ const AssetsInvestmentBank = ({
             radioValues={yesNoOptions}
             handleChange={handlePersonalAssets}
           />
-          {isPersonalAssets === 'yes' && (
+          {isPersonalAssets === 'Yes' && (
             <ASection
               title={'Personal Asset Details'}
               footers={[
@@ -563,7 +563,7 @@ const AssetsInvestmentBank = ({
             radioValues={yesNoOptions}
             handleChange={handleInvestments}
           />
-          {isInvestments === 'yes' && (
+          {isInvestments === 'Yes' && (
             <ASection
               title={'Investment Details'}
               footers={[
@@ -674,7 +674,7 @@ const AssetsInvestmentBank = ({
             radioValues={yesNoOptions}
             handleChange={handleBankAccounts}
           />
-          {isBankAccounts === 'yes' && (
+          {isBankAccounts === 'Yes' && (
             <ASection
               title={'Bank Account Details'}
               footers={[

@@ -162,8 +162,8 @@ const AddCase = () => {
   return (
     <>
       <ABreadcrumb pageName="Add Case" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
-        <p className="flex justify-between items-center font-sans text-base leading-relaxed text-grey-700 mt-1 font-normal mb-5">
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
+        <p className="flex justify-between items-center font-sans text-base leading-relaxed mt-1 font-normal mb-5">
           <span className="">
             Fill below details to {state?.activeItem?._id ? 'update' : 'add'}{' '}
             new case.

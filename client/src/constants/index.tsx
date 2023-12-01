@@ -83,7 +83,7 @@ export const casesTypes = [
       'Address',
       'City',
       'Branch',
-      'Loan Amt (Lacs)',
+      'Loan Amt (Lakhs)',
       'Type',
       'Case Type',
       'Case Status',
@@ -107,7 +107,7 @@ export const casesTypes = [
       'Mobile',
       'Address',
       'City',
-      'Loan Amt (Lacs)',
+      'Loan Amt (Lakhs)',
       'Case Type',
       'Case Status',
       'Appointment Status',
@@ -129,7 +129,7 @@ export const casesTypes = [
       'Mobile',
       'Address',
       'City',
-      'Loan Amt (Lacs)',
+      'Loan Amt (Lakhs)',
       'Case Type',
       'Assigned to',
       'Reviewer',
@@ -189,7 +189,7 @@ export const BULK_UPLOAD_TABLE_HEAD = [
   '',
   "Applicant's Name",
   'Mobile',
-  'Loan Amt (Lacs)',
+  'Loan Amt (Lakhs)',
   'Reference ID',
   'Type',
   'Address',
@@ -287,54 +287,36 @@ export const statusList = [
   { label: 'Inactive', value: 'inactive' },
 ];
 
-export const addBulkCsvData: any = [];
-export const addBulkCsvColumns = [
-  {
-    id: 'name',
-    displayName: "Applicant's Name",
-  },
-  {
-    id: 'mobile',
-    displayName: 'Mobile',
-  },
-  {
-    id: 'loanAmt',
-    displayName: 'Loan Amt. (Lacs)',
-  },
-  {
-    id: 'referenceId',
-    displayName: 'Reference ID',
-  },
-  {
-    id: 'type',
-    displayName: 'Type',
-  },
-  {
-    id: 'address',
-    displayName: 'Address',
-  },
-  {
-    id: 'city',
-    displayName: 'City',
-  },
-  {
-    id: 'branch',
-    displayName: 'Branch',
-  },
-  {
-    id: 'caseType',
-    displayName: 'Case Type',
-  },
-  {
-    id: 'address',
-    displayName: 'Address',
-  },
-  {
-    id: 'bankName',
-    displayName: 'Bank Name',
-  },
-  {
-    id: 'receivedDate',
-    displayName: 'Received Date',
-  },
+export const addBulkCsvHeaders = [
+  { key: 'srNo', label: 'Sr. No' },
+  { key: 'name', label: "Applicant's Name" },
+  { key: 'mobile', label: 'Mobile' },
+  { key: 'loanAmount', label: 'Loan Amt. (Lakhs)' },
+  { key: 'referenceId', label: 'Reference ID' },
+  { key: 'localOrOGL', label: 'Type' },
+  { key: 'address', label: 'Address' },
+  { key: 'city', label: 'City' },
+  { key: 'branch', label: 'Branch' },
+  { key: 'type', label: 'Case Type' },
+  { key: 'bankName', label: 'Bank Name' },
+  { key: 'receivedDate', label: 'Received Date' },
+];
+
+export const exportHeaders = [
+  { label: 'Bank Name', key: 'bankName' },
+  { label: 'Reference ID', key: 'referenceId' },
+  { label: 'Received Date', key: 'receivedDate' },
+  { label: "Applicant's Name", key: 'name' },
+  { label: 'Mobile', key: 'mobile' },
+  { label: 'Address', key: 'address' },
+  { label: 'City', key: 'city' },
+  { label: 'Branch', key: 'branch' },
+  { label: 'Loan Amt (Lakhs)', key: 'loanAmount' },
+  { label: 'Type', key: 'localOrOGL' },
+  { label: 'Case Type', key: 'type' },
+  { label: 'Case Status', key: 'status' },
+  { label: 'Appointment Status', key: 'appoinmentStatus' },
+  { label: 'Remark', key: 'remark' },
+  { label: 'Assigned to', key: 'assignTo' },
+  { label: 'Reviewer', key: 'reviewer' },
 ];

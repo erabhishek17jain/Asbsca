@@ -56,7 +56,7 @@ const Profile = () => {
   return (
     <>
       <ABreadcrumb pageName="Profile" />
-      <div className="overflow-hidden bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
+      <div className="overflow-hidden bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         {!isEditProfile ? (
           <>
             <div className="relative z-20 h-30">

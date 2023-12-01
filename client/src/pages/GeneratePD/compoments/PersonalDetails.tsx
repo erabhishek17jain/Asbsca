@@ -59,7 +59,7 @@ const familyInfo = {
 } as any;
 
 const PersonalDetails = ({
-  steps, action,
+  steps,
   payloads,
   activeStep,
   handlePrev,
@@ -162,11 +162,12 @@ const PersonalDetails = ({
       `${e.target.id.slice(0, 12)}.resiType`,
       e.target.value.slice(-1),
     );
+    e.target.value = e.target.value.slice(0, -1);
     formik.handleChange(e);
   };
 
   useEffect(() => {
-    if (action === 'edit') {
+    if (payloads.personalDetails) {
       formik.setFieldValue('applicants', payloads.personalDetails?.applicants);
       formik.setFieldValue('residents', payloads?.personalDetails?.residents);
       formik.setFieldValue(
@@ -192,168 +193,173 @@ const PersonalDetails = ({
               name="applicants"
               render={(tag) => (
                 <div>
-                  {formik?.values?.applicants.map((item: any, index: number) => (
-                    <div className="mb-3">
-                      <AddTagHeader
-                        title={item?.title}
-                        removeTag={() => tag.remove(index)}
-                        addTag={() =>
-                          tag.push({
-                            ...applicantInfo,
-                            title: 'Co-Applicant',
-                          })
-                        }
-                      />
-                      <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
-                        <AGroupFields>
-                          <AInputField
-                            id={`applicants[${index}].name`}
-                            label={"Applicant's Name*"}
-                            value={formik?.values?.applicants[index]?.name}
-                            error={
-                              errorsAp?.length > 0 && errorsAp[index]?.name
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <ADatePicker
-                            id={`applicants[${index}].dobDoi`}
-                            label={'Date of Birth/Incorporation*'}
-                            value={formik?.values?.applicants[index].dobDoi}
-                            error={
-                              errorsAp?.length > 0 && errorsAp[index]?.dobDoi
-                            }
-                            handleChange={handleDobDoi}
-                          />
-                          <ASingleSelect
-                            id={`applicants[${index}].qualification`}
-                            label={'Qualification*'}
-                            options={qualification}
-                            value={
-                              formik?.values?.applicants[index].qualification
-                            }
-                            error={
-                              errorsAp?.length > 0 &&
-                              errorsAp[index]?.qualification
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <ASingleSelect
-                            id={`applicants[${index}].natureOfBusiness`}
-                            label={'Nature of Business*'}
-                            options={natureOfAddress}
-                            value={
-                              formik?.values?.applicants[index].natureOfBusiness
-                            }
-                            error={
-                              errorsAp?.length > 0 &&
-                              errorsAp[index]?.natureOfBusiness
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <div className="flex gap-2">
+                  {formik?.values?.applicants.map(
+                    (item: any, index: number) => (
+                      <div className="mb-3">
+                        <AddTagHeader
+                          title={item?.title}
+                          removeTag={() => tag.remove(index)}
+                          addTag={() =>
+                            tag.push({
+                              ...applicantInfo,
+                              title: 'Co-Applicant',
+                            })
+                          }
+                        />
+                        <div className="w-full rounded-b-lg border-[1.5px] border-t-0 bg-transparent py-2.5 px-3 border-stroke">
+                          <AGroupFields>
                             <AInputField
-                              type={'number'}
-                              disabled={true}
-                              id={`applicants[${index}].birthYear`}
-                              label={'Birth Year*'}
+                              id={`applicants[${index}].name`}
+                              label={"Applicant's Name*"}
+                              value={formik?.values?.applicants[index]?.name}
+                              error={
+                                errorsAp?.length > 0 && errorsAp[index]?.name
+                              }
+                              handleChange={formik.handleChange}
+                            />
+                            <ADatePicker
+                              id={`applicants[${index}].dobDoi`}
+                              label={'Date of Birth/Incorporation*'}
+                              value={formik?.values?.applicants[index].dobDoi}
+                              error={
+                                errorsAp?.length > 0 && errorsAp[index]?.dobDoi
+                              }
+                              handleChange={handleDobDoi}
+                            />
+                            <ASingleSelect
+                              id={`applicants[${index}].qualification`}
+                              label={'Qualification*'}
+                              options={qualification}
                               value={
-                                formik?.values?.applicants[index].birthYear
+                                formik?.values?.applicants[index].qualification
                               }
                               error={
                                 errorsAp?.length > 0 &&
-                                errorsAp[index]?.birthYear
+                                errorsAp[index]?.qualification
                               }
                               handleChange={formik.handleChange}
                             />
-                            <AInputField
-                              type={'number'}
-                              id={`applicants[${index}].age`}
-                              label={'Age'}
-                              disabled={true}
-                              value={formik?.values?.applicants[index].age}
-                              error={
-                                errorsAp?.length > 0 && errorsAp[index]?.age
-                              }
-                              handleChange={formik.handleChange}
-                            />
-                          </div>
-                          <div className="flex gap-2">
-                            <AInputField
-                              type={'number'}
-                              id={`applicants[${index}].studyFinish`}
-                              label={'Study Finish*'}
+                            <ASingleSelect
+                              id={`applicants[${index}].natureOfBusiness`}
+                              label={'Nature of Business*'}
+                              options={natureOfAddress}
                               value={
-                                formik?.values?.applicants[index].studyFinish
+                                formik?.values?.applicants[index]
+                                  .natureOfBusiness
                               }
                               error={
                                 errorsAp?.length > 0 &&
-                                errorsAp[index]?.studyFinish
-                              }
-                              handleChange={handleStudyFinish}
-                            />
-                            <AInputField
-                              type={'number'}
-                              id={`applicants[${index}].study`}
-                              label={'Study'}
-                              disabled={true}
-                              value={formik?.values?.applicants[index].study}
-                              error={
-                                errorsAp?.length > 0 && errorsAp[index]?.study
+                                errorsAp[index]?.natureOfBusiness
                               }
                               handleChange={formik.handleChange}
                             />
-                          </div>
-                          <AInputField
-                            type={'number'}
-                            id={`applicants[${index}].businessStart`}
-                            label={'Business Start/Joined*'}
-                            value={
-                              formik?.values?.applicants[index].businessStart
-                            }
-                            error={
-                              errorsAp?.length > 0 &&
-                              errorsAp[index]?.businessStart
-                            }
-                            handleChange={handleBusinessStart}
-                          />
-                          <AInputField
-                            type={'number'}
-                            id={`applicants[${index}].currExp`}
-                            label={'Current Experiance'}
-                            disabled={true}
-                            value={formik?.values?.applicants[index].currExp}
-                            error={
-                              errorsAp?.length > 0 && errorsAp[index]?.currExp
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <AInputField
-                            type={'number'}
-                            id={`applicants[${index}].pastExp`}
-                            disabled={true}
-                            label={'Past Experience'}
-                            value={formik?.values?.applicants[index].pastExp}
-                            error={
-                              errorsAp?.length > 0 && errorsAp[index]?.pastExp
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <AInputField
-                            type={'number'}
-                            id={`applicants[${index}].overallExp`}
-                            disabled={true}
-                            label={'Overall Experience'}
-                            value={formik?.values?.applicants[index].overallExp}
-                            error={
-                              errorsAp?.length > 0 &&
-                              errorsAp[index]?.overallExp
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                        </AGroupFields>
+                            <div className="flex gap-2">
+                              <AInputField
+                                type={'number'}
+                                disabled={true}
+                                id={`applicants[${index}].birthYear`}
+                                label={'Birth Year*'}
+                                value={
+                                  formik?.values?.applicants[index].birthYear
+                                }
+                                error={
+                                  errorsAp?.length > 0 &&
+                                  errorsAp[index]?.birthYear
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                              <AInputField
+                                type={'number'}
+                                id={`applicants[${index}].age`}
+                                label={'Age'}
+                                disabled={true}
+                                value={formik?.values?.applicants[index].age}
+                                error={
+                                  errorsAp?.length > 0 && errorsAp[index]?.age
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                            </div>
+                            <div className="flex gap-2">
+                              <AInputField
+                                type={'number'}
+                                id={`applicants[${index}].studyFinish`}
+                                label={'Study Finish*'}
+                                value={
+                                  formik?.values?.applicants[index].studyFinish
+                                }
+                                error={
+                                  errorsAp?.length > 0 &&
+                                  errorsAp[index]?.studyFinish
+                                }
+                                handleChange={handleStudyFinish}
+                              />
+                              <AInputField
+                                type={'number'}
+                                id={`applicants[${index}].study`}
+                                label={'Study'}
+                                disabled={true}
+                                value={formik?.values?.applicants[index].study}
+                                error={
+                                  errorsAp?.length > 0 && errorsAp[index]?.study
+                                }
+                                handleChange={formik.handleChange}
+                              />
+                            </div>
+                            <AInputField
+                              type={'number'}
+                              id={`applicants[${index}].businessStart`}
+                              label={'Business Start/Joined*'}
+                              value={
+                                formik?.values?.applicants[index].businessStart
+                              }
+                              error={
+                                errorsAp?.length > 0 &&
+                                errorsAp[index]?.businessStart
+                              }
+                              handleChange={handleBusinessStart}
+                            />
+                            <AInputField
+                              type={'number'}
+                              id={`applicants[${index}].currExp`}
+                              label={'Current Experiance'}
+                              disabled={true}
+                              value={formik?.values?.applicants[index].currExp}
+                              error={
+                                errorsAp?.length > 0 && errorsAp[index]?.currExp
+                              }
+                              handleChange={formik.handleChange}
+                            />
+                            <AInputField
+                              type={'number'}
+                              id={`applicants[${index}].pastExp`}
+                              disabled={true}
+                              label={'Past Experience'}
+                              value={formik?.values?.applicants[index].pastExp}
+                              error={
+                                errorsAp?.length > 0 && errorsAp[index]?.pastExp
+                              }
+                              handleChange={formik.handleChange}
+                            />
+                            <AInputField
+                              type={'number'}
+                              id={`applicants[${index}].overallExp`}
+                              disabled={true}
+                              label={'Overall Experience'}
+                              value={
+                                formik?.values?.applicants[index].overallExp
+                              }
+                              error={
+                                errorsAp?.length > 0 &&
+                                errorsAp[index]?.overallExp
+                              }
+                              handleChange={formik.handleChange}
+                            />
+                          </AGroupFields>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
                 </div>
               )}
             />
@@ -453,7 +459,7 @@ const PersonalDetails = ({
                             handleChange={formik.handleChange}
                           />
                           {formik?.values?.residents[index]?.resiStatus !==
-                          'rentaln' ? (
+                          'RentalN' ? (
                             <>
                               <AInputField
                                 type={'number'}

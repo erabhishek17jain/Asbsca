@@ -43,7 +43,7 @@ const NotificationDropdown = () => {
 
   useEffect(() => {
     store.dispatch(fetchAllNotificationsAsync({ ...defaultFilters }));
-  }, []);
+  }, [defaultFilters]);
 
   return (
     <li className="relative">
@@ -64,7 +64,7 @@ const NotificationDropdown = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute top-12 right-0 flex flex-col w-50 border border-stroke bg-clip-border rounded-lg bg-white text-grey-700 shadow-lg ${
+        className={`absolute top-12 right-0 flex flex-col w-50 border border-stroke bg-clip-border rounded-lg bg-white shadow-lg ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >

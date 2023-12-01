@@ -18,11 +18,10 @@ const GeneratePD = () => {
   const { reportData } = useSelector((state: any) => state.cases);
 
   const generateReport = async () => {
-    let values = { caseId: state?.activeItem?._id, data: payloads };
+    let values = { caseId: state?.activeItem?._id, data: payload.data };
     values = await Object.assign(values);
-    const sample = await Object.assign(payload);
     let reportPromise =
-      state?.action === 'edit' ? updateReport(sample) : addReport(sample);
+      state?.action === 'edit' ? updateReport(values) : addReport(values);
     reportPromise
       .then((res: any) => {
         if (res) {
@@ -52,11 +51,10 @@ const GeneratePD = () => {
   return (
     <>
       <ABreadcrumb pageName="Generate PD" />
-      <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white text-grey-700 shadow-lg px-5 py-5">
+      <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         <AStepper
           steps={reportSteps}
           payloads={payloads}
-          action={state?.action}
           setPayloads={setPayloads}
           generateReport={generateReport}
           activeItem={state?.activeItem}
