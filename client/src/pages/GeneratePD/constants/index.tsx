@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const reportSteps = [
   { index: 0, label: 'Loan & PD Details' },
   { index: 1, label: 'Basic Personal Details & Experience' },
@@ -132,7 +134,6 @@ export const familyRealtion = [
   { label: 'Partner', value: 'Partner' },
 ];
 
-
 export const earningStatus = [
   { label: 'Earning', value: 'Earning' },
   { label: 'Dependent', value: 'Dependent' },
@@ -150,7 +151,6 @@ export const propertyLoanOptions = [
   },
   { label: 'Both Not Provided', value: 'Both Not Provided' },
 ];
-
 
 export const typesOfLoan = [
   { label: 'Home Loan', value: 'Home Loan' },
@@ -275,18 +275,20 @@ export const typeOfFacility = [
   { label: 'Dropline Overdraft', value: 'Dropline Overdraft' },
 ];
 
-
 export const particularsCommitment = [
-  { label: 'Cash Credit', value: 'Cash Credit' },
-  { label: 'Credit Card', value: 'Credit Card' },
-  { label: 'Overdraft', value: 'Overdraft' },
-  { label: 'Export Credit', value: 'Export Credit' },
-  { label: 'Packing Credit', value: 'Packing Credit' },
-  { label: 'Dropline Overdraft', value: 'Dropline Overdraft' },
+  { label: 'Medium', value: 'Medium' },
+  { label: 'Term Plan', value: 'Term Plan' },
+  { label: 'LIC', value: 'LIC' },
+  { label: 'SIP', value: 'SPI' },
+  { label: 'Life Insurance', value: 'Life Insurance' },
+  { label: 'Health Insurance', value: 'Health Insurance' },
 ];
 
 export const purchaseYear = [
-  { label: 'Last Year', value: 'Last Year' },
+  {
+    label: moment().subtract(1, 'y').year(),
+    value: moment().subtract(1, 'y').year(),
+  },
   {
     label: 'Property not yet Finalised',
     value: 'Property not yet Finalised',
@@ -296,7 +298,6 @@ export const purchaseYear = [
     value: 'Property Details not provided',
   },
 ];
-
 
 export const occupiedBy = [
   { label: 'Tenant', value: 'Tenant' },
@@ -338,6 +339,12 @@ export const sourceOcr = [
   { label: 'Savings of Spouse', value: 'Savings of Spouse' },
 ];
 
+export const generation = [
+  { label: 'First Generation', value: 'First Generation' },
+  { label: 'Second Generation', value: 'Second Generation' },
+  { label: 'Third Generation', value: 'Third Generation' },
+  { label: 'Fourth Generation', value: 'Fourth Generation' },
+];
 
 export const typesOfEntity = [
   { label: 'Proprietorship', value: 'Proprietorship' },
@@ -353,28 +360,21 @@ export const typesOfEntity = [
   { label: 'Salaried', value: 'Salaried' },
 ];
 
-export const generation = [
-  { label: 'First Generation', value: 'First Generation' },
-  { label: 'Second Generation', value: 'Second Generation' },
-  { label: 'Third Generation', value: 'Third Generation' },
-  { label: 'Fourth Generation', value: 'Fourth Generation' },
-];
-
 export const designations = [
   { label: 'Proprietor', value: 'Proprietor' },
   { label: 'Partner', value: 'Partner' },
-  { label: 'director', value: 'director' },
+  { label: 'Director', value: 'Director' },
   { label: 'Professional', value: 'Professional' },
   { label: 'Individual', value: 'Individual' },
   { label: 'Salaried', value: 'Salaried' },
 ];
 
 export const designation = [
-  { label: 'Proprietor', value: 'Proprietor' },
-  { label: 'Partner', value: 'Partner' },
-  { label: 'Partner', value: 'Partner' },
-  { label: 'Director', value: 'Director' },
-  { label: 'Director', value: 'Director' },
+  { label: 'Proprietor', value: 'Proprietorship' },
+  { label: 'Partner', value: 'Partnership' },
+  { label: 'Partner', value: 'Partnership(LLP)' },
+  { label: 'Director', value: 'Private Limited Company' },
+  { label: 'Director', value: 'Public Limited Company' },
   { label: 'Professinal', value: 'Professinal' },
   { label: 'Individual', value: 'Individual' },
   { label: 'Salaried', value: 'Salaried' },
@@ -407,7 +407,6 @@ export const vicinity = [
   },
 ];
 
-
 export const turnoverVerified = [
   {
     label: 'Turnover is not verified as documents were not provided',
@@ -435,7 +434,6 @@ export const turnoverVerified = [
   },
 ];
 
-
 export const citiesOfRepresentation = [
   { label: 'Mumbai', value: 'Mumbai' },
   {
@@ -460,7 +458,6 @@ export const fixedEmployee = [
     value: 'Yes but emoloyee not seen',
   },
 ];
-
 
 // show list from personal details
 export const applicantIncome = [
@@ -497,7 +494,6 @@ export const trendOfBusiness = [
   },
   { label: 'Business is stable', value: 'Business is stable' },
 ];
-
 
 export const futureProjection = [
   {
@@ -538,7 +534,6 @@ export const particularsAssets = [
   { label: 'Truck', value: 'Truck' },
 ];
 
-
 export const statusAssets = [
   { label: 'Owned by Applicant', value: 'Owned by Applicant' },
   { label: 'Owned by Co-Applicant', value: 'Owned by Co-Applicant' },
@@ -552,7 +547,6 @@ export const statusAssets = [
   },
   { label: 'Self-constructed', value: 'Self-constructed' },
 ];
-
 
 export const particularsInvestment = [
   { label: 'Bond', value: 'Bond' },
@@ -575,7 +569,6 @@ export const thirdPartyCheck = [
   { label: 'Not Done', value: 'Not Done' },
 ];
 
-
 export const activityReason = [
   {
     label: 'As visited residence address',
@@ -590,7 +583,6 @@ export const activityReason = [
     value: 'Activity is generally at site',
   },
 ];
-
 
 export const stockReason = [
   {

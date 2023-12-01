@@ -616,8 +616,8 @@ const ReportData = () => {
             <td colSpan={4}>
               <p>
                 {
-                  payload?.data?.detailsOfProp?.propertyLoanDetails
-                    ?.loanDetails[0].amount
+                  payload?.data?.detailsOfProp?.propertyLoanDetails?.loanDetails
+                    .amount
                 }
               </p>
             </td>
@@ -1150,8 +1150,12 @@ const ReportData = () => {
               <p>Loan Details</p>
             </td>
             <td colSpan={7}>
-              {payload.data.existingLoan.existingLoan.existingLoanDetails
-                .length > 0 ? (
+              {payload.data.existingLoan.existanceLoan.balanceTransfer.length >
+                0 ||
+              payload.data.existingLoan.existanceLoan.existingLoanClosed
+                .length > 0 ||
+              payload.data.existingLoan.existanceLoan.existingLoanEMI.length >
+                0 ? (
                 <table cellSpacing={0} className="w-full">
                   <tbody>
                     <tr className="bg">
@@ -1174,7 +1178,55 @@ const ReportData = () => {
                         <p>Remarks</p>
                       </td>
                     </tr>
-                    {payload.data.existingLoan.existingLoan.existingLoanDetails.map(
+                    {payload.data.existingLoan.existanceLoan.balanceTransfer.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.typeOfFacility}</p>
+                          </td>
+                          <td>
+                            <p>{item.bankName}</p>
+                          </td>
+                          <td>
+                            <p>{item.limit}</p>
+                          </td>
+                          <td>
+                            <p>{item.averageUtilization}</p>
+                          </td>
+                          <td>
+                            <p>{item.interestRate}</p>
+                          </td>
+                          <td>
+                            <p>{item.remark}</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
+                    {payload.data.existingLoan.existanceLoan.existingLoanClosed.map(
+                      (item: any, index: number) => (
+                        <tr key={index}>
+                          <td>
+                            <p>{item.typeOfFacility}</p>
+                          </td>
+                          <td>
+                            <p>{item.bankName}</p>
+                          </td>
+                          <td>
+                            <p>{item.limit}</p>
+                          </td>
+                          <td>
+                            <p>{item.averageUtilization}</p>
+                          </td>
+                          <td>
+                            <p>{item.interestRate}</p>
+                          </td>
+                          <td>
+                            <p>{item.remark}</p>
+                          </td>
+                        </tr>
+                      ),
+                    )}
+                    {payload.data.existingLoan.existanceLoan.existingLoanEMI.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1203,15 +1255,25 @@ const ReportData = () => {
                         <p>Total</p>
                       </td>
                       <td colSpan={2}>
-                        <p>
-                          {`${payload.data.existingLoan.existingLoan.totalLoan}`}
-                        </p>
+                        <p>{`${
+                          payload.data.existingLoan.existanceLoan.totalLoanBt +
+                          payload.data.existingLoan.existanceLoan.totalLoanEc +
+                          payload.data.existingLoan.existanceLoan.totalLoanEm
+                        }`}</p>
                       </td>
                       <td>
-                        <p>{`${payload.data.existingLoan.existingLoan.totalLoanEmi}`}</p>
+                        <p>{`${
+                          payload.data.existingLoan.existanceLoan.totalLoanBtEmi +
+                          payload.data.existingLoan.existanceLoan.totalLoanEcEmi +
+                          payload.data.existingLoan.existanceLoan.totalLoanEmEmi
+                        }`}</p>
                       </td>
                       <td>
-                        <p>{`${payload.data.existingLoan.existingLoan.totalLoanOut}`}</p>
+                        <p>{`${
+                          payload.data.existingLoan.existanceLoan.totalLoanBtOut +
+                          payload.data.existingLoan.existanceLoan.totalLoanEcOut +
+                          payload.data.existingLoan.existanceLoan.totalLoanEmOut
+                        }`}</p>
                       </td>
                     </tr>
                   </tbody>

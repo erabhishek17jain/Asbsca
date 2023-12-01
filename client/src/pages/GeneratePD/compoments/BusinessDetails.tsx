@@ -26,7 +26,7 @@ const shareInfo = {
 
 const BusinessDetails = ({
   steps,
-  
+
   payloads,
   activeStep,
   handlePrev,
@@ -69,7 +69,6 @@ const BusinessDetails = ({
     typeOfEntity: Yup.string().required('This field is required'),
     yearOfIncorporation: Yup.number().required('This field is required'),
     generation: Yup.string().required('This field is required'),
-    gstNumber: Yup.string().required('This field is required'),
     regOfficeAddress: Yup.string().required('This field is required'),
     visitedAddress: Yup.string().required('This field is required'),
     vicinity: Yup.string().required('This field is required'),
@@ -111,91 +110,95 @@ const BusinessDetails = ({
   const handleTypeOfEntity = (e: any) => {
     const { value } = e.target;
     const design = designation.find((item: any) => item.value === value);
-    formik.setFieldValue('designation', design?.label.toLowerCase()); // to do calculate emi
+    formik.setFieldValue('designation', design?.label);
     formik.handleChange(e);
   };
 
-   useEffect(() => {
-     if (payloads.businessDetails) {
-       formik.setFieldValue(
-         'bussinessName',
-         payloads.businessDetails?.bussinessName,
-       );
-       formik.setFieldValue(
-         'typeOfEntity',
-         payloads?.businessDetails?.typeOfEntity,
-       );
-       formik.setFieldValue(
-         'yearOfIncorporation',
-         payloads.businessDetails?.yearOfIncorporation,
-       );
-       formik.setFieldValue(
-         'generation',
-         payloads?.businessDetails?.generation,
-       );
-       formik.setFieldValue('gstNumber', payloads.businessDetails?.gstNumber);
-       formik.setFieldValue(
-         'regOfficeAddress',
-         payloads?.businessDetails?.regOfficeAddress,
-       );
-       formik.setFieldValue(
-         'visitedAddress',
-         payloads?.businessDetails?.visitedAddress,
-       );
-       formik.setFieldValue('vicinity', payloads.businessDetails?.vicinity);
-       formik.setFieldValue(
-         'ownership',
-         payloads?.businessDetails?.ownership,
-       );
-       formik.setFieldValue(
-         'pdConductWith',
-         payloads.businessDetails?.pdConductWith,
-       );
-       formik.setFieldValue(
-         'designation',
-         payloads?.businessDetails?.designation,
-       );
-       formik.setFieldValue('mobile', payloads.businessDetails?.mobile);
-       formik.setFieldValue(
-         'familyBusiness',
-         payloads?.businessDetails?.familyBusiness,
-       );
-       formik.setFieldValue(
-         'mainUseproducts',
-         payloads?.businessDetails?.mainUseproducts,
-       );
-       formik.setFieldValue(
-         'howTurnoverVerified',
-         payloads.businessDetails?.howTurnoverVerified,
-       );
-       formik.setFieldValue(
-         'citiesOfReppresentation',
-         payloads?.businessDetails?.citiesOfReppresentation,
-       );
-       formik.setFieldValue(
-         'competitorsOfBusiness',
-         payloads.businessDetails?.competitorsOfBusiness,
-       );
-       formik.setFieldValue('noOfVisit', payloads?.businessDetails?.noOfVisit);
-       formik.setFieldValue(
-         'doYouHavefixedEmployee',
-         payloads.businessDetails?.doYouHavefixedEmployee,
-       );
-       formik.setFieldValue(
-         'empSpecified',
-         payloads?.businessDetails?.empSpecified,
-       );
-       formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
-       formik.setFieldValue(
-         'shareHoldings',
-         payloads?.businessDetails?.shareHoldings,
-       );
-       formik.setFieldValue(
-         'totalHolding',
-         payloads?.businessDetails?.totalHolding,
-       );
-     }
-   }, [payloads]);
+  useEffect(() => {
+    let total = 0;
+    formik?.values?.shareHoldings?.forEach((item: any) => {
+      if (item.shareHolding !== '') {
+        total = total + item.shareHolding;
+      }
+    });
+    formik.setFieldValue('totalHolding', total);
+  }, [formik?.values?.shareHoldings]);
+
+  useEffect(() => {
+    if (payloads.businessDetails) {
+      formik.setFieldValue(
+        'bussinessName',
+        payloads.businessDetails?.bussinessName,
+      );
+      formik.setFieldValue(
+        'typeOfEntity',
+        payloads?.businessDetails?.typeOfEntity,
+      );
+      formik.setFieldValue(
+        'yearOfIncorporation',
+        payloads.businessDetails?.yearOfIncorporation,
+      );
+      formik.setFieldValue('generation', payloads?.businessDetails?.generation);
+      formik.setFieldValue('gstNumber', payloads.businessDetails?.gstNumber);
+      formik.setFieldValue(
+        'regOfficeAddress',
+        payloads?.businessDetails?.regOfficeAddress,
+      );
+      formik.setFieldValue(
+        'visitedAddress',
+        payloads?.businessDetails?.visitedAddress,
+      );
+      formik.setFieldValue('vicinity', payloads.businessDetails?.vicinity);
+      formik.setFieldValue('ownership', payloads?.businessDetails?.ownership);
+      formik.setFieldValue(
+        'pdConductWith',
+        payloads.businessDetails?.pdConductWith,
+      );
+      formik.setFieldValue(
+        'designation',
+        payloads?.businessDetails?.designation,
+      );
+      formik.setFieldValue('mobile', payloads.businessDetails?.mobile);
+      formik.setFieldValue(
+        'familyBusiness',
+        payloads?.businessDetails?.familyBusiness,
+      );
+      formik.setFieldValue(
+        'mainUseproducts',
+        payloads?.businessDetails?.mainUseproducts,
+      );
+      formik.setFieldValue(
+        'howTurnoverVerified',
+        payloads.businessDetails?.howTurnoverVerified,
+      );
+      formik.setFieldValue(
+        'citiesOfReppresentation',
+        payloads?.businessDetails?.citiesOfReppresentation,
+      );
+      formik.setFieldValue(
+        'competitorsOfBusiness',
+        payloads.businessDetails?.competitorsOfBusiness,
+      );
+      formik.setFieldValue('noOfVisit', payloads?.businessDetails?.noOfVisit);
+      formik.setFieldValue(
+        'doYouHavefixedEmployee',
+        payloads.businessDetails?.doYouHavefixedEmployee,
+      );
+      formik.setFieldValue(
+        'empSpecified',
+        payloads?.businessDetails?.empSpecified,
+      );
+      formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
+      formik.setFieldValue(
+        'shareHoldings',
+        payloads?.businessDetails?.shareHoldings,
+      );
+      formik.setFieldValue(
+        'totalHolding',
+        payloads?.businessDetails?.totalHolding,
+      );
+    }
+  }, [payloads]);
 
   const errors: any = formik?.errors?.shareHoldings;
 
@@ -279,14 +282,7 @@ const BusinessDetails = ({
                 value={formik?.values?.pdConductWith}
                 error={formik?.errors?.pdConductWith}
                 handleChange={formik?.handleChange}
-                options={payloads?.personalDetails?.applicants?.map(
-                  (item: any) => {
-                    return {
-                      label: item?.name,
-                      value: item?.name,
-                    };
-                  },
-                )}
+                options={[{ label: 'Palash Jain', value: 'Palash Jain' }]}
               />
               <ASingleSelect
                 disabled={true}
@@ -412,19 +408,22 @@ const BusinessDetails = ({
                                     }
                                     error={
                                       errors?.length > 0 &&
-                                      errors[index].ownerName
+                                      errors[index]?.ownerName
                                     }
                                     handleChange={formik?.handleChange}
-                                    options={payloads?.personalDetails?.applicants.map(
-                                      (item: any) => {
-                                        return {
-                                          label: item?.name,
-                                          value: item?.name,
-                                        };
+                                    options={[
+                                      {
+                                        label: 'Palash Jain',
+                                        value: 'Palash Jain',
                                       },
-                                    )}
+                                      {
+                                        label: 'Aadarsh Jain',
+                                        value: 'Aadarsh Jain',
+                                      },
+                                    ]}
                                   />
                                   <AInputField
+                                    type={'number'}
                                     label={'% of Holding'}
                                     id={`shareHoldings[${index}].shareHolding`}
                                     value={
@@ -433,7 +432,7 @@ const BusinessDetails = ({
                                     }
                                     error={
                                       errors?.length > 0 &&
-                                      errors[index]?.ownerName
+                                      errors[index]?.shareHolding
                                     }
                                     handleChange={formik.handleChange}
                                   />

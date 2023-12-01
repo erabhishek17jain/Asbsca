@@ -93,22 +93,6 @@ const ComitmentsSummaryFOIR = ({
   };
 
   useEffect(() => {
-    const emi = 41822;
-    const yearEmi = ((emi * 12) / 100000).toFixed(2);
-    const ratioPer = ((emi * 12) / 100000 / 75) * 100000;
-    const ratioStr = `${ratioPer} (${yearEmi} Lakhs/${75} Lakhs)`;
-    formik.setFieldValue('proposedEMI.amountPM', emi);
-    formik.setFieldValue('proposedEMI.amountPA', yearEmi);
-    formik.setFieldValue('totalCommitments.amountPM', emi);
-    formik.setFieldValue('totalCommitments.amountPA', yearEmi);
-    formik.setFieldValue('existingCommitments.amountPM', emi);
-    formik.setFieldValue('existingCommitments.amountPA', yearEmi);
-    formik.setFieldValue('onlyEMIRatio', ratioStr);
-    formik.setFieldValue('foirRatio', ratioStr);
-    formik.setFieldValue('totalCommitmentsRatio', ratioStr);
-  }, []);
-
-  useEffect(() => {
     if (payloads.comitmentSummary) {
       formik.setFieldValue(
         'proposedEMI',
@@ -149,6 +133,52 @@ const ComitmentsSummaryFOIR = ({
         'totalCommitmentsRatio',
         payloads?.comitmentSummary?.totalCommitmentsRatio,
       );
+    } else {
+      const prop = payloads?.detailsOfProp?.loanDetails?.emi;
+      const exis = payloads?.existingLoan?.existanceLoan?.totalLoanEmEmi;
+      const btem = payloads?.existingLoan?.existanceLoan?.totalLoanBtEmi;
+      const clos = payloads?.existingLoan?.existanceLoan?.totalLoanEcEmi;
+      const comm = payloads?.existingLoan?.otherCommitments?.totalCon;
+      const turn = payloads?.financials?.totalEarning;
+      formik.setFieldValue('proposedEMI.amountPM', prop);
+      formik.setFieldValue('proposedEMI.amountPA', prop * 12);
+      formik.setFieldValue('existingEMI.amountPM', exis);
+      formik.setFieldValue('existingEMI.amountPA', exis * 12);
+      formik.setFieldValue('btEMI.amountPM', btem);
+      formik.setFieldValue('btEMI.amountPA', btem * 12);
+      formik.setFieldValue('closureEMI.amountPM', clos);
+      formik.setFieldValue('closureEMI.amountPA', clos * 12);
+      formik.setFieldValue('licMedSipTpOther.amountPM', comm / 12);
+      formik.setFieldValue('licMedSipTpOther.amountPA', comm);
+      formik.setFieldValue('houseRent.amountPM', 0);
+      formik.setFieldValue('houseRent.amountPA', 0 * 12);
+      formik.setFieldValue(
+        'totalCommitments.amountPM',
+        prop + exis + btem + clos + comm,
+      );
+      formik.setFieldValue(
+        'totalCommitments.amountPA',
+        (prop + exis + btem + clos + comm) * 12,
+      );
+      formik.setFieldValue('totalPresentEMI.amountPM', exis + btem + clos);
+      formik.setFieldValue(
+        'totalPresentEMI.amountPA',
+        (exis + btem + clos) * 12,
+      );
+      formik.setFieldValue('existingCommitments.amountPM', prop + btem + comm);
+      formik.setFieldValue(
+        'existingCommitments.amountPA',
+        (prop + btem + comm) * 12,
+      );
+      const emiRatio = `${((prop + exis) * 12) / turn} (${
+        (prop + exis) * 12
+      } Lakhs/${turn} Lakhs)`;
+      const totRatio = `${((prop + btem + comm) * 12) / turn} (${
+        (prop + btem + comm) * 12
+      } Lakhs/${turn} Lakhs)`;
+      formik.setFieldValue('onlyEMIRatio', emiRatio);
+      formik.setFieldValue('foirRatio', totRatio);
+      formik.setFieldValue('totalCommitmentsRatio', totRatio);
     }
   }, [payloads]);
 
@@ -162,6 +192,7 @@ const ComitmentsSummaryFOIR = ({
             {comitments?.map((item) => (
               <AGroupFields col={3} title={item?.title}>
                 <AInputField
+                  disabled={true}
                   type={'number'}
                   id={`${item?.value}.amountPM`}
                   label={'Amount PM'}
@@ -171,6 +202,7 @@ const ComitmentsSummaryFOIR = ({
                   handleChange={handleMonthly}
                 />
                 <AInputField
+                  disabled={true}
                   type={'number'}
                   id={`${item?.value}?.amountPA`}
                   label={'Amount PA'}

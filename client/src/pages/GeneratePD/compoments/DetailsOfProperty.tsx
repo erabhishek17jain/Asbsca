@@ -3,10 +3,9 @@ import ASingleSelect from '../../../components-global/ASingleSelect';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
 import AGroupFields from '../../../components-global/AGroupFields';
-import { AddTagButton } from '../../../components-global/ATags';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
-import { FieldArray, FormikProvider, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import {
   occupiedBy,
   sourceOcr,
@@ -15,43 +14,44 @@ import {
   putPB,
 } from '../constants';
 import { useEffect } from 'react';
+import moment from 'moment';
 
-const loanInfo = { amount: '', emi: '', roi: '', year: '' };
+const initialValues: any = {
+  purchaseYear: '',
+  buildUpArea: '',
+  caretArea: '',
+  occupiedBy: '',
+  loanPropertyAddress: '',
+  builderName: '',
+  propertyLoanDetails: {
+    isLoanProvided: '',
+    loanDetails: { amount: '', emi: '', roi: '', year: '' },
+    propertyValue: {
+      agreementValue: '',
+      purchaseValue: '',
+      marketValue: '',
+      ocrPaid: '',
+      pOrb: '',
+      balanceOcr: '',
+      sourceOcr: '',
+    },
+    loanAsPerForm: '',
+  },
+};
+
 const DetailsOfProperty = ({
   steps,
-
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
+  const lastYear = moment().subtract(1, 'y').year();
+
   const handleLoanPropertyEMI = (title: string, val: string) => {
     console.log(title);
     formik.setFieldValue('propertyLoanDetails.isLoanProvided', val);
-  };
-
-  const initialValues: any = {
-    purchaseYear: '',
-    buildUpArea: '',
-    caretArea: '',
-    occupiedBy: '',
-    loanPropertyAddress: '',
-    builderName: '',
-    propertyLoanDetails: {
-      isLoanProvided: '',
-      loanDetails: [{ ...loanInfo }],
-      propertyValue: {
-        agreementValue: '',
-        purchaseValue: '',
-        marketValue: '',
-        ocrPaid: '',
-        pOrb: '',
-        balanceOcr: '',
-        sourceOcr: '',
-      },
-      loanAsPerForm: '',
-    },
   };
 
   const validationSchema = Yup.object().shape({
@@ -69,6 +69,12 @@ const DetailsOfProperty = ({
         ocrPaid: Yup.number().required('This field is required'),
         pOrb: Yup.string().required('This field is required'),
         sourceOcr: Yup.string().required('This field is required'),
+      }),
+      loanDetails: Yup.object({
+        amount: Yup.number().required('This field is required'),
+        emi: Yup.number().required('This field is required'),
+        roi: Yup.number().required('This field is required'),
+        year: Yup.number().required('This field is required'),
       }),
       loanAsPerForm: Yup.number().required('This field is required'),
     }),
@@ -91,35 +97,49 @@ const DetailsOfProperty = ({
   const handlePurchaseYear = (e: any) => {
     const { value } = e.target;
     const option = purchaseYear.find((item: any) => item.value === value);
-    formik.setFieldValue('buildUpArea', value !== 'lastYear' ? 0 : '');
-    formik.setFieldValue('caretArea', value !== 'lastYear' ? 0 : '');
-    formik.setFieldValue('occupiedBy', value !== 'lastYear' ? value : '');
+    formik.setFieldValue('buildUpArea', value != lastYear ? 0 : '');
+    formik.setFieldValue('caretArea', value != lastYear ? 0 : '');
+    formik.setFieldValue('occupiedBy', value != lastYear ? value : '');
     formik.setFieldValue(
       'loanPropertyAddress',
-      value !== 'lastYear' ? option?.label : '',
+      value != lastYear ? option?.label : '',
     );
-    formik.setFieldValue(
-      'builderName',
-      value !== 'lastYear' ? option?.label : '',
-    );
+    formik.setFieldValue('builderName', value != lastYear ? option?.label : '');
     formik.handleChange(e);
   };
 
-  const handleLoanAmount = (e: any) => {
-    const { id, value } = e.target;
-    if (id.includes('loan')) {
-      const n = id.lastIndexOf('.');
-      const parentId = id.substring(0, n);
-      formik.setFieldValue(`${parentId}.emi`, 10); // to do calculate emi
-    }
-    formik.setFieldValue('propertyLoanDetails.propertyValue.balanceOcr', value); // to do calculate balance ocr
-    formik.handleChange(e);
+  const setBalance = () => {
+    const balance =
+      Math.max(
+        formik.values.propertyLoanDetails.propertyValue.agreementValue,
+        formik.values.propertyLoanDetails.propertyValue.purchaseValue,
+      ) -
+      formik.values.propertyLoanDetails.loanDetails.amount -
+      formik.values.propertyLoanDetails.propertyValue.ocrPaid;
+
+    formik.setFieldValue(
+      'propertyLoanDetails.propertyValue.balanceOcr',
+      balance,
+    );
+  };
+
+  const calculateEMI = () => {
+    const ir = formik?.values?.propertyLoanDetails?.loanDetails?.roi / 100 / 12;
+    const np = formik?.values?.propertyLoanDetails?.loanDetails?.year * 12;
+    const pv =
+      formik?.values?.propertyLoanDetails?.loanDetails?.amount * 100000;
+    const pvif = Math.pow(1 + ir, np);
+    const pmt = (-ir * (pv * pvif)) / (pvif - 1);
+    formik.setFieldValue('propertyLoanDetails.loanDetails.emi', -pmt.toFixed(2));
   };
 
   useEffect(() => {
-    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].roi`, 8);
-    formik.setFieldValue(`propertyLoanDetails.loanDetails[0].year`, 20);
-  }, []);
+    calculateEMI();
+  }, [formik?.values?.propertyLoanDetails?.loanDetails]);
+
+  useEffect(() => {
+    setBalance();
+  }, [formik?.values?.propertyLoanDetails?.propertyValue]);
 
   useEffect(() => {
     if (payloads.detailsOfProp) {
@@ -139,6 +159,9 @@ const DetailsOfProperty = ({
         'propertyLoanDetails',
         payloads?.detailsOfProp?.propertyLoanDetails,
       );
+    } else {
+      formik.setFieldValue(`propertyLoanDetails.loanDetails.roi`, 8);
+      formik.setFieldValue(`propertyLoanDetails.loanDetails.year`, 20);
     }
   }, [payloads]);
 
@@ -166,7 +189,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.buildUpArea}
                 error={formik?.errors?.buildUpArea}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear !== 'lastYear'}
+                disabled={formik?.values?.purchaseYear != lastYear}
               />
               <AInputField
                 type={'number'}
@@ -176,7 +199,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.caretArea}
                 error={formik?.errors?.caretArea}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear !== 'lastYear'}
+                disabled={formik?.values?.purchaseYear != lastYear}
               />
               <ASingleSelect
                 id={'occupiedBy'}
@@ -185,7 +208,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.occupiedBy}
                 error={formik?.errors?.occupiedBy}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear !== 'lastYear'}
+                disabled={formik?.values?.purchaseYear != lastYear}
               />
               <AInputField
                 id={'loanPropertyAddress'}
@@ -193,7 +216,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.loanPropertyAddress}
                 error={formik?.errors?.loanPropertyAddress}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear !== 'lastYear'}
+                disabled={formik?.values?.purchaseYear != lastYear}
               />
               <AInputField
                 id={'builderName'}
@@ -201,7 +224,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.builderName}
                 error={formik?.errors?.builderName}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear !== 'lastYear'}
+                disabled={formik?.values?.purchaseYear != lastYear}
               />
             </AGroupFields>
           </ASection>
@@ -216,98 +239,46 @@ const DetailsOfProperty = ({
             'propertyValueNotProvided' ||
             formik?.values?.propertyLoanDetails?.isLoanProvided === '') && (
             <ASection title={'Loan Applied'}>
-              <FormikProvider value={formik}>
-                <form>
-                  <FieldArray
-                    name="propertyLoanDetails?.loanDetails"
-                    render={(tag) => (
-                      <div>
-                        {formik?.values?.propertyLoanDetails?.loanDetails
-                          ?.length > 0 ? (
-                          formik?.values?.propertyLoanDetails?.loanDetails?.map(
-                            (item: any, index: any) => (
-                              <div
-                                key={item?.name}
-                                className="flex items-center w-full gap-3 mb-3"
-                              >
-                                <div className="w-full border-2 rounded-lg pt-3 px-3">
-                                  <AGroupFields>
-                                    <AInputField
-                                      type={'number'}
-                                      label={'Amount'}
-                                      rightLabel={'(Lakhs)'}
-                                      id={`propertyLoanDetails.loanDetails[${index}].amount`}
-                                      value={
-                                        formik?.values?.propertyLoanDetails
-                                          ?.loanDetails[index]?.amount
-                                      }
-                                      error={
-                                        errors?.loanDetails?.length > 0 &&
-                                        errors?.loanDetails[index]?.amount
-                                      }
-                                      handleChange={handleLoanAmount}
-                                    />
-                                    <AInputField
-                                      type={'number'}
-                                      label={'ROI'}
-                                      rightLabel={'(%)'}
-                                      id={`propertyLoanDetails.loanDetails[${index}].roi`}
-                                      value={
-                                        formik?.values?.propertyLoanDetails
-                                          ?.loanDetails[index]?.roi
-                                      }
-                                      error={
-                                        errors?.loanDetails?.length > 0 &&
-                                        errors?.loanDetails[index]?.roi
-                                      }
-                                      handleChange={formik.handleChange}
-                                    />
-                                    <AInputField
-                                      type={'number'}
-                                      label={'Year'}
-                                      id={`propertyLoanDetails.loanDetails[${index}].year`}
-                                      value={
-                                        formik?.values?.propertyLoanDetails
-                                          ?.loanDetails[index]?.year
-                                      }
-                                      error={
-                                        errors?.loanDetails?.length > 0 &&
-                                        errors?.loanDetails[index]?.year
-                                      }
-                                      handleChange={formik.handleChange}
-                                    />
-                                    <AInputField
-                                      type={'number'}
-                                      label={'EMI'}
-                                      disabled={true}
-                                      rightLabel={'(Rs.)'}
-                                      id={`propertyLoanDetails.loanDetails[${index}].emi`}
-                                      value={
-                                        formik?.values?.propertyLoanDetails
-                                          ?.loanDetails[index]?.emi
-                                      }
-                                      error={
-                                        errors?.loanDetails?.length > 0 &&
-                                        errors?.loanDetails[index]?.emi
-                                      }
-                                      handleChange={formik.handleChange}
-                                    />
-                                  </AGroupFields>
-                                </div>
-                              </div>
-                            ),
-                          )
-                        ) : (
-                          <AddTagButton
-                            title={'Add Loan'}
-                            addTag={() => tag.push(loanInfo)}
-                          />
-                        )}
-                      </div>
-                    )}
-                  />
-                </form>
-              </FormikProvider>
+              <AGroupFields>
+                <AInputField
+                  type={'number'}
+                  label={'Amount'}
+                  rightLabel={'(Lakhs)'}
+                  id={`propertyLoanDetails.loanDetails.amount`}
+                  value={
+                    formik?.values?.propertyLoanDetails?.loanDetails?.amount
+                  }
+                  error={errors?.loanDetails?.amount}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  type={'number'}
+                  label={'ROI'}
+                  rightLabel={'(%)'}
+                  id={`propertyLoanDetails.loanDetails.roi`}
+                  value={formik?.values?.propertyLoanDetails?.loanDetails?.roi}
+                  error={errors?.loanDetails?.roi}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  type={'number'}
+                  label={'Year'}
+                  id={`propertyLoanDetails.loanDetails.year`}
+                  value={formik?.values?.propertyLoanDetails?.loanDetails?.year}
+                  error={errors?.loanDetails?.year}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  type={'number'}
+                  label={'EMI'}
+                  disabled={true}
+                  rightLabel={'(Rs.)'}
+                  id={`propertyLoanDetails.loanDetails.emi`}
+                  value={formik?.values?.propertyLoanDetails?.loanDetails?.emi}
+                  error={errors?.loanDetails?.emi}
+                  handleChange={formik.handleChange}
+                />
+              </AGroupFields>
             </ASection>
           )}
           {(formik?.values?.propertyLoanDetails?.isLoanProvided ===
