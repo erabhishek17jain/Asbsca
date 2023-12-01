@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const ReportData = () => {
   return (
-    <div className="flex flex-col text-sm">
+    <div className="flex flex-col text-sm  py-4 px-6">
       <table className="mb-1.5" cellSpacing={0}>
         <tbody>
           <tr className="bg text-center font-bold">
@@ -28,23 +28,15 @@ const ReportData = () => {
           </tr>
           <tr>
             <td colSpan={8}>
-              <div className="flex w-full -m-[1px]">
+              <div className="flex w-full">
                 <div className="w-1/4">
-                  <div className="border-r-[1.5px] border-black">
-                    <p className="bg pl-1 border-b-[1.5px] border-black text-center h-6"></p>
-                    <p className="pl-1 border-b-[1.5px] border-black">Name</p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Date of Birth
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Qualifications
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Current Experience
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Overall Experience
-                    </p>
+                  <div className="b-r">
+                    <p className="bg pl-1 b-b text-center h-6"></p>
+                    <p className="pl-1 b-b">Name</p>
+                    <p className="pl-1 b-b">Date of Birth</p>
+                    <p className="pl-1 b-b">Qualifications</p>
+                    <p className="pl-1 b-b">Current Experience</p>
+                    <p className="pl-1 b-b">Overall Experience</p>
                     <p className="pl-1">Nature of Business</p>
                   </div>
                 </div>
@@ -53,25 +45,22 @@ const ReportData = () => {
                 >
                   {payload.data.personalDetails.applicants.map(
                     (item: any, index: number) => (
-                      <div className="border-r-[1.5px] border-black">
-                        <p className="bg pl-1 border-b-[1.5px] border-black text-center font-bold h-6">
+                      <div
+                        className={
+                          index <
+                          payload.data.personalDetails.applicants.length - 1
+                            ? 'b-r'
+                            : ''
+                        }
+                      >
+                        <p className="bg pl-1 b-b text-center font-bold h-6">
                           {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
                         </p>
-                        <p className="pl-1 border-b-[1.5px] border-black">
-                          {item.name}
-                        </p>
-                        <p className="pl-1 border-b-[1.5px] border-black">
-                          {item.dobDoi}
-                        </p>
-                        <p className="pl-1 border-b-[1.5px] border-black">
-                          {item.qualification}
-                        </p>
-                        <p className="pl-1 border-b-[1.5px] border-black">
-                          {item.currExp} Years
-                        </p>
-                        <p className="pl-1 border-b-[1.5px] border-black">
-                          {item.overallExp} Years
-                        </p>
+                        <p className="pl-1 b-b">{item.name}</p>
+                        <p className="pl-1 b-b">{item.dobDoi}</p>
+                        <p className="pl-1 b-b">{item.qualification}</p>
+                        <p className="pl-1 b-b">{item.currExp} Years</p>
+                        <p className="pl-1 b-b">{item.overallExp} Years</p>
                         <p className="pl-1">{item.natureOfBusiness}</p>
                       </div>
                     ),
@@ -82,60 +71,55 @@ const ReportData = () => {
           </tr>
           <tr>
             <td colSpan={8}>
-              <div className="flex w-full -m-[1px]">
+              <div className="flex w-full">
                 <div className="w-1/4">
-                  <div className="border-r-[1.5px] border-black">
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Residence Address
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Residence Status
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black">
-                      Residing Since
-                    </p>
-                    <p className="pl-1 border-b-[1.5px] border-black h-10">
-                      Residential Area
-                    </p>
+                  <div className="b-r">
+                    <p className="pl-1 b-b">Residence Address</p>
+                    <p className="pl-1 b-b">Residence Status</p>
+                    <p className="pl-1 b-b">Residing Since</p>
+                    <p className="pl-1 b-b h-10">Residential Area</p>
                     <p className="pl-1 h-10">Residential Value (Rs.)</p>
                   </div>
                 </div>
                 <div
                   className={`w-3/4 grid grid-cols-${payload.data.personalDetails.residents.length}`}
                 >
-                  {payload.data.personalDetails.residents.map((item: any) => (
-                    <div className="border-r-[1.5px] border-black">
-                      <p className="pl-1 border-b-[1.5px] border-black">
-                        {item.resiAddress}
-                      </p>
-                      <p className="pl-1 border-b-[1.5px] border-black">
-                        {item.resiStatus}
-                      </p>
-                      <p className="pl-1 border-b-[1.5px] border-black">
-                        {item.resiSince}
-                      </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-10">
-                        Buildup Area: {item.buildArea} Sq. Ft. <br />
-                        Carpet Area: {item.carpetArea} Sq. Ft.
-                      </p>
-                      <p className="pl-1 h-10">
-                        Purchase Value: {item.purchaseValue} Lakhs <br />
-                        Market Value: {item.marketValue} Lakhs
-                      </p>
-                    </div>
-                  ))}
+                  {payload.data.personalDetails.residents.map(
+                    (item: any, index: number) => (
+                      <div
+                        className={
+                          index <
+                          payload.data.personalDetails.applicants.length - 1
+                            ? 'b-r'
+                            : ''
+                        }
+                      >
+                        <p className="pl-1 b-b">{item.resiAddress}</p>
+                        <p className="pl-1 b-b">{item.resiStatus}</p>
+                        <p className="pl-1 b-b">{item.resiSince}</p>
+                        <p className="pl-1 b-b h-10">
+                          Buildup Area: {item.buildArea} Sq. Ft. <br />
+                          Carpet Area: {item.carpetArea} Sq. Ft.
+                        </p>
+                        <p className="pl-1 h-10">
+                          Purchase Value: {item.purchaseValue} Lakhs <br />
+                          Market Value: {item.marketValue} Lakhs
+                        </p>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             </td>
           </tr>
           <tr>
-            <td rowSpan={3} className="w-1/4">
-              <p>Family Background</p>
+            <td rowSpan={2}>
+              <p className="pl-1">Family Background</p>
             </td>
             <td className="bg font-bold text-center" colSpan={2}>
               <p>Name</p>
             </td>
-            <td className="bg font-bold text-center" colSpan={3}>
+            <td className="bg font-bold text-center" colSpan={2}>
               <p>Relation</p>
             </td>
             <td className="bg font-bold text-center" colSpan={2}>
@@ -144,14 +128,14 @@ const ReportData = () => {
           </tr>
           {payload.data.personalDetails.familyDetails.map((item: any) => (
             <tr>
-              <td colSpan={2}>
-                <p>{item.name}</p>
-              </td>
-              <td colSpan={3} className="text-center">
-                <p>{item.relation}</p>
+              <td colSpan={2} className="text-center">
+                <p className="pl-1">{item.name}</p>
               </td>
               <td colSpan={2} className="text-center">
-                <p>{item.earningStatus}</p>
+                <p className="pl-1">{item.relation}</p>
+              </td>
+              <td colSpan={2} className="text-center">
+                <p className="pl-1">{item.earningStatus}</p>
               </td>
             </tr>
           ))}
@@ -169,99 +153,69 @@ const ReportData = () => {
                 <p>Income Sources:</p>
                 <p>(Amt in Rs.)</p>
               </div>
-              <table cellSpacing={0} className="w-10/12 mt-4 mx-auto">
-                <tbody>
-                  <tr>
-                    <td colSpan={8}>
-                      <div className="flex w-full -m-[1px]">
-                        <div className="w-1/4">
-                          <div className="border-r-[1.5px] border-black text-center">
-                            <p className="bg pl-1 border-b-[1.5px] border-black h-6 font-bold">
-                              Particulars
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Turnover
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Entity
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Gross Profit
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Net Margin
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Share of Profit
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Partner's Salary
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black">
-                              Partner's Remuneration
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black font-bold">
-                              Other Income
-                            </p>
-                            <p className="pl-1 border-b-[1.5px] border-black font-bold">
-                              Total
-                            </p>
-                            <p className="pl-1 font-bold">Grand Total</p>
-                          </div>
-                        </div>
-                        <div
-                          className={`w-3/4 grid grid-cols-${payload.data.financials.length} text-center`}
-                        >
-                          {payload.data.financials.map((item: any) => (
-                            <div className="border-r-[1.5px] border-black">
-                              <p className="bg pl-1 border-b-[1.5px] border-black font-bold h-6">
-                                {item.applicantIncome}
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.income.turnoverGrossReciepts.amountPA}
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.entityName}
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.income.totalAmountPA} (
-                                {item.income.totalAmountPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.netProfitPA} (
-                                {item.expenses.netProfitPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.shareOfProfitPA} (
-                                {item.expenses.shareOfProfitPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.shareOfProfitPA} (
-                                {item.expenses.shareOfProfitPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.shareOfProfitPA} (
-                                {item.expenses.shareOfProfitPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.shareOfProfitPA} (
-                                {item.expenses.shareOfProfitPM})
-                              </p>
-                              <p className="pl-1 border-b-[1.5px] border-black">
-                                {item.expenses.shareOfProfitPA} (
-                                {item.expenses.shareOfProfitPM})
-                              </p>
-                              <p className="pl-1">
-                                {item.expenses.shareOfProfitPA}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
+              <div className="flex justify-between m-4">
+                <div className="flex w-full border-[1.5px] border-r-0 border-black">
+                  <div className="w-1/4">
+                    <div className="b-r text-center">
+                      <p className="bg pl-1 b-b h-6 font-bold">Particulars</p>
+                      <p className="pl-1 b-b">Turnover</p>
+                      <p className="pl-1 b-b">Entity</p>
+                      <p className="pl-1 b-b">Gross Profit</p>
+                      <p className="pl-1 b-b">Net Margin</p>
+                      <p className="pl-1 b-b">Share of Profit</p>
+                      <p className="pl-1 b-b">Partner's Salary</p>
+                      <p className="pl-1 b-b">Partner's Remuneration</p>
+                      <p className="pl-1 b-b font-bold">Other Income</p>
+                      <p className="pl-1 b-b font-bold">Total</p>
+                      <p className="pl-1 font-bold">Grand Total</p>
+                    </div>
+                  </div>
+                  <div
+                    className={`w-3/4 grid grid-cols-${payload.data.financials.length} text-center`}
+                  >
+                    {payload.data.financials.map((item: any) => (
+                      <div className="b-r">
+                        <p className="bg pl-1 b-b font-bold h-6">
+                          {item.applicantIncome}
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.income.turnoverGrossReciepts.amountPA}
+                        </p>
+                        <p className="pl-1 b-b">{item.entityName}</p>
+                        <p className="pl-1 b-b">
+                          {item.income.totalAmountPA} (
+                          {item.income.totalAmountPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.netProfitPA} (
+                          {item.expenses.netProfitPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.shareOfProfitPA} (
+                          {item.expenses.shareOfProfitPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.shareOfProfitPA} (
+                          {item.expenses.shareOfProfitPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.shareOfProfitPA} (
+                          {item.expenses.shareOfProfitPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.shareOfProfitPA} (
+                          {item.expenses.shareOfProfitPM})
+                        </p>
+                        <p className="pl-1 b-b">
+                          {item.expenses.shareOfProfitPA} (
+                          {item.expenses.shareOfProfitPM})
+                        </p>
+                        <p className="pl-1">{item.expenses.shareOfProfitPA}</p>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    ))}
+                  </div>
+                </div>
+              </div>
               <div className="mx-4">
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
@@ -813,66 +767,56 @@ const ReportData = () => {
           <tr>
             <td>
               <div className="-m-[1px]">
-                <p className="bg border-b-[1.5px] border-black h-6"></p>
-                <p className="border-b-[1.5px] border-black h-10">
-                  Turnover (Rs.)
-                </p>
-                <p className="border-b-[1.5px] border-black h-10">
-                  Purchases (Rs.)
-                </p>
-                <p className="border-b-[1.5px] border-black h-10">Net Margin</p>
-                <p className="border-b-[1.5px] border-black h-5">
-                  Other Income (Rs.)
-                </p>
+                <p className="bg b-b h-6"></p>
+                <p className="b-b h-10">Turnover (Rs.)</p>
+                <p className="b-b h-10">Purchases (Rs.)</p>
+                <p className="b-b h-10">Net Margin</p>
+                <p className="b-b h-5">Other Income (Rs.)</p>
                 <p className="h-auto">Total Expenses (Rs.)</p>
               </div>
             </td>
             <td>
               <div className="-m-[1px]">
-                <p className="bg pl-1 border-b-[1.5px] border-black text-center h-6"></p>
-                <p className="pl-1 border-b-[1.5px] border-black h-5">
-                  Monthly
-                </p>
-                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
-                <p className="pl-1 border-b-[1.5px] border-black h-5">
-                  Monthly
-                </p>
-                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
-                <p className="pl-1 border-b-[1.5px] border-black h-10">
+                <p className="bg pl-1 b-b text-center h-6"></p>
+                <p className="pl-1 b-b h-5">Monthly</p>
+                <p className="pl-1 b-b h-5">Annual</p>
+                <p className="pl-1 b-b h-5">Monthly</p>
+                <p className="pl-1 b-b h-5">Annual</p>
+                <p className="pl-1 b-b h-10">
                   Value: <br />
                   Percentage:
                 </p>
-                <p className="pl-1 border-b-[1.5px] border-black h-5">Annual</p>
+                <p className="pl-1 b-b h-5">Annual</p>
                 <p className="pl-1 h-5">Annual</p>
               </div>
             </td>
             <td colSpan={6}>
-              <div className="flex w-full -m-[1px]">
+              <div className="flex w-full">
                 <div className="w-2/10"></div>
                 <div
                   className={`w-5/10 grid grid-cols-${payload.data.financials.length}`}
                 >
                   {payload.data.financials.map((item: any, index: number) => (
-                    <div className="border-r-[1.5px] border-black">
-                      <p className="bg pl-1 border-b-[1.5px] border-black text-center font-bold h-6">
+                    <div className="b-r">
+                      <p className="bg pl-1 b-b text-center font-bold h-6">
                         {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                      <p className="pl-1 b-b h-5">
                         {item.income.turnoverGrossReciepts.amountPM} Lakhs
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                      <p className="pl-1 b-b h-5">
                         {item.income.turnoverGrossReciepts.amountPA / 100} Cr.
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                      <p className="pl-1 b-b h-5">
                         {item.income.purchases.amountPM} Lakhs
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                      <p className="pl-1 b-b h-5">
                         {item.income.purchases.amountPA / 100} Cr.
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-10">
+                      <p className="pl-1 b-b h-10">
                         {item.income.purchases.amountPM} Lakhs
                       </p>
-                      <p className="pl-1 border-b-[1.5px] border-black h-5">
+                      <p className="pl-1 b-b h-5">
                         {item.income.purchases.amountPA / 100} Cr.
                       </p>
                       <p className="pl-1">

@@ -7,7 +7,6 @@ import {
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
 import ReportData from './ReportData/ReportData';
-import { Margin, usePDF } from 'react-to-pdf';
 import ADropdown from '../../components-global/ADropdown';
 import { useEffect, useState } from 'react';
 import { fetchCaseReportDataAsync } from '../../slices/casesSlice';
@@ -20,6 +19,8 @@ import { AModal } from '../../components-global/AModal';
 import ATextField from '../../components-global/ATextField';
 import { assignCase, statusUpdateCase } from '../../services';
 import * as Yup from 'yup';
+import React from 'react';
+import { generatePdf } from '../../utils';
 
 const modalTitle: any = {
   assigned: 'Assign Reporter or Reviewer ',
@@ -47,10 +48,8 @@ const FinalReport = () => {
   const [showStatusCase, setShowStatusCase] = useState(false);
   const [actionType, setActionType] = useState('');
 
-  const { toPDF, targetRef } = usePDF({
-    filename: 'usepdf-example.pdf',
-    page: { margin: Margin.MEDIUM },
-  });
+  const bodyRef: any = React.createRef();
+  const createPdf = () => generatePdf(bodyRef.current);
 
   const updateAssigneeReviewer = (values: any) => {
     if (values?.status === 'assigned') {
@@ -210,7 +209,7 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: toPDF,
+        action: createPdf,
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
     ],
@@ -235,7 +234,7 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: toPDF,
+        action: createPdf,
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
     ],
@@ -247,14 +246,14 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: toPDF,
+        action: createPdf,
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
     ],
     sentToBank: [
       {
         title: 'Download PDF',
-        action: toPDF,
+        action: createPdf,
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
     ],
@@ -264,12 +263,17 @@ const FinalReport = () => {
     <>
       <ABreadcrumb pageName="Preview Report" />
       <div className="overflow-x-scroll relative h-[80vh] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-3">
           <AButton
             variant={'link'}
             label={'Back'}
             action={() => navigate(-1)}
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
+          />
+          <AButton
+            variant={'link'}
+            label={'Download'}
+            action={createPdf}
           />
           <div>Preview Report</div>
           <ADropdown
@@ -284,10 +288,10 @@ const FinalReport = () => {
           />
         </div>
         {!loading ? (
-          <div className="mt-3 border-2 border-main p-2">
-            <div ref={targetRef}>
-              <ReportData/>
-            </div>
+          <div className="-my-4 -mx-6">
+            <section className="pdf-body" ref={bodyRef}>
+              <ReportData />
+            </section>
           </div>
         ) : (
           <div className="w-full h-96 pb-6 flex items-center justify-center">

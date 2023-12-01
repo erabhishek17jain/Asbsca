@@ -1,15 +1,20 @@
-tr {
-  height: 16px;
+.bg {
+  background-color: #d9d9d9;
+}
+
+.b-b {
+  border-bottom: 1.5px solid #000000;
+}
+
+.b-r {
+  border-right: 1.5px solid #000000;
 }
 
 td {
+  padding: 0;
   color: black;
   vertical-align: top;
   border: 1.5px solid black;
-}
-
-.bg {
-  background-color: #d9d9d9;
 }
 
 h1 {

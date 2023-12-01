@@ -1,3 +1,5 @@
+import { savePDF } from '@progress/kendo-react-pdf'; 
+
 /** image onto base64 */
 export function fileToBase64(file: any) {
   return new Promise((resolve, reject) => {
@@ -23,4 +25,12 @@ export function getOptions(data: any, label: string, value: string) {
     return options;
   }
   return [];
+}
+
+export function generatePdf(html: any) {
+  savePDF(html, {
+    paperSize: 'A4',
+    fileName: 'form.pdf',
+    margin: 3,
+  });
 }
