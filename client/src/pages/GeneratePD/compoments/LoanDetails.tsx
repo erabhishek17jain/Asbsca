@@ -10,6 +10,13 @@ import { fetchAllClientsAsync } from '../../../slices/clientsSlice';
 import store from '../../../store/store';
 import moment from 'moment';
 
+const initialValues = {
+  alc: '',
+  loan: '',
+  loanType: '',
+  bankName: '',
+};
+
 const LoanDetails = ({
   steps,
   payloads,
@@ -22,13 +29,6 @@ const LoanDetails = ({
   const { allClients } = useSelector((state: any) => state.clients);
   const [clientOptions, setClientOptions] = useState<any>([]);
   const [pdDetails, setPdDetails] = useState<any>({});
-
-  const initialValues = {
-    alc: '',
-    loan: '',
-    loanType: '',
-    bankName: '',
-  };
 
   const validationSchema = Yup.object().shape({
     alc: Yup.string().required('This field is required'),

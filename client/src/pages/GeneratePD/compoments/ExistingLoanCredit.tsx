@@ -48,9 +48,15 @@ const ExistingLoan = ({ formik }: any) => {
         totalLoanBtOut = totalLoanBtOut + item.outstanding;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanBt', totalLoanBt);
-    formik.setFieldValue('existanceLoan.totalLoanBtEmi', totalLoanBtEmi);
-    formik.setFieldValue('existanceLoan.totalLoanBtOut', totalLoanBtOut);
+    formik.setFieldValue('existanceLoan.totalLoanBt', totalLoanBt.toFixed(2));
+    formik.setFieldValue(
+      'existanceLoan.totalLoanBtEmi',
+      totalLoanBtEmi.toFixed(2),
+    );
+    formik.setFieldValue(
+      'existanceLoan.totalLoanBtOut',
+      totalLoanBtOut.toFixed(2),
+    );
   };
 
   useEffect(() => {
@@ -72,9 +78,15 @@ const ExistingLoan = ({ formik }: any) => {
         totalLoanEcOut = totalLoanEcOut + item.outstanding;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanEc', totalLoanEc);
-    formik.setFieldValue('existanceLoan.totalLoanEcEmi', totalLoanEcEmi);
-    formik.setFieldValue('existanceLoan.totalLoanEcOut', totalLoanEcOut);
+    formik.setFieldValue('existanceLoan.totalLoanEc', totalLoanEc.toFixed(2));
+    formik.setFieldValue(
+      'existanceLoan.totalLoanEcEmi',
+      totalLoanEcEmi.toFixed(2),
+    );
+    formik.setFieldValue(
+      'existanceLoan.totalLoanEcOut',
+      totalLoanEcOut.toFixed(2),
+    );
   };
 
   useEffect(() => {
@@ -96,9 +108,15 @@ const ExistingLoan = ({ formik }: any) => {
         totalLoanEmOut = totalLoanEmOut + item.outstanding;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanEm', totalLoanEm);
-    formik.setFieldValue('existanceLoan.totalLoanEmEmi', totalLoanEmEmi);
-    formik.setFieldValue('existanceLoan.totalLoanEmOut', totalLoanEmOut);
+    formik.setFieldValue('existanceLoan.totalLoanEm', totalLoanEm.toFixed(2));
+    formik.setFieldValue(
+      'existanceLoan.totalLoanEmEmi',
+      totalLoanEmEmi.toFixed(2),
+    );
+    formik.setFieldValue(
+      'existanceLoan.totalLoanEmOut',
+      totalLoanEmOut.toFixed(2),
+    );
   };
 
   useEffect(() => {
@@ -229,7 +247,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Rs.)'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -399,7 +417,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Rs.)'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -566,7 +584,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Rs.)'}
+                                    rightLabel={'(Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -652,8 +670,14 @@ const CreditFacility = ({ formik }: any) => {
         totalLoanCfAu = totalLoanCfAu + item.averageUtilization;
       }
     });
-    formik.setFieldValue('creditFacility.totalLoanCfAu', totalLoanCfAu);
-    formik.setFieldValue('creditFacility.totalLoanCfLimit', totalLoanCfLimit);
+    formik.setFieldValue(
+      'creditFacility.totalLoanCfAu',
+      totalLoanCfAu.toFixed(2),
+    );
+    formik.setFieldValue(
+      'creditFacility.totalLoanCfLimit',
+      totalLoanCfLimit.toFixed(2),
+    );
   };
 
   useEffect(() => {
@@ -690,7 +714,7 @@ const CreditFacility = ({ formik }: any) => {
                 name="creditFacility.creditDetails"
                 render={(tag) => (
                   <div>
-                    {formik?.values?.creditFacility?.creditDetails.length >
+                    {formik?.values?.creditFacility?.creditDetails?.length >
                     0 ? (
                       formik?.values?.creditFacility?.creditDetails.map(
                         (item: any, index: number) => (
@@ -851,7 +875,7 @@ const OtherCommitments = ({ formik }: any) => {
         }
       },
     );
-    formik.setFieldValue('otherCommitments.totalCon', totalCon);
+    formik.setFieldValue('otherCommitments.totalCon', totalCon.toFixed(2));
     formik.setFieldValue('otherCommitments.totalSum', totalSum);
   };
 

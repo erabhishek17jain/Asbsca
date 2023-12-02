@@ -8,8 +8,35 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
 import { yesNoOptions } from '../constants';
+import { calculatePeriod } from '../../../utils';
 
 const clientsInfo = { clientName: '', contact: '' };
+
+const initialValues = {
+  clients: {
+    isClientDetails: '',
+    clientDetails: {
+      noOfClientDaily: '',
+      majorClient: [{ clientName: '', contact: '' }],
+    },
+  },
+  debitors: {
+    isDebitorDetails: '',
+    debitorDetails: {
+      moreThan6Month: {
+        amount: 0,
+        reason: '',
+      },
+      lessThan6Month: {
+        amount: 0,
+      },
+      totalDebtors: 0,
+      collectionPeriod: '',
+      creditPeriodAllowed: '',
+      whyIrRegular: '',
+    },
+  },
+};
 
 const ClientsDebtors = ({
   steps,
@@ -30,32 +57,6 @@ const ClientsDebtors = ({
   const handleDebtors = (title: string, val: string) => {
     console.log(title);
     setIsDebtors(val);
-  };
-
-  const initialValues = {
-    clients: {
-      isClientDetails: '',
-      clientDetails: {
-        noOfClientDaily: '',
-        majorClient: [{ clientName: '', contact: '' }],
-      },
-    },
-    debitors: {
-      isDebitorDetails: '',
-      debitorDetails: {
-        moreThan6Month: {
-          amount: '',
-          reason: '',
-        },
-        lessThan6Month: {
-          amount: '',
-          collectionPeriod: '',
-        },
-        totalDebtors: '',
-        creditPeriodAllowed: '',
-        whyIrRegular: '',
-      },
-    },
   };
 
   const validationSchema = Yup.object().shape({
@@ -98,12 +99,32 @@ const ClientsDebtors = ({
     onSubmit: onSubmit,
   });
 
-   useEffect(() => {
-     if (payloads.clientDebtors) {
-       formik.setFieldValue('clients', payloads?.clientDebtors?.clients);
-       formik.setFieldValue('debitors', payloads?.clientDebtors?.debitors);
-     }
-   }, [payloads]);
+  useEffect(() => {
+    const moreAmt =
+      formik?.values?.debitors?.debitorDetails?.moreThan6Month?.amount;
+    const lessAmt =
+      formik?.values?.debitors?.debitorDetails?.lessThan6Month?.amount;
+    formik.setFieldValue('debitors.totalDebtors', moreAmt + lessAmt);
+    formik.setFieldValue(
+      'debitors.collectionPeriod',
+      calculatePeriod(
+        formik?.values?.debitors?.debitorDetails?.totalDebtors,
+        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+          ?.amountPA,
+      ),
+    );
+    formik.setFieldValue(
+      'debitors?.debitorDetails?.moreThan6Month?.reason',
+      moreAmt === 0 ? '-' : '',
+    );
+  }, [formik?.values?.debitors?.debitorDetails]);
+
+  useEffect(() => {
+    if (payloads.clientDebtors) {
+      formik.setFieldValue('clients', payloads?.clientDebtors?.clients);
+      formik.setFieldValue('debitors', payloads?.clientDebtors?.debitors);
+    }
+  }, [payloads]);
 
   const errors: any = formik?.errors?.clients?.clientDetails;
 
@@ -215,8 +236,7 @@ const ClientsDebtors = ({
                 {
                   label: 'Collection Period',
                   value:
-                    formik?.values?.debitors?.debitorDetails?.lessThan6Month
-                      ?.collectionPeriod,
+                    formik?.values?.debitors?.debitorDetails?.collectionPeriod,
                 },
               ]}
             >
@@ -241,6 +261,10 @@ const ClientsDebtors = ({
                     label={'Reason for Debtors'}
                     rightLabel={'more than 6 Months'}
                     id={'debitors.debitorDetails.moreThan6Month.reason'}
+                    disabled={
+                      formik?.values?.debitors?.debitorDetails?.moreThan6Month
+                        ?.amount === 0
+                    }
                     value={
                       formik?.values?.debitors?.debitorDetails?.moreThan6Month
                         ?.reason
@@ -263,6 +287,18 @@ const ClientsDebtors = ({
                     error={
                       formik?.errors?.debitors?.debitorDetails?.lessThan6Month
                         ?.amount
+                    }
+                    handleChange={formik.handleChange}
+                  />
+                  <AInputField
+                    disabled={true}
+                    label={'Collection Period'}
+                    id={'debitors.debitorDetails.collectionPeriod'}
+                    value={
+                      formik?.values?.debitors?.debitorDetails?.collectionPeriod
+                    }
+                    error={
+                      formik?.errors?.debitors?.debitorDetails?.collectionPeriod
                     }
                     handleChange={formik.handleChange}
                   />

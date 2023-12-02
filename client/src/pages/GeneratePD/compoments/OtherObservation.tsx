@@ -15,48 +15,47 @@ import {
 } from '../constants';
 import { useEffect } from 'react';
 
+const initialValues = {
+  businessPlateName: {
+    exist: '',
+    reasonForNo: '-',
+  },
+  activity: {
+    exist: '',
+    reasonForNo: '-',
+  },
+  customer: {
+    exist: '',
+    reasonForNo: '',
+  },
+  stock: {
+    exist: '',
+    reasonForNo: '-',
+  },
+  thirdPartyCheck: {
+    exist: '',
+    reasonForNo: '',
+  },
+  screenshotOfCCTV: {
+    exist: '',
+    reasonForNo: '-',
+  },
+  behaviourOfApplicant: '',
+  duringVist: {
+    applicantDoing: '',
+    employeesDoing: '',
+    otherObservation: '',
+  },
+} as any;
+
 const OtherObservation = ({
   steps,
-  
   payloads,
   activeStep,
   handlePrev,
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
-    businessPlateName: {
-      exist: '',
-      reasonForNo: '-',
-    },
-    activity: {
-      exist: '',
-      reasonForNo: '-',
-    },
-    customer: {
-      exist: '',
-      reasonForNo: '',
-    },
-    stock: {
-      exist: '',
-      reasonForNo: '-',
-    },
-    thirdPartyCheck: {
-      exist: '',
-      reasonForNo: '',
-    },
-    screenshotOfCCTV: {
-      exist: '',
-      reasonForNo: '-',
-    },
-    behaviourOfApplicant: '',
-    duringVist: {
-      applicantDoing: '',
-      employeesDoing: '',
-      otherObservation: '',
-    },
-  } as any;
-
   const validationSchema = Yup.object().shape({
     businessPlateName: Yup.object({
       exist: Yup.string().required('This field is required'),

@@ -7,6 +7,19 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { yesNoOptions } from '../constants';
+import { calculatePeriod } from '../../../utils';
+
+const initialValues = {
+  isStockDetails: 'Yes',
+  stockDetails: {
+    rawMaterialAmount: 0,
+    wipAmount: 0,
+    finishGoods: 0,
+    whyStocklowHigh: 0,
+    totalStocks: 0,
+    stockHoldingPeriod: '',
+  },
+};
 
 const Stocks = ({
   steps,
@@ -21,18 +34,6 @@ const Stocks = ({
   const handleStocks = (title: string, val: string) => {
     console.log(title);
     setIsStocks(val);
-  };
-
-  const initialValues = {
-    isStockDetails: 'Yes',
-    stockDetails: {
-      rawMaterialAmount: '',
-      wipAmount: '',
-      finishGoods: '',
-      whyStocklowHigh: '',
-      totalStocks: '',
-      stockHoldingPeriod: '',
-    },
   };
 
   const validationSchema = Yup.object().shape({
@@ -57,6 +58,23 @@ const Stocks = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  useEffect(() => {
+    const total =
+      formik?.values?.stockDetails?.rawMaterialAmount +
+      formik?.values?.stockDetails?.wipAmount +
+      formik?.values?.stockDetails?.finishGoods +
+      formik?.values?.stockDetails?.rawMaterialAmount;
+    formik.setFieldValue('stockDetails.totalStocks', total);
+    formik.setFieldValue(
+      'stockDetails.collectionPeriod',
+      calculatePeriod(
+        total,
+        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+          ?.amountPA,
+      ),
+    );
+  }, [formik?.values?.stockDetails]);
 
   useEffect(() => {
     if (payloads.stocks) {

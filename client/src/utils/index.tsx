@@ -1,4 +1,4 @@
-import { savePDF } from '@progress/kendo-react-pdf'; 
+import { savePDF } from '@progress/kendo-react-pdf';
 
 /** image onto base64 */
 export function fileToBase64(file: any) {
@@ -13,6 +13,21 @@ export function fileToBase64(file: any) {
     };
   });
 }
+
+export const calculatePeriod = (amount: number, turnover: number) => {
+  let period;
+  const duration = (amount * 12) / turnover;
+  if (amount === 0) {
+    period = '-';
+  } else if (duration > 11.99) {
+    period = duration / 12 + ' Years';
+  } else if (duration > 1) {
+    period = duration + ' Months';
+  } else if (duration > 11.99) {
+    period = (duration * 365) / 12 + ' Days';
+  }
+  return period;
+};
 
 export function getOptions(data: any, label: string, value: string) {
   if (data?.length > 0) {

@@ -163,17 +163,22 @@ const ReportData = () => {
                       <p className="pl-1 b-b">Gross Profit</p>
                       <p className="pl-1 b-b">Net Margin</p>
                       <p className="pl-1 b-b">Share of Profit</p>
-                      <p className="pl-1 b-b">Partner's Salary</p>
-                      <p className="pl-1 b-b">Partner's Remuneration</p>
+                      <p className="pl-1 b-b">
+                        {payload.data?.businessDetails?.designation}'s Salary
+                      </p>
+                      <p className="pl-1 b-b">
+                        {payload.data?.businessDetails?.designation}'s
+                        Remuneration
+                      </p>
                       <p className="pl-1 b-b font-bold">Other Income</p>
                       <p className="pl-1 b-b font-bold">Total</p>
                       <p className="pl-1 font-bold">Grand Total</p>
                     </div>
                   </div>
                   <div
-                    className={`w-3/4 grid grid-cols-${payload.data.financials.length} text-center`}
+                    className={`w-3/4 grid grid-cols-${payload.data.financials?.finances?.length} text-center`}
                   >
-                    {payload.data.financials.map((item: any) => (
+                    {payload.data?.financials?.finances?.map((item: any) => (
                       <div className="b-r">
                         <p className="bg pl-1 b-b font-bold h-6">
                           {item.applicantIncome}
@@ -183,8 +188,8 @@ const ReportData = () => {
                         </p>
                         <p className="pl-1 b-b">{item.entityName}</p>
                         <p className="pl-1 b-b">
-                          {item.income.totalAmountPA} (
-                          {item.income.totalAmountPM})
+                          {item.income.grossProfit} (
+                          {item.income.grossProfitPer})
                         </p>
                         <p className="pl-1 b-b">
                           {item.expenses.netProfitPA} (
@@ -231,7 +236,8 @@ const ReportData = () => {
                 <p className="my-4 font-bold">Assets Backing:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    - Asset & Investment Backing: 1.16 Cr.
+                    - Asset & Investment Backing:{' '}
+                    {payload.data?.assets?.assetsBacking}
                     <br />
                     (For the detail of assets please refer “Assets Head +
                     Investment” below)
@@ -794,43 +800,45 @@ const ReportData = () => {
               <div className="flex w-full">
                 <div className="w-2/10"></div>
                 <div
-                  className={`w-5/10 grid grid-cols-${payload.data.financials.length}`}
+                  className={`w-5/10 grid grid-cols-${payload.data.financials?.finances.length}`}
                 >
-                  {payload.data.financials.map((item: any, index: number) => (
-                    <div className="b-r">
-                      <p className="bg pl-1 b-b text-center font-bold h-6">
-                        {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
-                      </p>
-                      <p className="pl-1 b-b h-5">
-                        {item.income.turnoverGrossReciepts.amountPM} Lakhs
-                      </p>
-                      <p className="pl-1 b-b h-5">
-                        {item.income.turnoverGrossReciepts.amountPA / 100} Cr.
-                      </p>
-                      <p className="pl-1 b-b h-5">
-                        {item.income.purchases.amountPM} Lakhs
-                      </p>
-                      <p className="pl-1 b-b h-5">
-                        {item.income.purchases.amountPA / 100} Cr.
-                      </p>
-                      <p className="pl-1 b-b h-10">
-                        {item.income.purchases.amountPM} Lakhs
-                      </p>
-                      <p className="pl-1 b-b h-5">
-                        {item.income.purchases.amountPA / 100} Cr.
-                      </p>
-                      <p className="pl-1">
-                        Salary: {item.income.purchases.amountPM} Lakhs <br />
-                        Electricity: {item.income.purchases.amountPM} <br />
-                        Travelling Expenses: {
-                          item.income.purchases.amountPM
-                        }{' '}
-                        Lakhs
-                        <br />
-                        TotalExpenses: {item.income.purchases.amountPM} Lakhs
-                      </p>
-                    </div>
-                  ))}
+                  {payload.data.financials?.finances.map(
+                    (item: any, index: number) => (
+                      <div className="b-r">
+                        <p className="bg pl-1 b-b text-center font-bold h-6">
+                          {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
+                        </p>
+                        <p className="pl-1 b-b h-5">
+                          {item.income.turnoverGrossReciepts.amountPM} Lakhs
+                        </p>
+                        <p className="pl-1 b-b h-5">
+                          {item.income.turnoverGrossReciepts.amountPA / 100} Cr.
+                        </p>
+                        <p className="pl-1 b-b h-5">
+                          {item.income.purchases.amountPM} Lakhs
+                        </p>
+                        <p className="pl-1 b-b h-5">
+                          {item.income.purchases.amountPA / 100} Cr.
+                        </p>
+                        <p className="pl-1 b-b h-10">
+                          {item.income.purchases.amountPM} Lakhs
+                        </p>
+                        <p className="pl-1 b-b h-5">
+                          {item.income.purchases.amountPA / 100} Cr.
+                        </p>
+                        <p className="pl-1">
+                          Salary: {item.income.purchases.amountPM} Lakhs <br />
+                          Electricity: {item.income.purchases.amountPM} <br />
+                          Travelling Expenses: {
+                            item.income.purchases.amountPM
+                          }{' '}
+                          Lakhs
+                          <br />
+                          TotalExpenses: {item.income.purchases.amountPM} Lakhs
+                        </p>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             </td>
@@ -1263,15 +1271,19 @@ const ReportData = () => {
                       </td>
                       <td>
                         <p>{`${
-                          payload.data.existingLoan.existanceLoan.totalLoanBtEmi +
-                          payload.data.existingLoan.existanceLoan.totalLoanEcEmi +
+                          payload.data.existingLoan.existanceLoan
+                            .totalLoanBtEmi +
+                          payload.data.existingLoan.existanceLoan
+                            .totalLoanEcEmi +
                           payload.data.existingLoan.existanceLoan.totalLoanEmEmi
                         }`}</p>
                       </td>
                       <td>
                         <p>{`${
-                          payload.data.existingLoan.existanceLoan.totalLoanBtOut +
-                          payload.data.existingLoan.existanceLoan.totalLoanEcOut +
+                          payload.data.existingLoan.existanceLoan
+                            .totalLoanBtOut +
+                          payload.data.existingLoan.existanceLoan
+                            .totalLoanEcOut +
                           payload.data.existingLoan.existanceLoan.totalLoanEmOut
                         }`}</p>
                       </td>
@@ -1632,10 +1644,6 @@ const ReportData = () => {
                 <span>
                   - {payload.data.observations.duringVist.employeesDoing}
                 </span>
-                <br />
-                <span>
-                  - {payload.data.observations.duringVist.otherObservation}
-                </span>
               </p>
             </td>
           </tr>
@@ -1668,8 +1676,8 @@ const ReportData = () => {
         </tbody>
       </table>
       <div className="my-4">
-        <h1>Disclaimer Clause: -</h1>
-        <p className="text-main">
+        <h1 className='mb-2'>Disclaimer Clause: -</h1>
+        <p className="text-black">
           The above data and explanation are based on the information provided
           to us during the course of the visit. This report (including any
           attachments) has been prepared on the basis of verbal information

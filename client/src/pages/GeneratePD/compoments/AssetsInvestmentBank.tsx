@@ -43,6 +43,33 @@ const bankAccountInfo: any = {
   balanceOnDay: '',
 };
 
+const initialValues = {
+  isBussinessAssets: 'Yes',
+  bussinessAssetDetails: {
+    bussinessAssets: [] as any,
+    totalMarketValue: 0,
+    totalRentPM: 0,
+  },
+  isPersonalAssets: 'Yes',
+  personalAssetDetails: {
+    personalAssets: [] as any,
+    totalMarketValue: 0,
+    totalRentPM: 0,
+  },
+  isInvestments: 'Yes',
+  investmentDetails: {
+    investments: [] as any,
+    totalContribution: 0,
+    totalMarketValue: 0,
+  },
+  isBankAccount: 'Yes',
+  bankAccountDetails: {
+    bankAccounts: [] as any,
+    totalBalance: 0,
+  },
+  assetsBacking: '',
+};
+
 const AssetsInvestmentBank = ({
   steps,
   payloads,
@@ -75,34 +102,7 @@ const AssetsInvestmentBank = ({
     setIsBankAccounts(val);
   };
 
-  const initialValues = {
-    isBussinessAssets: 'Yes',
-    bussinessAssetDetails: {
-      bussinessAssets: [] as any,
-      totalMarketValue: '200',
-      totalRentPM: '30000',
-    },
-    isPersonalAssets: 'Yes',
-    personalAssetDetails: {
-      personalAssets: [] as any,
-      totalMarketValue: '120',
-      totalRentPM: '20000',
-    },
-    isInvestments: 'Yes',
-    investmentDetails: {
-      investments: [] as any,
-      totalContribution: '50',
-      totalMarketValue: '70',
-    },
-    isBankAccount: 'Yes',
-    bankAccountDetails: {
-      bankAccounts: [] as any,
-      totalBalance: '2.34',
-    },
-  };
-
   const validationSchema = Yup.object().shape({
-    // isBussinessAssets: Yup.string().required('This field is required'),
     bussinessAssetDetails: Yup.object({
       bussinessAssets: Yup.array().of(
         Yup.object().shape({
@@ -115,10 +115,7 @@ const AssetsInvestmentBank = ({
           rentPM: Yup.number().required('This field is required'),
         }),
       ),
-      // totalMarketValue: Yup.number().required('This field is required'),
-      // totalRentPM: Yup.number().required('This field is required'),
     }),
-    // isPersonalAssets: Yup.string().required('This field is required'),
     personalAssetDetails: Yup.object({
       personalAssets: Yup.array().of(
         Yup.object().shape({
@@ -131,10 +128,7 @@ const AssetsInvestmentBank = ({
           rentPM: Yup.number().required('This field is required'),
         }),
       ),
-      // totalMarketValue: Yup.number().required('This field is required'),
-      // totalRentPM: Yup.number().required('This field is required'),
     }),
-    // isInvestments: Yup.string().required('This field is required'),
     investmentDetails: Yup.object({
       investments: Yup.array().of(
         Yup.object().shape({
@@ -143,10 +137,7 @@ const AssetsInvestmentBank = ({
           marketValue: Yup.number().required('This field is required'),
         }),
       ),
-      // totalMarketValue: Yup.number().required('This field is required'),
-      // totalContribution: Yup.number().required('This field is required'),
     }),
-    // isBankAccount: Yup.string().required('This field is required'),
     bankAccountDetails: Yup.object({
       bankAccounts: Yup.array().of(
         Yup.object().shape({
@@ -156,7 +147,6 @@ const AssetsInvestmentBank = ({
           balanceOnDay: Yup.number().required('This field is required'),
         }),
       ),
-      // totalBalance: Yup.number().required('This field is required'),
     }),
   });
 
@@ -173,6 +163,81 @@ const AssetsInvestmentBank = ({
     validateOnChange: false,
     onSubmit: onSubmit,
   });
+
+  const setTotalBA = () => {
+    let total = 0;
+    let totalRent = 0;
+    formik?.values?.bussinessAssetDetails?.bussinessAssets?.forEach(
+      (item: any) => {
+        if (item.marketValue !== '') {
+          total = total + item.marketValue;
+        }
+        if (item.rentPM !== '') {
+          totalRent = totalRent + item.rentPM;
+        }
+      },
+    );
+    formik.setFieldValue('bussinessAssetDetails.totalRentPM', totalRent);
+    formik.setFieldValue('bussinessAssetDetails.totalMarketValue', total);
+  };
+
+  useEffect(() => {
+    setTotalBA();
+  }, [formik?.values?.bussinessAssetDetails?.bussinessAssets]);
+
+  const setTotalPA = () => {
+    let total = 0;
+    let totalRent = 0;
+    formik?.values?.personalAssetDetails?.personalAssets?.forEach(
+      (item: any) => {
+        if (item.marketValue !== '') {
+          total = total + item.marketValue;
+        }
+        if (item.rentPM !== '') {
+          totalRent = totalRent + item.rentPM;
+        }
+      },
+    );
+    formik.setFieldValue('personalAssetDetails.totalRentPM', totalRent);
+    formik.setFieldValue('personalAssetDetails.totalMarketValue', total);
+  };
+
+  useEffect(() => {
+    setTotalPA();
+  }, [formik?.values?.personalAssetDetails?.personalAssets]);
+
+  const setTotalInv = () => {
+    let total = 0;
+    let totalRent = 0;
+    formik?.values?.investmentDetails?.investments?.forEach((item: any) => {
+      if (item.marketValue !== '') {
+        total = total + item.marketValue;
+      }
+      if (item.contribution !== '') {
+        totalRent = totalRent + item.contribution;
+      }
+    });
+    formik.setFieldValue('investmentDetails.totalMarketValue', total);
+    formik.setFieldValue('investmentDetails.totalContribution', totalRent);
+  };
+
+  useEffect(() => {
+    setTotalInv();
+  }, [formik?.values?.investmentDetails?.investments]);
+
+  const setTotalBC = () => {
+    let total = 0;
+    formik?.values?.bankAccountDetails?.bankAccounts?.forEach((item: any) => {
+      if (item.balanceOnDay !== '') {
+        total = total + item.balanceOnDay;
+      }
+    });
+    formik.setFieldValue('bankAccountDetails.totalBalance', total);
+  };
+
+  useEffect(() => {
+    setTotalBC();
+  }, [formik?.values?.bankAccountDetails?.bankAccounts]);
 
   useEffect(() => {
     if (payloads.assets) {
@@ -202,6 +267,54 @@ const AssetsInvestmentBank = ({
         'bankAccountDetails',
         payloads?.assets?.bankAccountDetails,
       );
+    } else {
+      const business = payloads?.personalDetails?.residents.filter(
+        (item: any) => item?.resiType === 'P',
+      );
+      const personal = payloads?.personalDetails?.residents.filter(
+        (item: any) => item?.resiType === 'P',
+      );
+      const bussAssets: any = [];
+      if (business?.length > 0) {
+        business.forEach((el: any) => {
+          bussAssets.push({
+            ...assetInfo,
+            purchaseYear: el?.purchaseYear,
+            carpetArea: el?.carpetArea,
+            status: el?.resiStatus,
+            marketValue: el?.marketValue,
+          });
+        });
+      }
+      const perAssets: any = [];
+      if (personal?.length > 0) {
+        personal.forEach((el: any) => {
+          perAssets.push({
+            ...assetInfo,
+            purchaseYear: el?.purchaseYear,
+            carpetArea: el?.carpetArea,
+            status: el?.resiStatus,
+            marketValue: el?.marketValue,
+          });
+        });
+      }
+      if (
+        payloads?.detailsOfProp?.propertyLoanDetails?.propertyValue?.ocrPaid > 0
+      ) {
+        perAssets.push({
+          ...assetInfo,
+          particulars: '-',
+          localStorage: '-',
+          purchaseYear: '-',
+          carpetArea: '-',
+          status: '-',
+          marketValue:
+            payloads?.detailsOfProp?.propertyLoanDetails?.propertyValue
+              ?.ocrPaid,
+        });
+      }
+      formik.setFieldValue('bussinessAssetDetails.bussinessAssets', perAssets);
+      formik.setFieldValue('bussinessAssetDetails.bussinessAssets', bussAssets);
     }
   }, [payloads]);
 
@@ -230,7 +343,7 @@ const AssetsInvestmentBank = ({
                     formik?.values?.bussinessAssetDetails?.totalMarketValue,
                 },
                 {
-                  label: 'Total Rent P?.M',
+                  label: 'Total Rent P.M',
                   value: formik?.values?.bussinessAssetDetails?.totalRentPM,
                 },
               ]}
@@ -401,7 +514,7 @@ const AssetsInvestmentBank = ({
                   value: formik?.values?.personalAssetDetails?.totalMarketValue,
                 },
                 {
-                  label: 'Total Rent P?.M',
+                  label: 'Total Rent P.M',
                   value: formik?.values?.personalAssetDetails?.totalRentPM,
                 },
               ]}

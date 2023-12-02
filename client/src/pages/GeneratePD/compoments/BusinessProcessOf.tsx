@@ -5,6 +5,10 @@ import { useFormik } from 'formik';
 import { businessProcess } from '../constants';
 import { useEffect } from 'react';
 
+const initialValues = {
+  bussinessProcessOf: '',
+};
+
 const BusinessProcessOf = ({
   steps,
   payloads,
@@ -13,10 +17,6 @@ const BusinessProcessOf = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
-    bussinessProcessOf: '',
-  };
-
   const validationSchema = Yup.object().shape({
     bussinessProcessOf: Yup.string().required('This field is required'),
   });
@@ -35,15 +35,15 @@ const BusinessProcessOf = ({
     onSubmit: onSubmit,
   });
 
-   useEffect(() => {
-     if (payloads.businessOf) {
-       formik.setFieldValue(
-         'bussinessProcessOf',
-         payloads.businessOf?.bussinessProcessOf,
-       );
-     }
-   }, [payloads]);
-  
+  useEffect(() => {
+    if (payloads.businessOf) {
+      formik.setFieldValue(
+        'bussinessProcessOf',
+        payloads.businessOf?.bussinessProcessOf,
+      );
+    }
+  }, [payloads]);
+
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">

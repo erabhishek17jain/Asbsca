@@ -192,6 +192,11 @@ const financeInfo = {
   },
 };
 
+const initialValues: any = {
+  totalEarning: '',
+  finances: [{ ...financeInfo }] as any,
+};
+
 const Financials = ({
   steps,
   payloads,
@@ -203,11 +208,6 @@ const Financials = ({
   const [showModal, setShowModal] = useState(false);
   const [expenseList, setExpenseList] = useState<any>([...expenses]);
   const [bussinessSalary] = useState<any>([...salaryFromBusiness]);
-
-  const initialValues: any = {
-    totalEarning: '',
-    finances: [{ ...financeInfo }] as any,
-  };
 
   const validationSchema = Yup.object().shape({
     finances: Yup.array().of(
@@ -324,7 +324,7 @@ const Financials = ({
     formik.setFieldValue(`finances[${index}]income.grossProfit`, totalAP);
     formik.setFieldValue(
       `finances[${index}]income.grossProfitPer`,
-      `${(100 - totalPM * 100).toFixed(0)}%`,
+      (100 - totalPM * 100).toFixed(0),
     );
   };
 

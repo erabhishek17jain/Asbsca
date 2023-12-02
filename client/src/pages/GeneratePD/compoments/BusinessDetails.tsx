@@ -24,6 +24,37 @@ const shareInfo = {
   shareHolding: '',
 };
 
+const initialValues = {
+  bussinessName: '',
+  typeOfEntity: '',
+  yearOfIncorporation: '',
+  generation: '',
+  gstNumber: '',
+  regOfficeAddress: '',
+  visitedAddress: '',
+  vicinity: '',
+  ownership: '',
+  pdConductWith: '',
+  designation: '',
+  mobile: '',
+  familyBusiness: '',
+  mainUseproducts: '',
+  howTurnoverVerified: '',
+  citiesOfReppresentation: '',
+  competitorsOfBusiness: '',
+  noOfVisit: 1,
+  doYouHavefixedEmployee: '',
+  empSpecified: '',
+  empSeen: '',
+  shareHoldings: [
+    {
+      ownerName: '',
+      shareHolding: 0,
+    },
+  ],
+  totalHolding: 0,
+};
+
 const BusinessDetails = ({
   steps,
 
@@ -33,37 +64,6 @@ const BusinessDetails = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
-    bussinessName: '',
-    typeOfEntity: '',
-    yearOfIncorporation: '',
-    generation: '',
-    gstNumber: '',
-    regOfficeAddress: '',
-    visitedAddress: '',
-    vicinity: '',
-    ownership: '',
-    pdConductWith: '',
-    designation: '',
-    mobile: '',
-    familyBusiness: '',
-    mainUseproducts: '',
-    howTurnoverVerified: '',
-    citiesOfReppresentation: '',
-    competitorsOfBusiness: '',
-    noOfVisit: 1,
-    doYouHavefixedEmployee: '',
-    empSpecified: '',
-    empSeen: '',
-    shareHoldings: [
-      {
-        ownerName: '',
-        shareHolding: '',
-      },
-    ],
-    totalHolding: '',
-  };
-
   const validationSchema = Yup.object().shape({
     bussinessName: Yup.string().required('This field is required'),
     typeOfEntity: Yup.string().required('This field is required'),

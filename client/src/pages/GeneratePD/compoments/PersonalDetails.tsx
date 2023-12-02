@@ -58,6 +58,12 @@ const familyInfo = {
   earningStatus: '',
 } as any;
 
+const initialValues = {
+  applicants: [{ ...applicantInfo }] as any,
+  residents: [{ ...resiInfo }] as any,
+  familyDetails: [] as any,
+};
+
 const PersonalDetails = ({
   steps,
   payloads,
@@ -66,12 +72,6 @@ const PersonalDetails = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
-    applicants: [{ ...applicantInfo }] as any,
-    residents: [{ ...resiInfo }] as any,
-    familyDetails: [] as any,
-  };
-
   const validationSchema = Yup.object().shape({
     applicants: Yup.array().of(
       Yup.object().shape({
@@ -162,7 +162,6 @@ const PersonalDetails = ({
       `${e.target.id.slice(0, 12)}.resiType`,
       e.target.value.slice(-1),
     );
-    e.target.value = e.target.value.slice(0, -1);
     formik.handleChange(e);
   };
 
@@ -524,7 +523,7 @@ const PersonalDetails = ({
                               type={'number'}
                               id={`residents[${index}].rentPm`}
                               label={'Rent P.M.'}
-                              rightLabel={'Rs.'}
+                              rightLabel={'(Lakhs)'}
                               value={formik?.values?.residents[index]?.rentPm}
                               error={
                                 errorsRe?.length > 0 && errorsRe[index]?.rentPm

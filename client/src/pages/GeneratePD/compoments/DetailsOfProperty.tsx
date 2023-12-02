@@ -130,8 +130,20 @@ const DetailsOfProperty = ({
       formik?.values?.propertyLoanDetails?.loanDetails?.amount * 100000;
     const pvif = Math.pow(1 + ir, np);
     const pmt = (-ir * (pv * pvif)) / (pvif - 1);
-    formik.setFieldValue('propertyLoanDetails.loanDetails.emi', -pmt.toFixed(2));
+    formik.setFieldValue(
+      'propertyLoanDetails.loanDetails.emi',
+      -pmt.toFixed(2),
+    );
   };
+
+  useEffect(() => {
+    if (formik?.values.occupiedBy !== '') {
+      formik.setFieldValue(
+        'propertyLoanDetails.loanDetails.emi',
+        formik?.values.occupiedBy !== 'Under Construction' ? 'NA' : '',
+      );
+    }
+  }, [formik?.values?.occupiedBy]);
 
   useEffect(() => {
     calculateEMI();

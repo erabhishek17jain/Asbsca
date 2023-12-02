@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
 import ASection from '../../../components-global/ASection';
 import { yesNoOptions } from '../constants';
+import { calculatePeriod } from '../../../utils';
 
 const Section = ({ title, children }: any) => {
   return (
@@ -19,6 +20,20 @@ const Section = ({ title, children }: any) => {
 };
 
 const clientsInfo = { clientName: '', contact: '' };
+
+const initialValues = {
+  isSuppliersDetails: 'Yes',
+  suppliersDetails: {
+    noOfSuppliers: '',
+    majorSuppliers: [] as any,
+  },
+  creditors: {
+    amount: 0,
+  },
+  collectionPeriod: '',
+  creitPeriodAllowed: '',
+  whyCreditorHighThanCredit: '',
+};
 
 const SuppliersCreditors = ({
   steps,
@@ -32,20 +47,6 @@ const SuppliersCreditors = ({
   const handleSuppliers = (title: string, val: string) => {
     console.log(title);
     setIsSuppliers(val);
-  };
-
-  const initialValues = {
-    isSuppliersDetails: 'Yes',
-    suppliersDetails: {
-      noOfSuppliers: '',
-      majorSuppliers: [] as any,
-    },
-    creditors: {
-      amount: '',
-      collectionPeriod: '',
-    },
-    creitPeriodAllowed: '',
-    whyCreditorHighThanCredit: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -79,27 +80,15 @@ const SuppliersCreditors = ({
     onSubmit: onSubmit,
   });
 
-  const getCollectionPeriod = (value: any) => {
-    const purchase = 50;
-    if (value === 0 || value === '') {
-      return 0;
-    } else if ((value * 12) / purchase > 11.99) {
-      return ((value * 12) / purchase / 12).toFixed(1) + ' Years';
-    } else if ((value * 12) / purchase > 1) {
-      return ((value * 12) / purchase).toFixed(1) + ' Months';
-    } else {
-      return ((value * 365) / purchase).toFixed(1) + ' Days';
-    }
-  };
-
-  const handleAmount = (e: any) => {
-    const { value } = e.target;
+  useEffect(() => {
     formik.setFieldValue(
-      'creditors.collectionPeriod',
-      getCollectionPeriod(value),
+      'collectionPeriod',
+      calculatePeriod(
+        formik?.values?.creditors?.amount,
+        payloads?.financials?.finances[0]?.income?.purchases?.amountPA,
+      ),
     );
-    formik.handleChange(e);
-  };
+  }, [formik?.values]);
 
   useEffect(() => {
     if (payloads.suppliers) {
@@ -148,7 +137,7 @@ const SuppliersCreditors = ({
                     handleChange={formik.handleChange}
                   />
                 </AGroupFields>
-                {formik?.values?.suppliersDetails.majorSuppliers.length > 0 && (
+                {formik?.values?.suppliersDetails.majorSuppliers?.length > 0 && (
                   <p className="w-full pb-3">Major Suppliers</p>
                 )}
                 <FormikProvider value={formik}>
@@ -223,7 +212,7 @@ const SuppliersCreditors = ({
               footers={[
                 {
                   label: 'Collection Period',
-                  value: formik?.values?.creditors.collectionPeriod,
+                  value: formik?.values?.collectionPeriod,
                 },
               ]}
             >
@@ -235,7 +224,15 @@ const SuppliersCreditors = ({
                   id={`creditors.amount`}
                   value={formik?.values?.creditors.amount}
                   error={formik?.errors?.creditors?.amount}
-                  handleChange={handleAmount}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  disabled={true}
+                  id={`collectionPeriod`}
+                  label={'Collection Period'}
+                  value={formik?.values?.collectionPeriod}
+                  error={formik?.errors?.collectionPeriod}
+                  handleChange={formik.handleChange}
                 />
                 <AInputField
                   type={'number'}

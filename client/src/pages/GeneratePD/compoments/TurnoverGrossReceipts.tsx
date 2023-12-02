@@ -9,6 +9,47 @@ import ASection from '../../../components-global/ASection';
 import moment from 'moment';
 import { useEffect } from 'react';
 
+const initialValues = {
+  aprilTillDate: {
+    idealAprilTillDate: {
+      turnover: 0,
+      netProfit: 0,
+    },
+    aprilTillDate: {
+      turnover: 0,
+      netProfit: 0,
+    },
+    reasonforDiff: '',
+  },
+  lastYears: {
+    firstLastYear: 0,
+    secondLastYear: 0,
+    changes: '',
+    reasonforDiff: '',
+  },
+  currentYearActual: {
+    actuals: {
+      turnover: 0,
+      netProfit: 0,
+      profitPercentage: 0,
+    },
+    asPerFinancials: {
+      turnover: 0,
+      netProfit: 0,
+      profitPercentage: 0,
+    },
+    financialActualRatio: '',
+  },
+  currentLastYearComparision: {
+    firstLastYear: 0,
+    secondLastYear: 0,
+    changes: '',
+    reasonforDiff: '',
+  },
+  bussinessTrendLast2Year: '',
+  futureProjection: '',
+};
+
 const TurnoverGrossReceipts = ({
   steps,
   payloads,
@@ -17,47 +58,6 @@ const TurnoverGrossReceipts = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const initialValues = {
-    aprilTillDate: {
-      idealAprilTillDate: {
-        turnover: '',
-        netProfit: '',
-      },
-      aprilTillDate: {
-        turnover: '',
-        netProfit: '',
-      },
-      reasonforDiff: '',
-    },
-    lastYears: {
-      firstLastYear: '',
-      secondLastYear: '',
-      changes: '',
-      reasonforDiff: '',
-    },
-    currentYearActual: {
-      actuals: {
-        turnover: '',
-        netProfit: '',
-        profitPercentage: '',
-      },
-      asPerFinancials: {
-        turnover: '',
-        netProfit: '',
-        profitPercentage: '',
-      },
-      financialActualRatio: '',
-    },
-    currentLastYearComparision: {
-      firstLastYear: '',
-      secondLastYear: '',
-      changes: '',
-      reasonforDiff: '',
-    },
-    bussinessTrendLast2Year: '',
-    futureProjection: '',
-  };
-
   const validationSchema = Yup.object().shape({
     aprilTillDate: Yup.object({
       idealAprilTillDate: Yup.object({
@@ -113,6 +113,88 @@ const TurnoverGrossReceipts = ({
     onSubmit: onSubmit,
   });
 
+  const calculatePercentage = (first: number, second: number) => {
+    var change = '';
+    const diff = second - first;
+    lastPer = (diff * 100) / first;
+    if (diff > 0) {
+      change = `Increased by ${diff} Lakhs | ${lastPer}%`;
+    } else if (diff < 0) {
+      change = `Decreased by ${diff} Lakhs | ${lastPer}%`;
+    } else {
+      change = 'No Changes | 0%';
+    }
+    return change;
+  };
+
+  const setCurrLast = () => {
+    if (
+      formik?.values?.currentLastYearComparision.firstLastYear !== 0 &&
+      formik?.values?.currentLastYearComparision.secondLastYear !== 0
+    ) {
+      const percent =
+        ((formik?.values?.currentLastYearComparision.secondLastYear -
+          formik?.values?.currentLastYearComparision.firstLastYear) *
+          100) /
+        formik?.values?.currentLastYearComparision.firstLastYear;
+
+      formik.setFieldValue(
+        'currentLastYearComparision.changes',
+        calculatePercentage(
+          formik?.values?.currentLastYearComparision.firstLastYear,
+          formik?.values?.currentLastYearComparision.secondLastYear,
+        ),
+      );
+      formik.setFieldValue(
+        'currentLastYearComparision.reasonforDiff',
+        percent > 25 ? '' : '-',
+      );
+    }
+  };
+
+  let actualPer: any;
+  useEffect(() => {
+    actualPer =
+      ((formik?.values?.aprilTillDate?.aprilTillDate?.turnover -
+        formik?.values?.aprilTillDate?.idealAprilTillDate?.turnover) *
+        100) /
+      formik?.values?.aprilTillDate?.aprilTillDate?.turnover;
+    formik.setFieldValue(
+      'aprilTillDate.reasonforDiff',
+      actualPer > 25 ? '' : '-',
+    );
+    setCurrLast();
+  }, [formik?.values?.aprilTillDate]);
+
+  let lastPer: any;
+  useEffect(() => {
+    formik.setFieldValue(
+      'lastYears.changes',
+      calculatePercentage(
+        formik?.values?.lastYears?.firstLastYear,
+        formik?.values?.lastYears?.secondLastYear,
+      ),
+    );
+    formik.setFieldValue('lastYears.reasonforDiff', lastPer > 25 ? '' : '-');
+    formik.setFieldValue(
+      'currentLastYearComparision.firstLastYear',
+      formik?.values?.lastYears?.secondLastYear,
+    );
+    setCurrLast();
+  }, [formik?.values?.lastYears]);
+
+  useEffect(() => {
+    const diff =
+      (formik?.values?.currentYearActual?.asPerFinancials?.turnover * 100) /
+      formik?.values?.currentYearActual?.actuals?.turnover;
+    formik.setFieldValue('currentYearActual.financialActualRatio', diff);
+    formik.setFieldValue(
+      'currentLastYearComparision.firstLastYear',
+      formik?.values?.currentYearActual?.asPerFinancials?.turnover,
+    );
+    setCurrLast();
+  }, [formik?.values?.currentYearActual]);
+
   useEffect(() => {
     if (payloads.turnoverDetails) {
       formik.setFieldValue(
@@ -136,10 +218,42 @@ const TurnoverGrossReceipts = ({
         'futureProjection',
         payloads?.turnoverDetails?.futureProjection,
       );
+    } else {
+      const end = moment();
+      const start = moment([2023, 3, 1]);
+      const turnoverA: any = (
+        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+          ?.amountPA *
+        (end.diff(start, 'days') / 365)
+      ).toFixed(2);
+      const netProfitA: any =
+        (turnoverA * payloads?.financials?.finances[0]?.expenses?.netProfitPM) /
+        100;
+      formik.setFieldValue(
+        'aprilTillDate.idealAprilTillDate.turnover',
+        turnoverA,
+      );
+      formik.setFieldValue(
+        'aprilTillDate.idealAprilTillDate.netProfit',
+        netProfitA,
+      );
+      formik.setFieldValue(
+        'currentYearActual.actuals.turnover',
+        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+          ?.amountPA,
+      );
+      formik.setFieldValue(
+        'currentYearActual.actuals.netProfit',
+        payloads?.financials?.finances[0]?.expenses?.netProfitPA,
+      );
+      formik.setFieldValue(
+        'currentYearActual.actuals.turnover',
+        payloads?.financials?.finances[0]?.expenses?.netProfitPM,
+      );
     }
   }, [payloads]);
 
-  const errors: any = formik.errors;
+  const errors: any = formik?.errors;
 
   return (
     <>
@@ -195,6 +309,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 id={'aprilTillDate.reasonforDiff'}
                 label={'Reason if major diff'}
+                disabled={actualPer < 25}
                 value={formik?.values?.aprilTillDate.reasonforDiff}
                 error={errors?.aprilTillDate?.reasonforDiff}
                 handleChange={formik.handleChange}
@@ -239,6 +354,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 label={'Reason if major diff'}
                 id={'lastYears.reasonforDiff'}
+                disabled={lastPer < 25}
                 value={formik?.values?.lastYears.reasonforDiff}
                 error={errors?.lastYears?.reasonforDiff}
                 handleChange={formik.handleChange}
@@ -320,6 +436,7 @@ const TurnoverGrossReceipts = ({
             </AGroupFields>
             <AGroupFields col={2}>
               <AInputField
+                disabled={true}
                 label={'F.S./Acutals (Bank Ratio)'}
                 id={'currentYearActual.financialActualRatio'}
                 value={formik?.values?.currentYearActual.financialActualRatio}
@@ -331,7 +448,8 @@ const TurnoverGrossReceipts = ({
           <ASection>
             <p className="w-full pb-3">
               March-{moment().year()} and March-
-              {moment().subtract(1, 'y').year()} Comparison (as per turnoverDetails):
+              {moment().subtract(1, 'y').year()} Comparison (as per
+              turnoverDetails):
             </p>
             <AGroupFields>
               <AInputField
