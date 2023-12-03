@@ -282,7 +282,14 @@ const BusinessDetails = ({
                 value={formik?.values?.pdConductWith}
                 error={formik?.errors?.pdConductWith}
                 handleChange={formik?.handleChange}
-                options={[{ label: 'Palash Jain', value: 'Palash Jain' }]}
+                options={payloads?.personalDetails?.applicants?.map(
+                  (item: any) => {
+                    return {
+                      label: item?.name,
+                      value: item?.name,
+                    };
+                  },
+                )}
               />
               <ASingleSelect
                 disabled={true}
@@ -411,16 +418,14 @@ const BusinessDetails = ({
                                       errors[index]?.ownerName
                                     }
                                     handleChange={formik?.handleChange}
-                                    options={[
-                                      {
-                                        label: 'Palash Jain',
-                                        value: 'Palash Jain',
+                                    options={payloads?.personalDetails?.applicants?.map(
+                                      (item: any) => {
+                                        return {
+                                          label: item?.name,
+                                          value: item?.name,
+                                        };
                                       },
-                                      {
-                                        label: 'Aadarsh Jain',
-                                        value: 'Aadarsh Jain',
-                                      },
-                                    ]}
+                                    )}
                                   />
                                   <AInputField
                                     type={'number'}

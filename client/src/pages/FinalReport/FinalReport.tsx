@@ -43,7 +43,7 @@ const FinalReport = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location?.state;
-  const { reportData, loading } = useSelector((state: any) => state.cases);
+  const { loading } = useSelector((state: any) => state.cases);
   const [showAssignCase, setShowAssignCase] = useState(false);
   const [showStatusCase, setShowStatusCase] = useState(false);
   const [actionType, setActionType] = useState('');
@@ -187,9 +187,7 @@ const FinalReport = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(reportData).length === 0) {
-      store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
-    }
+    store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
   }, []);
 
   const dropdownOptions = {
@@ -198,7 +196,7 @@ const FinalReport = () => {
         title: 'Edit Report',
         action: () =>
           navigate('/generatePD', {
-            state: { activeItem: state?.activeItem, action: 'edit' },
+            state: { activeItem: state?.activeItem },
           }),
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
@@ -218,7 +216,7 @@ const FinalReport = () => {
         title: 'Edit Report',
         action: () =>
           navigate('/generatePD', {
-            state: { activeItem: state?.activeItem, action: 'edit' },
+            state: { activeItem: state?.activeItem },
           }),
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
@@ -270,11 +268,7 @@ const FinalReport = () => {
             action={() => navigate(-1)}
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
-          <AButton
-            variant={'link'}
-            label={'Download'}
-            action={createPdf}
-          />
+          <AButton variant={'link'} label={'Download'} action={createPdf} />
           <div>Preview Report</div>
           <ADropdown
             options={dropdownOptions[state?.activeItem?.status]}

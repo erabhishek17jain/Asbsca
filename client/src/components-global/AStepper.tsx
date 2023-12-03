@@ -58,13 +58,15 @@ export function AStepper({
   payloads,
   activeItem,
   setPayloads,
-  generateReport,
+  setStepFinished,
 }: any) {
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () =>
-    activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
   const handlePrev = () => activeStep !== 0 && setActiveStep((cur) => cur - 1);
+  const handleNext = () => {
+    activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
+    if (activeStep === 14) setStepFinished(true);
+  };
 
   return (
     <div className="w-full p-0">
@@ -236,7 +238,7 @@ export function AStepper({
               activeStep={activeStep}
               handlePrev={handlePrev}
               setPayloads={setPayloads}
-              handleNext={generateReport}
+              handleNext={handleNext}
             />
           )}
         </div>

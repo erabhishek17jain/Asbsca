@@ -80,7 +80,7 @@ const Cases = () => {
         setActiveItem(null);
         closeAssignCaseModal();
         formikAssigned.resetForm();
-        setDefaultFilters({...defaultFilters})
+        setDefaultFilters({ ...defaultFilters });
         toast.success(<b>{successMessages[values?.status]}</b>);
       })
       .catch((e) => {
@@ -183,11 +183,11 @@ const Cases = () => {
       const values = { appoinmentStatus: 'visited' };
       updateCaseStatus(activeItem?._id, values);
       navigate('/generatePD', {
-        state: { activeItem: activeItem, action: 'start' },
+        state: { activeItem: activeItem },
       });
     } else {
       navigate('/generatePD', {
-        state: { activeItem: activeItem, action: 'edit' },
+        state: { activeItem: activeItem },
       });
     }
   };

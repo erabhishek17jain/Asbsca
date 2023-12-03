@@ -43,7 +43,6 @@ export function showError(error: any) {
   ) {
     toast.error(<b>Login Expired!</b>);
     window.location.href = window.location.origin + '/signin';
-    // window.location.reload();
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
@@ -103,7 +102,6 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
     return response.data;
   } catch (error: any) {
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    toast.error(<b>Login Expired!</b>);
     return rejectWithValue(error?.response?.data);
   }
 }

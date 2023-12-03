@@ -104,9 +104,12 @@ const ClientsDebtors = ({
       formik?.values?.debitors?.debitorDetails?.moreThan6Month?.amount;
     const lessAmt =
       formik?.values?.debitors?.debitorDetails?.lessThan6Month?.amount;
-    formik.setFieldValue('debitors.totalDebtors', moreAmt + lessAmt);
     formik.setFieldValue(
-      'debitors.collectionPeriod',
+      'debitors.debitorDetails.totalDebtors',
+      moreAmt + lessAmt,
+    );
+    formik.setFieldValue(
+      'debitors.debitorDetails.collectionPeriod',
       calculatePeriod(
         formik?.values?.debitors?.debitorDetails?.totalDebtors,
         payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts

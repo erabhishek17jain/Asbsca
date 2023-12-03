@@ -116,11 +116,11 @@ const TurnoverGrossReceipts = ({
   const calculatePercentage = (first: number, second: number) => {
     var change = '';
     const diff = second - first;
-    lastPer = (diff * 100) / first;
+    lastPer = Math.abs((diff * 100) / first).toFixed(2);
     if (diff > 0) {
       change = `Increased by ${diff} Lakhs | ${lastPer}%`;
     } else if (diff < 0) {
-      change = `Decreased by ${diff} Lakhs | ${lastPer}%`;
+      change = `Decreased by ${Math.abs(diff)} Lakhs | ${lastPer}%`;
     } else {
       change = 'No Changes | 0%';
     }
@@ -145,10 +145,12 @@ const TurnoverGrossReceipts = ({
           formik?.values?.currentLastYearComparision.secondLastYear,
         ),
       );
-      formik.setFieldValue(
-        'currentLastYearComparision.reasonforDiff',
-        percent > 25 ? '' : '-',
-      );
+      if (formik?.values?.currentLastYearComparision?.reasonforDiff === '') {
+        formik.setFieldValue(
+          'currentLastYearComparision.reasonforDiff',
+          percent > 25 ? '' : '-',
+        );
+      }
     }
   };
 
@@ -175,7 +177,12 @@ const TurnoverGrossReceipts = ({
         formik?.values?.lastYears?.secondLastYear,
       ),
     );
-    formik.setFieldValue('lastYears.reasonforDiff', lastPer > 25 ? '' : '-');
+    if (
+      formik?.values?.lastYears?.reasonforDiff === '' ||
+      formik?.values?.lastYears?.reasonforDiff === '-'
+    ) {
+      formik.setFieldValue('lastYears.reasonforDiff', lastPer > 25 ? '' : '-');
+    }
     formik.setFieldValue(
       'currentLastYearComparision.firstLastYear',
       formik?.values?.lastYears?.secondLastYear,
@@ -184,12 +191,19 @@ const TurnoverGrossReceipts = ({
   }, [formik?.values?.lastYears]);
 
   useEffect(() => {
-    const diff =
+    const percent =
+      (formik?.values?.currentYearActual?.asPerFinancials?.netProfit * 100) /
+      formik?.values?.currentYearActual?.asPerFinancials?.turnover;
+    const ratio =
       (formik?.values?.currentYearActual?.asPerFinancials?.turnover * 100) /
       formik?.values?.currentYearActual?.actuals?.turnover;
-    formik.setFieldValue('currentYearActual.financialActualRatio', diff);
     formik.setFieldValue(
-      'currentLastYearComparision.firstLastYear',
+      'currentYearActual.asPerFinancials.profitPercentage',
+      percent,
+    );
+    formik.setFieldValue('currentYearActual.financialActualRatio', ratio);
+    formik.setFieldValue(
+      'currentLastYearComparision.secondLastYear',
       formik?.values?.currentYearActual?.asPerFinancials?.turnover,
     );
     setCurrLast();
@@ -226,9 +240,10 @@ const TurnoverGrossReceipts = ({
           ?.amountPA *
         (end.diff(start, 'days') / 365)
       ).toFixed(2);
-      const netProfitA: any =
+      const netProfitA: any = (
         (turnoverA * payloads?.financials?.finances[0]?.expenses?.netProfitPM) /
-        100;
+        100
+      ).toFixed(2);
       formik.setFieldValue(
         'aprilTillDate.idealAprilTillDate.turnover',
         turnoverA,
@@ -247,7 +262,7 @@ const TurnoverGrossReceipts = ({
         payloads?.financials?.finances[0]?.expenses?.netProfitPA,
       );
       formik.setFieldValue(
-        'currentYearActual.actuals.turnover',
+        'currentYearActual.actuals.profitPercentage',
         payloads?.financials?.finances[0]?.expenses?.netProfitPM,
       );
     }
@@ -345,6 +360,7 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
+                disabled={true}
                 label={'Changes'}
                 id={'lastYears.changes'}
                 value={formik?.values?.lastYears.changes}
@@ -355,7 +371,7 @@ const TurnoverGrossReceipts = ({
                 label={'Reason if major diff'}
                 id={'lastYears.reasonforDiff'}
                 disabled={lastPer < 25}
-                value={formik?.values?.lastYears.reasonforDiff}
+                value={formik?.values?.lastYears?.reasonforDiff}
                 error={errors?.lastYears?.reasonforDiff}
                 handleChange={formik.handleChange}
               />
@@ -473,6 +489,7 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment().year()}`}
               />
               <AInputField
+                disabled={true}
                 label={'Changes'}
                 id={'currentLastYearComparision.changes'}
                 value={formik?.values?.currentLastYearComparision.changes}

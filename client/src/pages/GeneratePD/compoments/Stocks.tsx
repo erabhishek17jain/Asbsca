@@ -15,8 +15,8 @@ const initialValues = {
     rawMaterialAmount: 0,
     wipAmount: 0,
     finishGoods: 0,
-    whyStocklowHigh: 0,
     totalStocks: 0,
+    whyStocklowHigh: '',
     stockHoldingPeriod: '',
   },
 };
@@ -63,11 +63,10 @@ const Stocks = ({
     const total =
       formik?.values?.stockDetails?.rawMaterialAmount +
       formik?.values?.stockDetails?.wipAmount +
-      formik?.values?.stockDetails?.finishGoods +
-      formik?.values?.stockDetails?.rawMaterialAmount;
+      formik?.values?.stockDetails?.finishGoods
     formik.setFieldValue('stockDetails.totalStocks', total);
     formik.setFieldValue(
-      'stockDetails.collectionPeriod',
+      'stockDetails.stockHoldingPeriod',
       calculatePeriod(
         total,
         payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts

@@ -269,7 +269,7 @@ const AssetsInvestmentBank = ({
       );
     } else {
       const business = payloads?.personalDetails?.residents.filter(
-        (item: any) => item?.resiType === 'P',
+        (item: any) => item?.resiType === 'B',
       );
       const personal = payloads?.personalDetails?.residents.filter(
         (item: any) => item?.resiType === 'P',
@@ -313,7 +313,7 @@ const AssetsInvestmentBank = ({
               ?.ocrPaid,
         });
       }
-      formik.setFieldValue('bussinessAssetDetails.bussinessAssets', perAssets);
+      formik.setFieldValue('personalAssetDetails.personalAssets', perAssets);
       formik.setFieldValue('bussinessAssetDetails.bussinessAssets', bussAssets);
     }
   }, [payloads]);
@@ -465,7 +465,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].rentPM`}
                                       label={'Rent P.M.*'}
-                                      rightLabel={'(Rs.)'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].rentPM
@@ -636,7 +636,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].rentPM`}
                                       label={'Rent P.M.*'}
-                                      rightLabel={'(Rs.)'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.personalAssetDetails
                                           ?.personalAssets[index]?.rentPM
@@ -731,7 +731,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].contribution`}
                                       label={'Contribution*'}
-                                      rightLabel={'(Rs.)'}
+                                      rightLabel={'(Lakhs)'}
                                       value={
                                         formik?.values?.investmentDetails
                                           ?.investments[index]?.contribution

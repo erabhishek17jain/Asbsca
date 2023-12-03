@@ -5,7 +5,6 @@ import { reportSteps } from './constants';
 import { useEffect, useState } from 'react';
 import { addReport, updateReport } from '../../services';
 import toast from 'react-hot-toast';
-import { payload } from '../../mockData/mocks';
 import { fetchCaseReportDataAsync } from '../../slices/casesSlice';
 import store from '../../store/store';
 import { useSelector } from 'react-redux';
@@ -14,14 +13,16 @@ const GeneratePD = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location?.state;
-  const [payloads, setPayloads] = useState<any>({});
   const { reportData } = useSelector((state: any) => state.cases);
+  const [action, setAction] = useState<any>('start');
+  const [payloads, setPayloads] = useState<any>({});
+  const [stepFinished, setStepFinished] = useState(false);
 
   const generateReport = async () => {
-    let values = { caseId: state?.activeItem?._id, data: payload.data };
+    let values = { caseId: state?.activeItem?._id, data: payloads };
     values = await Object.assign(values);
     let reportPromise =
-      state?.action === 'edit' ? updateReport(values) : addReport(values);
+      action === 'edit' ? updateReport(values) : addReport(values);
     reportPromise
       .then((res: any) => {
         if (res) {
@@ -37,13 +38,18 @@ const GeneratePD = () => {
   };
 
   useEffect(() => {
+    if (stepFinished) generateReport();
+  }, [payloads]);
+
+  useEffect(() => {
     if (Object.keys(reportData).length > 0) {
+      setAction('edit');
       setPayloads({ ...reportData?.data });
     }
   }, [reportData]);
 
   useEffect(() => {
-    if (Object.keys(reportData).length === 0 && state?.action === 'edit') {
+    if (Object.keys(reportData).length === 0) {
       store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
     }
   }, []);
@@ -56,8 +62,8 @@ const GeneratePD = () => {
           steps={reportSteps}
           payloads={payloads}
           setPayloads={setPayloads}
-          generateReport={generateReport}
           activeItem={state?.activeItem}
+          setStepFinished={setStepFinished}
         />
       </div>
     </>

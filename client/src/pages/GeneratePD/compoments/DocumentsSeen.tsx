@@ -6,6 +6,7 @@ import { AModal } from '../../../components-global/AModal';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import { useFormik } from 'formik';
 import { AStepperPagination } from '../../../components-global/AStepper';
+import moment from 'moment';
 
 const radioValues = [
   { value: 'Yes', label: 'Yes' },
@@ -28,23 +29,29 @@ const documents = [
     isDoc: 'Yes',
   },
   {
-    label: 'Financial Statements of March Current Year',
+    label: `Financial Statements of March ${moment().year()}`,
     isDoc: 'no',
   },
   {
-    label: 'Financial Statements of March Last Year',
+    label: `Financial Statements of March ${moment().subtract(1, 'y').year()}`,
     isDoc: 'no',
   },
   {
-    label: 'Financial Statements of March Second Last Year',
+    label: `Financial Statements of March ${moment().subtract(2, 'y').year()}`,
     isDoc: 'no',
   },
   { label: 'Sales Bills', isDoc: 'no' },
   { label: 'Purchase Bills', isDoc: 'no' },
-  { label: 'ITR for March Current Year', isDoc: 'no' },
-  { label: 'ITR for March Last Year', isDoc: 'no' },
   {
-    label: 'ITR for March Second Last Year',
+    label: `ITR for March ${moment().year()}`,
+    isDoc: 'no',
+  },
+  {
+    label: `ITR for March ${moment().subtract(1, 'y').year()}`,
+    isDoc: 'no',
+  },
+  {
+    label: `ITR for March ${moment().subtract(2, 'y').year()}`,
     isDoc: 'no',
   },
   { label: 'Udyam Aadhar', isDoc: 'no' },

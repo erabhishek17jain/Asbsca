@@ -20,11 +20,11 @@ export const calculatePeriod = (amount: number, turnover: number) => {
   if (amount === 0) {
     period = '-';
   } else if (duration > 11.99) {
-    period = duration / 12 + ' Years';
+    period = (duration / 12).toFixed(2) + ' Years';
   } else if (duration > 1) {
-    period = duration + ' Months';
+    period = duration.toFixed(2) + ' Months';
   } else if (duration > 11.99) {
-    period = (duration * 365) / 12 + ' Days';
+    period = ((duration * 365) / 12).toFixed(2) + ' Days';
   }
   return period;
 };

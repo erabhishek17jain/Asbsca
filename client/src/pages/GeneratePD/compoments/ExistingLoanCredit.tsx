@@ -914,8 +914,8 @@ const OtherCommitments = ({ formik }: any) => {
                 render={(tag) => (
                   <div>
                     {formik?.values?.otherCommitments?.commitmentsDetails
-                      .length > 0 ? (
-                      formik?.values?.otherCommitments?.commitmentsDetails.map(
+                      ?.length > 0 ? (
+                      formik?.values?.otherCommitments?.commitmentsDetails?.map(
                         (item: any, index: number) => (
                           <div className="mb-3">
                             <AddTagHeader
@@ -1075,10 +1075,10 @@ const ExistingLoanCredit = ({
         Yup.object().shape({
           typeOfLoan: Yup.string().required('This field is required'),
           bankName: Yup.string().required('This field is required'),
-          loanAmount: Yup.string().required('This field is required'),
-          tenureMonth: Yup.string().required('This field is required'),
-          emi: Yup.string().required('This field is required'),
-          outstanding: Yup.string().required('This field is required'),
+          loanAmount: Yup.number().required('This field is required'),
+          tenureMonth: Yup.number().required('This field is required'),
+          emi: Yup.number().required('This field is required'),
+          outstanding: Yup.number().required('This field is required'),
           remark: Yup.string().required('This field is required'),
         }),
       ),
@@ -1086,10 +1086,10 @@ const ExistingLoanCredit = ({
         Yup.object().shape({
           typeOfLoan: Yup.string().required('This field is required'),
           bankName: Yup.string().required('This field is required'),
-          loanAmount: Yup.string().required('This field is required'),
-          tenureMonth: Yup.string().required('This field is required'),
-          emi: Yup.string().required('This field is required'),
-          outstanding: Yup.string().required('This field is required'),
+          loanAmount: Yup.number().required('This field is required'),
+          tenureMonth: Yup.number().required('This field is required'),
+          emi: Yup.number().required('This field is required'),
+          outstanding: Yup.number().required('This field is required'),
           remark: Yup.string().required('This field is required'),
         }),
       ),
@@ -1144,21 +1144,30 @@ const ExistingLoanCredit = ({
 
   useEffect(() => {
     if (payloads?.existingLoan) {
-      formik.setFieldValue('existanceLoan', payloads.existingLoan);
+      formik.setFieldValue(
+        'existanceLoan',
+        payloads.existingLoan?.existanceLoan,
+      );
     } else {
       formik.setFieldValue('existanceLoan', {
         ...initialValues?.existanceLoan,
       });
     }
     if (payloads?.existingLoan) {
-      formik.setFieldValue('creditFacility', payloads?.creditFacility);
+      formik.setFieldValue(
+        'creditFacility',
+        payloads?.existingLoan?.creditFacility,
+      );
     } else {
       formik.setFieldValue('creditFacility', {
         ...initialValues?.creditFacility,
       });
     }
     if (payloads?.existingLoan) {
-      formik.setFieldValue('otherCommitments', payloads?.otherCommitments);
+      formik.setFieldValue(
+        'otherCommitments',
+        payloads?.existingLoan?.otherCommitments,
+      );
     } else {
       formik.setFieldValue('otherCommitments', {
         ...initialValues?.otherCommitments,
