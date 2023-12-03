@@ -1,5 +1,5 @@
+import { reportData } from '../../../mockData/mocks';
 import './ReportData.css';
-import { payload } from '../../../mockData/mocks';
 import moment from 'moment';
 
 const ReportData = () => {
@@ -10,14 +10,14 @@ const ReportData = () => {
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
               <p>
-                {`${payload?.data?.loanDetails?.bankName}_PD_REPORT_${payload?.data?.personalDetails?.applicants[0]?.name}_${payload?.data?.pdDetails?.location}_${payload?.data?.loanDetails?.alc}_${payload?.data?.pdDetails?.pdVisitDate}`}
+                {`${reportData?.loanDetails?.bankName}_PD_REPORT_${reportData?.personalDetails?.applicants[0]?.name}_${reportData?.pdDetails?.location}_${reportData?.loanDetails?.alc}_${reportData?.pdDetails?.pdVisitDate}`}
               </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
               <p>
-                {`${payload?.data?.loanDetails?.loan}: ${payload?.data?.loanDetails?.loanType}`}
+                {`${reportData?.loanDetails?.loan}: ${reportData?.loanDetails?.loanType}`}
               </p>
             </td>
           </tr>
@@ -41,14 +41,14 @@ const ReportData = () => {
                   </div>
                 </div>
                 <div
-                  className={`w-3/4 grid grid-cols-${payload.data.personalDetails.applicants.length}`}
+                  className={`w-3/4 grid grid-cols-${reportData.personalDetails.applicants.length}`}
                 >
-                  {payload.data.personalDetails.applicants.map(
+                  {reportData.personalDetails.applicants.map(
                     (item: any, index: number) => (
                       <div
                         className={
                           index <
-                          payload.data.personalDetails.applicants.length - 1
+                          reportData.personalDetails.applicants.length - 1
                             ? 'b-r'
                             : ''
                         }
@@ -94,14 +94,14 @@ const ReportData = () => {
                   </div>
                 </div>
                 <div
-                  className={`w-3/4 grid grid-cols-${payload.data.personalDetails.residents.length}`}
+                  className={`w-3/4 grid grid-cols-${reportData.personalDetails.residents.length}`}
                 >
-                  {payload.data.personalDetails.residents.map(
+                  {reportData.personalDetails.residents.map(
                     (item: any, index: number) => (
                       <div
                         className={
                           index <
-                          payload.data.personalDetails.applicants.length - 1
+                          reportData.personalDetails.applicants.length - 1
                             ? 'b-r'
                             : ''
                         }
@@ -132,7 +132,7 @@ const ReportData = () => {
             </td>
           </tr>
           <tr>
-            <td rowSpan={payload.data.personalDetails.familyDetails.length + 1}>
+            <td rowSpan={reportData.personalDetails.familyDetails.length + 1}>
               <p className="pl-1">Family Background</p>
             </td>
             <td className="bg font-bold text-center h-6" colSpan={2}>
@@ -145,7 +145,7 @@ const ReportData = () => {
               <p>Earning/Dependent</p>
             </td>
           </tr>
-          {payload.data.personalDetails.familyDetails.map((item: any) => (
+          {reportData.personalDetails.familyDetails.map((item: any) => (
             <tr>
               <td colSpan={2} className="text-center">
                 <p className="pl-1 h-6">{item.name}</p>
@@ -187,10 +187,10 @@ const ReportData = () => {
                       <p className="pl-1 b-b h-6">Net Margin</p>
                       <p className="pl-1 b-b h-6">Share of Profit</p>
                       <p className="pl-1 b-b h-6">
-                        {payload.data?.businessDetails?.designation}'s Salary
+                        {reportData?.businessDetails?.designation}'s Salary
                       </p>
                       <p className="pl-1 b-b h-6">
-                        {payload.data?.businessDetails?.designation}'s
+                        {reportData?.businessDetails?.designation}'s
                         Remuneration
                       </p>
                       <p className="pl-1 b-b h-6">Other Income</p>
@@ -203,9 +203,9 @@ const ReportData = () => {
                     </div>
                   </div>
                   <div
-                    className={`w-8/12 grid grid-cols-${payload.data.financials?.finances?.length} text-center`}
+                    className={`w-8/12 grid grid-cols-${reportData.financials?.finances?.length} text-center`}
                   >
-                    {payload.data?.financials?.finances?.map((item: any) => (
+                    {reportData?.financials?.finances?.map((item: any) => (
                       <div className="b-r">
                         <p className="bg pl-1 b-b font-bold h-6 text-center">
                           {item.applicantIncome}
@@ -256,7 +256,7 @@ const ReportData = () => {
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    - {payload?.data?.businessDetails?.howTurnoverVerified}
+                    - {reportData?.businessDetails?.howTurnoverVerified}
                   </li>
                   <li>-</li>
                   <li>-</li>
@@ -265,7 +265,7 @@ const ReportData = () => {
                 <ul className="ml-6 mb-6">
                   <li>
                     - Asset & Investment Backing:{' '}
-                    {payload.data?.assets?.assetsBacking}
+                    {reportData?.assets?.assetsBacking}
                     <br />
                     (For the detail of assets please refer “Assets Head +
                     Investment” below)
@@ -530,7 +530,7 @@ const ReportData = () => {
               <p>Name of Entity</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.bussinessName}</p>
+              <p>{reportData?.businessDetails?.bussinessName}</p>
             </td>
           </tr>
           <tr>
@@ -538,7 +538,7 @@ const ReportData = () => {
               <p>Type of Entity</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.typeOfEntity}</p>
+              <p>{reportData?.businessDetails?.typeOfEntity}</p>
             </td>
           </tr>
           <tr>
@@ -548,7 +548,7 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 {moment().year() -
-                  parseInt(payload?.data?.businessDetails?.yearOfIncorporation)}
+                  parseInt(reportData?.businessDetails?.yearOfIncorporation)}
               </p>
             </td>
           </tr>
@@ -557,7 +557,7 @@ const ReportData = () => {
               <p>PD Conducted with</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.pdConductWith}</p>
+              <p>{reportData?.businessDetails?.pdConductWith}</p>
             </td>
           </tr>
           <tr>
@@ -565,7 +565,7 @@ const ReportData = () => {
               <p>Designation</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.designation}</p>
+              <p>{reportData?.businessDetails?.designation}</p>
             </td>
           </tr>
           <tr>
@@ -573,7 +573,7 @@ const ReportData = () => {
               <p>Office Address</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.regOfficeAddress}</p>
+              <p>{reportData?.businessDetails?.regOfficeAddress}</p>
             </td>
           </tr>
           <tr>
@@ -581,7 +581,7 @@ const ReportData = () => {
               <p>Visited Address</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.visitedAddress}</p>
+              <p>{reportData?.businessDetails?.visitedAddress}</p>
             </td>
           </tr>
           <tr>
@@ -589,7 +589,7 @@ const ReportData = () => {
               <p>Vicinity</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.vicinity}</p>
+              <p>{reportData?.businessDetails?.vicinity}</p>
             </td>
           </tr>
           <tr>
@@ -597,7 +597,7 @@ const ReportData = () => {
               <p>Ownership</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.ownership}</p>
+              <p>{reportData?.businessDetails?.ownership}</p>
             </td>
           </tr>
           <tr>
@@ -605,7 +605,7 @@ const ReportData = () => {
               <p>Phone Number</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.mobile}</p>
+              <p>{reportData?.businessDetails?.mobile}</p>
             </td>
           </tr>
           <tr>
@@ -614,8 +614,8 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <p>
-                {payload?.data?.pdDetails?.pdVisitDate} :{' '}
-                {payload?.data?.pdDetails?.pdConductTime}
+                {reportData?.pdDetails?.pdVisitDate} :{' '}
+                {reportData?.pdDetails?.pdConductTime}
               </p>
             </td>
           </tr>
@@ -624,7 +624,7 @@ const ReportData = () => {
               <p>No. of Visits</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.noOfVisit}</p>
+              <p>{reportData?.businessDetails?.noOfVisit}</p>
             </td>
           </tr>
           <tr>
@@ -637,7 +637,7 @@ const ReportData = () => {
             <td colSpan={4}>
               <p>
                 {
-                  payload?.data?.detailsOfProp?.propertyLoanDetails
+                  reportData?.detailsOfProp?.propertyLoanDetails
                     ?.loanAsPerForm
                 }
               </p>
@@ -650,7 +650,7 @@ const ReportData = () => {
             <td colSpan={4}>
               <p>
                 {
-                  payload?.data?.detailsOfProp?.propertyLoanDetails?.loanDetails
+                  reportData?.detailsOfProp?.propertyLoanDetails?.loanDetails
                     .amount
                 }
               </p>
@@ -661,7 +661,7 @@ const ReportData = () => {
               <p>Purpose of LAP/Topup</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.pdConductWith}</p>
+              <p>{reportData?.businessDetails?.pdConductWith}</p>
             </td>
           </tr>
           <tr>
@@ -669,7 +669,7 @@ const ReportData = () => {
               <p>Family Members in Business</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.familyBusiness}</p>
+              <p>{reportData?.businessDetails?.familyBusiness}</p>
             </td>
           </tr>
           <tr>
@@ -677,7 +677,7 @@ const ReportData = () => {
               <p>Generation</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.generation}</p>
+              <p>{reportData?.businessDetails?.generation}</p>
             </td>
           </tr>
           <tr>
@@ -694,10 +694,10 @@ const ReportData = () => {
               <p>Share Holding (%)</p>
             </td>
           </tr>
-          {payload.data.businessDetails.shareHoldings.map((item: any) => (
+          {reportData.businessDetails.shareHoldings.map((item: any) => (
             <tr>
               <td colSpan={2}>
-                <p>{payload?.data?.businessDetails?.bussinessName}</p>
+                <p>{reportData?.businessDetails?.bussinessName}</p>
               </td>
               <td colSpan={2}>
                 <p>{item?.ownerName}</p>
@@ -713,7 +713,7 @@ const ReportData = () => {
               <p>Main use of products/services</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.mainUseproducts}</p>
+              <p>{reportData?.businessDetails?.mainUseproducts}</p>
             </td>
           </tr>
           <tr>
@@ -722,7 +722,7 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <ul id="l2">
-                {payload?.data?.documentsSeen.map((item: any) => {
+                {reportData?.documentsSeen.map((item: any) => {
                   return (
                     item?.isDoc === 'Yes' && (
                       <li data-list-text="-">- {item?.label}</li>
@@ -741,7 +741,7 @@ const ReportData = () => {
               <p>Cities of Representation of Business</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.citiesOfReppresentation}</p>
+              <p>{reportData?.businessDetails?.citiesOfReppresentation}</p>
             </td>
           </tr>
           <tr>
@@ -765,7 +765,7 @@ const ReportData = () => {
               <p>Key Competitors to Business</p>
             </td>
             <td colSpan={7}>
-              <p>{payload?.data?.businessDetails?.competitorsOfBusiness}</p>
+              <p>{reportData?.businessDetails?.competitorsOfBusiness}</p>
             </td>
           </tr>
           <tr>
@@ -784,10 +784,10 @@ const ReportData = () => {
           </tr>
           <tr>
             <td colSpan={2}>
-              <p>{payload?.data?.businessDetails?.empSpecified}</p>
+              <p>{reportData?.businessDetails?.empSpecified}</p>
             </td>
             <td colSpan={3}>
-              <p>{payload?.data?.businessDetails?.empSeen}</p>
+              <p>{reportData?.businessDetails?.empSeen}</p>
             </td>
             <td colSpan={2}>
               <p>2 Lakhs</p>
@@ -828,9 +828,9 @@ const ReportData = () => {
               <div className="flex w-full">
                 <div className="w-2/10"></div>
                 <div
-                  className={`w-5/10 grid grid-cols-${payload.data.financials?.finances.length}`}
+                  className={`w-5/10 grid grid-cols-${reportData.financials?.finances.length}`}
                 >
-                  {payload.data.financials?.finances.map(
+                  {reportData.financials?.finances.map(
                     (item: any, index: number) => (
                       <div className="b-r">
                         <p className="bg pl-1 b-b text-center font-bold h-6">
@@ -878,7 +878,7 @@ const ReportData = () => {
             <td colSpan={7}>
               <div className="my-2 mx-3">
                 <p className="font-bold">Business Assets:</p>
-                {payload.data.assets.bussinessAssetDetails.bussinessAssets
+                {reportData.assets.bussinessAssetDetails.bussinessAssets
                   .length > 0 ? (
                   <table cellSpacing={0} className="w-full mt-4 mx-auto">
                     <tbody>
@@ -902,7 +902,7 @@ const ReportData = () => {
                           <p>Market Value (Rs.)</p>
                         </td>
                       </tr>
-                      {payload.data.assets.bussinessAssetDetails.bussinessAssets.map(
+                      {reportData.assets.bussinessAssetDetails.bussinessAssets.map(
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
@@ -944,7 +944,7 @@ const ReportData = () => {
                         </td>
                         <td>
                           <p>
-                            {`${payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                            {`${reportData.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
                           </p>
                         </td>
                       </tr>
@@ -954,7 +954,7 @@ const ReportData = () => {
                   <p>No Business Assets</p>
                 )}
                 <p className="font-bold my-4">Personal Assets:</p>
-                {payload.data.assets.personalAssetDetails.personalAssets
+                {reportData.assets.personalAssetDetails.personalAssets
                   .length > 0 ? (
                   <table cellSpacing={0} className="w-full mt-4 mx-auto">
                     <tbody>
@@ -978,7 +978,7 @@ const ReportData = () => {
                           <p>Market Value (Rs.)</p>
                         </td>
                       </tr>
-                      {payload.data.assets.personalAssetDetails.personalAssets.map(
+                      {reportData.assets.personalAssetDetails.personalAssets.map(
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
@@ -1020,7 +1020,7 @@ const ReportData = () => {
                         </td>
                         <td>
                           <p>
-                            {`${payload.data.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                            {`${reportData.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
                           </p>
                         </td>
                       </tr>
@@ -1077,7 +1077,7 @@ const ReportData = () => {
               <p>Bank Account Details</p>
             </td>
             <td colSpan={7}>
-              {payload.data.assets.bankAccountDetails.bankAccounts.length >
+              {reportData.assets.bankAccountDetails.bankAccounts.length >
               0 ? (
                 <table cellSpacing={0} className="w-full">
                   <tbody>
@@ -1095,7 +1095,7 @@ const ReportData = () => {
                         <p>Balance as on date (Rs.)</p>
                       </td>
                     </tr>
-                    {payload.data.assets.bankAccountDetails.bankAccounts.map(
+                    {reportData.assets.bankAccountDetails.bankAccounts.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1119,7 +1119,7 @@ const ReportData = () => {
                       </td>
                       <td>
                         <p>
-                          {`${payload.data.assets.bankAccountDetails.totalBalance} Lakhs`}
+                          {`${reportData.assets.bankAccountDetails.totalBalance} Lakhs`}
                         </p>
                       </td>
                     </tr>
@@ -1135,7 +1135,7 @@ const ReportData = () => {
               <p>Investments</p>
             </td>
             <td colSpan={7}>
-              {payload.data.assets.investmentDetails.investments.length > 0 ? (
+              {reportData.assets.investmentDetails.investments.length > 0 ? (
                 <table cellSpacing={0} className="w-full">
                   <tbody>
                     <tr className="bg">
@@ -1149,7 +1149,7 @@ const ReportData = () => {
                         <p>Market Value (Rs.)</p>
                       </td>
                     </tr>
-                    {payload.data.assets.investmentDetails.investments.map(
+                    {reportData.assets.investmentDetails.investments.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1170,7 +1170,7 @@ const ReportData = () => {
                       </td>
                       <td>
                         <p>
-                          {`${payload.data.assets.investmentDetails.totalMarketValue} Lakhs`}
+                          {`${reportData.assets.investmentDetails.totalMarketValue} Lakhs`}
                         </p>
                       </td>
                     </tr>
@@ -1186,11 +1186,11 @@ const ReportData = () => {
               <p>Loan Details</p>
             </td>
             <td colSpan={7}>
-              {payload.data.existingLoan.existanceLoan.balanceTransfer.length >
+              {reportData.existingLoan.existanceLoan.balanceTransfer.length >
                 0 ||
-              payload.data.existingLoan.existanceLoan.existingLoanClosed
+              reportData.existingLoan.existanceLoan.existingLoanClosed
                 .length > 0 ||
-              payload.data.existingLoan.existanceLoan.existingLoanEMI.length >
+              reportData.existingLoan.existanceLoan.existingLoanEMI.length >
                 0 ? (
                 <table cellSpacing={0} className="w-full">
                   <tbody>
@@ -1214,7 +1214,7 @@ const ReportData = () => {
                         <p>Remarks</p>
                       </td>
                     </tr>
-                    {payload.data.existingLoan.existanceLoan.balanceTransfer.map(
+                    {reportData.existingLoan.existanceLoan.balanceTransfer.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1238,7 +1238,7 @@ const ReportData = () => {
                         </tr>
                       ),
                     )}
-                    {payload.data.existingLoan.existanceLoan.existingLoanClosed.map(
+                    {reportData.existingLoan.existanceLoan.existingLoanClosed.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1262,7 +1262,7 @@ const ReportData = () => {
                         </tr>
                       ),
                     )}
-                    {payload.data.existingLoan.existanceLoan.existingLoanEMI.map(
+                    {reportData.existingLoan.existanceLoan.existingLoanEMI.map(
                       (item: any, index: number) => (
                         <tr key={index}>
                           <td>
@@ -1292,27 +1292,27 @@ const ReportData = () => {
                       </td>
                       <td colSpan={2}>
                         <p>{`${
-                          payload.data.existingLoan.existanceLoan.totalLoanBt +
-                          payload.data.existingLoan.existanceLoan.totalLoanEc +
-                          payload.data.existingLoan.existanceLoan.totalLoanEm
+                          reportData.existingLoan.existanceLoan.totalLoanBt +
+                          reportData.existingLoan.existanceLoan.totalLoanEc +
+                          reportData.existingLoan.existanceLoan.totalLoanEm
                         }`}</p>
                       </td>
                       <td>
                         <p>{`${
-                          payload.data.existingLoan.existanceLoan
+                          reportData.existingLoan.existanceLoan
                             .totalLoanBtEmi +
-                          payload.data.existingLoan.existanceLoan
+                          reportData.existingLoan.existanceLoan
                             .totalLoanEcEmi +
-                          payload.data.existingLoan.existanceLoan.totalLoanEmEmi
+                          reportData.existingLoan.existanceLoan.totalLoanEmEmi
                         }`}</p>
                       </td>
                       <td>
                         <p>{`${
-                          payload.data.existingLoan.existanceLoan
+                          reportData.existingLoan.existanceLoan
                             .totalLoanBtOut +
-                          payload.data.existingLoan.existanceLoan
+                          reportData.existingLoan.existanceLoan
                             .totalLoanEcOut +
-                          payload.data.existingLoan.existanceLoan.totalLoanEmOut
+                          reportData.existingLoan.existanceLoan.totalLoanEmOut
                         }`}</p>
                       </td>
                     </tr>
@@ -1329,7 +1329,7 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <td colSpan={7}>
-                {payload.data.existingLoan.creditFacility.creditDetails.length >
+                {reportData.existingLoan.creditFacility.creditDetails.length >
                 0 ? (
                   <table cellSpacing={0} className="w-full">
                     <tbody>
@@ -1353,7 +1353,7 @@ const ReportData = () => {
                           <p>Remarks</p>
                         </td>
                       </tr>
-                      {payload.data.existingLoan.creditFacility.creditDetails.map(
+                      {reportData.existingLoan.creditFacility.creditDetails.map(
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
@@ -1383,12 +1383,12 @@ const ReportData = () => {
                         </td>
                         <td colSpan={2}>
                           <p>
-                            {`${payload.data.existingLoan.creditFacility.totalLoanCfLimit}`}
+                            {`${reportData.existingLoan.creditFacility.totalLoanCfLimit}`}
                           </p>
                         </td>
                         <td>
                           <p>
-                            {`${payload.data.existingLoan.creditFacility.totalLoanCfAu}`}
+                            {`${reportData.existingLoan.creditFacility.totalLoanCfAu}`}
                           </p>
                         </td>
                       </tr>
@@ -1406,7 +1406,7 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <td colSpan={7}>
-                {payload.data.existingLoan.otherCommitments.commitmentsDetails
+                {reportData.existingLoan.otherCommitments.commitmentsDetails
                   .length > 0 ? (
                   <table cellSpacing={0} className="w-full">
                     <tbody>
@@ -1421,7 +1421,7 @@ const ReportData = () => {
                           <p>Sum Assured/Maturity Value (Rs.)</p>
                         </td>
                       </tr>
-                      {payload.data.existingLoan.otherCommitments.commitmentsDetails.map(
+                      {reportData.existingLoan.otherCommitments.commitmentsDetails.map(
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
@@ -1442,12 +1442,12 @@ const ReportData = () => {
                         </td>
                         <td colSpan={2}>
                           <p>
-                            {`${payload.data.existingLoan.otherCommitments.totalCon}`}
+                            {`${reportData.existingLoan.otherCommitments.totalCon}`}
                           </p>
                         </td>
                         <td>
                           <p>
-                            {`${payload.data.existingLoan.otherCommitments.totalSum}`}
+                            {`${reportData.existingLoan.otherCommitments.totalSum}`}
                           </p>
                         </td>
                       </tr>
@@ -1464,7 +1464,7 @@ const ReportData = () => {
               <p>GSTIN</p>
             </td>
             <td colSpan={7}>
-              <p>{payload.data.businessDetails.gstNumber}</p>
+              <p>{reportData.businessDetails.gstNumber}</p>
             </td>
           </tr>
           <tr className="font-bold text-center">
@@ -1477,7 +1477,7 @@ const ReportData = () => {
               <p>Name of the Builder (If Under Construction Property)</p>
             </td>
             <td colSpan={7}>
-              <p>{payload.data.detailsOfProp.builderName}</p>
+              <p>{reportData.detailsOfProp.builderName}</p>
             </td>
           </tr>
           <tr>
@@ -1485,7 +1485,7 @@ const ReportData = () => {
               <p>Address of the Property</p>
             </td>
             <td colSpan={7}>
-              <p>{payload.data.detailsOfProp.loanPropertyAddress}</p>
+              <p>{reportData.detailsOfProp.loanPropertyAddress}</p>
             </td>
           </tr>
           <tr>
@@ -1493,7 +1493,7 @@ const ReportData = () => {
               <p>Date of Purchase</p>
             </td>
             <td colSpan={7}>
-              <p>{payload.data.detailsOfProp.purchaseYear}</p>
+              <p>{reportData.detailsOfProp.purchaseYear}</p>
             </td>
           </tr>
           <tr>
@@ -1502,9 +1502,9 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <p>
-                Built-up Area: {payload.data.detailsOfProp.buildUpArea} Sq. Ft.
+                Built-up Area: {reportData.detailsOfProp.buildUpArea} Sq. Ft.
               </p>
-              <p>Carpet Area: {payload.data.detailsOfProp.caretArea} Sq. Ft.</p>
+              <p>Carpet Area: {reportData.detailsOfProp.caretArea} Sq. Ft.</p>
             </td>
           </tr>
           <tr>
@@ -1516,7 +1516,7 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                {reportData.detailsOfProp.propertyLoanDetails.propertyValue
                   .agreementValue / 100}{' '}
                 Cr.
               </p>
@@ -1528,7 +1528,7 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                {reportData.detailsOfProp.propertyLoanDetails.propertyValue
                   .purchaseValue / 100}{' '}
                 Cr.
               </p>
@@ -1540,7 +1540,7 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                {reportData.detailsOfProp.propertyLoanDetails.propertyValue
                   .marketValue / 100}{' '}
                 Cr.
               </p>
@@ -1552,7 +1552,7 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                {reportData.detailsOfProp.propertyLoanDetails.propertyValue
                   .ocrPaid / 100}{' '}
                 Cr.
               </p>
@@ -1573,7 +1573,7 @@ const ReportData = () => {
             <td colSpan={4}>
               <p>
                 {
-                  payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  reportData.detailsOfProp.propertyLoanDetails.propertyValue
                     .balanceOcr
                 }{' '}
                 Lakhs
@@ -1587,7 +1587,7 @@ const ReportData = () => {
             <td colSpan={4}>
               <p>
                 {
-                  payload.data.detailsOfProp.propertyLoanDetails.propertyValue
+                  reportData.detailsOfProp.propertyLoanDetails.propertyValue
                     .sourceOcr
                 }
               </p>
@@ -1598,7 +1598,7 @@ const ReportData = () => {
               <p>Occupied By</p>
             </td>
             <td colSpan={7}>
-              <p>{payload.data.detailsOfProp.occupiedBy}</p>
+              <p>{reportData.detailsOfProp.occupiedBy}</p>
             </td>
           </tr>
           <tr className="font-bold text-center">
@@ -1623,15 +1623,15 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 1.Business Plate name seen:
-                {payload.data.observations.businessPlateName.exist}
+                {reportData.observations.businessPlateName.exist}
               </p>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
               <p>
-                2.Activtity Seen: {payload.data.observations.activity.exist} (
-                {payload.data.observations.activity.reasonForNo})
+                2.Activtity Seen: {reportData.observations.activity.exist} (
+                {reportData.observations.activity.reasonForNo})
               </p>
             </td>
           </tr>
@@ -1639,25 +1639,25 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 3.Employees Seen:{' '}
-                {payload.data.businessDetails?.empSeen === 0
+                {reportData.businessDetails?.empSeen === 0
                   ? 'No'
-                  : `Yes (${payload.data.businessDetails.empSeen})`}
+                  : `Yes (${reportData.businessDetails.empSeen})`}
               </p>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
               <p>
-                4.Customer Seen: {payload.data.observations.customer.exist} (
-                {payload.data.observations.customer.reasonForNo})
+                4.Customer Seen: {reportData.observations.customer.exist} (
+                {reportData.observations.customer.reasonForNo})
               </p>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
               <p>
-                5.Stock seen: {payload.data.observations.stock.exist} (
-                {payload.data.observations.stock.reasonForNo})
+                5.Stock seen: {reportData.observations.stock.exist} (
+                {reportData.observations.stock.reasonForNo})
               </p>
             </td>
           </tr>
@@ -1666,11 +1666,11 @@ const ReportData = () => {
               <p>
                 6. During Visit:- <br />
                 <span>
-                  - {payload.data.observations.duringVist.applicantDoing}
+                  - {reportData.observations.duringVist.applicantDoing}
                 </span>
                 <br />
                 <span>
-                  - {payload.data.observations.duringVist.employeesDoing}
+                  - {reportData.observations.duringVist.employeesDoing}
                 </span>
               </p>
             </td>
@@ -1679,8 +1679,8 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 7.Third Party Check:
-                {payload.data.observations.thirdPartyCheck.exist} (
-                {payload.data.observations.thirdPartyCheck.reasonForNo})
+                {reportData.observations.thirdPartyCheck.exist} (
+                {reportData.observations.thirdPartyCheck.reasonForNo})
               </p>
             </td>
           </tr>
@@ -1688,8 +1688,8 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 8. Screenshot of CCTV of premises other than Visited:{' '}
-                {payload.data.observations.screenshotOfCCTV.exist} (
-                {payload.data.observations.screenshotOfCCTV.reasonForNo})
+                {reportData.observations.screenshotOfCCTV.exist} (
+                {reportData.observations.screenshotOfCCTV.reasonForNo})
               </p>
             </td>
           </tr>
@@ -1697,7 +1697,7 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 9. Behaviour of applicant:{' '}
-                {payload.data.observations.behaviourOfApplicant}
+                {reportData.observations.behaviourOfApplicant}
               </p>
             </td>
           </tr>
@@ -1741,7 +1741,7 @@ const ReportData = () => {
               <p>Name:</p>
             </td>
             <td>
-              <p>{payload?.data?.pdDetails?.reporterName}</p>
+              <p>{reportData?.pdDetails?.reporterName}</p>
             </td>
           </tr>
           <tr>
@@ -1749,7 +1749,7 @@ const ReportData = () => {
               <p>Contact No:</p>
             </td>
             <td>
-              <p>{payload?.data?.pdDetails?.reporterContact}</p>
+              <p>{reportData?.pdDetails?.reporterContact}</p>
             </td>
           </tr>
           <tr className="bg">
@@ -1762,7 +1762,7 @@ const ReportData = () => {
               <p>Name:</p>
             </td>
             <td>
-              <p>{payload?.data?.pdDetails?.reviewerName}</p>
+              <p>{reportData?.pdDetails?.reviewerName}</p>
             </td>
           </tr>
           <tr>
@@ -1770,7 +1770,7 @@ const ReportData = () => {
               <p>Contact No:</p>
             </td>
             <td>
-              <p>{payload?.data?.pdDetails?.reviewerContact}</p>
+              <p>{reportData?.pdDetails?.reviewerContact}</p>
             </td>
           </tr>
         </tbody>

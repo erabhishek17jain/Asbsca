@@ -1,4 +1,6 @@
-export const payload = {
+export const reportData: any = {};
+
+export const initailReportPayload = {
   caseId: '656380f829a29b03abbaa394',
   data: {
     loanDetails: {
