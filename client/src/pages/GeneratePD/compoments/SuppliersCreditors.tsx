@@ -25,7 +25,7 @@ const initialValues = {
   isSuppliersDetails: 'Yes',
   suppliersDetails: {
     noOfSuppliers: '',
-    majorSuppliers: [] as any,
+    majorSuppliers: [{ clientName: '', contact: '' }] as any,
   },
   creditors: {
     amount: 0,

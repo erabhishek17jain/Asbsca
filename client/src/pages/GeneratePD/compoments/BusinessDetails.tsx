@@ -44,8 +44,8 @@ const initialValues = {
   competitorsOfBusiness: '',
   noOfVisit: 1,
   doYouHavefixedEmployee: '',
-  empSpecified: '',
-  empSeen: '',
+  empSpecified: 0,
+  empSeen: 0,
   shareHoldings: [
     {
       ownerName: '',

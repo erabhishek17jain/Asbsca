@@ -32,12 +32,12 @@ const ReportData = () => {
                 <div className="w-1/4">
                   <div className="b-r">
                     <p className="bg pl-1 b-b text-center h-6"></p>
-                    <p className="pl-1 b-b">Name</p>
-                    <p className="pl-1 b-b">Date of Birth</p>
-                    <p className="pl-1 b-b">Qualifications</p>
-                    <p className="pl-1 b-b">Current Experience</p>
-                    <p className="pl-1 b-b">Overall Experience</p>
-                    <p className="pl-1">Nature of Business</p>
+                    <p className="pl-1 b-b h-6">Name</p>
+                    <p className="pl-1 b-b h-6">Date of Birth</p>
+                    <p className="pl-1 b-b h-6">Qualifications</p>
+                    <p className="pl-1 b-b h-6">Current Experience</p>
+                    <p className="pl-1 b-b h-6">Overall Experience</p>
+                    <p className="pl-1 h-6">Nature of Business</p>
                   </div>
                 </div>
                 <div
@@ -56,12 +56,24 @@ const ReportData = () => {
                         <p className="bg pl-1 b-b text-center font-bold h-6">
                           {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
                         </p>
-                        <p className="pl-1 b-b">{item.name}</p>
-                        <p className="pl-1 b-b">{item.dobDoi}</p>
-                        <p className="pl-1 b-b">{item.qualification}</p>
-                        <p className="pl-1 b-b">{item.currExp} Years</p>
-                        <p className="pl-1 b-b">{item.overallExp} Years</p>
-                        <p className="pl-1">{item.natureOfBusiness}</p>
+                        <p className="pl-1 b-b h-6">
+                          {item.name !== '' ? item.name : 'Nil'}
+                        </p>
+                        <p className="pl-1 b-b h-6">
+                          {item.dobDoi !== '' ? item.dobDoi : 'Nil'}
+                        </p>
+                        <p className="pl-1 b-b h-6">
+                          {item.qualification !== ''
+                            ? item.qualification
+                            : 'Nil'}
+                        </p>
+                        <p className="pl-1 b-b h-6">{item.currExp} Years</p>
+                        <p className="pl-1 b-b h-6">{item.overallExp} Years</p>
+                        <p className="pl-1">
+                          {item.natureOfBusiness !== ''
+                            ? item.natureOfBusiness
+                            : 'Nil'}
+                        </p>
                       </div>
                     ),
                   )}
@@ -74,11 +86,11 @@ const ReportData = () => {
               <div className="flex w-full">
                 <div className="w-1/4">
                   <div className="b-r">
-                    <p className="pl-1 b-b">Residence Address</p>
-                    <p className="pl-1 b-b">Residence Status</p>
-                    <p className="pl-1 b-b">Residing Since</p>
-                    <p className="pl-1 b-b h-10">Residential Area</p>
-                    <p className="pl-1 h-10">Residential Value (Rs.)</p>
+                    <p className="pl-1 b-b h-6">Residence Address</p>
+                    <p className="pl-1 b-b h-6">Residence Status</p>
+                    <p className="pl-1 b-b h-6">Residing Since</p>
+                    <p className="pl-1 b-b h-12">Residential Area</p>
+                    <p className="pl-1 h-12">Residential Value (Rs.)</p>
                   </div>
                 </div>
                 <div
@@ -94,16 +106,23 @@ const ReportData = () => {
                             : ''
                         }
                       >
-                        <p className="pl-1 b-b">{item.resiAddress}</p>
-                        <p className="pl-1 b-b">{item.resiStatus}</p>
-                        <p className="pl-1 b-b">{item.resiSince}</p>
-                        <p className="pl-1 b-b h-10">
+                        <p className="pl-1 b-b h-6">{item.resiAddress}</p>
+                        <p className="pl-1 b-b h-6">{item.resiStatus}</p>
+                        <p className="pl-1 b-b h-6">{item.resiSince}</p>
+                        <p className="pl-1 b-b h-12">
                           Buildup Area: {item.buildArea} Sq. Ft. <br />
                           Carpet Area: {item.carpetArea} Sq. Ft.
                         </p>
-                        <p className="pl-1 h-10">
-                          Purchase Value: {item.purchaseValue} Lakhs <br />
-                          Market Value: {item.marketValue} Lakhs
+                        <p className="pl-1 h-12">
+                          {item.resiStatus !== 'RentalN' &&
+                            `Purchase Value: ${item.purchaseValue} Lakhs`}
+                          <br />
+                          {item.resiStatus !== 'RentalN' &&
+                            `Market Value: ${item.marketValue} Lakhs`}
+                          <br />
+                          {item.resiStatus === 'RentalN' &&
+                            `Monthly Rent: ${item.rentPm} Lakhs`}
+                          <br />
                         </p>
                       </div>
                     ),
@@ -113,35 +132,35 @@ const ReportData = () => {
             </td>
           </tr>
           <tr>
-            <td rowSpan={2}>
+            <td rowSpan={payload.data.personalDetails.familyDetails.length + 1}>
               <p className="pl-1">Family Background</p>
             </td>
-            <td className="bg font-bold text-center" colSpan={2}>
+            <td className="bg font-bold text-center h-6" colSpan={2}>
               <p>Name</p>
             </td>
-            <td className="bg font-bold text-center" colSpan={2}>
+            <td className="bg font-bold text-center h-6" colSpan={2}>
               <p>Relation</p>
             </td>
-            <td className="bg font-bold text-center" colSpan={2}>
+            <td className="bg font-bold text-center h-6" colSpan={2}>
               <p>Earning/Dependent</p>
             </td>
           </tr>
           {payload.data.personalDetails.familyDetails.map((item: any) => (
             <tr>
               <td colSpan={2} className="text-center">
-                <p className="pl-1">{item.name}</p>
+                <p className="pl-1 h-6">{item.name}</p>
               </td>
               <td colSpan={2} className="text-center">
-                <p className="pl-1">{item.relation}</p>
+                <p className="pl-1 h-6">{item.relation}</p>
               </td>
               <td colSpan={2} className="text-center">
-                <p className="pl-1">{item.earningStatus}</p>
+                <p className="pl-1 h-6">{item.earningStatus}</p>
               </td>
             </tr>
           ))}
           <tr className="font-bold text-center">
             <td colSpan={8}>
-              <p className="mt-2">BUSINESS DATA</p>
+              <p className="my-2">BUSINESS DATA</p>
             </td>
           </tr>
           <tr>
@@ -149,73 +168,85 @@ const ReportData = () => {
               <p>ASBS &amp; Co. Observations</p>
             </td>
             <td colSpan={7}>
-              <div className="flex justify-between m-2 font-bold">
+              <div className="flex  m-2 font-bold">
                 <p>Income Sources:</p>
+              </div>
+              <div className="flex justify-end mx-4 font-bold">
                 <p>(Amt in Rs.)</p>
               </div>
-              <div className="flex justify-between m-4">
+              <div className="flex justify-between mt-1 mb-4 mx-4">
                 <div className="flex w-full border-[1.5px] border-r-0 border-black">
-                  <div className="w-1/4">
-                    <div className="b-r text-center">
-                      <p className="bg pl-1 b-b h-6 font-bold">Particulars</p>
-                      <p className="pl-1 b-b">Turnover</p>
-                      <p className="pl-1 b-b">Entity</p>
-                      <p className="pl-1 b-b">Gross Profit</p>
-                      <p className="pl-1 b-b">Net Margin</p>
-                      <p className="pl-1 b-b">Share of Profit</p>
-                      <p className="pl-1 b-b">
+                  <div className="w-4/12">
+                    <div className="b-r">
+                      <p className="bg pl-1 b-b h-6 text-center font-bold">
+                        Particulars
+                      </p>
+                      <p className="pl-1 b-b h-6">Turnover</p>
+                      <p className="pl-1 b-b h-6">Entity</p>
+                      <p className="pl-1 b-b h-6">Gross Profit</p>
+                      <p className="pl-1 b-b h-6">Net Margin</p>
+                      <p className="pl-1 b-b h-6">Share of Profit</p>
+                      <p className="pl-1 b-b h-6">
                         {payload.data?.businessDetails?.designation}'s Salary
                       </p>
-                      <p className="pl-1 b-b">
+                      <p className="pl-1 b-b h-6">
                         {payload.data?.businessDetails?.designation}'s
                         Remuneration
                       </p>
-                      <p className="pl-1 b-b font-bold">Other Income</p>
-                      <p className="pl-1 b-b font-bold">Total</p>
-                      <p className="pl-1 font-bold">Grand Total</p>
+                      <p className="pl-1 b-b h-6">Other Income</p>
+                      <p className="pl-1 b-b h-6 text-center font-bold">
+                        Total
+                      </p>
+                      <p className="pl-1 h-6 text-center font-bold">
+                        Grand Total
+                      </p>
                     </div>
                   </div>
                   <div
-                    className={`w-3/4 grid grid-cols-${payload.data.financials?.finances?.length} text-center`}
+                    className={`w-8/12 grid grid-cols-${payload.data.financials?.finances?.length} text-center`}
                   >
                     {payload.data?.financials?.finances?.map((item: any) => (
                       <div className="b-r">
-                        <p className="bg pl-1 b-b font-bold h-6">
+                        <p className="bg pl-1 b-b font-bold h-6 text-center">
                           {item.applicantIncome}
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.income.turnoverGrossReciepts.amountPA}
                         </p>
-                        <p className="pl-1 b-b">{item.entityName}</p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
+                          {item.entityName}
+                        </p>
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.income.grossProfit} (
                           {item.income.grossProfitPer})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.netProfitPA} (
                           {item.expenses.netProfitPM})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.shareOfProfitPA} (
                           {item.expenses.shareOfProfitPM})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.shareOfProfitPA} (
                           {item.expenses.shareOfProfitPM})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.shareOfProfitPA} (
                           {item.expenses.shareOfProfitPM})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.shareOfProfitPA} (
                           {item.expenses.shareOfProfitPM})
                         </p>
-                        <p className="pl-1 b-b">
+                        <p className="pl-1 b-b h-6 text-center">
                           {item.expenses.shareOfProfitPA} (
                           {item.expenses.shareOfProfitPM})
                         </p>
-                        <p className="pl-1">{item.expenses.shareOfProfitPA}</p>
+                        <p className="pl-1 h-6 text-center">
+                          {item.expenses.shareOfProfitPA}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -227,11 +258,8 @@ const ReportData = () => {
                   <li>
                     - {payload?.data?.businessDetails?.howTurnoverVerified}
                   </li>
-                  <li>
-                    - It’s advised to cross check income with ITR &amp;
-                    Financial statements for last 3 years as during visit it we
-                    were not provided.
-                  </li>
+                  <li>-</li>
+                  <li>-</li>
                 </ul>
                 <p className="my-4 font-bold">Assets Backing:</p>
                 <ul className="ml-6 mb-6">
@@ -520,7 +548,7 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 {moment().year() -
-                  payload?.data?.businessDetails?.yearOfIncorporation}
+                  parseInt(payload?.data?.businessDetails?.yearOfIncorporation)}
               </p>
             </td>
           </tr>
@@ -1676,7 +1704,7 @@ const ReportData = () => {
         </tbody>
       </table>
       <div className="my-4">
-        <h1 className='mb-2'>Disclaimer Clause: -</h1>
+        <h1 className="mb-2">Disclaimer Clause: -</h1>
         <p className="text-black">
           The above data and explanation are based on the information provided
           to us during the course of the visit. This report (including any

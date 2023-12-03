@@ -32,9 +32,9 @@ const applicantInfo = {
   studyFinish: '',
   study: '',
   businessStart: '',
-  currExp: '',
-  pastExp: '',
-  overallExp: '',
+  currExp: 0,
+  pastExp: 0,
+  overallExp: 0,
 } as any;
 
 const resiInfo = {
@@ -87,7 +87,7 @@ const PersonalDetails = ({
       Yup.object().shape({
         resiAddress: Yup.string().required('This field is required'),
         resiStatus: Yup.string().required('This field is required'),
-        resiSince: Yup.string().required('This field is required'),
+        resiSince: Yup.number().required('This field is required'),
         buildArea: Yup.number().required('This field is required'),
         carpetArea: Yup.number().required('This field is required'),
       }),
