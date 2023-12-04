@@ -49,7 +49,11 @@ const FinalReport = () => {
   const [actionType, setActionType] = useState('');
 
   const bodyRef: any = React.createRef();
-  const createPdf = () => generatePdf(bodyRef.current);
+  const createPdf = () =>
+    generatePdf(
+      bodyRef.current,
+      `${state?.activeItem?.bankName?.name} ${state?.activeItem?.name} ${state?.activeItem?.city}}`,
+    );
 
   const updateAssigneeReviewer = (values: any) => {
     if (values?.status === 'assigned') {
@@ -58,6 +62,7 @@ const FinalReport = () => {
     let assignCasePromise = assignCase(values);
     assignCasePromise
       .then(() => {
+        navigate('/dashboard');
         closeAssignCaseModal();
         formikAssigned.resetForm();
         toast.success(<b>{successMessages[values?.status]}</b>);
@@ -71,6 +76,7 @@ const FinalReport = () => {
     let updateStatusPromise = statusUpdateCase(id, values);
     updateStatusPromise
       .then(() => {
+        navigate('/dashboard');
         closeUpdateStatusModal();
         formikStatus.resetForm();
         if (successMessages[values?.status])
@@ -211,6 +217,26 @@ const FinalReport = () => {
         icon: <DocumentChartBarIcon className="h-5 w-5" />,
       },
     ],
+    query: [
+      {
+        title: 'Edit Report',
+        action: () =>
+          navigate('/generatePD', {
+            state: { activeItem: state?.activeItem },
+          }),
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Send to Review',
+        action: sentToReviewCase,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+      {
+        title: 'Download PDF',
+        action: createPdf,
+        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+      },
+    ],
     review: [
       {
         title: 'Edit Report',
@@ -268,7 +294,6 @@ const FinalReport = () => {
             action={() => navigate(-1)}
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
-          <AButton variant={'link'} label={'Download'} action={createPdf} />
           <div>Preview Report</div>
           <ADropdown
             options={dropdownOptions[state?.activeItem?.status]}

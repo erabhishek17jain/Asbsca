@@ -29,7 +29,7 @@ const GeneratePD = () => {
           navigate('/finalReport', {
             state: { activeItem: state?.activeItem },
           }),
-            toast.success(<b>Report created sucessfully.</b>);
+            toast.success(<b>Report {action === 'edit' ? 'updated' : 'created'} sucessfully.</b>);
         }
       })
       .catch((e: any) => {

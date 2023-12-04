@@ -104,7 +104,7 @@ export default class AnalyticsAPI {
             });
             const completedCases = await this.model.countDocuments({
                 ...filter,
-                status: CaseStatus.Assigned,
+                status: CaseStatus.Completed,
             });
             const sentToBank = await this.model.countDocuments({
                 ...filter,

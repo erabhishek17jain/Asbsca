@@ -42,10 +42,10 @@ export function getOptions(data: any, label: string, value: string) {
   return [];
 }
 
-export function generatePdf(html: any) {
+export function generatePdf(html: any, fileName: string) {
   savePDF(html, {
     paperSize: 'A4',
-    fileName: 'form.pdf',
+    fileName: fileName + '.pdf',
     margin: 3,
   });
 }
