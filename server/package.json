@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon server.ts",
-    "dev": "export NODE_PATH=./ && nodemon server.ts"
+    "dev": "export NODE_PATH=./ && nodemon server.ts",
+    "start": "export NODE_PATH=./build && node build/server.js",
+    "build": "tsc -p . && cp -r ./views ./build/views && cp -r ./static ./build/static"
+    
   },
   "keywords": [],
   "author": "",
