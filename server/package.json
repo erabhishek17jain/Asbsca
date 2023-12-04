@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "export NODE_PATH=./ && nodemon server.ts",
     "start": "export NODE_PATH=./build && node build/server.js",
-    "build": "tsc -p . && cp -r ./views ./build/views && cp -r ./static ./build/static"
+    "build": "tsc -p . && cp -r ./templates ./build/templates"
     
   },
   "keywords": [],
