@@ -294,12 +294,12 @@ const FinalReport = () => {
             action={() => navigate(-1)}
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
-          <div>Preview Report</div>
+          <div className='text-base'>Preview Report</div>
           <ADropdown
             options={dropdownOptions[state?.activeItem?.status]}
             header={
               <span className="text-right">
-                <span className="flex gap-1 text-sm font-medium text-main">
+                <span className="flex gap-1 font-medium text-main">
                   <span>Actions</span>
                 </span>
               </span>
