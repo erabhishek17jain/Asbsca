@@ -41,7 +41,7 @@ export function AddEditDeleteRole({
   const onSubmit = async (values: any) => {
     values.permissions = permissions
       .filter((item: any) => item?.isChecked)
-      .map((item: any) => item.value);
+      .map((item: any) => item.label);
     values = await Object.assign(values);
     let addRolePromise = activeItem?._id ? updateRole(values) : addRole(values);
     addRolePromise

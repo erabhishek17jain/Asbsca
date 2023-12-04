@@ -29,7 +29,7 @@ export const AModal = ({
             <div className="my-3 overflow-y-auto h-full max-h-[480px]">
               {children}
             </div>
-            <div className="flex justify-end gap-3 border-t-2 border-stroke py-3">
+            <div className="flex justify-end gap-3 border-t-2 border-stroke py-3 h-16">
               <AButton
                 label={'Cancel'}
                 variant={'secondary'}
