@@ -210,6 +210,7 @@ export const USER_TABLE_HEAD = [
   'Location',
   'Role',
   'Status',
+  'Verified',
   'Action',
 ];
 

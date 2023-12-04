@@ -36,6 +36,11 @@ const UsersBody = ({
           label={item?.status}
           color={item?.status === 'active' ? 'green' : 'red'}
         />
+        <TableColumn
+          classes={classes}
+          label={item?.isVerified ? 'Verified' : 'Request Sent'}
+          color={item?.isVerified ? 'green' : 'red'}
+        />
         <td className={`${classes}`}>
           <div className="flex gap-3">
             <Tooltip content="Edit User">
