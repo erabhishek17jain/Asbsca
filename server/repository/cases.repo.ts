@@ -63,9 +63,9 @@ export default class CaseRepository {
                         {referenceId: regex},
                         {localOrOGL: regex},
                         {city: regex},
-                        {branch: regex},
+                        // {branch: regex},
                         {type: regex},
-                        {bankName: regex},
+                        // {bankName: regex},
                         {status: regex},
                         // Numeric fields
                         ...(numericValue !== null ? [{ mobile: numericValue }, { loanAmount: numericValue }] : []),
@@ -124,9 +124,9 @@ export default class CaseRepository {
                         {referenceId: regex},
                         {localOrOGL: regex},
                         {city: regex},
-                        {branch: regex},
+                        // {branch: regex},
                         {type: regex},
-                        {bankName: regex},
+                        // {bankName: regex},
                         {status: regex},
                         // Numeric fields
                         ...(numericValue !== null ? [{ mobile: numericValue }, { loanAmount: numericValue }] : []),
