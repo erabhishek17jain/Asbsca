@@ -3,12 +3,12 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { selfUpdateUser } from './services';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyD2YUPM5hIUPeXZGzqZvkvIuXfWPAteS5U',
-  authDomain: 'test-74caf.firebaseapp.com',
-  projectId: 'test-74caf',
-  storageBucket: 'test-74caf.appspot.com',
-  messagingSenderId: '816359809491',
-  appId: '1:816359809491:web:0aec972a768e640f9d8f26',
+  apiKey: "AIzaSyBfjAX4oXj27T8CqNj3YLg3d772gDz5yFU",
+  authDomain: "abasca-80b5e.firebaseapp.com",
+  projectId: "abasca-80b5e",
+  storageBucket: "abasca-80b5e.appspot.com",
+  messagingSenderId: "845580204881",
+  appId: "1:845580204881:web:2a53914df6f0fea0e6b170"
 };
 
 const app = initializeApp(firebaseConfig);
