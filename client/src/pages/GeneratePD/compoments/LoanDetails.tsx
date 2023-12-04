@@ -62,17 +62,22 @@ const LoanDetails = ({
   }, [allClients]);
 
   useEffect(() => {
-    const details = {
-      location: activeItem?.city,
-      reporterName: activeItem?.assignTo?.fullName,
-      reporterContact: activeItem?.assignTo?.mobile,
-      pdVisitDate: moment().format('DD-MM-YYYY'),
-      pdConductTime: moment().format('hh:MM'),
-      reviewerName: activeItem?.reviewer?.fullName,
-      reviewerContact: activeItem?.reviewer?.mobile,
-      reportTat: moment().add(1, 'd').format('DD-MM-YYYY hh:MM'),
-      reportSentDate: moment().add(1, 'd').format('DD-MM-YYYY'),
-    };
+    let details = {}
+    if (payloads.pdDetails) {
+      details = payloads.pdDetails;
+    } else {
+      details = {
+        location: activeItem?.city,
+        reporterName: activeItem?.assignTo?.fullName,
+        reporterContact: activeItem?.assignTo?.mobile,
+        pdVisitDate: moment().format('DD-MM-YYYY'),
+        pdConductTime: moment().format('hh:MM a'),
+        reviewerName: activeItem?.reviewer?.fullName,
+        reviewerContact: activeItem?.reviewer?.mobile,
+        reportTat: moment().add(1, 'd').format('DD-MM-YYYY hh:MM a'),
+        reportSentDate: moment().add(1, 'd').format('DD-MM-YYYY'),
+      };
+    }
     setPdDetails(details);
     formik.setFieldValue('bankName', activeItem?.bankName?.name);
     store.dispatch(fetchAllClientsAsync({ page: 1, limit: 200 }));

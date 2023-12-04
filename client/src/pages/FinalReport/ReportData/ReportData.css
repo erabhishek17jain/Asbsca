@@ -21,3 +21,10 @@ h1 {
   color: #000;
   font-weight: bold;
 }
+
+p {
+  padding-left: 4px;
+  /* height: 24px; */
+  display: flex;
+  align-items: center;
+}

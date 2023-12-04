@@ -6,159 +6,153 @@ const ReportData = () => {
   const { reportData } = useSelector((state: any) => state.cases);
 
   const amtConvertor = (amt: number) => {
+    if (amt < 1) return `${(amt * 100000).toFixed(0)}`;
     if (amt > 100) return `${amt / 100} Cr.`;
     else return `${amt} Lakhs`;
   };
+
+  const docsList = reportData?.data?.documentsSeen.filter(
+    (item: any) => item?.isDoc === 'Yes',
+  );
   return (
     <div className="flex flex-col text-sm  py-4 px-6">
       <table className="mb-1.5" cellSpacing={0}>
         <tbody>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
-              <p>
+              <p className="justify-center">
                 {`${reportData?.data?.loanDetails?.bankName}_PD_REPORT_${reportData?.data?.personalDetails?.applicants[0]?.name}_${reportData?.data?.pdDetails?.location}_${reportData?.data?.loanDetails?.alc}_${reportData?.data?.pdDetails?.pdVisitDate}`}
               </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
-              <p>
+              <p className="justify-center">
                 {`${reportData?.data?.loanDetails?.loan}: ${reportData?.data?.loanDetails?.loanType}`}
               </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
-              <p>PERSONAL DATA</p>
+              <p className="justify-center">PERSONAL DATA</p>
             </td>
           </tr>
           <tr>
-            <td colSpan={8}>
-              <div className="flex w-full">
-                <div className="w-1/4">
-                  <div className="b-r">
-                    <p className="bg pl-1 b-b text-center h-6"></p>
-                    <p className="pl-1 b-b h-6">Name</p>
-                    <p className="pl-1 b-b h-6">Date of Birth</p>
-                    <p className="pl-1 b-b h-6">Qualifications</p>
-                    <p className="pl-1 b-b h-6">Current Experience</p>
-                    <p className="pl-1 b-b h-6">Overall Experience</p>
-                    <p className="pl-1 h-6">Nature of Business</p>
-                  </div>
-                </div>
-                <div
-                  className={`w-3/4 grid grid-cols-${reportData?.data?.personalDetails?.applicants?.length}`}
-                >
-                  {reportData?.data?.personalDetails?.applicants.map(
-                    (item: any, index: number) => (
-                      <div
-                        className={
-                          index <
-                          reportData?.data?.personalDetails?.applicants
-                            ?.length -
-                            1
-                            ? 'b-r'
-                            : ''
-                        }
-                      >
-                        <p className="bg pl-1 b-b text-center font-bold h-6">
-                          {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
-                        </p>
-                        <p className="pl-1 b-b h-6">
-                          {item.name !== '' ? item.name : 'Nil'}
-                        </p>
-                        <p className="pl-1 b-b h-6">
-                          {item.dobDoi !== ''
-                            ? moment(item.dobDoi).format('DD-M-YYYY')
-                            : 'Nil'}
-                        </p>
-                        <p className="pl-1 b-b h-6">
-                          {item.qualification !== ''
-                            ? item.qualification
-                            : 'Nil'}
-                        </p>
-                        <p className="pl-1 b-b h-6">{item.currExp} Years</p>
-                        <p className="pl-1 b-b h-6">{item.overallExp} Years</p>
-                        <p className="pl-1">
-                          {item.natureOfBusiness !== ''
-                            ? item.natureOfBusiness
-                            : 'Nil'}
-                        </p>
-                      </div>
-                    ),
-                  )}
-                </div>
+            <td colSpan={1}>
+              <p className="bg pl-1 b-b text-center h-6"></p>
+              <p className="pl-1 b-b h-6">Name</p>
+              <p className="pl-1 b-b h-6">Date of Birth</p>
+              <p className="pl-1 b-b h-6">Qualifications</p>
+              <p className="pl-1 b-b h-6">Current Experience</p>
+              <p className="pl-1 b-b h-6">Overall Experience</p>
+              <p className="pl-1 h-6">Nature of Business</p>
+            </td>
+            <td colSpan={7}>
+              <div
+                className={`grid grid-cols-${reportData?.data?.personalDetails?.applicants?.length}`}
+              >
+                {reportData?.data?.personalDetails?.applicants.map(
+                  (item: any, index: number) => (
+                    <div
+                      className={
+                        index <
+                        reportData?.data?.personalDetails?.applicants?.length -
+                          1
+                          ? 'b-r'
+                          : ''
+                      }
+                    >
+                      <p className="bg pl-1 b-b text-center font-bold h-6">
+                        {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {item.name !== '' ? item.name : 'Nil'}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {item.dobDoi !== ''
+                          ? moment(item.dobDoi).format('DD-M-YYYY')
+                          : 'Nil'}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {item.qualification !== '' ? item.qualification : 'Nil'}
+                      </p>
+                      <p className="pl-1 b-b h-6">{item.currExp} Years</p>
+                      <p className="pl-1 b-b h-6">{item.overallExp} Years</p>
+                      <p className="pl-1">
+                        {item.natureOfBusiness !== ''
+                          ? item.natureOfBusiness
+                          : 'Nil'}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </td>
           </tr>
           <tr>
-            <td colSpan={8}>
-              <div className="flex w-full">
-                <div className="w-1/4">
-                  <div className="b-r">
-                    <p className="bg pl-1 b-b text-center h-6"></p>
-                    <p className="pl-1 b-b h-6">Residence Address</p>
-                    <p className="pl-1 b-b h-6">Residence Status</p>
-                    <p className="pl-1 b-b h-6">Residing Since</p>
-                    <p className="pl-1 b-b h-12">Residential Area</p>
-                    <p className="pl-1 h-12">Residential Value (Rs.)</p>
-                  </div>
-                </div>
-                <div
-                  className={`w-3/4 grid grid-cols-${reportData?.data?.personalDetails.residents.length}`}
-                >
-                  {reportData?.data?.personalDetails.residents.map(
-                    (item: any, index: number) => (
-                      <div
-                        className={
-                          index <
-                          reportData?.data?.personalDetails.applicants.length -
-                            1
-                            ? 'b-r'
-                            : ''
-                        }
-                      >
-                        <p className="bg pl-1 b-b text-center font-bold h-6">
-                          {'Address ' + (index + 1)}
+            <td colSpan={1}>
+              <p className="bg pl-1 b-b text-center h-6"></p>
+              <p className="pl-1 b-b h-6">Residence Address</p>
+              <p className="pl-1 b-b h-6">Residence Status</p>
+              <p className="pl-1 b-b h-6">Residing Since</p>
+              <p className="pl-1 b-b h-12">Residential Area</p>
+              <p className="pl-1 h-12">Residential Value (Rs.)</p>
+            </td>
+            <td colSpan={7}>
+              <div
+                className={`grid grid-cols-${reportData?.data?.personalDetails.residents.length}`}
+              >
+                {reportData?.data?.personalDetails.residents.map(
+                  (item: any, index: number) => (
+                    <div
+                      className={
+                        index <
+                        reportData?.data?.personalDetails.applicants.length - 1
+                          ? 'b-r'
+                          : ''
+                      }
+                    >
+                      <p className="bg pl-1 b-b text-center font-bold h-6">
+                        {'Address ' + (index + 1)}
+                      </p>
+                      <p className="pl-1 b-b h-6">{item.resiAddress}</p>
+                      <p className="pl-1 b-b h-6">
+                        {item.resiStatus.slice(0, -1)}
+                      </p>
+                      <p className="pl-1 b-b h-6">{item.resiSince}</p>
+                      <p className="pl-1 b-b h-12">
+                        Buildup Area: {item.buildArea} Sq. Ft. <br />
+                        Carpet Area: {item.carpetArea} Sq. Ft.
+                      </p>
+                      {item.resiStatus !== 'RentalN' && (
+                        <p className="pl-1 h-12">
+                          Purchase Value: {amtConvertor(item.purchaseValue)}
+                          <br />
+                          Market Value: {amtConvertor(item.marketValue)}
                         </p>
-                        <p className="pl-1 b-b h-6">{item.resiAddress}</p>
-                        <p className="pl-1 b-b h-6">
-                          {item.resiStatus.slice(0, -1)}
+                      )}
+                      {item.resiStatus === 'RentalN' && (
+                        <p className="pl-1 h-12">
+                          Rent: {amtConvertor(item.rentPm * 12)} p.a.
+                          <br />
                         </p>
-                        <p className="pl-1 b-b h-6">{item.resiSince}</p>
-                        <p className="pl-1 b-b h-12">
-                          Buildup Area: {item.buildArea} Sq. Ft. <br />
-                          Carpet Area: {item.carpetArea} Sq. Ft.
-                        </p>
-                        {item.resiStatus !== 'RentalN' && (
-                          <p className="pl-1 h-12">
-                            Purchase Value: {amtConvertor(item.purchaseValue)}
-                            <br />
-                            Market Value: {amtConvertor(item.marketValue)}
-                          </p>
-                        )}
-                        {item.resiStatus === 'RentalN' && (
-                          <p className="pl-1 h-12">
-                            Rent: {amtConvertor(item.rentPm * 12)} p.a.
-                            <br />
-                          </p>
-                        )}
-                      </div>
-                    ),
-                  )}
-                </div>
+                      )}
+                    </div>
+                  ),
+                )}
               </div>
             </td>
           </tr>
           <tr>
             <td
+              colSpan={1}
               rowSpan={
                 reportData?.data?.personalDetails.familyDetails.length + 1
               }
             >
               <p className="pl-1">Family Background</p>
             </td>
-            <td className="bg font-bold text-center h-6" colSpan={2}>
+            <td className="bg font-bold text-center h-6" colSpan={3}>
               <p>Name</p>
             </td>
             <td className="bg font-bold text-center h-6" colSpan={2}>
@@ -170,7 +164,7 @@ const ReportData = () => {
           </tr>
           {reportData?.data?.personalDetails.familyDetails.map((item: any) => (
             <tr>
-              <td colSpan={2} className="text-center">
+              <td colSpan={3} className="text-center">
                 <p className="pl-1 h-6">{item.name}</p>
               </td>
               <td colSpan={2} className="text-center">
@@ -183,7 +177,7 @@ const ReportData = () => {
           ))}
           <tr className="font-bold text-center">
             <td colSpan={8}>
-              <p className="my-2">BUSINESS DATA</p>
+              <p className="my-2 justify-center">BUSINESS DATA</p>
             </td>
           </tr>
           <tr>
@@ -191,7 +185,7 @@ const ReportData = () => {
               <p>ASBS &amp; Co. Observations</p>
             </td>
             <td colSpan={7}>
-              <div className="flex  m-2 font-bold">
+              <div className="flex mt-2 mx-2 font-bold">
                 <p>Income Sources:</p>
               </div>
               <div className="flex justify-end mx-4 font-bold">
@@ -221,9 +215,7 @@ const ReportData = () => {
                       <p className="pl-1 b-b h-6 text-center font-bold">
                         Total
                       </p>
-                      <p className="pl-1 h-6 text-center font-bold">
-                        Grand Total
-                      </p>
+                      <p className=" text-center font-bold">Grand Total</p>
                     </div>
                   </div>
                   <div
@@ -282,7 +274,7 @@ const ReportData = () => {
                         </div>
                       ),
                     )}
-                    <p className="pl-1 h-6 font-bold text-right">
+                    <p className=" font-bold text-right">
                       {amtConvertor(reportData?.data?.financials?.totalEarning)}
                     </p>
                     <p className="h-6 b-r"></p>
@@ -311,14 +303,86 @@ const ReportData = () => {
                     Investment” below)
                   </li>
                 </ul>
-                <p className="my-4 font-bold">Note:</p>
-                <ul className="ml-6 mb-6">
-                  <li>- Reason fow low asset backing was not provided.</li>
-                </ul>
+                {reportData?.data?.assets?.assetsBacking !== '' && (
+                  <>
+                    <p className="my-4 font-bold">Note:</p>
+                    <ul className="ml-6 mb-6">
+                      <li>- {reportData?.data?.assets?.assetsBacking}</li>
+                    </ul>
+                  </>
+                )}
+
                 <p className="my-4 font-bold">Existing Commitments:</p>
                 <ul className="ml-6 mb-6">
-                  <li>- EMI Commitments: Nil</li>
-                  <li>- Other Commitments: Nil</li>
+                  <li>
+                    - EMI Commitments:{' '}
+                    {reportData?.data?.existanceLoan?.existanceLoan
+                      ?.balanceTransfer?.length === 0 &&
+                    reportData?.data?.existanceLoan?.existanceLoan
+                      ?.existingLoanClosed?.length === 0 &&
+                    reportData?.data?.existanceLoan?.existanceLoan
+                      ?.existingLoanEMI?.length === 0 ? (
+                      'Nil'
+                    ) : (
+                      <>
+                        {amtConvertor(
+                          parseFloat(
+                            reportData?.data?.existingLoan?.existanceLoan
+                              ?.totalLoanBtEmi,
+                          ) *
+                            12 +
+                            parseFloat(
+                              reportData?.data?.existingLoan?.existanceLoan
+                                ?.totalLoanEcEmi,
+                            ) *
+                              12 +
+                            parseFloat(
+                              reportData?.data?.existingLoan?.existanceLoan
+                                ?.totalLoanEmEmi,
+                            ) *
+                              12,
+                        )}
+                        <ul className="ml-6 mb-2">
+                          <li>
+                            {`(Out of which Rs.
+                            ${amtConvertor(
+                              parseFloat(
+                                reportData?.data?.existingLoan?.existanceLoan
+                                  ?.totalLoanBtEmi,
+                              ) * 12,
+                            )}
+                            is subject to balance transfer.)`}
+                          </li>
+                          <li>
+                            {`(Out of which Rs. ${amtConvertor(
+                              parseFloat(
+                                reportData?.data?.existingLoan?.existanceLoan
+                                  ?.totalLoanEcEmi,
+                              ) * 12,
+                            )} Cr. is subject to subject to
+                            closure within 12 months.)`}
+                          </li>
+                        </ul>
+                      </>
+                    )}
+                  </li>
+                  <li>
+                    - Other Commitments:{' '}
+                    {reportData?.data?.existanceLoan?.otherCommitments
+                      ?.commitmentsDetails?.length === 0 ? (
+                      'Nil'
+                    ) : (
+                      <>
+                        Rs.{' '}
+                        {amtConvertor(
+                          parseFloat(
+                            reportData?.data?.existingLoan?.otherCommitments
+                              ?.totalCon,
+                          ),
+                        )}
+                      </>
+                    )}
+                  </li>
                 </ul>
               </div>
               <table cellSpacing={0} className="w-10/12 mt-4 mx-auto">
@@ -337,11 +401,47 @@ const ReportData = () => {
                     </td>
                     <td colSpan={2}>
                       <p>As per Agreement Value:</p>
-                      <p className="ml-6">79.31% (1.15 Cr./1.45 Cr.)</p>
+                      <p className="ml-6">{`${(
+                        (reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount *
+                          100) /
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.agreementValue
+                      ).toFixed(2)}% (${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount,
+                      )} / ${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.agreementValue,
+                      )})`}</p>
                       <p>As per Purchase Value:</p>
-                      <p className="ml-6">69.70% (1.15 Cr./1.65 Cr.)</p>
+                      <p className="ml-6">{`${(
+                        (reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount *
+                          100) /
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.purchaseValue
+                      ).toFixed(2)}% (${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount,
+                      )} / ${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.purchaseValue,
+                      )})`}</p>
                       <p>As per Market Value:</p>
-                      <p className="ml-6">69.70% (1.15 Cr./1.65 Cr.)</p>
+                      <p className="ml-6">{`${(
+                        (reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount *
+                          100) /
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.marketValue
+                      ).toFixed(2)}% (${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.loanDetails?.amount,
+                      )} / ${amtConvertor(
+                        reportData?.data?.detailsOfProp?.propertyLoanDetails
+                          ?.propertyValue?.marketValue,
+                      )})`}</p>
                     </td>
                   </tr>
                   <tr>
@@ -349,7 +449,12 @@ const ReportData = () => {
                       <p>EMI Commitments to Total Earning(FOIR)</p>
                     </td>
                     <td colSpan={2}>
-                      <p className="ml-6">6.80% (11.54 Lakhs/1.7 Cr.)</p>
+                      <p className="ml-6">
+                        {
+                          reportData?.data?.comitmentSummary
+                            ?.totalCommitmentsRatio
+                        }
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -358,8 +463,15 @@ const ReportData = () => {
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    - Proposed EMI at 8% for 20 years on 1.15 Cr. comes to
-                    96,191 p.m.
+                    {`- Proposed EMI at ${reportData?.data?.detailsOfProp
+                      ?.propertyLoanDetails?.loanDetails?.roi}% for ${reportData
+                      ?.data?.detailsOfProp?.propertyLoanDetails?.loanDetails
+                      ?.year} years on ${amtConvertor(
+                      reportData?.data?.detailsOfProp?.propertyLoanDetails
+                        ?.loanDetails?.amount,
+                    )} comes to Rs. ${reportData?.data?.detailsOfProp?.propertyLoanDetails?.loanDetails?.emi?.toFixed(
+                      0,
+                    )} p.m.`}
                   </li>
                 </ul>
               </div>
@@ -370,41 +482,28 @@ const ReportData = () => {
               <p>Business Profile</p>
             </td>
             <td colSpan={7}>
-              <div className="flex gap-2 my-2 mx-4 font-bold">
-                <img
-                  width={15}
-                  height={15}
-                  src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
-                />
-                <span>History of Applicant:</span>
-              </div>
-              <div className="mx-4">
-                <ul className="ml-6 mb-6">
-                  <li>- Applicant has completed Post Graduate in year 2012.</li>
-                  <li>
-                    - Previously applicant has worked for 7 years as a
-                    housewife.
-                  </li>
-                  <li>- Applicant started business in year 2019.</li>
-                </ul>
-              </div>
-              <div className="flex gap-2 my-2 mx-4 font-bold">
-                <img
-                  width={15}
-                  height={15}
-                  src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
-                />
-                <span>History of Co-Applicant:</span>
-              </div>
-              <div className="mx-4">
-                <ul className="ml-6 mb-6">
-                  <li>- Applicant has completed Residing Since: in year .</li>
-                  <li>
-                    - He started his jurney with Kotak Bank and worked as a
-                    credit Manager for 3.5 years
-                  </li>
-                </ul>
-              </div>
+              {reportData?.data?.personalDetails?.applicants?.map(
+                (item: any) => (
+                  <>
+                    <div className="flex gap-2 my-2 mx-4 font-bold">
+                      <img
+                        width={15}
+                        height={15}
+                        src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
+                      />
+                      <span>History of Applicant:</span>
+                    </div>
+                    <div className="mx-4">
+                      <ul className="ml-6 mb-6">
+                        <li>{`- Applicant has completed ${item?.qualification} in year ${item?.studyFinish}.`}</li>
+                        <li>{`- Previously applicant has worked for ${item?.pastExp} years.`}</li>
+                        <li>{`- Applicant started business in year ${item?.businessStart}.`}</li>
+                      </ul>
+                    </div>
+                  </>
+                ),
+              )}
+
               <div className="flex gap-2 my-2 mx-4 font-bold">
                 <img
                   width={15}
@@ -415,24 +514,7 @@ const ReportData = () => {
               </div>
               <div className="mx-4">
                 <ul className="ml-6 mb-6">
-                  <li>
-                    - Applicant started a Proprietorship Firm named XYZ Colony
-                    in year 2019.
-                  </li>
-                  <li>- They provide services of banking.</li>
-                  <li>- Loans and advances are being advanced by them.</li>
-                  <li>
-                    - Service Charges ranges between 2% to 3% per transaction.
-                  </li>
-                  <li>
-                    - Monthly gross receipts from them are between 11.34 Lakhs
-                    to 17 Lakhs.
-                  </li>
-                  <li>- 90% of transaction are done via banking channels.</li>
-                  <li>
-                    - Expenses in the business are Salary: 2 Lakhs, Electricity:
-                    18,000, Travelling Expenses:
-                  </li>
+                  <li>-</li>
                 </ul>
               </div>
               <div className="flex gap-2 my-2 mx-4 font-bold">
@@ -461,11 +543,20 @@ const ReportData = () => {
                       <p>March-2021 (as per F.S.)</p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.lastYears
+                            ?.firstLastYear,
+                        )}
+                      </p>
                     </td>
                     <td rowSpan={2}>
-                      <p>Cannot Comment as Data was not</p>
-                      <p>provided.</p>
+                      <p>
+                        {
+                          reportData?.data?.turnoverDetails?.lastYears
+                            ?.reasonforDiff
+                        }
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -473,7 +564,12 @@ const ReportData = () => {
                       <p>March-2022 (as per F.S.)</p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.lastYears
+                            ?.firstLastYear,
+                        )}
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -507,10 +603,20 @@ const ReportData = () => {
                       <p>March-2023 (as per F.S.)</p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.currentYearActual
+                            ?.asPerFinancials?.turnover,
+                        )}
+                      </p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.currentYearActual
+                            ?.asPerFinancials?.netProfit,
+                        )}
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -518,10 +624,20 @@ const ReportData = () => {
                       <p>March-2023 (Actuals)</p>
                     </td>
                     <td>
-                      <p>1.7 Cr.</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.currentYearActual
+                            ?.actuals?.turnover,
+                        )}
+                      </p>
                     </td>
                     <td>
-                      <p>1.65 Cr.</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.currentYearActual
+                            ?.actuals?.netProfit,
+                        )}
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -529,14 +645,43 @@ const ReportData = () => {
                       <p>April-2023 till Date (Actuals)</p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.aprilTillDate
+                            ?.aprilTillDate?.turnover,
+                        )}
+                      </p>
                     </td>
                     <td>
-                      <p>NP</p>
+                      <p>
+                        {amtConvertor(
+                          reportData?.data?.turnoverDetails?.aprilTillDate
+                            ?.aprilTillDate?.netProfit,
+                        )}
+                      </p>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div className="mx-4">
+                <p className="my-4 font-bold">Note:</p>
+                <ul className="ml-6 mb-6">
+                  <li>
+                    {`- Turnover pf March-{moment().year()} is ${reportData
+                      ?.data?.turnoverDetails?.currentLastYearComparision
+                      ?.changes} compared to March-${moment()
+                      .subtract(1, 'y')
+                      .year()}`}
+                  </li>
+                  <li>
+                    -{' '}
+                    {
+                      reportData?.data?.turnoverDetails
+                        ?.currentLastYearComparision?.reasonforDiff
+                    }
+                  </li>
+                </ul>
+              </div>
               <div className="flex gap-2 my-2 mx-4 font-bold">
                 <img
                   width={15}
@@ -547,7 +692,11 @@ const ReportData = () => {
               </div>
               <div className="mx-4">
                 <ul className="ml-6 mb-6">
-                  <li>- Cannot Comment as data was not provided.</li>
+                  <li>
+                    -{' '}
+                    {reportData?.data?.turnoverDetails?.bussinessTrendLast2Year}
+                    .
+                  </li>
                 </ul>
               </div>
               <div className="flex gap-2 my-2 mx-4 font-bold">
@@ -560,7 +709,7 @@ const ReportData = () => {
               </div>
               <div className="mx-4">
                 <ul className="ml-6 mb-6">
-                  <li>- Applicant will continue business as it is.</li>
+                  - {reportData?.data?.turnoverDetails?.futureProjection}.
                 </ul>
               </div>
             </td>
@@ -590,7 +739,8 @@ const ReportData = () => {
                 {moment().year() -
                   parseInt(
                     reportData?.data?.businessDetails?.yearOfIncorporation,
-                  )}
+                  )}{' '}
+                Years
               </p>
             </td>
           </tr>
@@ -656,8 +806,7 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <p>
-                {reportData?.data?.pdDetails?.pdVisitDate} :{' '}
-                {reportData?.data?.pdDetails?.pdConductTime}
+                {`${reportData?.data?.pdDetails?.pdVisitDate} at ${reportData?.data?.pdDetails?.pdConductTime}`}
               </p>
             </td>
           </tr>
@@ -678,10 +827,12 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {
-                  reportData?.data?.detailsOfProp?.propertyLoanDetails
-                    ?.loanAsPerForm
-                }
+                {amtConvertor(
+                  parseInt(
+                    reportData?.data?.detailsOfProp?.propertyLoanDetails
+                      ?.loanAsPerForm,
+                  ),
+                )}
               </p>
             </td>
           </tr>
@@ -691,10 +842,10 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {
+                {amtConvertor(
                   reportData?.data?.detailsOfProp?.propertyLoanDetails
-                    ?.loanDetails.amount
-                }
+                    ?.loanDetails.amount,
+                )}
               </p>
             </td>
           </tr>
@@ -703,7 +854,7 @@ const ReportData = () => {
               <p>Purpose of LAP/Topup</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.pdConductWith}</p>
+              <p>NA</p>
             </td>
           </tr>
           <tr>
@@ -723,7 +874,11 @@ const ReportData = () => {
             </td>
           </tr>
           <tr>
-            <td rowSpan={2}>
+            <td
+              rowSpan={
+                reportData?.data?.businessDetails.shareHoldings?.length + 1
+              }
+            >
               <p>Shareholding Pattern of Ownership</p>
             </td>
             <td colSpan={2} className="bg">
@@ -749,7 +904,6 @@ const ReportData = () => {
               </td>
             </tr>
           ))}
-
           <tr>
             <td width={160}>
               <p>Main use of products/services</p>
@@ -764,17 +918,16 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <ul id="l2">
-                {reportData?.data?.documentsSeen.map((item: any) => {
-                  return (
-                    item?.isDoc === 'Yes' && (
-                      <li data-list-text="-">- {item?.label}</li>
-                    )
-                  );
-                })}
-                <li>
-                  - No documents provided &amp; applicant said Documents are
-                  already given to bank.
-                </li>
+                {docsList?.length === 0 ? (
+                  <li>
+                    - No documents provided &amp; applicant said Documents are
+                    already given to bank.
+                  </li>
+                ) : (
+                  docsList?.map((item: any) => (
+                    <li data-list-text="-">- {item?.label}</li>
+                  ))
+                )}
               </ul>
             </td>
           </tr>
@@ -793,7 +946,9 @@ const ReportData = () => {
               <p>Credit Period Provided to Customers</p>
             </td>
             <td colSpan={7}>
-              <p>No Credit Provided to Clients</p>
+              <p>
+                {`${reportData?.data?.clientDebtors?.debitors?.debitorDetails?.creditPeriodAllowed} Months`}
+              </p>
             </td>
           </tr>
           <tr>
@@ -801,7 +956,7 @@ const ReportData = () => {
               <p>Credit Period given by Suppliers</p>
             </td>
             <td colSpan={7}>
-              <p>NA</p>
+              <p>{`${reportData?.data?.suppliers?.creitPeriodAllowed} Months`}</p>
             </td>
           </tr>
           <tr>
@@ -834,84 +989,184 @@ const ReportData = () => {
               <p>{reportData?.data?.businessDetails?.empSeen}</p>
             </td>
             <td colSpan={2}>
-              <p>2 Lakhs</p>
+              <p>
+                {amtConvertor(
+                  reportData?.data?.financials?.finances[0]?.expenses?.salary
+                    ?.amountPA,
+                )}
+              </p>
             </td>
           </tr>
           <tr className="font-bold text-center">
             <td colSpan={8}>
-              <p className="mt-2">FINANCIAL DATA</p>
+              <p className="my-2 justify-center">FINANCIAL DATA</p>
             </td>
           </tr>
           <tr>
-            <td>
-              <div className="-m-[1px]">
-                <p className="bg b-b h-6"></p>
-                <p className="b-b h-10">Turnover (Rs.)</p>
-                <p className="b-b h-10">Purchases (Rs.)</p>
-                <p className="b-b h-10">Net Margin</p>
-                <p className="b-b h-5">Other Income (Rs.)</p>
-                <p className="h-auto">Total Expenses (Rs.)</p>
-              </div>
+            <td colSpan={1}>
+              <p className="bg b-b h-6"></p>
+              <p className="b-b h-12">Turnover (Rs.)</p>
+              <p className="b-b h-12">Purchases (Rs.)</p>
+              <p className="b-b h-12">Net Margin</p>
+              <p className="b-b h-6">Other Income (Rs.)</p>
+              <p className="h-auto">Total Expenses (Rs.)</p>
             </td>
-            <td>
-              <div className="-m-[1px]">
-                <p className="bg pl-1 b-b text-center h-6"></p>
-                <p className="pl-1 b-b h-5">Monthly</p>
-                <p className="pl-1 b-b h-5">Annual</p>
-                <p className="pl-1 b-b h-5">Monthly</p>
-                <p className="pl-1 b-b h-5">Annual</p>
-                <p className="pl-1 b-b h-10">
-                  Value: <br />
-                  Percentage:
-                </p>
-                <p className="pl-1 b-b h-5">Annual</p>
-                <p className="pl-1 h-5">Annual</p>
-              </div>
+            <td colSpan={1}>
+              <p className="bg pl-1 b-b text-center h-6"></p>
+              <p className="pl-1 b-b h-6">Monthly</p>
+              <p className="pl-1 b-b h-6">Annual</p>
+              <p className="pl-1 b-b h-6">Monthly</p>
+              <p className="pl-1 b-b h-6">Annual</p>
+              <p className="pl-1 b-b h-12">
+                Value: <br />
+                Percentage:
+              </p>
+              <p className="pl-1 b-b h-6">Annual</p>
+              <p className="pl-1 h-6">Annual</p>
             </td>
             <td colSpan={6}>
-              <div className="flex w-full">
-                <div className="w-2/10"></div>
-                <div
-                  className={`w-5/10 grid grid-cols-${reportData?.data?.financials?.finances.length}`}
-                >
-                  {reportData?.data?.financials?.finances.map(
-                    (item: any, index: number) => (
-                      <div className="b-r">
-                        <p className="bg pl-1 b-b text-center font-bold h-6">
-                          {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
-                        </p>
-                        <p className="pl-1 b-b h-5">
-                          {item.income.turnoverGrossReciepts.amountPM} Lakhs
-                        </p>
-                        <p className="pl-1 b-b h-5">
-                          {item.income.turnoverGrossReciepts.amountPA / 100} Cr.
-                        </p>
-                        <p className="pl-1 b-b h-5">
-                          {item.income.purchases.amountPM} Lakhs
-                        </p>
-                        <p className="pl-1 b-b h-5">
-                          {item.income.purchases.amountPA / 100} Cr.
-                        </p>
-                        <p className="pl-1 b-b h-10">
-                          {item.income.purchases.amountPM} Lakhs
-                        </p>
-                        <p className="pl-1 b-b h-5">
-                          {item.income.purchases.amountPA / 100} Cr.
-                        </p>
-                        <p className="pl-1">
-                          Salary: {item.income.purchases.amountPM} Lakhs <br />
-                          Electricity: {item.income.purchases.amountPM} <br />
-                          Travelling Expenses: {
-                            item.income.purchases.amountPM
-                          }{' '}
-                          Lakhs
-                          <br />
-                          TotalExpenses: {item.income.purchases.amountPM} Lakhs
-                        </p>
-                      </div>
-                    ),
-                  )}
-                </div>
+              <div
+                className={`grid grid-cols-${reportData?.data?.financials?.finances.length}`}
+              >
+                {reportData?.data?.financials?.finances.map(
+                  (item: any, index: number) => (
+                    <div
+                      className={
+                        index <
+                        reportData?.data?.financials?.finances?.length - 1
+                          ? 'b-r'
+                          : ''
+                      }
+                    >
+                      <p className="bg pl-1 b-b text-center font-bold h-6">
+                        {index === 0 ? 'Applicant' : 'Co-Applicant ' + index}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {amtConvertor(
+                          item.income.turnoverGrossReciepts.amountPM,
+                        )}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {amtConvertor(
+                          item.income.turnoverGrossReciepts.amountPA,
+                        )}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {amtConvertor(item.income.purchases.amountPM)}
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {amtConvertor(item.income.purchases.amountPA)}
+                      </p>
+                      <p className="pl-1 b-b h-12">
+                        {amtConvertor(item.expenses.netProfitPA)} <br />
+                        {item.expenses.netProfitPM}%
+                      </p>
+                      <p className="pl-1 b-b h-6">
+                        {`Rent: ${amtConvertor(
+                          item.businessIncome.rent.amountPA,
+                        )}`}
+                      </p>
+                      <p className="pl-1">
+                        {item.expenses.salary.amountPM > 0 && (
+                          <>
+                            {`Salary: ${amtConvertor(
+                              item.expenses.salary.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.maintanance.amountPM > 0 && (
+                          <>
+                            {`Maintanance: ${amtConvertor(
+                              item.expenses.maintanance.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.transport.amountPM > 0 && (
+                          <>
+                            {`Transport: ${amtConvertor(
+                              item.expenses.transport.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.electricity.amountPM > 0 && (
+                          <>
+                            {`Electricity: ${amtConvertor(
+                              item.expenses.electricity.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.travelling.amountPM > 0 && (
+                          <>
+                            {`Travelling: ${amtConvertor(
+                              item.expenses.travelling.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.fuel.amountPM > 0 && (
+                          <>
+                            {`Fuel: ${amtConvertor(
+                              item.expenses.fuel.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.officeRent.amountPM > 0 && (
+                          <>
+                            {`Office Rent: ${amtConvertor(
+                              item.expenses.officeRent.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.partnersSalary.amountPM > 0 && (
+                          <>
+                            {`Partner's Salary: ${amtConvertor(
+                              item.expenses.partnersSalary.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.partnersRemuneration.amountPM > 0 && (
+                          <>
+                            {`Partner's Remuneration: ${amtConvertor(
+                              item.expenses.partnersRemuneration.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.otherExpenses.amountPM > 0 && (
+                          <>
+                            {`Other Expenses: ${amtConvertor(
+                              item.expenses.otherExpenses.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.bifercationOfExpenses.amountPM > 0 && (
+                          <>
+                            {`Bifercation of Expenses: ${amtConvertor(
+                              item.expenses.bifercationOfExpenses.amountPA,
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                        {item.expenses.totalExpensePA > 0 && (
+                          <>
+                            {`Total Expenses: ${amtConvertor(
+                              parseFloat(item.expenses.totalExpensePA),
+                            )}`}
+                            <br />
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </td>
           </tr>
@@ -920,7 +1175,7 @@ const ReportData = () => {
               <p>Assets in Value (Rs.)</p>
             </td>
             <td colSpan={7}>
-              <div className="my-2 mx-3">
+              <div className="my-2 mx-4">
                 <p className="font-bold">Business Assets:</p>
                 {reportData?.data?.assets.bussinessAssetDetails.bussinessAssets
                   .length > 0 ? (
@@ -953,42 +1208,33 @@ const ReportData = () => {
                               <p>{item.particulars}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
                               <p>{item.location}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
                               <p>{item.purchaseYear}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
-                              <p>{item.carpetArea}</p>
+                              <p>{item.carpetArea} Sq. Ft.</p>
                             </td>
                             <td>
                               <p>{item.status}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
-                              <p>{item.marketValue} Lakhs</p>
+                              <p>{amtConvertor(item.marketValue)}</p>
                             </td>
                           </tr>
                         ),
                       )}
                       <tr>
                         <td colSpan={5}>
-                          <p>Total</p>
+                          <p className="justify-center font-bold">Total</p>
                         </td>
                         <td>
-                          <p>
-                            {`${reportData?.data?.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                          <p className="font-bold">
+                            {amtConvertor(
+                              reportData?.data?.assets.bussinessAssetDetails
+                                .totalMarketValue,
+                            )}
                           </p>
                         </td>
                       </tr>
@@ -1029,42 +1275,33 @@ const ReportData = () => {
                               <p>{item.particulars}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
                               <p>{item.location}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
                               <p>{item.purchaseYear}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
-                              <p>{item.carpetArea}</p>
+                              <p>{item.carpetArea} Sq. Ft.</p>
                             </td>
                             <td>
                               <p>{item.status}</p>
                             </td>
                             <td>
-                              <p>
-                                <br />
-                              </p>
-                              <p>{item.marketValue} Lakhs</p>
+                              <p>{amtConvertor(item.marketValue)}</p>
                             </td>
                           </tr>
                         ),
                       )}
                       <tr>
                         <td colSpan={5}>
-                          <p>Total</p>
+                          <p className="justify-center font-bold">Total</p>
                         </td>
                         <td>
-                          <p>
-                            {`${reportData?.data?.assets.bussinessAssetDetails.totalMarketValue} Lakhs`}
+                          <p className="font-bold">
+                            {amtConvertor(
+                              reportData?.data?.assets.bussinessAssetDetails
+                                .totalMarketValue,
+                            )}
                           </p>
                         </td>
                       </tr>
@@ -1081,432 +1318,735 @@ const ReportData = () => {
               <p>Debtors as on date</p>
             </td>
             <td colSpan={7}>
-              <p>No outstanding from debtors.</p>
+              <div className="my-2 mx-4">
+                {reportData?.data?.clientDebtors.debitors.isDebitorDetails ===
+                'Yes' ? (
+                  <>
+                    <table cellSpacing={0} className="w-full mx-auto">
+                      <tbody>
+                        <tr className="bg">
+                          <td>
+                            <p>Particulars</p>
+                          </td>
+                          <td>
+                            <p>Amount (Rs.)</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>{'Due >/= 6 Months'}</p>
+                          </td>
+                          <td>
+                            <p>
+                              {amtConvertor(
+                                reportData?.data?.clientDebtors.debitors
+                                  ?.debitorDetails?.moreThan6Month?.amount,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>{'Due < 6 Months'}</p>
+                          </td>
+                          <td>
+                            <p>
+                              {amtConvertor(
+                                reportData?.data?.clientDebtors.debitors
+                                  ?.debitorDetails?.lessThan6Month?.amount,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p className="font-bold">Total</p>
+                          </td>
+                          <td>
+                            <p className="font-bold">
+                              {amtConvertor(
+                                reportData?.data?.clientDebtors.debitors
+                                  ?.debitorDetails?.totalDebtors,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="my-4 grid grid-cols-2">
+                      <span>Average Debtor to Turnover Ratio:</span>
+                      <span>
+                        {
+                          reportData?.data?.clientDebtors.debitors
+                            ?.debitorDetails?.collectionPeriod
+                        }
+                      </span>
+                      <span>Total Debtors/Turnover</span>
+                      <span>{`(${amtConvertor(
+                        reportData?.data?.clientDebtors.debitors?.debitorDetails
+                          ?.totalDebtors,
+                      )} / ${amtConvertor(
+                        reportData?.data?.financials?.finances[0]?.income
+                          .turnoverGrossReciepts.amountPA,
+                      )})`}</span>
+                      <span className="w-1/2 mt-2">
+                        Regularity on Cash Flow:
+                      </span>
+                      <span className="w-1/2 mt-2">Regular</span>
+                    </div>
+                  </>
+                ) : (
+                  <p>No outstanding from debtors</p>
+                )}
+              </div>
             </td>
           </tr>
           <tr>
-            <td>
-              <p>Major Clientele</p>
+            <td
+              rowSpan={
+                reportData?.data?.clientDebtors?.clients?.clientDetails
+                  ?.majorClient?.length + 1
+              }
+            >
+              <p>Major Clients</p>
             </td>
-            <td colSpan={7}>
-              <p>Client's details not provided.</p>
-            </td>
+            {reportData?.data?.clientDebtors?.clients?.clientDetails
+              ?.majorClient?.length > 0 ? (
+              <>
+                <td colSpan={1} className="bg">
+                  <p>Sr. No.</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Name of Client</p>
+                </td>
+                <td colSpan={3} className="bg">
+                  <p>Contact No.</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
+                <p>Client's details not provided</p>
+              </td>
+            )}
           </tr>
+          {reportData?.data?.clientDebtors?.clients?.clientDetails?.majorClient?.map(
+            (item: any, index: number) => (
+              <tr>
+                <td colSpan={1}>
+                  <p>{index + 1}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{item?.clientName}</p>
+                </td>
+                <td colSpan={3}>
+                  <p>{item?.contact}</p>
+                </td>
+              </tr>
+            ),
+          )}
           <tr>
             <td>
               <p>Creditors as on date</p>
             </td>
             <td colSpan={7}>
-              <p>NA</p>
+              <p>
+                {reportData?.data?.suppliers?.creditors?.amount !== 0
+                  ? `${amtConvertor(
+                      reportData?.data?.suppliers?.creditors?.amount,
+                    )} ${
+                      reportData?.data?.suppliers?.whyCreditorHighThanCredit !==
+                        '' &&
+                      `(Creditors are high because ${reportData?.data?.suppliers?.whyCreditorHighThanCredit})`
+                    }`
+                  : 'NA'}
+              </p>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.suppliers?.suppliersDetails?.majorSuppliers
+                  ?.length + 1
+              }
+            >
               <p>Major Supplier</p>
             </td>
-            <td colSpan={7}>
-              <p>No Suppliers in the business.</p>
-            </td>
+            {reportData?.data?.suppliers?.suppliersDetails?.majorSuppliers
+              ?.length > 0 ? (
+              <>
+                <td colSpan={1} className="bg">
+                  <p>Sr. No.</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Name of Client</p>
+                </td>
+                <td colSpan={3} className="bg">
+                  <p>Contact No.</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
+                <p>No Suppliers in the business.</p>
+              </td>
+            )}
           </tr>
+          {reportData?.data?.suppliers?.suppliersDetails?.majorSuppliers?.map(
+            (item: any, index: number) => (
+              <tr>
+                <td colSpan={1}>
+                  <p>{index + 1}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{item?.clientName}</p>
+                </td>
+                <td colSpan={3}>
+                  <p>{item?.contact}</p>
+                </td>
+              </tr>
+            ),
+          )}
           <tr>
             <td>
               <p>Stock Level as on date</p>
             </td>
             <td colSpan={7}>
-              <p>Stock are not applicable.</p>
+              <div className="my-2 mx-4">
+                {reportData?.data?.stocks.isStockDetails === 'Yes' ? (
+                  <>
+                    <table cellSpacing={0} className="w-full mx-auto">
+                      <tbody>
+                        <tr className="bg">
+                          <td>
+                            <p>Particulars</p>
+                          </td>
+                          <td>
+                            <p>Amount (Rs.)</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Raw Materials</p>
+                          </td>
+                          <td>
+                            <p>
+                              {amtConvertor(
+                                reportData?.data?.stocks.stockDetails
+                                  ?.rawMaterialAmount,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>WIP</p>
+                          </td>
+                          <td>
+                            <p>
+                              {amtConvertor(
+                                reportData?.data?.stocks.stockDetails
+                                  ?.wipAmount,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p>Finish Goods</p>
+                          </td>
+                          <td>
+                            <p>
+                              {amtConvertor(
+                                reportData?.data?.stocks.stockDetails
+                                  ?.finishGoods,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p className="font-bold">Total</p>
+                          </td>
+                          <td>
+                            <p className="font-bold">
+                              {amtConvertor(
+                                reportData?.data?.stocks.stockDetails
+                                  ?.totalStocks,
+                              )}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="my-4 grid grid-cols-2">
+                      <span>Average Stock to Turnover Ratio:</span>
+                      <span>
+                        {
+                          reportData?.data?.stocks.stockDetails
+                            ?.stockHoldingPeriod
+                        }
+                      </span>
+                      <span>Total Stock/Turnover</span>
+                      <span>{`(${amtConvertor(
+                        reportData?.data?.stocks.stockDetails?.totalStocks,
+                      )} / ${amtConvertor(
+                        reportData?.data?.financials?.finances[0]?.income
+                          .turnoverGrossReciepts.amountPA,
+                      )})`}</span>
+                    </div>
+                    <p className="mt-4 mb-2 font-bold">Note:</p>
+                    <ul className="ml-6 mb-6">
+                      <li>
+                        {`- ${reportData?.data?.businessDetails?.howTurnoverVerified}`}
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <p>Stock are not applicable.</p>
+                )}
+              </div>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.assets.bankAccountDetails.bankAccounts
+                  ?.length + 2
+              }
+            >
               <p>Bank Account Details</p>
             </td>
-            <td colSpan={7}>
-              {reportData?.data?.assets.bankAccountDetails.bankAccounts.length >
-              0 ? (
-                <table cellSpacing={0} className="w-full">
-                  <tbody>
-                    <tr className="bg">
-                      <td>
-                        <p>Bank Name</p>
-                      </td>
-                      <td>
-                        <p>Branch</p>
-                      </td>
-                      <td>
-                        <p>Type</p>
-                      </td>
-                      <td>
-                        <p>Balance as on date (Rs.)</p>
-                      </td>
-                    </tr>
-                    {reportData?.data?.assets.bankAccountDetails.bankAccounts.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.bankName}</p>
-                          </td>
-                          <td>
-                            <p>{item.branch}</p>
-                          </td>
-                          <td>
-                            <p>{item.type}</p>
-                          </td>
-                          <td>
-                            <p>{item.balanceOnDay}</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    <tr>
-                      <td colSpan={3}>
-                        <p>Total</p>
-                      </td>
-                      <td>
-                        <p>
-                          {`${reportData?.data?.assets.bankAccountDetails.totalBalance} Lakhs`}
-                        </p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              ) : (
-                <p>No Bank Accounts</p>
-              )}
+            {reportData?.data?.assets.bankAccountDetails.bankAccounts?.length >
+            0 ? (
+              <>
+                <td colSpan={2} className="bg">
+                  <p>Bank Name</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Branch</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Type</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Balance as on date (Rs.)</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
+                <p>No Bank Account</p>
+              </td>
+            )}
+          </tr>
+          {reportData?.data?.assets.bankAccountDetails.bankAccounts.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={2}>
+                  <p>{item.bankName}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.branch}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.type}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{amtConvertor(item.balanceOnDay)}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          <tr>
+            <td colSpan={4} className="font-bold">
+              <p>Total</p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.assets.bankAccountDetails.totalBalance,
+                )}
+              </p>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.assets.investmentDetails.investments?.length +
+                2
+              }
+            >
               <p>Investments</p>
             </td>
-            <td colSpan={7}>
-              {reportData?.data?.assets.investmentDetails.investments.length >
-              0 ? (
-                <table cellSpacing={0} className="w-full">
-                  <tbody>
-                    <tr className="bg">
-                      <td>
-                        <p>Particulars</p>
-                      </td>
-                      <td>
-                        <p>Contribution (Rs.)</p>
-                      </td>
-                      <td>
-                        <p>Market Value (Rs.)</p>
-                      </td>
-                    </tr>
-                    {reportData?.data?.assets.investmentDetails.investments.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.particulars}</p>
-                          </td>
-                          <td>
-                            <p>{item.contribution}</p>
-                          </td>
-                          <td>
-                            <p>{item.marketValue}</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    <tr>
-                      <td colSpan={2}>
-                        <p>Total</p>
-                      </td>
-                      <td>
-                        <p>
-                          {`${reportData?.data?.assets.investmentDetails.totalMarketValue} Lakhs`}
-                        </p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              ) : (
+            {reportData?.data?.assets.investmentDetails.investments?.length >
+            0 ? (
+              <>
+                <td colSpan={2} className="bg">
+                  <p>Particulars</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Contribution (Rs.)</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Market Value (Rs.)</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
                 <p>No Investments</p>
-              )}
+              </td>
+            )}
+          </tr>
+          {reportData?.data?.assets.investmentDetails.investments.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={2}>
+                  <p>{item.particulars}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{amtConvertor(item.contribution)}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{amtConvertor(item.marketValue)}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          <tr>
+            <td colSpan={4} className="font-bold">
+              <p>Total</p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.assets.investmentDetails.totalMarketValue,
+                )}
+              </p>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.existingLoan.existanceLoan.balanceTransfer
+                  .length +
+                reportData?.data?.existingLoan.existanceLoan.existingLoanClosed
+                  .length +
+                reportData?.data?.existingLoan.existanceLoan.existingLoanEMI
+                  .length +
+                2
+              }
+            >
               <p>Loan Details</p>
             </td>
-            <td colSpan={7}>
-              {reportData?.data?.existingLoan.existanceLoan.balanceTransfer
-                .length > 0 ||
-              reportData?.data?.existingLoan.existanceLoan.existingLoanClosed
-                .length > 0 ||
-              reportData?.data?.existingLoan.existanceLoan.existingLoanEMI
-                .length > 0 ? (
-                <table cellSpacing={0} className="w-full">
-                  <tbody>
-                    <tr className="bg">
-                      <td>
-                        <p>Type of Facility</p>
-                      </td>
-                      <td>
-                        <p>Bank Name</p>
-                      </td>
-                      <td>
-                        <p>Limit (Rs.)</p>
-                      </td>
-                      <td>
-                        <p>Average Utilization (Rs.)</p>
-                      </td>
-                      <td>
-                        <p>Interest Rate (%)</p>
-                      </td>
-                      <td>
-                        <p>Remarks</p>
-                      </td>
-                    </tr>
-                    {reportData?.data?.existingLoan.existanceLoan.balanceTransfer.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.typeOfFacility}</p>
-                          </td>
-                          <td>
-                            <p>{item.bankName}</p>
-                          </td>
-                          <td>
-                            <p>{item.limit}</p>
-                          </td>
-                          <td>
-                            <p>{item.averageUtilization}</p>
-                          </td>
-                          <td>
-                            <p>{item.interestRate}</p>
-                          </td>
-                          <td>
-                            <p>{item.remark}</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    {reportData?.data?.existingLoan.existanceLoan.existingLoanClosed.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.typeOfFacility}</p>
-                          </td>
-                          <td>
-                            <p>{item.bankName}</p>
-                          </td>
-                          <td>
-                            <p>{item.limit}</p>
-                          </td>
-                          <td>
-                            <p>{item.averageUtilization}</p>
-                          </td>
-                          <td>
-                            <p>{item.interestRate}</p>
-                          </td>
-                          <td>
-                            <p>{item.remark}</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    {reportData?.data?.existingLoan.existanceLoan.existingLoanEMI.map(
-                      (item: any, index: number) => (
-                        <tr key={index}>
-                          <td>
-                            <p>{item.typeOfFacility}</p>
-                          </td>
-                          <td>
-                            <p>{item.bankName}</p>
-                          </td>
-                          <td>
-                            <p>{item.limit}</p>
-                          </td>
-                          <td>
-                            <p>{item.averageUtilization}</p>
-                          </td>
-                          <td>
-                            <p>{item.interestRate}</p>
-                          </td>
-                          <td>
-                            <p>{item.remark}</p>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                    <tr>
-                      <td colSpan={2}>
-                        <p>Total</p>
-                      </td>
-                      <td colSpan={2}>
-                        <p>{`${
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanBt +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEc +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEm
-                        }`}</p>
-                      </td>
-                      <td>
-                        <p>{`${
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanBtEmi +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEcEmi +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEmEmi
-                        }`}</p>
-                      </td>
-                      <td>
-                        <p>{`${
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanBtOut +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEcOut +
-                          reportData?.data?.existingLoan.existanceLoan
-                            .totalLoanEmOut
-                        }`}</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              ) : (
+            {reportData?.data?.existingLoan.existanceLoan.balanceTransfer
+              .length > 0 ||
+            reportData?.data?.existingLoan.existanceLoan.existingLoanClosed
+              .length > 0 ||
+            reportData?.data?.existingLoan.existanceLoan.existingLoanEMI
+              .length > 0 ? (
+              <>
+                <td colSpan={1} className="bg">
+                  <p>Type of loan</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Bank Name</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Loan Amount</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Tenure (Months)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>EMI (Rs.)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Outstanding (Rs.)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Remark</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
                 <p>No Loans</p>
-              )}
+              </td>
+            )}
+          </tr>
+          {reportData?.data?.existingLoan.existanceLoan.balanceTransfer.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={1}>
+                  <p>{item.typeOfLoan}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.bankName}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.loanAmount)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.tenureMonth}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.emi)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.outstanding)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.remark}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          {reportData?.data?.existingLoan.existanceLoan.existingLoanClosed.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={1}>
+                  <p>{item.typeOfLoan}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.bankName}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.loanAmount)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.tenureMonth}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.emi)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.outstanding)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.remark}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          {reportData?.data?.existingLoan.existanceLoan.existingLoanEMI.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={1}>
+                  <p>{item.typeOfLoan}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.bankName}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.loanAmount)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.tenureMonth}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.emi)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.outstanding)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.remark}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          <tr>
+            <td colSpan={2} className="font-bold">
+              <p>Total</p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  parseFloat(
+                    reportData?.data?.existingLoan.existanceLoan.totalLoanBt,
+                  ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan.totalLoanEc,
+                    ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan.totalLoanEm,
+                    ),
+                )}
+              </p>
+            </td>
+            <td colSpan={1} className="font-bold">
+              <p>
+                {amtConvertor(
+                  parseFloat(
+                    reportData?.data?.existingLoan.existanceLoan.totalLoanBtEmi,
+                  ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan
+                        .totalLoanEcEmi,
+                    ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan
+                        .totalLoanEmEmi,
+                    ),
+                )}
+              </p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  parseFloat(
+                    reportData?.data?.existingLoan.existanceLoan.totalLoanBtOut,
+                  ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan
+                        .totalLoanEcOut,
+                    ) +
+                    parseFloat(
+                      reportData?.data?.existingLoan.existanceLoan
+                        .totalLoanEmOut,
+                    ),
+                )}
+              </p>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.existingLoan.creditFacility.creditDetails
+                  ?.length + 2
+              }
+            >
               <p>Credit Facility</p>
             </td>
-            <td colSpan={7}>
-              <td colSpan={7}>
-                {reportData?.data?.existingLoan.creditFacility.creditDetails
-                  .length > 0 ? (
-                  <table cellSpacing={0} className="w-full">
-                    <tbody>
-                      <tr className="bg">
-                        <td>
-                          <p>Type of Facility</p>
-                        </td>
-                        <td>
-                          <p>Bank Name</p>
-                        </td>
-                        <td>
-                          <p>Limit (Rs.)</p>
-                        </td>
-                        <td>
-                          <p>Average Utilization (Rs.)</p>
-                        </td>
-                        <td>
-                          <p>Interest Rate (%)</p>
-                        </td>
-                        <td>
-                          <p>Remarks</p>
-                        </td>
-                      </tr>
-                      {reportData?.data?.existingLoan.creditFacility.creditDetails.map(
-                        (item: any, index: number) => (
-                          <tr key={index}>
-                            <td>
-                              <p>{item.typeOfFacility}</p>
-                            </td>
-                            <td>
-                              <p>{item.bankName}</p>
-                            </td>
-                            <td>
-                              <p>{item.limit}</p>
-                            </td>
-                            <td>
-                              <p>{item.averageUtilization}</p>
-                            </td>
-                            <td>
-                              <p>{item.interestRate}</p>
-                            </td>
-                            <td>
-                              <p>{item.remark}</p>
-                            </td>
-                          </tr>
-                        ),
-                      )}
-                      <tr>
-                        <td colSpan={2}>
-                          <p>Total</p>
-                        </td>
-                        <td colSpan={2}>
-                          <p>
-                            {`${reportData?.data?.existingLoan.creditFacility.totalLoanCfLimit}`}
-                          </p>
-                        </td>
-                        <td>
-                          <p>
-                            {`${reportData?.data?.existingLoan.creditFacility.totalLoanCfAu}`}
-                          </p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>No Credit Facility</p>
-                )}
+            {reportData?.data?.existingLoan.creditFacility.creditDetails
+              ?.length > 0 ? (
+              <>
+                <td colSpan={1} className="bg">
+                  <p>Type of Facility</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Bank Name</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Limit (Rs.)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Average Utilization (Rs.)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Interest Rate (%)</p>
+                </td>
+                <td colSpan={1} className="bg">
+                  <p>Remarks</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
+                <p>No Credit Facility</p>
               </td>
+            )}
+          </tr>
+          {reportData?.data?.existingLoan.creditFacility.creditDetails.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={1}>
+                  <p>{item.typeOfFacility}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.bankName}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.limit)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{amtConvertor(item.averageUtilization)}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.interestRate}</p>
+                </td>
+                <td colSpan={1}>
+                  <p>{item.remark}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          <tr>
+            <td colSpan={2} className="font-bold">
+              <p>Total</p>
+            </td>
+            <td colSpan={1} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.existingLoan.creditFacility
+                    ?.totalLoanCfLimit,
+                )}
+              </p>
+            </td>
+            <td colSpan={3} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.existingLoan.creditFacility?.totalLoanCfAu,
+                )}
+              </p>
             </td>
           </tr>
           <tr>
-            <td>
+            <td
+              rowSpan={
+                reportData?.data?.existingLoan.otherCommitments
+                  .commitmentsDetails?.length + 2
+              }
+            >
               <p>Other Commitments</p>
             </td>
-            <td colSpan={7}>
-              <td colSpan={7}>
-                {reportData?.data?.existingLoan.otherCommitments
-                  .commitmentsDetails.length > 0 ? (
-                  <table cellSpacing={0} className="w-full">
-                    <tbody>
-                      <tr className="bg">
-                        <td>
-                          <p>Particulars</p>
-                        </td>
-                        <td>
-                          <p>Contribution P.A. (Rs.)</p>
-                        </td>
-                        <td>
-                          <p>Sum Assured/Maturity Value (Rs.)</p>
-                        </td>
-                      </tr>
-                      {reportData?.data?.existingLoan.otherCommitments.commitmentsDetails.map(
-                        (item: any, index: number) => (
-                          <tr key={index}>
-                            <td>
-                              <p>{item.particulars}</p>
-                            </td>
-                            <td>
-                              <p>{item.contribution}</p>
-                            </td>
-                            <td>
-                              <p>{item.sumAssured}</p>
-                            </td>
-                          </tr>
-                        ),
-                      )}
-                      <tr>
-                        <td colSpan={2}>
-                          <p>Total</p>
-                        </td>
-                        <td colSpan={2}>
-                          <p>
-                            {`${reportData?.data?.existingLoan.otherCommitments.totalCon}`}
-                          </p>
-                        </td>
-                        <td>
-                          <p>
-                            {`${reportData?.data?.existingLoan.otherCommitments.totalSum}`}
-                          </p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>No other commitments</p>
-                )}
+            {reportData?.data?.existingLoan.otherCommitments.commitmentsDetails
+              ?.length > 0 ? (
+              <>
+                <td colSpan={2} className="bg">
+                  <p>Particulars</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Contribution P.A. (Rs.)</p>
+                </td>
+                <td colSpan={2} className="bg">
+                  <p>Sum Assured/Maturity Value (Rs.)</p>
+                </td>
+              </>
+            ) : (
+              <td colSpan={6}>
+                <p>No Commitments</p>
               </td>
+            )}
+          </tr>
+          {reportData?.data?.existingLoan.otherCommitments.commitmentsDetails.map(
+            (item: any, index: number) => (
+              <tr key={index}>
+                <td colSpan={2}>
+                  <p>{item.particulars}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{amtConvertor(item.contribution)}</p>
+                </td>
+                <td colSpan={2}>
+                  <p>{amtConvertor(item.sumAssured)}</p>
+                </td>
+              </tr>
+            ),
+          )}
+          <tr>
+            <td colSpan={2} className="font-bold">
+              <p>Total</p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.existingLoan.otherCommitments.totalCon,
+                )}
+              </p>
+            </td>
+            <td colSpan={2} className="font-bold">
+              <p>
+                {amtConvertor(
+                  reportData?.data?.existingLoan.otherCommitments.totalSum,
+                )}
+              </p>
             </td>
           </tr>
           <tr>
@@ -1519,7 +2059,9 @@ const ReportData = () => {
           </tr>
           <tr className="font-bold text-center">
             <td colSpan={8}>
-              <p className="mt-2">Details of Property to be mortgage</p>
+              <p className="my-2 justify-center">
+                Details of Property to be mortgage
+              </p>
             </td>
           </tr>
           <tr>
@@ -1569,9 +2111,10 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {reportData?.data?.detailsOfProp.propertyLoanDetails
-                  .propertyValue.agreementValue / 100}{' '}
-                Cr.
+                {amtConvertor(
+                  reportData?.data?.detailsOfProp.propertyLoanDetails
+                    .propertyValue.agreementValue,
+                )}
               </p>
             </td>
           </tr>
@@ -1581,9 +2124,10 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {reportData?.data?.detailsOfProp.propertyLoanDetails
-                  .propertyValue.purchaseValue / 100}{' '}
-                Cr.
+                {amtConvertor(
+                  reportData?.data?.detailsOfProp.propertyLoanDetails
+                    .propertyValue.purchaseValue,
+                )}
               </p>
             </td>
           </tr>
@@ -1593,9 +2137,10 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {reportData?.data?.detailsOfProp.propertyLoanDetails
-                  .propertyValue.marketValue / 100}{' '}
-                Cr.
+                {amtConvertor(
+                  reportData?.data?.detailsOfProp.propertyLoanDetails
+                    .propertyValue.marketValue,
+                )}
               </p>
             </td>
           </tr>
@@ -1605,18 +2150,24 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {reportData?.data?.detailsOfProp.propertyLoanDetails
-                  .propertyValue.ocrPaid / 100}{' '}
-                Cr.
+                {amtConvertor(
+                  reportData?.data?.detailsOfProp.propertyLoanDetails
+                    .propertyValue.ocrPaid,
+                )}
               </p>
             </td>
           </tr>
           <tr>
             <td colSpan={3}>
-              <p>Loan Expected (Rs) (HL)</p>
+              <p>Loan Expected (Rs.) (HL)</p>
             </td>
             <td colSpan={4}>
-              <p>1.15 Cr.</p>
+              <p>
+                {amtConvertor(
+                  reportData?.data?.detailsOfProp.propertyLoanDetails
+                    .loanDetails.amount,
+                )}
+              </p>
             </td>
           </tr>
           <tr>
@@ -1625,11 +2176,10 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {
+                {amtConvertor(
                   reportData?.data?.detailsOfProp.propertyLoanDetails
-                    .propertyValue.balanceOcr
-                }{' '}
-                Lakhs
+                    .propertyValue.balanceOcr,
+                )}
               </p>
             </td>
           </tr>
@@ -1709,30 +2259,26 @@ const ReportData = () => {
           </tr>
           <tr>
             <td colSpan={7}>
-              <p>
-                5.Stock seen: {reportData?.data?.observations.stock.exist} (
-                {reportData?.data?.observations.stock.reasonForNo})
-              </p>
+              <p>5.Stock seen: {reportData?.data?.observations.stock.exist}</p>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
-              <p>
-                6. During Visit:- <br />
-                <span>
+              <p>6. During Visit:</p>
+              <ul className="ml-6 mb-1">
+                <li>
                   - {reportData?.data?.observations.duringVist.applicantDoing}
-                </span>
-                <br />
-                <span>
+                </li>
+                <li>
                   - {reportData?.data?.observations.duringVist.employeesDoing}
-                </span>
-              </p>
+                </li>
+              </ul>
             </td>
           </tr>
           <tr>
             <td colSpan={7}>
               <p>
-                7.Third Party Check:
+                7.Third Party Check:{' '}
                 {reportData?.data?.observations.thirdPartyCheck.exist} (
                 {reportData?.data?.observations.thirdPartyCheck.reasonForNo})
               </p>
@@ -1742,8 +2288,7 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 8. Screenshot of CCTV of premises other than Visited:{' '}
-                {reportData?.data?.observations.screenshotOfCCTV.exist} (
-                {reportData?.data?.observations.screenshotOfCCTV.reasonForNo})
+                {reportData?.data?.observations.screenshotOfCCTV.exist}
               </p>
             </td>
           </tr>

@@ -14,14 +14,14 @@ const clientsInfo = { clientName: '', contact: '' };
 
 const initialValues = {
   clients: {
-    isClientDetails: '',
+    isClientDetails: 'Yes',
     clientDetails: {
       noOfClientDaily: '',
       majorClient: [{ clientName: '', contact: '' }],
     },
   },
   debitors: {
-    isDebitorDetails: '',
+    isDebitorDetails: 'Yes',
     debitorDetails: {
       moreThan6Month: {
         amount: 0,

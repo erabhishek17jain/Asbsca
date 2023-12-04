@@ -554,13 +554,6 @@ export const reportDataMock: any = {
       totalDebtors: 25,
       collectionPeriod: '-',
     },
-    'debitors?': {
-      'debitorDetails?': {
-        'moreThan6Month?': {
-          reason: '',
-        },
-      },
-    },
   },
   stocks: {
     isStockDetails: 'Yes',
@@ -571,7 +564,6 @@ export const reportDataMock: any = {
       totalStocks: 102,
       whyStocklowHigh: 'Purchase on demand',
       stockHoldingPeriod: '4.9 Months',
-      collectionPeriod: '4.896 Months',
     },
   },
   suppliers: {
