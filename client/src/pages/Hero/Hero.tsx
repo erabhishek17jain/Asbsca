@@ -55,7 +55,7 @@ const Hero = () => {
                 <>
                   <p className="2xl:px-20">
                     Create Business Analysis Report with us based on Bank Loan
-                    Application.
+                    Applications.
                   </p>
 
                   <span className="flex justify-center w-full mt-10 inline-block">
