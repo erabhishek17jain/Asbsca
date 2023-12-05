@@ -23,6 +23,7 @@ import { assignCase, statusUpdateCase } from '../../services';
 import * as Yup from 'yup';
 import React from 'react';
 import { generatePdf } from '../../utils';
+import { useReactToPrint } from 'react-to-print';
 
 const modalTitle: any = {
   assigned: 'Assign Reporter or Reviewer ',
@@ -51,11 +52,16 @@ const FinalReport = () => {
   const [actionType, setActionType] = useState('');
 
   const bodyRef: any = React.createRef();
-  const createPdf = () =>
+  const createPdf = () => {
     generatePdf(
       bodyRef.current,
       `${state?.activeItem?.bankName?.name} ${state?.activeItem?.name} ${state?.activeItem?.city}}`,
     );
+  };
+
+  const handlePrint: any = useReactToPrint({
+    content: () => bodyRef.current,
+  });
 
   const updateAssigneeReviewer = (values: any) => {
     if (values?.status === 'assigned') {
@@ -215,7 +221,7 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: createPdf,
+        action: handlePrint,
         icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
@@ -234,8 +240,13 @@ const FinalReport = () => {
         icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
       },
       {
+        title: 'Print PDF',
+        action: handlePrint,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
+      },
+      {
         title: 'Download PDF',
-        action: createPdf,
+        action: handlePrint,
         icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
@@ -260,7 +271,7 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: createPdf,
+        action: handlePrint,
         icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
@@ -272,14 +283,14 @@ const FinalReport = () => {
       },
       {
         title: 'Download PDF',
-        action: createPdf,
+        action: handlePrint,
         icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
     sentToBank: [
       {
         title: 'Download PDF',
-        action: createPdf,
+        action: handlePrint,
         icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
@@ -296,7 +307,6 @@ const FinalReport = () => {
             action={() => navigate(-1)}
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
-          <div className='text-lg text-main'></div>
           <ADropdown
             options={dropdownOptions[state?.activeItem?.status]}
             header={

@@ -46,6 +46,5 @@ export function generatePdf(html: any, fileName: string) {
   savePDF(html, {
     paperSize: 'A4',
     fileName: fileName + '.pdf',
-    margin: 3,
   });
 }
