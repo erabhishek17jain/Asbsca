@@ -334,7 +334,15 @@ const BusinessDetails = ({
               <ASingleSelect
                 id={'citiesOfReppresentation'}
                 label={'Cities of Representation'}
-                options={citiesOfRepresentation}
+                options={[
+                  [
+                    {
+                      label: payloads.pdDetails.location,
+                      value: payloads.pdDetails.location,
+                    },
+                  ],
+                  ...citiesOfRepresentation,
+                ]}
                 value={formik?.values?.citiesOfReppresentation}
                 error={formik?.errors?.citiesOfReppresentation}
                 handleChange={formik?.handleChange}

@@ -139,7 +139,7 @@ const DetailsOfProperty = ({
   useEffect(() => {
     if (formik?.values.occupiedBy !== '') {
       formik.setFieldValue(
-        'propertyLoanDetails.loanDetails.emi',
+        'builderName',
         formik?.values.occupiedBy !== 'Under Construction' ? 'NA' : '',
       );
     }
@@ -236,7 +236,10 @@ const DetailsOfProperty = ({
                 value={formik?.values?.builderName}
                 error={formik?.errors?.builderName}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
+                disabled={
+                  formik?.values?.purchaseYear != lastYear ||
+                  formik?.values.occupiedBy !== 'Under Construction'
+                }
               />
             </AGroupFields>
           </ASection>
