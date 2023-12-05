@@ -194,7 +194,6 @@ const financeInfo = {
 
 const initialValues: any = {
   totalEarning: '',
-  assetsBacking: '',
   assetsReason: '',
   finances: [{ ...financeInfo }] as any,
 };

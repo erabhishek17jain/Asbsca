@@ -215,7 +215,7 @@ const ReportData = () => {
                       <p className="pl-1 b-b h-6 text-center font-bold">
                         Total
                       </p>
-                      <p className=" text-center font-bold">Grand Total</p>
+                      <p className="text-center font-bold">Grand Total</p>
                     </div>
                   </div>
                   <div
@@ -274,10 +274,9 @@ const ReportData = () => {
                         </div>
                       ),
                     )}
-                    <p className=" font-bold text-right">
+                    <p className="b-r font-bold text-right">
                       {amtConvertor(reportData?.data?.financials?.totalEarning)}
                     </p>
-                    <p className="h-6 b-r"></p>
                   </div>
                 </div>
               </div>
@@ -297,17 +296,17 @@ const ReportData = () => {
                 <ul className="ml-6 mb-6">
                   <li>
                     - Asset & Investment Backing:{' '}
-                    {reportData?.data?.assets?.assetsBacking}
+                    {amtConvertor(reportData?.data?.assets?.assetsBacking)}
                     <br />
                     (For the detail of assets please refer “Assets Head +
                     Investment” below)
                   </li>
                 </ul>
-                {reportData?.data?.assets?.assetsBacking !== '' && (
+                {reportData?.data?.assets?.assetReason !== '' && (
                   <>
                     <p className="my-4 font-bold">Note:</p>
                     <ul className="ml-6 mb-6">
-                      <li>- {reportData?.data?.assets?.assetsBacking}</li>
+                      <li>- {reportData?.data?.assets?.assetReason}</li>
                     </ul>
                   </>
                 )}
@@ -2031,7 +2030,7 @@ const ReportData = () => {
             ),
           )}
           <tr>
-            <td colSpan={2} className="font-bold">
+            <td colSpan={3} className="font-bold">
               <p>Total</p>
             </td>
             <td colSpan={2} className="font-bold">
@@ -2325,9 +2324,7 @@ const ReportData = () => {
         <h1>Authorised Signatory</h1>
         <h1>Date: {moment().format('DD-MM-YYYY')}</h1>
       </div>
-      <p>
-        <br />
-      </p>
+      <br />
       <table className="w-1/2 font-bold" cellSpacing={0}>
         <tbody>
           <tr className="bg">
@@ -2374,6 +2371,11 @@ const ReportData = () => {
           </tr>
         </tbody>
       </table>
+      <div className="grid grid-cols-2 gap-4 mt-5">
+        {reportData?.data?.photos?.photos.map((obj: any, i: number) => (
+          <img key={i} src={obj} alt={i.toString()} className='w-full'/>
+        ))}
+      </div>
     </div>
   );
 };

@@ -26,7 +26,7 @@ function setFilters(payload: any) {
 /** services */
 export function setToken(token: string) {
   document.cookie = 'token=' + token + '; Path=/;';
-  axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = process.env.SERVER_DOMAIN;
   axios.defaults.headers.common = {
     accept: 'application/json',
     'Content-Type': 'application/json',
