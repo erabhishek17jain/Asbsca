@@ -21,7 +21,7 @@ export const getFirebaseToken = async (
   try {
     const token = await getToken(messaging, {
       vapidKey:
-        'BB2p_SJpdqI5NZSFmb4ZSDjwma0uUquVOvPMiYKjNz2Q4_9RF_kmzOH90_ZXznOsUrSlXgCceliSaQI0_yK6Ez4',
+        'BIMEbUeyp8lnoSxqsQR_Z1XIp4SiXY8o7kx9yc6UQENVxsPt96x4GScDsE1UkYGNvMxFTldBhf4HB9PUr-VqwWY',
     });
     if (token) {
       console.log('Token: ', token);

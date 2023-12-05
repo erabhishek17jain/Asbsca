@@ -4,13 +4,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Initialize the Firebase app in the service worker by passing the generated config
 var firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+  apiKey: "AIzaSyBfjAX4oXj27T8CqNj3YLg3d772gDz5yFU",
+  authDomain: "abasca-80b5e.firebaseapp.com",
+  projectId: "abasca-80b5e",
+  storageBucket: "abasca-80b5e.appspot.com",
+  messagingSenderId: "845580204881",
+  appId: "1:845580204881:web:2a53914df6f0fea0e6b170"
+};;
 
 firebase.initializeApp(firebaseConfig);
 
