@@ -14,7 +14,7 @@ export default class NotificationAPI {
 
     public get = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const user = new Types.ObjectId(res.locals.user._id);
+            const user = new Types.ObjectId(res.locals.user.id);
             const { page, limit } = req.query;
             const skip = Number(page) * Number(limit);
             const notifications = await this.model.find({ user: user }).sort({ createdAt: -1 }).skip(skip).limit(Number(limit));
