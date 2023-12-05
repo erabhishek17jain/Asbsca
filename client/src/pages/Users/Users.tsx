@@ -80,7 +80,7 @@ const Users = () => {
         closeUserModal();
         formik.resetForm();
         setDefaultFilters({ ...{ page: 1, limit: 10 } });
-        toast.success(<b>User added sucessfully.</b>);
+        toast.success(<b>User {activeItem?._id ? 'updated' : 'added'} sucessfully.</b>);
       })
       .catch((e) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);

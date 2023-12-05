@@ -7,8 +7,8 @@ const options: ApexOptions = {
   chart: {
     type: 'donut',
   },
-  colors: ['#10B981', '#375E83', '#FFA70B', '#8FD0EF'],
-  labels: ['Assigned', 'Reviewing', 'Completed', 'Sent to Bank'],
+  colors: ['#10B981', '#375E83', '#FFA70B', '#8FD0EF', '#EC7063'],
+  labels: ['Assigned', 'Query', 'Reviewing', 'Completed', 'Sent to Bank'],
   legend: {
     show: true,
     position: 'bottom',
@@ -53,6 +53,7 @@ const ReportStatusPieChart: React.FC = () => {
     if (analytics) {
       setSeries([
         analytics?.assignedCases ? analytics?.assignedCases : 0,
+        analytics?.queryCases ? analytics?.queryCases : 0,
         analytics?.reviewedCases ? analytics?.reviewedCases : 0,
         analytics?.completedCases ? analytics?.completedCases : 0,
         analytics?.sentToBank ? analytics?.sentToBank : 0,

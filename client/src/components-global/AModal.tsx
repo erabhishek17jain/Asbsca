@@ -1,4 +1,5 @@
 import {
+  ArrowTopRightOnSquareIcon,
   ArrowUpTrayIcon,
   PlusIcon,
   TrashIcon,
@@ -11,7 +12,6 @@ export const AModal = ({
   onSave,
   title,
   children,
-  icon,
   saveText = 'Save',
 }: any) => {
   let btnIcon: any = '';
@@ -22,7 +22,7 @@ export const AModal = ({
   } else if (saveText === 'Update') {
     btnIcon = <ArrowUpTrayIcon className="h-5 w-5 stroke-white stroke-1" />;
   } else {
-    btnIcon = icon;
+    btnIcon = <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />;
   }
 
   return (

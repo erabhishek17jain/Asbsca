@@ -27,7 +27,7 @@ const CasesBody = ({
   const navigate = useNavigate();
   return allcases?.map((item: any, index: number) => {
     const isLast = index === allcases.length - 1;
-    const classes = isLast ? 'p-4 border-0' : 'p-4 border-0 border-b border-stroke';
+    const classes = `p-4 border-0 ${isLast && 'border-b border-stroke'}`
     const caseStatus: any = caseStatusList.find(
       (el: any) => el.value === item?.status,
     );
@@ -140,23 +140,27 @@ const CasesBody = ({
                     state: { activeItem: item },
                   })
                 }
-                icon={<ArrowTopRightOnSquareIcon className="h-5 w-5" />}
+                icon={
+                  <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-main stroke-1" />
+                }
               />
             )}
             {(status === 'review' ||
               status === 'completed' ||
               status === 'sentToBank') && (
-              <Tooltip content="Preview Report">
-                <AButton
-                  variant="link"
-                  action={() =>
-                    navigate('/finalReport', {
-                      state: { activeItem: item },
-                    })
-                  }
-                  icon={<EyeIcon className="h-5 w-5" />}
-                />
-              </Tooltip>
+              <div className="-mt-[3px]">
+                <Tooltip content="Preview Report">
+                  <AButton
+                    variant="link"
+                    action={() =>
+                      navigate('/finalReport', {
+                        state: { activeItem: item },
+                      })
+                    }
+                    icon={<EyeIcon className="h-5 w-5" />}
+                  />
+                </Tooltip>
+              </div>
             )}
             {(status === 'cases' || status === 'assigned') && (
               <ADropdown

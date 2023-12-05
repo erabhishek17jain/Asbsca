@@ -1,7 +1,8 @@
 import {
   Cog6ToothIcon,
   DocumentMagnifyingGlassIcon,
-  NewspaperIcon,
+  DocumentTextIcon,
+  PaperAirplaneIcon,
   QueueListIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
@@ -40,13 +41,13 @@ export const pages = [
     label: 'Completed',
     value: 'completed',
     isChecked: false,
-    icon: <NewspaperIcon className="h-5 w-5" />,
+    icon: <DocumentTextIcon className="h-5 w-5" />,
   },
   {
     label: 'Sent To Bank',
     value: 'sentToBank',
     isChecked: false,
-    icon: <NewspaperIcon className="h-5 w-5" />,
+    icon: <PaperAirplaneIcon className="h-5 w-5" />,
   },
   {
     label: 'Users',
