@@ -215,7 +215,7 @@ const ReportData = () => {
                       <p className="pl-1 b-b h-6 text-center font-bold">
                         Total
                       </p>
-                      <p className=" text-center font-bold">Grand Total</p>
+                      <p className="text-center font-bold">Grand Total</p>
                     </div>
                   </div>
                   <div
@@ -274,10 +274,9 @@ const ReportData = () => {
                         </div>
                       ),
                     )}
-                    <p className=" font-bold text-right">
+                    <p className="b-r font-bold text-right">
                       {amtConvertor(reportData?.data?.financials?.totalEarning)}
                     </p>
-                    <p className="h-6 b-r"></p>
                   </div>
                 </div>
               </div>
