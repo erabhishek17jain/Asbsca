@@ -255,7 +255,7 @@ const DetailsOfProperty = ({
                 <AInputField
                   type={'number'}
                   label={'Amount'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={`propertyLoanDetails.loanDetails.amount`}
                   value={
                     formik?.values?.propertyLoanDetails?.loanDetails?.amount
@@ -300,7 +300,7 @@ const DetailsOfProperty = ({
               <AGroupFields>
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.agreementValue'}
                   label={'Agreement Value'}
                   value={
@@ -312,7 +312,7 @@ const DetailsOfProperty = ({
                 />
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.purchaseValue'}
                   label={'Purchase Value'}
                   value={
@@ -324,7 +324,7 @@ const DetailsOfProperty = ({
                 />
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   label={'Market Value'}
                   id={'propertyLoanDetails.propertyValue.marketValue'}
                   value={
@@ -337,7 +337,7 @@ const DetailsOfProperty = ({
                 <div className="flex gap-3">
                   <AInputField
                     type={'number'}
-                    rightLabel={'(Lakhs)'}
+                    rightLabel={'(In Lakhs)'}
                     id={'propertyLoanDetails.propertyValue.ocrPaid'}
                     label={'OCR Paid'}
                     value={
@@ -361,7 +361,7 @@ const DetailsOfProperty = ({
                 <AInputField
                   type={'number'}
                   disabled={true}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.balanceOcr'}
                   label={'Balance OCR'}
                   value={
@@ -388,7 +388,7 @@ const DetailsOfProperty = ({
           <AGroupFields col={2}>
             <AInputField
               id={'propertyLoanDetails.loanAsPerForm'}
-              rightLabel={'(Lakhs)'}
+              rightLabel={'(In Lakhs)'}
               label={'Loan as per application Form'}
               value={formik?.values?.propertyLoanDetails?.loanAsPerForm}
               error={errors?.loanAsPerForm}

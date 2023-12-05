@@ -10,63 +10,63 @@ import moment from 'moment';
 
 const radioValues = [
   { value: 'Yes', label: 'Yes' },
-  { value: 'no', label: 'No' },
+  { value: 'No', label: 'No' },
 ];
 
 const documents = [
   {
     label: 'Documents were not handy during PD.',
-    isDoc: 'Yes',
+    isDoc: 'No',
   },
   {
     label:
       'No documents provided & applicant said Documents are already given to bank.',
-    isDoc: 'Yes',
+    isDoc: 'No',
   },
-  { label: 'GST Returns', isDoc: 'Yes' },
+  { label: 'GST Returns', isDoc: 'No' },
   {
     label: 'GST Registration Certificate',
-    isDoc: 'Yes',
+    isDoc: 'No',
   },
   {
     label: `Financial Statements of March ${moment().year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
   {
     label: `Financial Statements of March ${moment().subtract(1, 'y').year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
   {
     label: `Financial Statements of March ${moment().subtract(2, 'y').year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
-  { label: 'Sales Bills', isDoc: 'no' },
-  { label: 'Purchase Bills', isDoc: 'no' },
+  { label: 'Sales Bills', isDoc: 'No' },
+  { label: 'Purchase Bills', isDoc: 'No' },
   {
     label: `ITR for March ${moment().year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
   {
     label: `ITR for March ${moment().subtract(1, 'y').year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
   {
     label: `ITR for March ${moment().subtract(2, 'y').year()}`,
-    isDoc: 'no',
+    isDoc: 'No',
   },
-  { label: 'Udyam Aadhar', isDoc: 'no' },
+  { label: 'Udyam Aadhar', isDoc: 'No' },
   {
     label: 'Vehicle Registration (RC Book)',
-    isDoc: 'no',
+    isDoc: 'No',
   },
-  { label: 'Gumasta', isDoc: 'Yes' },
-  { label: 'RC Book', isDoc: 'Yes' },
-  { label: 'Salary Slip', isDoc: 'no' },
+  { label: 'Gumasta', isDoc: 'No' },
+  { label: 'RC Book', isDoc: 'No' },
+  { label: 'Salary Slip', isDoc: 'No' },
   {
     label: 'Provisional Financials for March Last Year',
-    isDoc: 'no',
+    isDoc: 'No',
   },
-  { label: 'Financials in Tally', isDoc: 'no' },
+  { label: 'Financials in Tally', isDoc: 'No' },
 ];
 
 const DocumentsSeen = ({
@@ -91,7 +91,7 @@ const DocumentsSeen = ({
       setShowModal(false);
       documentList.push({
         label: values.name,
-        isDoc: 'no',
+        isDoc: 'No',
       });
       setDocumentList([...documentList]);
     },

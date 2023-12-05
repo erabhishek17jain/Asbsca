@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 import { fetchCaseReportDataAsync } from '../../slices/casesSlice';
 import store from '../../store/store';
 import { useSelector } from 'react-redux';
+import AButton from '../../components-global/AButton';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 
 const GeneratePD = () => {
   const navigate = useNavigate();
@@ -29,7 +31,11 @@ const GeneratePD = () => {
           navigate('/finalReport', {
             state: { activeItem: state?.activeItem },
           }),
-            toast.success(<b>Report {action === 'edit' ? 'updated' : 'created'} sucessfully.</b>);
+            toast.success(
+              <b>
+                Report {action === 'edit' ? 'updated' : 'created'} sucessfully.
+              </b>,
+            );
         }
       })
       .catch((e: any) => {
@@ -57,6 +63,24 @@ const GeneratePD = () => {
   return (
     <>
       <ABreadcrumb pageName="Generate PD" />
+      {Object.keys(reportData).length !== 0 && (
+        <div className="flex gap-2 w-full flex-col">
+          <div className="flex justify-end gap-3">
+            <AButton
+              variant={'secondary'}
+              label={'View Report'}
+              action={() =>
+                navigate('/finalReport', {
+                  state: { activeItem: state?.activeItem },
+                })
+              }
+              icon={
+                <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-main stroke" />
+              }
+            />
+          </div>
+        </div>
+      )}
       <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         <AStepper
           steps={reportSteps}

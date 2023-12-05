@@ -46,7 +46,7 @@ const Users = () => {
     username: '',
     password: 'admin@123',
     email: '',
-    mobile: 0,
+    mobile: '',
     address: '',
     role: '',
     status: '',
@@ -191,15 +191,15 @@ const Users = () => {
       </div>
       {showAddEditUser && (
         <AModal
-          saveText={'Add'}
-          title={'Add User'}
+          saveText={`${activeItem?._id ? 'Update' : 'Add'}`}
+          title={`${activeItem?._id ? 'Edit' : 'Add'} User`}
           onSave={formik.handleSubmit}
           closeModal={closeUserModal}
         >
           <div className="flex flex-col ">
             <AInputField
               id="fullName"
-              label="Name*"
+              label="Name"
               value={formik.values.fullName}
               error={formik.errors.fullName}
               handleChange={formik.handleChange}
@@ -207,7 +207,7 @@ const Users = () => {
             />
             <AInputField
               id="username"
-              label="Emp ID*"
+              label="Emp ID"
               value={formik.values.username}
               error={formik.errors.username}
               handleChange={formik.handleChange}
@@ -215,7 +215,7 @@ const Users = () => {
             />
             <AInputField
               id="email"
-              label="Email ID*"
+              label="Email ID"
               value={formik.values.email}
               error={formik.errors.email}
               handleChange={formik.handleChange}
@@ -223,7 +223,7 @@ const Users = () => {
             />
             <AInputField
               id="mobile"
-              label="Mobile No.*"
+              label="Mobile No."
               value={formik.values.mobile}
               error={formik.errors.mobile}
               handleChange={formik.handleChange}
@@ -231,7 +231,7 @@ const Users = () => {
             />
             <AInputField
               id="address"
-              label={'Location*'}
+              label={'Location'}
               value={formik.values.address}
               error={formik.errors.address}
               handleChange={formik.handleChange}
@@ -239,7 +239,7 @@ const Users = () => {
             />
             <ASingleSelect
               id="role"
-              label={'Role*'}
+              label={'Role'}
               value={formik.values.role}
               error={formik.errors.role}
               handleChange={formik.handleChange}
@@ -261,7 +261,7 @@ const Users = () => {
               value={formik.values.profile}
               error={formik.errors.profile}
               formik={formik}
-              icon={<UserCircleIcon className="w-15 h-15 -mt-2" />}
+              icon={<UserCircleIcon className="w-13 h-13" />}
             />
           </div>
         </AModal>

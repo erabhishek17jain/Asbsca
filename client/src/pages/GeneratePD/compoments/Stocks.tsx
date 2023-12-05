@@ -109,7 +109,7 @@ const Stocks = ({
                 <AInputField
                   type={'number'}
                   label={'Raw Material Amt.'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'stockDetails.rawMaterialAmount'}
                   value={formik?.values?.stockDetails.rawMaterialAmount}
                   error={formik?.errors?.stockDetails?.rawMaterialAmount}
@@ -118,7 +118,7 @@ const Stocks = ({
                 <AInputField
                   type={'number'}
                   label={'WIP Amt.'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'stockDetails.wipAmount'}
                   value={formik?.values?.stockDetails.wipAmount}
                   error={formik?.errors?.stockDetails?.wipAmount}
@@ -127,7 +127,7 @@ const Stocks = ({
                 <AInputField
                   type={'number'}
                   label={'Finish Goods'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'stockDetails.finishGoods'}
                   value={formik?.values?.stockDetails.finishGoods}
                   error={formik?.errors?.stockDetails?.finishGoods}

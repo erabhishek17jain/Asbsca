@@ -1,4 +1,9 @@
-import { ArrowTopRightOnSquareIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowUpTrayIcon,
+  PlusIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
 import AButton from './AButton';
 
 export const AModal = ({
@@ -6,8 +11,20 @@ export const AModal = ({
   onSave,
   title,
   children,
+  icon,
   saveText = 'Save',
 }: any) => {
+  let btnIcon: any = '';
+  if (saveText === 'Add') {
+    btnIcon = <PlusIcon className="h-5 w-5 stroke-white stroke-1" />;
+  } else if (saveText === 'Delete') {
+    btnIcon = <TrashIcon className="h-5 w-5 stroke-main stroke-1" />;
+  } else if (saveText === 'Update') {
+    btnIcon = <ArrowUpTrayIcon className="h-5 w-5 stroke-white stroke-1" />;
+  } else {
+    btnIcon = icon;
+  }
+
   return (
     <>
       <div
@@ -41,13 +58,7 @@ export const AModal = ({
                 type={'submit'}
                 variant={'primary'}
                 action={onSave}
-                icon={
-                  saveText === 'Add' ? (
-                    <PlusIcon className="h-5 w-5 stroke-white stroke-1" />
-                  ) : (
-                    <ArrowTopRightOnSquareIcon className="h-5 w-5" />
-                  )
-                }
+                icon={btnIcon}
               />
             </div>
           </div>

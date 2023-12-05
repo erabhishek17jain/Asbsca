@@ -117,6 +117,7 @@ export function AddEditDeleteClient({
     <>
       {showAddEditModal && (
         <AModal
+          saveText={`${activeItem?._id ? 'Update' : 'Add'}`}
           title={`${activeItem?._id ? 'Edit' : 'Add'} Client`}
           onSave={formikClient.handleSubmit}
           closeModal={() => {
@@ -127,7 +128,7 @@ export function AddEditDeleteClient({
           <div className="flex flex-col">
             <AInputField
               id={'name'}
-              label="Client Name*"
+              label="Client Name"
               value={formikClient.values.name}
               error={formikClient.errors.name}
               handleChange={formikClient.handleChange}
@@ -135,7 +136,7 @@ export function AddEditDeleteClient({
             />
             <ASingleSelect
               id={'branch'}
-              label={'Branch*'}
+              label={'Branch'}
               options={branchs}
               value={formikClient.values.branch}
               error={formikClient.errors.branch}

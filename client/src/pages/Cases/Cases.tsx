@@ -261,7 +261,13 @@ const Cases = () => {
 
   useEffect(() => {
     if (allUsers?.users?.length > 0) {
-      setUsersOptions(getOptions(allUsers?.users, 'fullName', '_id'));
+      setUsersOptions(
+        getOptions(
+          allUsers?.users.filter((item: any) => item.isVerified),
+          'fullName',
+          '_id',
+        ),
+      );
     }
   }, [allUsers.users]);
 
@@ -367,7 +373,7 @@ const Cases = () => {
               <>
                 <ASingleSelect
                   id="assigneeId"
-                  label={'Assign Reporter*'}
+                  label={'Assign Reporter'}
                   value={formikAssigned.values.assigneeId}
                   error={formikAssigned.errors.assigneeId}
                   handleChange={formikAssigned.handleChange}
@@ -376,7 +382,7 @@ const Cases = () => {
                 />
                 <ASingleSelect
                   id="reviewerId"
-                  label={'Assign Reviewer*'}
+                  label={'Assign Reviewer'}
                   value={formikAssigned.values.reviewerId}
                   error={formikAssigned.errors.reviewerId}
                   handleChange={formikAssigned.handleChange}
@@ -411,7 +417,7 @@ const Cases = () => {
                 {userDetails?.role?.name === 'Admin' && (
                   <ASingleSelect
                     id="status"
-                    label={'Status*'}
+                    label={'Status'}
                     value={formikStatus.values.status}
                     error={formikStatus.errors.status}
                     handleChange={formikStatus.handleChange}
@@ -421,7 +427,7 @@ const Cases = () => {
                 )}
                 <ASingleSelect
                   id="appoinmentStatus"
-                  label={'Appoinment Status*'}
+                  label={'Appoinment Status'}
                   value={formikStatus.values.appoinmentStatus}
                   error={formikStatus.errors.appoinmentStatus}
                   handleChange={formikStatus.handleChange}

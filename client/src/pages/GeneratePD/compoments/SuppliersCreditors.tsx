@@ -157,7 +157,7 @@ const SuppliersCreditors = ({
                                   <div className="w-full border-2 rounded-lg pt-3 px-3">
                                     <AGroupFields col={2}>
                                       <AInputField
-                                        label={'Client Name*'}
+                                        label={'Client Name'}
                                         id={`suppliersDetails.majorSuppliers[${index}].clientName`}
                                         value={
                                           formik?.values?.suppliersDetails
@@ -172,7 +172,7 @@ const SuppliersCreditors = ({
                                         handleChange={formik.handleChange}
                                       />
                                       <AInputField
-                                        label={'Contact No.*'}
+                                        label={'Contact No.'}
                                         id={`suppliersDetails.majorSuppliers[${index}].contact`}
                                         value={
                                           formik?.values?.suppliersDetails
@@ -220,7 +220,7 @@ const SuppliersCreditors = ({
                 <AInputField
                   type={'number'}
                   label={'Creditors Amount'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={`creditors.amount`}
                   value={formik?.values?.creditors.amount}
                   error={formik?.errors?.creditors?.amount}

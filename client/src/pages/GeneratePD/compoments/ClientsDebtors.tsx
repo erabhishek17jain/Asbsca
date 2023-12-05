@@ -176,7 +176,7 @@ const ClientsDebtors = ({
                                 <div className="w-full border-2 rounded-lg pt-3 px-3">
                                   <AGroupFields col={2}>
                                     <AInputField
-                                      label={'Client Name*'}
+                                      label={'Client Name'}
                                       id={`clients.clientDetails.majorClient[${index}].clientName`}
                                       value={
                                         formik?.values?.clients?.clientDetails
@@ -189,7 +189,7 @@ const ClientsDebtors = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      label={'Contact No.*'}
+                                      label={'Contact No.'}
                                       id={`clients.clientDetails.majorClient[${index}].contact`}
                                       value={
                                         formik?.values?.clients.clientDetails
@@ -248,7 +248,7 @@ const ClientsDebtors = ({
                   <AInputField
                     type={'number'}
                     label={'Debtors Amount'}
-                    rightLabel={'more than 6 Months (Lakhs)'}
+                    rightLabel={'more than 6 Months (In Lakhs)'}
                     id={'debitors.debitorDetails.moreThan6Month.amount'}
                     value={
                       formik?.values?.debitors?.debitorDetails?.moreThan6Month
@@ -281,7 +281,7 @@ const ClientsDebtors = ({
                   <AInputField
                     type={'number'}
                     label={'Debtors Amount'}
-                    rightLabel={'less than 6 Months (Lakhs)'}
+                    rightLabel={'less than 6 Months (In Lakhs)'}
                     id={'debitors.debitorDetails.lessThan6Month.amount'}
                     value={
                       formik?.values?.debitors?.debitorDetails?.lessThan6Month

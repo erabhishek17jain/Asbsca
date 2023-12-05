@@ -6,7 +6,7 @@ const UsersHeader = ({ openUserModal }: any) => {
     <div className="flex flex-col justify-between gap-5">
       <div className="flex w-full justify-between items-end gap-2">
         <div>
-          <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal">
+          <h5 className="block antialiased font-semibold text-xl leading-normal text-main font-normal">
             Users
           </h5>
           <div className="block antialiased font-sans text-lg leading-normal text-main font-normal mt-1">

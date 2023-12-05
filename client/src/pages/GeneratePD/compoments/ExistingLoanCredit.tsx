@@ -215,8 +215,8 @@ const ExistingLoan = ({ formik }: any) => {
                                       errors?.balanceTransfer[index]?.loanAmount
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Loan Amount (Lakhs)'}
-                                    rightLabel={'(Lakhs)'}
+                                    label={'Loan Amount (In Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -247,7 +247,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -263,7 +263,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.balanceTransfer[${index}].remark`}
@@ -385,8 +385,8 @@ const ExistingLoan = ({ formik }: any) => {
                                         .loanAmount
                                     }
                                     handleChange={formik.handleChange}
-                                    label={'Loan Amount (Lakhs)'}
-                                    rightLabel={'(Lakhs)'}
+                                    label={'Loan Amount (In Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -417,7 +417,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -433,7 +433,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanClosed[${index}].remark`}
@@ -554,7 +554,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Loan Amount'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -584,7 +584,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'EMI'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
                                     type={'number'}
@@ -599,7 +599,7 @@ const ExistingLoan = ({ formik }: any) => {
                                     }
                                     handleChange={formik.handleChange}
                                     label={'Outstanding'}
-                                    rightLabel={'(Lakhs)'}
+                                    rightLabel={'(In Lakhs)'}
                                   />
                                   <ASingleSelect
                                     id={`existanceLoan.existingLoanEMI[${index}].remark`}
@@ -772,7 +772,7 @@ const CreditFacility = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Limit'}
-                                  rightLabel={'(Lakhs)'}
+                                  rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
                                   type={'number'}
@@ -788,7 +788,7 @@ const CreditFacility = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Average Utilization'}
-                                  rightLabel={'(Lakhs)'}
+                                  rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
                                   type={'number'}
@@ -959,7 +959,7 @@ const OtherCommitments = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Contribution P.A.'}
-                                  rightLabel={'(Lakhs)'}
+                                  rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
                                   type={'number'}

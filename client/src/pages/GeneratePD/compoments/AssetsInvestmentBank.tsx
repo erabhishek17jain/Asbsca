@@ -82,24 +82,37 @@ const AssetsInvestmentBank = ({
   const handleBusinessAssets = (title: string, val: string) => {
     console.log(title);
     setIsBusinessAssets(val);
+    formik.setFieldValue(
+      'bussinessAssetDetails',
+      initialValues?.bussinessAssetDetails,
+    );
   };
 
   const [isPersonalAssets, setIsPersonalAssets] = useState('Yes');
   const handlePersonalAssets = (title: string, val: string) => {
     console.log(title);
     setIsPersonalAssets(val);
+    formik.setFieldValue(
+      'personalAssetDetails',
+      initialValues?.personalAssetDetails,
+    );
   };
 
   const [isInvestments, setIsInvestments] = useState('Yes');
   const handleInvestments = (title: string, val: string) => {
     console.log(title);
     setIsInvestments(val);
+    formik.setFieldValue('investmentDetails', initialValues?.investmentDetails);
   };
 
   const [isBankAccounts, setIsBankAccounts] = useState('Yes');
   const handleBankAccounts = (title: string, val: string) => {
     console.log(title);
     setIsBankAccounts(val);
+    formik.setFieldValue(
+      'bankAccountDetails',
+      initialValues?.bankAccountDetails,
+    );
   };
 
   const validationSchema = Yup.object().shape({
@@ -373,7 +386,7 @@ const AssetsInvestmentBank = ({
                                   <AGroupFields>
                                     <ASingleSelect
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].particulars`}
-                                      label={'Particulars*'}
+                                      label={'Particulars'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           ?.bussinessAssets[index]?.particulars
@@ -388,7 +401,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <AInputField
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].location`}
-                                      label={'Location*'}
+                                      label={'Location'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].location
@@ -418,7 +431,7 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].carpetArea`}
-                                      label={'Carpet Area*'}
+                                      label={'Carpet Area'}
                                       rightLabel={'(Sq. Ft.)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
@@ -433,7 +446,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <ASingleSelect
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].status`}
-                                      label={'Status*'}
+                                      label={'Status'}
                                       options={statusAssets}
                                       value={
                                         formik?.values?.bussinessAssetDetails
@@ -448,8 +461,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].marketValue`}
-                                      label={'Market Value*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Market Value'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].marketValue
@@ -464,8 +477,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].rentPM`}
-                                      label={'Rent P.M.*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Rent P.M.'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.bussinessAssetDetails
                                           .bussinessAssets[index].rentPM
@@ -544,7 +557,7 @@ const AssetsInvestmentBank = ({
                                   <AGroupFields>
                                     <ASingleSelect
                                       id={`personalAssetDetails.personalAssets[${index}].particulars`}
-                                      label={'Particulars*'}
+                                      label={'Particulars'}
                                       value={
                                         formik?.values?.personalAssetDetails
                                           ?.personalAssets[index]?.particulars
@@ -559,7 +572,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <AInputField
                                       id={`personalAssetDetails.personalAssets[${index}].location`}
-                                      label={'Location*'}
+                                      label={'Location'}
                                       value={
                                         formik?.values?.personalAssetDetails
                                           ?.personalAssets[index]?.location
@@ -589,7 +602,7 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].carpetArea`}
-                                      label={'Carpet Area*'}
+                                      label={'Carpet Area'}
                                       rightLabel={'(Sq. Ft.)'}
                                       value={
                                         formik?.values?.personalAssetDetails
@@ -604,7 +617,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <ASingleSelect
                                       id={`personalAssetDetails.personalAssets[${index}].status`}
-                                      label={'Status*'}
+                                      label={'Status'}
                                       options={statusAssets}
                                       value={
                                         formik?.values?.personalAssetDetails
@@ -619,8 +632,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].marketValue`}
-                                      label={'Market Value*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Market Value'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.personalAssetDetails
                                           ?.personalAssets[index]?.marketValue
@@ -635,8 +648,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].rentPM`}
-                                      label={'Rent P.M.*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Rent P.M.'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.personalAssetDetails
                                           ?.personalAssets[index]?.rentPM
@@ -715,7 +728,7 @@ const AssetsInvestmentBank = ({
                                   <AGroupFields col={3}>
                                     <ASingleSelect
                                       id={`investmentDetails.investments[${index}].particulars`}
-                                      label={'Particulars*'}
+                                      label={'Particulars'}
                                       value={
                                         formik?.values?.investmentDetails
                                           ?.investments[index]?.particulars
@@ -730,8 +743,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].contribution`}
-                                      label={'Contribution*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Contribution'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.investmentDetails
                                           ?.investments[index]?.contribution
@@ -747,7 +760,7 @@ const AssetsInvestmentBank = ({
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].marketValue`}
                                       label={'Market Year'}
-                                      rightLabel={'(Lakhs)'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.investmentDetails
                                           ?.investments[index]?.marketValue
@@ -822,7 +835,7 @@ const AssetsInvestmentBank = ({
                                   <AGroupFields>
                                     <ASingleSelect
                                       id={`bankAccountDetails.bankAccounts[${index}].bankName`}
-                                      label={'Bank Name*'}
+                                      label={'Bank Name'}
                                       value={
                                         formik?.values?.bankAccountDetails
                                           ?.bankAccounts[index]?.bankName
@@ -836,7 +849,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <AInputField
                                       id={`bankAccountDetails.bankAccounts[${index}].branch`}
-                                      label={'Branch*'}
+                                      label={'Branch'}
                                       value={
                                         formik?.values?.bankAccountDetails
                                           ?.bankAccounts[index]?.branch
@@ -864,8 +877,8 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`bankAccountDetails.bankAccounts[${index}].balanceOnDay`}
-                                      label={'Balance on Day*'}
-                                      rightLabel={'(Lakhs)'}
+                                      label={'Balance on Day'}
+                                      rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.bankAccountDetails
                                           ?.bankAccounts[index]?.balanceOnDay

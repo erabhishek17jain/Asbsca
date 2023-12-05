@@ -74,7 +74,7 @@ const Dashboard = () => {
               <div className="flex justify-end gap-3">
                 <AButton
                   variant={'secondary'}
-                  label={'Bulk Upload'}
+                  label={'Add Bulk Case'}
                   action={() => navigate('/bulkUpload')}
                   icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
                 />
@@ -102,7 +102,7 @@ const Dashboard = () => {
       <div className="mt-8 flex flex-col">
         {topAssignedCases.length > 0 && (
           <>
-            <h5 className="block antialiased font-semibold text-2xl leading-normal text-main font-normal mx-4">
+            <h5 className="block antialiased font-semibold text-xl leading-normal text-main font-normal mx-4">
               Top Assigned Cases
             </h5>
             <div

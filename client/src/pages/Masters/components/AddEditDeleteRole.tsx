@@ -108,6 +108,7 @@ export function AddEditDeleteRole({
     <>
       {showAddEditModal && (
         <AModal
+          saveText={`${activeItem?._id ? 'Update' : 'Add'}`}
           title={`${activeItem?._id ? 'Edit' : 'Add'} Role`}
           onSave={formikRole.handleSubmit}
           closeModal={() => {
@@ -118,7 +119,7 @@ export function AddEditDeleteRole({
           <div className="flex flex-col">
             <AInputField
               id={'name'}
-              label="Role Name*"
+              label="Role Name"
               value={formikRole.values.name}
               error={formikRole.errors.name}
               handleChange={formikRole.handleChange}

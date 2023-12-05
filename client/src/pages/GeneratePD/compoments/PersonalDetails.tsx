@@ -209,7 +209,7 @@ const PersonalDetails = ({
                           <AGroupFields>
                             <AInputField
                               id={`applicants[${index}].name`}
-                              label={"Applicant's Name*"}
+                              label={"Applicant's Name"}
                               value={formik?.values?.applicants[index]?.name}
                               error={
                                 errorsAp?.length > 0 && errorsAp[index]?.name
@@ -218,7 +218,7 @@ const PersonalDetails = ({
                             />
                             <ADatePicker
                               id={`applicants[${index}].dobDoi`}
-                              label={'Date of Birth/Incorporation*'}
+                              label={'Date of Birth/Incorporation'}
                               value={formik?.values?.applicants[index].dobDoi}
                               error={
                                 errorsAp?.length > 0 && errorsAp[index]?.dobDoi
@@ -227,7 +227,7 @@ const PersonalDetails = ({
                             />
                             <ASingleSelect
                               id={`applicants[${index}].qualification`}
-                              label={'Qualification*'}
+                              label={'Qualification'}
                               options={qualification}
                               value={
                                 formik?.values?.applicants[index].qualification
@@ -240,7 +240,7 @@ const PersonalDetails = ({
                             />
                             <ASingleSelect
                               id={`applicants[${index}].natureOfBusiness`}
-                              label={'Nature of Business*'}
+                              label={'Nature of Business'}
                               options={natureOfAddress}
                               value={
                                 formik?.values?.applicants[index]
@@ -257,7 +257,7 @@ const PersonalDetails = ({
                                 type={'number'}
                                 disabled={true}
                                 id={`applicants[${index}].birthYear`}
-                                label={'Birth Year*'}
+                                label={'Birth Year'}
                                 value={
                                   formik?.values?.applicants[index].birthYear
                                 }
@@ -283,7 +283,7 @@ const PersonalDetails = ({
                               <AInputField
                                 type={'number'}
                                 id={`applicants[${index}].studyFinish`}
-                                label={'Study Finish*'}
+                                label={'Study Finish'}
                                 value={
                                   formik?.values?.applicants[index].studyFinish
                                 }
@@ -308,7 +308,7 @@ const PersonalDetails = ({
                             <AInputField
                               type={'number'}
                               id={`applicants[${index}].businessStart`}
-                              label={'Business Start/Joined*'}
+                              label={'Business Start/Joined'}
                               value={
                                 formik?.values?.applicants[index].businessStart
                               }
@@ -389,7 +389,7 @@ const PersonalDetails = ({
                         <AGroupFields col={3}>
                           <AInputField
                             id={`residents[${index}].resiAddress`}
-                            label={'Residence Address*'}
+                            label={'Residence Address'}
                             value={
                               formik?.values?.residents[index]?.resiAddress
                             }
@@ -400,7 +400,7 @@ const PersonalDetails = ({
                             handleChange={formik.handleChange}
                           />
                           <ASingleSelect
-                            label={'Residence Status*'}
+                            label={'Residence Status'}
                             options={residenceStatus}
                             id={`residents[${index}].resiStatus`}
                             value={formik?.values?.residents[index]?.resiStatus}
@@ -427,7 +427,7 @@ const PersonalDetails = ({
                           <AInputField
                             type={'number'}
                             id={`residents[${index}].resiSince`}
-                            label={'Residing Since*'}
+                            label={'Residing Since'}
                             value={formik?.values?.residents[index]?.resiSince}
                             error={
                               errorsRe?.length > 0 && errorsRe[index]?.resiSince
@@ -437,7 +437,7 @@ const PersonalDetails = ({
                           <AInputField
                             type={'number'}
                             id={`residents[${index}].buildArea`}
-                            label={'Build-up Area*'}
+                            label={'Build-up Area'}
                             rightLabel={'(Sq. Ft.)'}
                             value={formik?.values?.residents[index]?.buildArea}
                             error={
@@ -448,7 +448,7 @@ const PersonalDetails = ({
                           <AInputField
                             type={'number'}
                             id={`residents[${index}].carpetArea`}
-                            label={'Carpet Area*'}
+                            label={'Carpet Area'}
                             rightLabel={'(Sq. Ft.)'}
                             value={formik?.values?.residents[index]?.carpetArea}
                             error={
@@ -475,7 +475,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'(Lakhs)'}
+                                rightLabel={'(In Lakhs)'}
                                 id={`residents[${index}].agrimentValue`}
                                 label={'Agreement. Value'}
                                 value={
@@ -490,7 +490,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'(Lakhs)'}
+                                rightLabel={'(In Lakhs)'}
                                 id={`residents[${index}].purchaseValue`}
                                 label={'Purchase Value'}
                                 value={
@@ -505,7 +505,7 @@ const PersonalDetails = ({
                               />
                               <AInputField
                                 type={'number'}
-                                rightLabel={'(Lakhs)'}
+                                rightLabel={'(In Lakhs)'}
                                 id={`residents[${index}].marketValue`}
                                 label={'Market Value'}
                                 value={
@@ -523,7 +523,7 @@ const PersonalDetails = ({
                               type={'number'}
                               id={`residents[${index}].rentPm`}
                               label={'Rent P.M.'}
-                              rightLabel={'(Lakhs)'}
+                              rightLabel={'(In Lakhs)'}
                               value={formik?.values?.residents[index]?.rentPm}
                               error={
                                 errorsRe?.length > 0 && errorsRe[index]?.rentPm
@@ -557,7 +557,7 @@ const PersonalDetails = ({
                           <div className="w-full border-2 rounded-lg pt-3 px-3">
                             <AGroupFields col={3}>
                               <ASingleSelect
-                                label={'Name*'}
+                                label={'Name'}
                                 id={`familyDetails[${index}].name`}
                                 value={
                                   formik?.values?.familyDetails[index].name
@@ -576,7 +576,7 @@ const PersonalDetails = ({
                                 handleChange={formik.handleChange}
                               />
                               <ASingleSelect
-                                label={'Reation*'}
+                                label={'Reation'}
                                 options={familyRealtion}
                                 id={`familyDetails[${index}].relation`}
                                 value={
@@ -589,7 +589,7 @@ const PersonalDetails = ({
                                 handleChange={formik.handleChange}
                               />
                               <ASingleSelect
-                                label={'Earning Status*'}
+                                label={'Earning Status'}
                                 options={earningStatus}
                                 id={`familyDetails[${index}].earningStatus`}
                                 value={

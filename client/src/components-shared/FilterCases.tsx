@@ -140,7 +140,13 @@ export const FilterCases = ({
   }, [allClients]);
 
   useEffect(() => {
-    setAssignOptions(getOptions(allUsers?.users, 'fullName', '_id'));
+    setAssignOptions(
+      getOptions(
+        allUsers?.users.filter((item: any) => item.isVerified),
+        'fullName',
+        '_id',
+      ),
+    );
   }, [allUsers]);
 
   useEffect(() => {
@@ -157,7 +163,10 @@ export const FilterCases = ({
           <AButton
             label={''}
             variant="link"
-            action={() => showHideFilters(showFilter)}
+            action={() => {
+              showHideFilters(showFilter);
+              setFilters({ filters: {} });
+            }}
             icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
         </span>

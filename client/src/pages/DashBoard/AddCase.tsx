@@ -1,14 +1,14 @@
 import {
   ArrowLeftIcon,
-  BookmarkIcon,
   BuildingLibraryIcon,
   BuildingOfficeIcon,
   CurrencyRupeeIcon,
   DevicePhoneMobileIcon,
   IdentificationIcon,
   MapPinIcon,
+  PlusIcon,
   TagIcon,
-  UserIcon,
+  UserIcon, 
   XMarkIcon,
 } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
@@ -44,7 +44,7 @@ const AddCase = () => {
 
   const initialValues = {
     name: '',
-    mobile: 0,
+    mobile: '',
     loanAmount: 0,
     referenceId: '',
     localOrOGL: '',
@@ -124,7 +124,13 @@ const AddCase = () => {
 
   useEffect(() => {
     if (allUsers?.users?.length > 0) {
-      setUsersOptions(getOptions(allUsers?.users, 'fullName', '_id'));
+      setUsersOptions(
+        getOptions(
+          allUsers?.users.filter((item: any) => item.isVerified),
+          'fullName',
+          '_id',
+        ),
+      );
     }
   }, [allUsers]);
 
@@ -178,11 +184,10 @@ const AddCase = () => {
             icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
         </p>
-        <div className="flex flex-col w-[70%]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
           <AInputField
             id={'name'}
             label="Applicant's Name"
-            variant="horizantal"
             value={formik.values.name}
             error={formik.errors.name}
             handleChange={formik.handleChange}
@@ -192,7 +197,6 @@ const AddCase = () => {
             id={'mobile'}
             type="number"
             label="Mobile"
-            variant="horizantal"
             value={formik.values.mobile}
             error={formik.errors.mobile}
             handleChange={formik.handleChange}
@@ -201,8 +205,8 @@ const AddCase = () => {
           <AInputField
             id={'loanAmount'}
             type="number"
-            label="Loan Amt. (Lacs)"
-            variant="horizantal"
+            label="Loan Amount"
+            rightLabel={'(In Lakhs)'}
             value={formik.values.loanAmount}
             error={formik.errors.loanAmount}
             handleChange={formik.handleChange}
@@ -211,7 +215,6 @@ const AddCase = () => {
           <AInputField
             id={'referenceId'}
             label="Reference ID"
-            variant="horizantal"
             value={formik.values.referenceId}
             error={formik.errors.referenceId}
             handleChange={formik.handleChange}
@@ -220,7 +223,6 @@ const AddCase = () => {
           <ASingleSelect
             id={'localOrOGL'}
             label={'Type'}
-            variant={'horizantal'}
             value={formik.values.localOrOGL}
             error={formik.errors.localOrOGL}
             handleChange={formik.handleChange}
@@ -230,7 +232,6 @@ const AddCase = () => {
           <AInputField
             id={'address'}
             label="Address"
-            variant="horizantal"
             value={formik.values.address}
             error={formik.errors.address}
             handleChange={formik.handleChange}
@@ -239,7 +240,6 @@ const AddCase = () => {
           <AInputField
             id={'city'}
             label="City"
-            variant="horizantal"
             value={formik.values.city}
             error={formik.errors.city}
             handleChange={formik.handleChange}
@@ -248,7 +248,6 @@ const AddCase = () => {
           <ASingleSelect
             id={'bankName'}
             label={'Bank Name'}
-            variant={'horizantal'}
             value={formik.values.bankName}
             error={formik.errors.bankName}
             handleChange={formik.handleChange}
@@ -258,7 +257,6 @@ const AddCase = () => {
           <ASingleSelect
             id={'branch'}
             label={'Branch'}
-            variant={'horizantal'}
             value={formik.values.branch}
             error={formik.errors.branch}
             handleChange={formik.handleChange}
@@ -268,7 +266,6 @@ const AddCase = () => {
           <ASingleSelect
             id={'type'}
             label={'Case Type'}
-            variant={'horizantal'}
             value={formik.values.type}
             error={formik.errors.type}
             handleChange={formik.handleChange}
@@ -278,7 +275,6 @@ const AddCase = () => {
           <ADatePicker
             id={'receivedDate'}
             label={'Received Date'}
-            variant={'horizantal'}
             value={formik.values.receivedDate}
             error={formik.errors.receivedDate}
             handleChange={formik.handleChange}
@@ -288,7 +284,6 @@ const AddCase = () => {
               <ASingleSelect
                 id={'status'}
                 label={'Case Status'}
-                variant={'horizantal'}
                 value={formik.values.status}
                 error={formik.errors.status}
                 handleChange={formik.handleChange}
@@ -298,7 +293,6 @@ const AddCase = () => {
               <ASingleSelect
                 id={'appoinmentStatus'}
                 label={'Appointment Status'}
-                variant={'horizantal'}
                 value={formik.values.appoinmentStatus}
                 error={formik.errors.appoinmentStatus}
                 handleChange={formik.handleChange}
@@ -307,8 +301,7 @@ const AddCase = () => {
               />
               <ASingleSelect
                 id="assigneeId"
-                variant={'horizantal'}
-                label={'Assign Reporter*'}
+                label={'Assign Reporter'}
                 value={formik.values.assigneeId}
                 error={formik.errors.assigneeId}
                 handleChange={formik.handleChange}
@@ -317,8 +310,7 @@ const AddCase = () => {
               />
               <ASingleSelect
                 id="reviewerId"
-                variant={'horizantal'}
-                label={'Assign Reviewer*'}
+                label={'Assign Reviewer'}
                 value={formik.values.reviewerId}
                 error={formik.errors.referenceId}
                 handleChange={formik.handleChange}
@@ -334,23 +326,23 @@ const AddCase = () => {
               />
             </>
           )}
-          <div className="flex gap-2 justify-end">
-            <AButton
-              label="Cancel"
-              variant="secondary"
-              action={() => {
-                navigate(-1);
-                formik.resetForm();
-              }}
-              icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
-            />
-            <AButton
-              label={state?.activeItem?._id ? 'Update' : 'Add'}
-              variant="primary"
-              action={() => formik.handleSubmit()}
-              icon={<BookmarkIcon className="h-5 w-5" />}
-            />
-          </div>
+        </div>
+        <div className="flex gap-2 justify-end">
+          <AButton
+            label="Cancel"
+            variant="secondary"
+            action={() => {
+              navigate(-1);
+              formik.resetForm();
+            }}
+            icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
+          />
+          <AButton
+            label={state?.activeItem?._id ? 'Update' : 'Add'}
+            variant="primary"
+            action={() => formik.handleSubmit()}
+            icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
+          />
         </div>
       </div>
     </>

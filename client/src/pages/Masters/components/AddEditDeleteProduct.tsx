@@ -113,6 +113,7 @@ export function AddEditDeleteProduct({
     <>
       {showAddEditModal && (
         <AModal
+          saveText={`${activeItem?._id ? 'Update' : 'Add'}`}
           title={`${activeItem?._id ? 'Edit' : 'Add'} Product`}
           onSave={formikProduct.handleSubmit}
           closeModal={() => {
@@ -123,7 +124,7 @@ export function AddEditDeleteProduct({
           <div className="flex flex-col">
             <AInputField
               id={'name'}
-              label="Product Name*"
+              label="Product Name"
               value={formikProduct.values.name}
               error={formikProduct.errors.name}
               handleChange={formikProduct.handleChange}
@@ -131,7 +132,7 @@ export function AddEditDeleteProduct({
             />
             <ASingleSelect
               id={'client'}
-              label={'Client Name*'}
+              label={'Client Name'}
               value={formikProduct.values.client}
               error={formikProduct.errors.client}
               handleChange={formikProduct.handleChange}

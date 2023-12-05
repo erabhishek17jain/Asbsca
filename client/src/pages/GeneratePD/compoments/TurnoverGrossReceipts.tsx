@@ -199,7 +199,7 @@ const TurnoverGrossReceipts = ({
       formik?.values?.currentYearActual?.actuals?.turnover;
     formik.setFieldValue(
       'currentYearActual.asPerFinancials.profitPercentage',
-      percent,
+      percent.toFixed(2),
     );
     formik.setFieldValue('currentYearActual.financialActualRatio', ratio);
     formik.setFieldValue(
@@ -280,7 +280,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'aprilTillDate.idealAprilTillDate.turnover'}
                 value={
                   formik?.values?.aprilTillDate.idealAprilTillDate.turnover
@@ -305,7 +305,7 @@ const TurnoverGrossReceipts = ({
                 type={'number'}
                 id={'aprilTillDate.aprilTillDate.turnover'}
                 label={'Turnover'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 value={formik?.values?.aprilTillDate.aprilTillDate.turnover}
                 error={errors?.aprilTillDate?.aprilTillDate?.turnover}
                 handleChange={formik.handleChange}
@@ -342,7 +342,7 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment()
                   .subtract(2, 'y')
                   .year()} (As per F.S.)`}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'lastYears.firstLastYear'}
                 value={formik?.values?.lastYears.firstLastYear}
                 error={errors?.lastYears?.firstLastYear}
@@ -353,7 +353,7 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment()
                   .subtract(1, 'y')
                   .year()} (As per F.S.)`}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'lastYears.secondLastYear'}
                 value={formik?.values?.lastYears.secondLastYear}
                 error={errors?.lastYears?.secondLastYear}
@@ -385,7 +385,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.actuals.turnover'}
                 value={formik?.values?.currentYearActual.actuals.turnover}
                 error={errors?.currentYearActual?.actuals?.turnover}
@@ -394,7 +394,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Net Profit'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.actuals.netProfit'}
                 value={formik?.values?.currentYearActual.actuals.netProfit}
                 error={errors?.currentYearActual?.actuals?.netProfit}
@@ -416,7 +416,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Turnover'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.asPerFinancials.turnover'}
                 value={
                   formik?.values?.currentYearActual?.asPerFinancials?.turnover
@@ -427,7 +427,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 type={'number'}
                 label={'Net Profit'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.asPerFinancials.netProfit'}
                 value={
                   formik?.values?.currentYearActual?.asPerFinancials?.netProfit
@@ -470,7 +470,7 @@ const TurnoverGrossReceipts = ({
             <AGroupFields>
               <AInputField
                 type={'number'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentLastYearComparision.firstLastYear'}
                 value={formik?.values?.currentLastYearComparision.firstLastYear}
                 error={errors?.currentLastYearComparision?.firstLastYear}
@@ -479,7 +479,7 @@ const TurnoverGrossReceipts = ({
               />
               <AInputField
                 type={'number'}
-                rightLabel={'(Lakhs)'}
+                rightLabel={'(In Lakhs)'}
                 id={'currentLastYearComparision.secondLastYear'}
                 value={
                   formik?.values?.currentLastYearComparision.secondLastYear

@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import AButton from '../../components-global/AButton';
 import AProfileUpload from '../../components-global/AProfileUpload';
 import {
-  BookmarkIcon,
+  ArrowUpTrayIcon,
   CameraIcon,
   DevicePhoneMobileIcon,
   EnvelopeIcon,
@@ -226,10 +226,12 @@ const Profile = () => {
                   icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
                 />
                 <AButton
-                  label={'Save'}
+                  label={'Update'}
                   variant={'primary'}
                   action={formikUser.handleSubmit}
-                  icon={<BookmarkIcon className="h-5 w-5" />}
+                  icon={
+                    <ArrowUpTrayIcon className="h-5 w-5 stroke-white stroke-1  " />
+                  }
                 />
               </div>
             </form>

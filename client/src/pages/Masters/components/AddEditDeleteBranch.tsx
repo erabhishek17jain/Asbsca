@@ -95,6 +95,7 @@ export function AddEditDeleteBranch({
     <>
       {showAddEditModal && (
         <AModal
+          saveText={`${activeItem?._id ? 'Update' : 'Add'}`}
           title={`${activeItem?._id ? 'Edit' : 'Add'} Branch`}
           onSave={formikBranch.handleSubmit}
           closeModal={() => {
@@ -105,7 +106,7 @@ export function AddEditDeleteBranch({
           <div className="flex flex-col">
             <AInputField
               id={'name'}
-              label="Branch Name*"
+              label="Branch Name"
               value={formikBranch.values.name}
               error={formikBranch.errors.name}
               handleChange={formikBranch.handleChange}
