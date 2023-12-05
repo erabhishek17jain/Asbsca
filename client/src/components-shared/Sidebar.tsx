@@ -67,7 +67,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     if (userDetails) {
       const menu = pages.filter(
-        (item) => userDetails?.role?.permissions.includes(item.value),
+        (item) => userDetails?.role?.permissions.includes(item.label),
       );
       setSideBarPages(menu);
     }
