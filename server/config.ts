@@ -1,16 +1,20 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const CONFIG = {
-    JWT_SECRET: 'asbsca-app',
-    EMAIL: 'mateo.jerde@ethereal.email',
-    PASSWORD: 'C2gF9hDN7CQe1H5BUZ',
-    ATLAS_URI: 'mongodb+srv://3asoftwares:karLM1Doo1PvrdBF@abasca.sxdkgor.mongodb.net/abasca',
-    CLIENT_ID: '857985018804-abl6p7nrbrn3cmq6hsijilr3ajppetpa.apps.googleusercontent.com',
-    CLIENT_SECRET: '',
+    JWT_SECRET: process.env.JWT_SECRET || '',
+    EMAIL: process.env.EMAIL || '',
+    PASSWORD: process.env.PASSWORD || '',
+    ATLAS_URI: process.env.ATLAS_URI || '',
+    CLIENT_ID: process.env.CLIENT_ID || '',
+    CLIENT_SECRET: process.env.CLIENT_SECRET || '',
     email: {
-        user: 'erabhishek17jain@gmail.com',
-        pass: 'zularurktxjctzqb',
+        user: process.env.EMAIL_USER || '',
+        pass: process.env.EMAIL_PASS || '',
     },
-    ADMIN_ROLE_ID: '654e7db499e3242d43db55ef',
-    CLIENT_URL: 'https://asbsca.vercel.app/',
+    ADMIN_ROLE_ID: process.env.ADMIN_ROLE_ID || '',
+    CLIENT_URL: process.env.CLIENT_URL || '',
 };
 
 export default CONFIG;
