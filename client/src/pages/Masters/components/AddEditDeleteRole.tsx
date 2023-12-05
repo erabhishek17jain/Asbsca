@@ -96,9 +96,9 @@ export function AddEditDeleteRole({
       formikRole.setFieldValue('name', activeItem?.name);
       formikRole.setFieldValue('status', activeItem?.status);
       permissions.filter((item: any) => {
-        if (activeItem?.permissions.includes(item.value)) {
-          item.isChecked = true;
-        }
+        item.isChecked = activeItem?.permissions.includes(item.label)
+          ? true
+          : false;
       });
       setPermissions([...permissions]);
     }

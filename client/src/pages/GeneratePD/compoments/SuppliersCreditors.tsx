@@ -22,7 +22,7 @@ const initialValues = {
     amount: 0,
   },
   collectionPeriod: '',
-  creitPeriodAllowed: '',
+  creitPeriodAllowed: 0,
   whyCreditorHighThanCredit: '',
 };
 
@@ -72,6 +72,11 @@ const SuppliersCreditors = ({
   });
 
   useEffect(() => {
+    const income =
+      payloads?.financials?.finances[0]?.expenses?.otherExpenses?.amountPA;
+    const cpAllow =
+      (formik?.values?.creditors?.amount * 12) / income -
+      (formik?.values?.creditors?.amount * 12 * 0.4) / income;
     formik.setFieldValue(
       'collectionPeriod',
       calculatePeriod(
@@ -79,6 +84,15 @@ const SuppliersCreditors = ({
         payloads?.financials?.finances[0]?.income?.purchases?.amountPA,
       ),
     );
+    if (
+      formik?.values?.whyCreditorHighThanCredit === '' ||
+      formik?.values?.whyCreditorHighThanCredit === '-'
+    ) {
+      formik.setFieldValue(
+        'whyCreditorHighThanCredit',
+        formik?.values?.creitPeriodAllowed < cpAllow ? '-' : '',
+      );
+    }
   }, [formik?.values]);
 
   useEffect(() => {

@@ -32,7 +32,7 @@ const initialValues = {
       },
       totalDebtors: 0,
       collectionPeriod: '',
-      creditPeriodAllowed: '',
+      creditPeriodAllowed: 0,
       whyIrRegular: '',
     },
   },
@@ -80,6 +80,7 @@ const ClientsDebtors = ({
         lessThan6Month: Yup.object().shape({
           amount: Yup.number().required('This field is required'),
         }),
+        creditPeriodAllowed: Yup.number().required('This field is required'),
         whyIrRegular: Yup.string().required('This field is required'),
       }),
     }),
@@ -100,26 +101,35 @@ const ClientsDebtors = ({
   });
 
   useEffect(() => {
+    const income =
+      payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+        ?.amountPA;
     const moreAmt =
       formik?.values?.debitors?.debitorDetails?.moreThan6Month?.amount;
     const lessAmt =
       formik?.values?.debitors?.debitorDetails?.lessThan6Month?.amount;
+    const cpAllow =
+      ((moreAmt + lessAmt) * 12) / income -
+      ((moreAmt + lessAmt) * 12 * 0.4) / income;
     formik.setFieldValue(
       'debitors.debitorDetails.totalDebtors',
       moreAmt + lessAmt,
     );
     formik.setFieldValue(
       'debitors.debitorDetails.collectionPeriod',
-      calculatePeriod(
-        formik?.values?.debitors?.debitorDetails?.totalDebtors,
-        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-          ?.amountPA,
-      ),
+      calculatePeriod(moreAmt + lessAmt, income),
     );
-    formik.setFieldValue(
-      'debitors?.debitorDetails?.moreThan6Month?.reason',
-      moreAmt === 0 ? '-' : '',
-    );
+    if (
+      formik?.values?.debitors?.debitorDetails?.whyIrRegular === '' ||
+      formik?.values?.debitors?.debitorDetails?.whyIrRegular === '-'
+    ) {
+      formik.setFieldValue(
+        'debitors.debitorDetails.whyIrRegular',
+        formik?.values?.debitors.debitorDetails.creditPeriodAllowed < cpAllow
+          ? '-'
+          : '',
+      );
+    }
   }, [formik?.values?.debitors?.debitorDetails]);
 
   useEffect(() => {
@@ -264,10 +274,6 @@ const ClientsDebtors = ({
                     label={'Reason for Debtors'}
                     rightLabel={'more than 6 Months'}
                     id={'debitors.debitorDetails.moreThan6Month.reason'}
-                    disabled={
-                      formik?.values?.debitors?.debitorDetails?.moreThan6Month
-                        ?.amount === 0
-                    }
                     value={
                       formik?.values?.debitors?.debitorDetails?.moreThan6Month
                         ?.reason
@@ -322,6 +328,10 @@ const ClientsDebtors = ({
                   />
                   <AInputField
                     label={'Why Ir-Regular?'}
+                    disabled={
+                      formik?.values?.debitors?.debitorDetails?.whyIrRegular ===
+                      '-'
+                    }
                     id={'debitors.debitorDetails.whyIrRegular'}
                     value={
                       formik?.values?.debitors?.debitorDetails?.whyIrRegular

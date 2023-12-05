@@ -6,6 +6,7 @@ import ASection from '../../../components-global/ASection';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import { AddTagButton, AddTagHeader } from '../../../components-global/ATags';
 import {
+  assetReasons,
   bankTypes,
   banksList,
   particularsAssets,
@@ -67,6 +68,7 @@ const initialValues = {
     bankAccounts: [] as any,
     totalBalance: 0,
   },
+  assetReason: '',
   assetsBacking: '',
 };
 
@@ -251,6 +253,14 @@ const AssetsInvestmentBank = ({
   useEffect(() => {
     setTotalBC();
   }, [formik?.values?.bankAccountDetails?.bankAccounts]);
+
+  useEffect(() => {
+    let assetsBacking =
+      formik?.values?.bussinessAssetDetails?.totalMarketValue +
+      formik?.values?.personalAssetDetails?.totalMarketValue +
+      formik?.values?.investmentDetails?.totalMarketValue;
+    formik.setFieldValue('assetsBacking', assetsBacking);
+  }, [formik?.values]);
 
   useEffect(() => {
     if (payloads.assets) {
@@ -914,6 +924,26 @@ const AssetsInvestmentBank = ({
             </ASection>
           )}
         </div>
+        <AGroupFields col={2}>
+          <AInputField
+            type={'number'}
+            disabled={true}
+            id={`assetsBacking`}
+            label={'Assets Backing'}
+            rightLabel={'(In Lakhs)'}
+            value={formik?.values?.assetsBacking}
+            error={formik?.errors?.assetsBacking}
+            handleChange={formik.handleChange}
+          />
+          <ASingleSelect
+            id={`assetReason`}
+            options={assetReasons}
+            label={'Why asset Backing is low?'}
+            value={formik?.values?.assetReason}
+            error={formik?.errors?.assetReason}
+            handleChange={formik.handleChange}
+          />
+        </AGroupFields>
       </div>
       <AStepperPagination
         steps={steps}

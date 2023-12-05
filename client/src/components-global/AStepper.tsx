@@ -21,6 +21,7 @@ import AssetsInvestmentBank from '../pages/GeneratePD/compoments/AssetsInvestmen
 import OtherObservation from '../pages/GeneratePD/compoments/OtherObservation';
 import DocumentsSeen from '../pages/GeneratePD/compoments/DocumentsSeen';
 import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf';
+import PhotoScreenshots from '../pages/GeneratePD/compoments/PhotoScreenshots';
 
 export const AStepperPagination = ({
   steps,
@@ -65,7 +66,7 @@ export function AStepper({
   const handlePrev = () => activeStep !== 0 && setActiveStep((cur) => cur - 1);
   const handleNext = () => {
     activeStep !== steps?.length - 1 && setActiveStep((cur) => cur + 1);
-    if (activeStep === 14) setStepFinished(true);
+    if (activeStep === 15) setStepFinished(true);
   };
 
   return (
@@ -221,7 +222,7 @@ export function AStepper({
               handleNext={handleNext}
             />
           )}
-          {activeStep === 13 && ( // done
+          {activeStep === 13 && (
             <DocumentsSeen
               steps={steps}
               payloads={payloads}
@@ -231,8 +232,18 @@ export function AStepper({
               handleNext={handleNext}
             />
           )}
-          {activeStep === 14 && ( // done
+          {activeStep === 14 && (
             <BusinessProcessOf
+              steps={steps}
+              payloads={payloads}
+              activeStep={activeStep}
+              handlePrev={handlePrev}
+              setPayloads={setPayloads}
+              handleNext={handleNext}
+            />
+          )}
+          {activeStep === 15 && (
+            <PhotoScreenshots
               steps={steps}
               payloads={payloads}
               activeStep={activeStep}

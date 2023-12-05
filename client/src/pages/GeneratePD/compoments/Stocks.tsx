@@ -60,11 +60,19 @@ const Stocks = ({
   });
 
   useEffect(() => {
+    const income =
+      payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+        ?.amountPA;
     const total =
       formik?.values?.stockDetails?.rawMaterialAmount +
       formik?.values?.stockDetails?.wipAmount +
-      formik?.values?.stockDetails?.finishGoods
+      formik?.values?.stockDetails?.finishGoods;
+    const lowHigh = (total * 12) / income;
     formik.setFieldValue('stockDetails.totalStocks', total);
+    formik.setFieldValue(
+      'stockDetails.whyStocklowHigh',
+      lowHigh > 0.3 && lowHigh < 4 ? '-' : '',
+    );
     formik.setFieldValue(
       'stockDetails.stockHoldingPeriod',
       calculatePeriod(
@@ -139,6 +147,7 @@ const Stocks = ({
                   value={formik?.values?.stockDetails.whyStocklowHigh}
                   error={formik?.errors?.stockDetails?.whyStocklowHigh}
                   handleChange={formik.handleChange}
+                  disabled={formik?.values?.stockDetails.whyStocklowHigh === '-'}
                 />
               </AGroupFields>
             </ASection>
