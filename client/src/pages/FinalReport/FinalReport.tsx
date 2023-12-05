@@ -1,8 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
+  ArrowDownTrayIcon,
   ArrowLeftIcon,
   ArrowTopRightOnSquareIcon,
-  DocumentChartBarIcon,
+  DocumentMagnifyingGlassIcon,
+  PencilSquareIcon,
 } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import AButton from '../../components-global/AButton';
@@ -204,17 +206,17 @@ const FinalReport = () => {
           navigate('/generatePD', {
             state: { activeItem: state?.activeItem },
           }),
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <PencilSquareIcon className="h-5 w-5" />,
       },
       {
         title: 'Send to Review',
         action: sentToReviewCase,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
       },
       {
         title: 'Download PDF',
         action: createPdf,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
     query: [
@@ -224,17 +226,17 @@ const FinalReport = () => {
           navigate('/generatePD', {
             state: { activeItem: state?.activeItem },
           }),
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <PencilSquareIcon className="h-5 w-5" />,
       },
       {
         title: 'Send to Review',
         action: sentToReviewCase,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <DocumentMagnifyingGlassIcon className="h-5 w-5" />,
       },
       {
         title: 'Download PDF',
         action: createPdf,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
     review: [
@@ -244,7 +246,7 @@ const FinalReport = () => {
           navigate('/generatePD', {
             state: { activeItem: state?.activeItem },
           }),
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <PencilSquareIcon className="h-5 w-5" />,
       },
       {
         title: 'Revert to Assignee',
@@ -259,7 +261,7 @@ const FinalReport = () => {
       {
         title: 'Download PDF',
         action: createPdf,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
     completed: [
@@ -271,14 +273,14 @@ const FinalReport = () => {
       {
         title: 'Download PDF',
         action: createPdf,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
     sentToBank: [
       {
         title: 'Download PDF',
         action: createPdf,
-        icon: <DocumentChartBarIcon className="h-5 w-5" />,
+        icon: <ArrowDownTrayIcon className="h-5 w-5" />,
       },
     ],
   } as any;
@@ -286,26 +288,26 @@ const FinalReport = () => {
   return (
     <>
       <ABreadcrumb pageName="Preview Report" />
-      <div className="overflow-x-scroll relative h-[80vh] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
-        <div className="flex justify-between items-center mb-3">
-          <AButton
-            variant={'link'}
-            label={'Back'}
-            action={() => navigate(-1)}
-            icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
-          />
-          <div>Preview Report</div>
-          <ADropdown
-            options={dropdownOptions[state?.activeItem?.status]}
-            header={
-              <span className="text-right">
-                <span className="flex gap-1 text-sm font-medium text-main">
-                  <span>Actions</span>
-                </span>
+      <div className="flex justify-between items-center mb-3">
+        <AButton
+          variant={'link'}
+          label={'Back'}
+          action={() => navigate(-1)}
+          icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
+        />
+        <div className="text-lg text-main"></div>
+        <ADropdown
+          options={dropdownOptions[state?.activeItem?.status]}
+          header={
+            <span className="text-right">
+              <span className="flex gap-1 font-medium text-main">
+                <span>Actions</span>
               </span>
-            }
-          />
-        </div>
+            </span>
+          }
+        />
+      </div>
+      <div className="overflow-x-scroll relative h-[80vh] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         {!loading ? (
           <div className="-my-4 -mx-6">
             <section className="pdf-body" ref={bodyRef}>

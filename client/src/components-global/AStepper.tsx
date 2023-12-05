@@ -83,7 +83,7 @@ export function AStepper({
           );
         })}
       </Stepper>
-      <div className="absolute w-[calc(100%-40px)] h-[calc(100%-60px)] mb-4 overflow-x-scroll flex flex-col justify-between">
+      <div className="absolute w-[calc(100%-32px)] sm:w-[calc(100%-40px)] h-[calc(100%-60px)] mb-4 overflow-x-scroll flex flex-col justify-between">
         <div className="flex flex-col gap-3 mt-3">
           {activeStep === steps[activeStep].index && (
             <div className="w-max text-lg font-bold text-main text-center">

@@ -15,7 +15,7 @@ const ReportData = () => {
     (item: any) => item?.isDoc === 'Yes',
   );
   return (
-    <div className="flex flex-col text-sm  py-4 px-6">
+    <div className="flex flex-col text-sm  py-4 px-6 min-w-[650px]">
       <table className="mb-1.5" cellSpacing={0}>
         <tbody>
           <tr className="bg text-center font-bold">
@@ -1413,7 +1413,7 @@ const ReportData = () => {
             {reportData?.data?.clientDebtors?.clients?.clientDetails
               ?.majorClient?.length > 0 ? (
               <>
-                <td colSpan={1} className="bg">
+                <td colSpan={2} className="bg">
                   <p>Sr. No.</p>
                 </td>
                 <td colSpan={2} className="bg">
@@ -1424,7 +1424,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>Client's details not provided</p>
               </td>
             )}
@@ -1432,7 +1432,7 @@ const ReportData = () => {
           {reportData?.data?.clientDebtors?.clients?.clientDetails?.majorClient?.map(
             (item: any, index: number) => (
               <tr>
-                <td colSpan={1}>
+                <td colSpan={2}>
                   <p>{index + 1}</p>
                 </td>
                 <td colSpan={2}>
@@ -1474,7 +1474,7 @@ const ReportData = () => {
             {reportData?.data?.suppliers?.suppliersDetails?.majorSuppliers
               ?.length > 0 ? (
               <>
-                <td colSpan={1} className="bg">
+                <td colSpan={2} className="bg">
                   <p>Sr. No.</p>
                 </td>
                 <td colSpan={2} className="bg">
@@ -1485,7 +1485,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Suppliers in the business.</p>
               </td>
             )}
@@ -1493,7 +1493,7 @@ const ReportData = () => {
           {reportData?.data?.suppliers?.suppliersDetails?.majorSuppliers?.map(
             (item: any, index: number) => (
               <tr>
-                <td colSpan={1}>
+                <td colSpan={2}>
                   <p>{index + 1}</p>
                 </td>
                 <td colSpan={2}>
@@ -1621,7 +1621,7 @@ const ReportData = () => {
                 <td colSpan={2} className="bg">
                   <p>Bank Name</p>
                 </td>
-                <td colSpan={1} className="bg">
+                <td colSpan={2} className="bg">
                   <p>Branch</p>
                 </td>
                 <td colSpan={1} className="bg">
@@ -1632,7 +1632,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Bank Account</p>
               </td>
             )}
@@ -1643,7 +1643,7 @@ const ReportData = () => {
                 <td colSpan={2}>
                   <p>{item.bankName}</p>
                 </td>
-                <td colSpan={1}>
+                <td colSpan={2}>
                   <p>{item.branch}</p>
                 </td>
                 <td colSpan={1}>
@@ -1656,7 +1656,7 @@ const ReportData = () => {
             ),
           )}
           <tr>
-            <td colSpan={4} className="font-bold">
+            <td colSpan={5} className="font-bold">
               <p>Total</p>
             </td>
             <td colSpan={2} className="font-bold">
@@ -1679,7 +1679,7 @@ const ReportData = () => {
             {reportData?.data?.assets.investmentDetails.investments?.length >
             0 ? (
               <>
-                <td colSpan={2} className="bg">
+                <td colSpan={3} className="bg">
                   <p>Particulars</p>
                 </td>
                 <td colSpan={2} className="bg">
@@ -1690,7 +1690,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Investments</p>
               </td>
             )}
@@ -1698,7 +1698,7 @@ const ReportData = () => {
           {reportData?.data?.assets.investmentDetails.investments.map(
             (item: any, index: number) => (
               <tr key={index}>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <p>{item.particulars}</p>
                 </td>
                 <td colSpan={2}>
@@ -1711,7 +1711,7 @@ const ReportData = () => {
             ),
           )}
           <tr>
-            <td colSpan={4} className="font-bold">
+            <td colSpan={5} className="font-bold">
               <p>Total</p>
             </td>
             <td colSpan={2} className="font-bold">
@@ -1766,7 +1766,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Loans</p>
               </td>
             )}
@@ -1924,7 +1924,7 @@ const ReportData = () => {
                 <td colSpan={1} className="bg">
                   <p>Bank Name</p>
                 </td>
-                <td colSpan={1} className="bg">
+                <td colSpan={2} className="bg">
                   <p>Limit (Rs.)</p>
                 </td>
                 <td colSpan={1} className="bg">
@@ -1938,7 +1938,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Credit Facility</p>
               </td>
             )}
@@ -1952,7 +1952,7 @@ const ReportData = () => {
                 <td colSpan={1}>
                   <p>{item.bankName}</p>
                 </td>
-                <td colSpan={1}>
+                <td colSpan={2}>
                   <p>{amtConvertor(item.limit)}</p>
                 </td>
                 <td colSpan={1}>
@@ -1971,7 +1971,7 @@ const ReportData = () => {
             <td colSpan={2} className="font-bold">
               <p>Total</p>
             </td>
-            <td colSpan={1} className="font-bold">
+            <td colSpan={2} className="font-bold">
               <p>
                 {amtConvertor(
                   reportData?.data?.existingLoan.creditFacility
@@ -1999,7 +1999,7 @@ const ReportData = () => {
             {reportData?.data?.existingLoan.otherCommitments.commitmentsDetails
               ?.length > 0 ? (
               <>
-                <td colSpan={2} className="bg">
+                <td colSpan={3} className="bg">
                   <p>Particulars</p>
                 </td>
                 <td colSpan={2} className="bg">
@@ -2010,7 +2010,7 @@ const ReportData = () => {
                 </td>
               </>
             ) : (
-              <td colSpan={6}>
+              <td colSpan={7}>
                 <p>No Commitments</p>
               </td>
             )}
@@ -2018,7 +2018,7 @@ const ReportData = () => {
           {reportData?.data?.existingLoan.otherCommitments.commitmentsDetails.map(
             (item: any, index: number) => (
               <tr key={index}>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <p>{item.particulars}</p>
                 </td>
                 <td colSpan={2}>

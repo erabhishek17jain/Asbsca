@@ -82,7 +82,7 @@ export const FilterButtons = ({
 
   return (
     <>
-      <div className="flex gap-1 w-full md:w-72">
+      <div className="flex gap-2 w-full md:w-72">
         <AInputField
           id={'search'}
           variant={'horizantal'}
@@ -90,7 +90,7 @@ export const FilterButtons = ({
           error={formik.errors.search}
           handleChange={formik.handleChange}
         />
-        <div className="flex mb-8">
+        <div className="flex mb-8 sm:mb-8">
           <AButton
             label={''}
             variant={'secondary'}
@@ -99,24 +99,30 @@ export const FilterButtons = ({
           />
         </div>
       </div>
-      {userDetails?.role?.name === 'Admin' && (
-        <Tooltip content="Download Cases">
-          <CSVLink data={exportData} headers={exportHeaders} filename={'Cases'}>
-            <div
-              className={`flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey`}
+      <div className="flex gap-2 justify-end w-full sm:w-auto">
+        {userDetails?.role?.name === 'Admin' && (
+          <Tooltip content="Download Cases">
+            <CSVLink
+              data={exportData}
+              headers={exportHeaders}
+              filename={'Cases'}
             >
-              <ArrowDownTrayIcon className="h-5 w-5 stroke-main" />
-              Download
-            </div>
-          </CSVLink>
-        </Tooltip>
-      )}
-      <AButton
-        label={'Filter'}
-        variant={'primary'}
-        action={() => showHideFilters(showFilter)}
-        icon={<FunnelIcon className="h-5 w-5" />}
-      />
+              <div
+                className={`flex justify-center items-center gap-1 rounded-lg p-2 font-medium px-4 border border-main text-main hover:bg-grey`}
+              >
+                <ArrowDownTrayIcon className="h-5 w-5 stroke-main" />
+                Download
+              </div>
+            </CSVLink>
+          </Tooltip>
+        )}
+        <AButton
+          label={'Filter'}
+          variant={'primary'}
+          action={() => showHideFilters(showFilter)}
+          icon={<FunnelIcon className="h-5 w-5" />}
+        />
+      </div>
     </>
   );
 };
@@ -140,7 +146,13 @@ export const FilterCases = ({
   }, [allClients]);
 
   useEffect(() => {
-    setAssignOptions(getOptions(allUsers?.users, 'fullName', '_id'));
+    setAssignOptions(
+      getOptions(
+        allUsers?.users.filter((item: any) => item.isVerified),
+        'fullName',
+        '_id',
+      ),
+    );
   }, [allUsers]);
 
   useEffect(() => {
@@ -157,12 +169,15 @@ export const FilterCases = ({
           <AButton
             label={''}
             variant="link"
-            action={() => showHideFilters(showFilter)}
+            action={() => {
+              showHideFilters(showFilter);
+              setFilters({ filters: {} });
+            }}
             icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
           />
         </span>
       </span>
-      <span className="flex gap-3">
+      <span className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 sm:gap-3 sm:flex-row">
         <ASingleSelect
           id={'bankName'}
           label={'Bank Name'}

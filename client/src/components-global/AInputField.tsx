@@ -23,7 +23,7 @@ const AInputField = ({
           }`}
           htmlFor={id}
         >
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end font-medium">
             <span>{label}</span>
             {rightLabel !== '' && (
               <span className="text-main text-xs mr-2">{rightLabel}</span>
@@ -39,7 +39,7 @@ const AInputField = ({
           disabled={disabled}
           onChange={handleChange}
           placeholder={`Enter ${label}`}
-          className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
+          className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-defnot-allowedault disabled:bg-whiter"
         />
         {icon && (
           <span className="absolute top-6 right-3 -translate-y-1/2">

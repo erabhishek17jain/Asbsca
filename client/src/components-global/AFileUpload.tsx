@@ -46,16 +46,16 @@ const AFileUpload = ({
           <img
             alt={id}
             src={value}
-            className="w-13 h-13 -mt-1 rounded-full p-1"
+            className="w-13 h-13 -mt-1 rounded-full"
           />
         ) : value !== '' ? (
           <img
             alt={id}
             src={value}
-            className="w-13 h-13 -mt-1 rounded-full p-1"
+            className="w-13 h-13 -mt-1 rounded-full"
           />
         ) : (
-          <div className="w-13 h-13 -mt-1 rounded-full p-1">{icon}</div>
+          <div className="w-13 h-13 -mt-1 rounded-full">{icon}</div>
         )}
       </div>
       {error && <span className="ml-1 text-xs text-meta1">{error}</span>}

@@ -98,6 +98,10 @@ export default class AnalyticsAPI {
                 ...filter,
                 status: CaseStatus.Assigned,
             });
+            const queryCases = await this.model.countDocuments({
+                ...filter,
+                status: CaseStatus.Query,
+            });
             const reviewedCases = await this.model.countDocuments({
                 ...filter,
                 status: CaseStatus.Reviewing,
@@ -128,6 +132,7 @@ export default class AnalyticsAPI {
                 return res.status(200).json({
                     cases,
                     assignedCases,
+                    queryCases,
                     reviewedCases,
                     completedCases,
                     sentToBank,
@@ -138,6 +143,7 @@ export default class AnalyticsAPI {
             return res.status(200).json({
                 cases,
                 assignedCases,
+                queryCases,
                 reviewedCases,
                 completedCases,
                 sentToBank,

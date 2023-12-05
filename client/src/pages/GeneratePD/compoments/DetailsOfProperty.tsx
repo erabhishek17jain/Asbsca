@@ -139,7 +139,7 @@ const DetailsOfProperty = ({
   useEffect(() => {
     if (formik?.values.occupiedBy !== '') {
       formik.setFieldValue(
-        'propertyLoanDetails.loanDetails.emi',
+        'builderName',
         formik?.values.occupiedBy !== 'Under Construction' ? 'NA' : '',
       );
     }
@@ -236,7 +236,10 @@ const DetailsOfProperty = ({
                 value={formik?.values?.builderName}
                 error={formik?.errors?.builderName}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
+                disabled={
+                  formik?.values?.purchaseYear != lastYear ||
+                  formik?.values.occupiedBy !== 'Under Construction'
+                }
               />
             </AGroupFields>
           </ASection>
@@ -255,7 +258,7 @@ const DetailsOfProperty = ({
                 <AInputField
                   type={'number'}
                   label={'Amount'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={`propertyLoanDetails.loanDetails.amount`}
                   value={
                     formik?.values?.propertyLoanDetails?.loanDetails?.amount
@@ -300,7 +303,7 @@ const DetailsOfProperty = ({
               <AGroupFields>
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.agreementValue'}
                   label={'Agreement Value'}
                   value={
@@ -312,7 +315,7 @@ const DetailsOfProperty = ({
                 />
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.purchaseValue'}
                   label={'Purchase Value'}
                   value={
@@ -324,7 +327,7 @@ const DetailsOfProperty = ({
                 />
                 <AInputField
                   type={'number'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   label={'Market Value'}
                   id={'propertyLoanDetails.propertyValue.marketValue'}
                   value={
@@ -337,7 +340,7 @@ const DetailsOfProperty = ({
                 <div className="flex gap-3">
                   <AInputField
                     type={'number'}
-                    rightLabel={'(Lakhs)'}
+                    rightLabel={'(In Lakhs)'}
                     id={'propertyLoanDetails.propertyValue.ocrPaid'}
                     label={'OCR Paid'}
                     value={
@@ -361,7 +364,7 @@ const DetailsOfProperty = ({
                 <AInputField
                   type={'number'}
                   disabled={true}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.balanceOcr'}
                   label={'Balance OCR'}
                   value={
@@ -388,7 +391,7 @@ const DetailsOfProperty = ({
           <AGroupFields col={2}>
             <AInputField
               id={'propertyLoanDetails.loanAsPerForm'}
-              rightLabel={'(Lakhs)'}
+              rightLabel={'(In Lakhs)'}
               label={'Loan as per application Form'}
               value={formik?.values?.propertyLoanDetails?.loanAsPerForm}
               error={errors?.loanAsPerForm}

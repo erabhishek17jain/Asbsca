@@ -95,10 +95,10 @@ const LoanDetails = ({
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
-        <div className="flex flex-col w-[60%] py-4">
+        <div className="flex flex-col sm:w-[60%] py-4">
           <ASingleSelect
             id={'bankName'}
-            label={'Bank Name*'}
+            label={'Bank Name'}
             options={clientOptions}
             variant={'horizantal'}
             value={formik?.values?.bankName}
@@ -107,7 +107,7 @@ const LoanDetails = ({
           />
           <ASingleSelect
             id={'alc'}
-            label={'ALC*'}
+            label={'ALC'}
             options={alcList}
             variant={'horizantal'}
             value={formik?.values?.alc}
@@ -116,7 +116,7 @@ const LoanDetails = ({
           />
           <ASingleSelect
             id={'loan'}
-            label={'Loan*'}
+            label={'Loan'}
             options={loans}
             variant={'horizantal'}
             value={formik?.values?.loan}
@@ -125,7 +125,7 @@ const LoanDetails = ({
           />
           <ASingleSelect
             id={'loanType'}
-            label={'Loan Type*'}
+            label={'Loan Type'}
             options={loanTypes}
             variant={'horizantal'}
             value={formik?.values?.loanType}

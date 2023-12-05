@@ -10,15 +10,6 @@ import ASection from '../../../components-global/ASection';
 import { yesNoOptions } from '../constants';
 import { calculatePeriod } from '../../../utils';
 
-const Section = ({ title, children }: any) => {
-  return (
-    <div className="border-2 rounded-lg mb-4 border-stroke">
-      <p className="w-full pt-3 px-4">{title}</p>
-      {children && <div className="pt-3 px-4">{children}</div>}
-    </div>
-  );
-};
-
 const clientsInfo = { clientName: '', contact: '' };
 
 const initialValues = {
@@ -124,7 +115,7 @@ const SuppliersCreditors = ({
             radioValues={yesNoOptions}
             handleChange={handleSuppliers}
           />
-          <Section>
+          <ASection>
             {isSuppliers == 'Yes' && (
               <div className="mb-4">
                 <AGroupFields col={2}>
@@ -137,9 +128,8 @@ const SuppliersCreditors = ({
                     handleChange={formik.handleChange}
                   />
                 </AGroupFields>
-                {formik?.values?.suppliersDetails.majorSuppliers?.length > 0 && (
-                  <p className="w-full pb-3">Major Suppliers</p>
-                )}
+                {formik?.values?.suppliersDetails.majorSuppliers?.length >
+                  0 && <p className="w-full pb-3">Major Suppliers</p>}
                 <FormikProvider value={formik}>
                   <form>
                     <FieldArray
@@ -157,7 +147,7 @@ const SuppliersCreditors = ({
                                   <div className="w-full border-2 rounded-lg pt-3 px-3">
                                     <AGroupFields col={2}>
                                       <AInputField
-                                        label={'Client Name*'}
+                                        label={'Client Name'}
                                         id={`suppliersDetails.majorSuppliers[${index}].clientName`}
                                         value={
                                           formik?.values?.suppliersDetails
@@ -172,7 +162,7 @@ const SuppliersCreditors = ({
                                         handleChange={formik.handleChange}
                                       />
                                       <AInputField
-                                        label={'Contact No.*'}
+                                        label={'Contact No.'}
                                         id={`suppliersDetails.majorSuppliers[${index}].contact`}
                                         value={
                                           formik?.values?.suppliersDetails
@@ -220,7 +210,7 @@ const SuppliersCreditors = ({
                 <AInputField
                   type={'number'}
                   label={'Creditors Amount'}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={`creditors.amount`}
                   value={formik?.values?.creditors.amount}
                   error={formik?.errors?.creditors?.amount}
@@ -252,7 +242,7 @@ const SuppliersCreditors = ({
                 />
               </AGroupFields>
             </ASection>
-          </Section>
+          </ASection>
         </div>
       </div>
       <AStepperPagination

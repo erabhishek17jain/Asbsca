@@ -226,7 +226,7 @@ export async function getReportData(id: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/cases/reports/${id}`);
     return response.data;
   } catch (error: any) {
-    showError(error);
+    // showError(error);
     return rejectWithValue(error?.response?.data);
   }
 }

@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import AButton from '../../components-global/AButton';
 import AProfileUpload from '../../components-global/AProfileUpload';
 import {
-  BookmarkIcon,
+  ArrowUpTrayIcon,
   CameraIcon,
   DevicePhoneMobileIcon,
   EnvelopeIcon,
@@ -59,7 +59,7 @@ const Profile = () => {
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         {!isEditProfile ? (
           <>
-            <div className="relative z-20 h-30">
+            <div className="relative z-20 h-36">
               <div className="absolute top-4 right-4 xsm:bottom-4 xsm:right-4">
                 <label
                   htmlFor="cover"
@@ -79,13 +79,13 @@ const Profile = () => {
               </div>
             </div>
             <div className="px-4 pb-6 text-center">
-              <div className="relative mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-40 sm:max-w-40 sm:p-3">
-                <div className="relative rounded-full">
+              <div className="relative flex justify-center mx-auto -mt-22 h-36 w-full max-w-36 rounded-full bg-white/20 p-1 backdrop-blur">
+                <div className="relative rounded-full w-36">
                   {userDetails?.profile ? (
                     <img
                       alt="profile"
                       src={userDetails?.profile}
-                      className={`w-40 h-36 rounded-full border-6 p-0.5 ${
+                      className={`w-36 h-36 rounded-full border-6 p-0.5 ${
                         userDetails?.status === 'active'
                           ? 'border-meta3'
                           : 'border-meta1'
@@ -102,19 +102,19 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <h3 className="mb-1.5 text-2xl font-semibold text-main">
+                <h3 className="mt-4 mb-1.5 text-2xl font-semibold text-main">
                   {userDetails?.fullName}
                 </h3>
-                <p className="flex justify-center gap-3 font-medium my-4">
-                  <span className="flex gap-2 items-center">
+                <p className="flex flex-col xsm:flex-row justify-center xsm:items-center gap-3 font-medium my-4">
+                  <span className="flex gap-2 items-center justify-center">
                     <UserIcon className="h-5 w-5" />
                     {userDetails?.username}
                   </span>
-                  <span className="flex gap-2 items-center">
+                  <span className="flex gap-2 items-center justify-center">
                     <EnvelopeIcon className="h-5 w-5" />
                     {userDetails?.email}
                   </span>
-                  <span className="flex gap-2 items-center">
+                  <span className="flex gap-2 items-center justify-center">
                     <PhoneIcon className="h-5 w-5" />
                     {userDetails?.mobile}
                   </span>
@@ -145,7 +145,9 @@ const Profile = () => {
                   </div>
                   <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                     <span className="font-semibold text-main">
-                      {userDetails?.analysis?.accuracy}
+                      {userDetails?.analysis?.accuracy
+                        ? userDetails?.analysis?.accuracy
+                        : 0}
                     </span>
                     <span className="text-sm">Accuracy</span>
                   </div>
@@ -165,7 +167,7 @@ const Profile = () => {
         ) : (
           <div className="rounded-sm px-5 py-5">
             <form action="#">
-              <div className="mb-4 flex items-center gap-3 justify-center">
+              <div className="sm:mb-4 flex flex-col sm:flex-row items-center gap-3 justify-center">
                 <AProfileUpload
                   id={'profile'}
                   formik={formikUser}
@@ -226,10 +228,12 @@ const Profile = () => {
                   icon={<XMarkIcon className="h-5 w-5 stroke-main stroke-1" />}
                 />
                 <AButton
-                  label={'Save'}
+                  label={'Update'}
                   variant={'primary'}
                   action={formikUser.handleSubmit}
-                  icon={<BookmarkIcon className="h-5 w-5" />}
+                  icon={
+                    <ArrowUpTrayIcon className="h-5 w-5 stroke-white stroke-1  " />
+                  }
                 />
               </div>
             </form>
