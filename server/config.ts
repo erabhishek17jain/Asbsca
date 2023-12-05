@@ -1,6 +1,15 @@
 import dotenv from 'dotenv';
+import path = require('path');
 
-dotenv.config();
+let envPath: string;
+if (__dirname.includes("build")) {
+    envPath = path.join(__dirname, "./.env.production");
+} else {
+    envPath = path.join(__dirname, "./.env.development");
+}
+dotenv.config({
+    path: envPath,
+});
 
 const CONFIG = {
     JWT_SECRET: process.env.JWT_SECRET || '',
