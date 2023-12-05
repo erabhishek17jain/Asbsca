@@ -12,9 +12,7 @@ const UsersBody = ({
 
   return allUsers?.users?.map((item: any, index: number) => {
     const isLast = index === allUsers?.users.length - 1;
-    const classes = isLast
-      ? 'p-4 border-0 '
-      : 'p-4 border-0  border-b border-stroke';
+    const classes = `p-4 border-0 ${!isLast && 'border-b border-stroke'}`;
     return (
       <tr key={item?.email}>
         <TableColumn

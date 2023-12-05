@@ -42,7 +42,7 @@ const Masters = () => {
       <ABreadcrumb pageName="Masters" />
       <div className="w-full mb-4" id="masters">
         <Tabs value="client">
-          <TabsHeader>
+          <TabsHeader className='grid grid-cols-2 sm:grid-cols-4'>
             <Tab value={'client'}>
               <div className="flex items-center gap-2">
                 <BuildingLibraryIcon className="h-5 w-5" />

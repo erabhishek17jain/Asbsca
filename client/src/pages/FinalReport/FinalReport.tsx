@@ -288,26 +288,26 @@ const FinalReport = () => {
   return (
     <>
       <ABreadcrumb pageName="Preview Report" />
-      <div className="overflow-x-scroll relative h-[80vh] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
-        <div className="flex justify-between items-center mb-3">
-          <AButton
-            variant={'link'}
-            label={'Back'}
-            action={() => navigate(-1)}
-            icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
-          />
-          <div className='text-lg text-main'></div>
-          <ADropdown
-            options={dropdownOptions[state?.activeItem?.status]}
-            header={
-              <span className="text-right">
-                <span className="flex gap-1 font-medium text-main">
-                  <span>Actions</span>
-                </span>
+      <div className="flex justify-between items-center mb-3">
+        <AButton
+          variant={'link'}
+          label={'Back'}
+          action={() => navigate(-1)}
+          icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
+        />
+        <div className="text-lg text-main"></div>
+        <ADropdown
+          options={dropdownOptions[state?.activeItem?.status]}
+          header={
+            <span className="text-right">
+              <span className="flex gap-1 font-medium text-main">
+                <span>Actions</span>
               </span>
-            }
-          />
-        </div>
+            </span>
+          }
+        />
+      </div>
+      <div className="overflow-x-scroll relative h-[80vh] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         {!loading ? (
           <div className="-my-4 -mx-6">
             <section className="pdf-body" ref={bodyRef}>

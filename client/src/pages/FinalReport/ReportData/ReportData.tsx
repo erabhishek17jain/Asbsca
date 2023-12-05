@@ -15,7 +15,7 @@ const ReportData = () => {
     (item: any) => item?.isDoc === 'Yes',
   );
   return (
-    <div className="flex flex-col text-sm  py-4 px-6">
+    <div className="flex flex-col text-sm  py-4 px-6 min-w-[650px]">
       <table className="mb-1.5" cellSpacing={0}>
         <tbody>
           <tr className="bg text-center font-bold">

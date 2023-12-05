@@ -47,8 +47,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="w-4/12">
+      <div className="flex flex-col gap-3 mb-2 sm:flex-row justify-between items-center">
+        <div className="sm:w-4/12 w-full sm:text-left text-center">
           <div className="relative inline-block">
             <select
               id="filter"
@@ -68,7 +68,7 @@ const Dashboard = () => {
             </span>
           </div>
         </div>
-        <div className="w-8/12 flex gap-3">
+        <div className="sm:w-8/12 w-auto flex gap-3">
           {userDetails?.role?.name === 'Admin' && (
             <div className="flex gap-2 w-full flex-col">
               <div className="flex justify-end gap-3">
@@ -116,10 +116,7 @@ const Dashboard = () => {
                 data={topAssignedCases}
                 tableHeader={tableRaw?.header}
                 tableBody={
-                  <CasesBody
-                    status={'dashboard'}
-                    allcases={topAssignedCases}
-                  />
+                  <CasesBody status={'dashboard'} allcases={topAssignedCases} />
                 }
               />
             </div>

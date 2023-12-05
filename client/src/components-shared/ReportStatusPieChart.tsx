@@ -71,7 +71,7 @@ const ReportStatusPieChart: React.FC = () => {
 
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart options={options} series={series} type="donut" />
+          <ReactApexChart options={options} series={series} type="donut" height={400} width={400} />
         </div>
       </div>
     </div>

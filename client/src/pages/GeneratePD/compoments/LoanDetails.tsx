@@ -95,7 +95,7 @@ const LoanDetails = ({
   return (
     <>
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
-        <div className="flex flex-col w-[60%] py-4">
+        <div className="flex flex-col sm:w-[60%] py-4">
           <ASingleSelect
             id={'bankName'}
             label={'Bank Name'}

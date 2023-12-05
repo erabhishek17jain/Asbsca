@@ -10,9 +10,9 @@ const ARadioButtonGroup = ({
   isReset = false,
 }: any) => {
   return (
-    <div className="flex items-center gap-3 py-4">
-      <div className={`min-w-[25%] ${width}`}>{title}</div>
-      <div className="flex">
+    <div className="flex flex-col xsm:flex-row xsm:items-center gap-3 py-4">
+      <div className={`min-w-[25%] w-full xsm:${width}`}>{title}</div>
+      <div className="flex w-1/2">
         {radioValues?.map((item: any) => (
           <ARadiobox
             id={item.value + title}
@@ -24,11 +24,7 @@ const ARadioButtonGroup = ({
           />
         ))}
         {isReset && value !== '' && (
-          <AButton
-            label={'Reset'}
-            variant="small"
-            action={isReset}
-          />
+          <AButton label={'Reset'} variant="small" action={isReset} />
         )}
       </div>
     </div>

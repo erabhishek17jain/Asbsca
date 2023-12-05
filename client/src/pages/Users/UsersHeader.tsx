@@ -14,14 +14,12 @@ const UsersHeader = ({ openUserModal }: any) => {
           </div>
         </div>
         <div className="flex justify-between items-center gap-3">
-          <div className="flex justify-end items-center gap-3">
             <AButton
               variant={'primary'}
               label={'Add User'}
               action={openUserModal}
               icon={<PlusIcon className="h-5 w-5 stroke-white stroke-1" />}
             />
-          </div>
         </div>
       </div>
     </div>

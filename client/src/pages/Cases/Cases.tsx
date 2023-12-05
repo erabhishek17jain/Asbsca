@@ -314,7 +314,7 @@ const Cases = () => {
       <ABreadcrumb pageName={tableRaw?.title} />
       <div className="flex flex-col">
         {userDetails?.role?.name === 'Admin' && pathname.includes('cases') && (
-          <div className="flex justify-end gap-3 mx-4">
+          <div className="flex justify-end gap-3 mb-2 sm:mx-4">
             <AButton
               variant={'secondary'}
               label={'Bulk Upload'}

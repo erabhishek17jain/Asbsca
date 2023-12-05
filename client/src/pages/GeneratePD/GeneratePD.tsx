@@ -65,7 +65,7 @@ const GeneratePD = () => {
       <ABreadcrumb pageName="Generate PD" />
       {Object.keys(reportData).length !== 0 && (
         <div className="flex gap-2 w-full flex-col">
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-center sm:justify-end gap-3">
             <AButton
               variant={'secondary'}
               label={'View Report'}
@@ -81,7 +81,7 @@ const GeneratePD = () => {
           </div>
         </div>
       )}
-      <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
+      <div className="overflow-hidden relative h-[calc(100vh-170px)] bg-clip-border rounded-xl bg-white shadow-lg p-4 sm:p-5">
         <AStepper
           steps={reportSteps}
           payloads={payloads}

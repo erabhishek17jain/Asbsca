@@ -21,7 +21,7 @@ const CasesHeader = ({
 
   return (
     <div className="flex flex-col justify-between gap-5">
-      <div className="flex w-full justify-between gap-2">
+      <div className="flex sm:flex-row flex-col w-full justify-between gap-2">
         <div>
           <h5 className="block antialiased font-semibold text-xl leading-normal text-main font-normal">
             {title}
@@ -30,7 +30,7 @@ const CasesHeader = ({
             {description}
           </div>
         </div>
-        <div className="flex justify-between items-start gap-3">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
           <FilterButtons
             showFilter={showFilter}
             defaultFilters={defaultFilters}

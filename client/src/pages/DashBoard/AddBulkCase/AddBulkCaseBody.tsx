@@ -5,9 +5,7 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 const AddBulkCaseBody = ({ data }: any) => {
   return data.map((item: any, index: number) => {
     const isLast = index === data.length - 1;
-    const classes = isLast
-      ? 'p-4 border-0'
-      : 'p-4 border-0 border-b border-stroke';
+    const classes = `p-4 border-0 ${!isLast && 'border-b border-stroke'}`
     return (
       <tr key={item?.bankName}>
         <TableColumn classes={classes} label={item?.srNo} />
