@@ -13,7 +13,6 @@ import {
   ArrowTopRightOnSquareIcon,
   PencilSquareIcon,
   PlusIcon,
-  TrashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
 import AButton from '../../components-global/AButton';
@@ -45,6 +44,7 @@ const successMessages: any = {
   review: 'Case sent to reviewer sucessfully.',
   completed: 'Case is approved sucessfully.',
   sentToBank: 'Case is sucessfully sent to bank.',
+  unassigned: 'Case restored sucessfully. Check All cases to see.',
 };
 
 const Cases = () => {
@@ -192,9 +192,9 @@ const Cases = () => {
     }
   };
 
-  const openDeleteModal = () => {
-    setShowDeleteModal(true);
-  };
+  // const openDeleteModal = () => {
+  //   setShowDeleteModal(true);
+  // };
 
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
@@ -215,6 +215,17 @@ const Cases = () => {
       .catch((e: any) => {
         toast.error(<b>{e?.error?.response?.data?.message}</b>);
       });
+  };
+
+  const restoreCase = (id: string) => {
+    const values = {
+      remark: '',
+      assignTo: null,
+      reviewer: null,
+      status: 'unassigned',
+      appoinmentStatus: 'notScheduled',
+    };
+    updateCaseStatus(id, values);
   };
 
   useEffect(() => {
@@ -253,7 +264,7 @@ const Cases = () => {
     if (status === 'cases') {
       setFilters({});
     } else if (status === 'assigned') {
-      setFilters({ ...filters, ...{ status: 'assignedquery' } });
+      setFilters({ ...filters, ...{ status: 'assigned_query' } }); // assigned_query
     } else {
       setFilters({ ...filters, ...{ status: status } });
     }
@@ -263,7 +274,7 @@ const Cases = () => {
     if (allUsers?.users?.length > 0) {
       setUsersOptions(
         getOptions(
-          allUsers?.users.filter((item: any) => item.isVerified),
+          allUsers?.users?.filter((item: any) => item.isVerified),
           'fullName',
           '_id',
         ),
@@ -289,11 +300,6 @@ const Cases = () => {
         action: updateStatusCase,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
       },
-      {
-        title: 'Delete Case',
-        action: openDeleteModal,
-        icon: <TrashIcon className="h-5 w-5" />,
-      },
     ],
     assigned: [
       {
@@ -305,6 +311,13 @@ const Cases = () => {
         title: 'Update Status',
         action: updateStatusCase,
         icon: <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-2" />,
+      },
+    ],
+    cancelled: [
+      {
+        title: 'Restore',
+        action: restoreCase,
+        icon: <></>,
       },
     ],
   };

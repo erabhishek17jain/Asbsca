@@ -1,6 +1,7 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Tooltip } from '@material-tailwind/react';
 import { TableColumn } from '../../components-global/ATable';
+import { pages } from '../../constants';
 
 const MastersBody = ({
   type,
@@ -14,7 +15,10 @@ const MastersBody = ({
     const classes = `p-4 border-0 ${!isLast && 'border-b border-stroke'}`;
     return (
       <tr key={item?.name}>
-        <TableColumn classes={classes} label={(meta?.page - 1) * 10 + index + 1} />
+        <TableColumn
+          classes={classes}
+          label={(meta?.page - 1) * 10 + index + 1}
+        />
         <TableColumn
           classes={classes}
           label={item?.name}
@@ -40,7 +44,7 @@ const MastersBody = ({
           <TableColumn
             classes={classes}
             label={
-              item?.name === 'Admin'
+              item?.permissions.length === pages.length
                 ? 'Full Access'
                 : item?.permissions.join(', ')
             }
