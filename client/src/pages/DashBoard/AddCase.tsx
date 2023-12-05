@@ -126,7 +126,7 @@ const AddCase = () => {
     if (allUsers?.users?.length > 0) {
       setUsersOptions(
         getOptions(
-          allUsers?.users.filter((item: any) => item.isVerified),
+          allUsers?.users?.filter((item: any) => item.isVerified),
           'fullName',
           '_id',
         ),

@@ -63,7 +63,8 @@ const CasesBody = ({
         <TableColumn classes={classes} label={item?.city} />
         {(status === 'cases' ||
           status === 'completed' ||
-          status === 'sentToBank') && (
+          status === 'sentToBank' ||
+          status === 'cancelled') && (
           <TableColumn classes={classes} label={item?.branch?.name} />
         )}
         {status !== 'completed' && status !== 'sentToBank' && (
@@ -72,7 +73,8 @@ const CasesBody = ({
         <TableColumn classes={classes} label={localOrOGL.label} />
         {(status === 'cases' ||
           status === 'completed' ||
-          status === 'sentToBank') && (
+          status === 'sentToBank' ||
+          status === 'cancelled') && (
           <TableColumn classes={classes} label={caseType.label} />
         )}
         {(status === 'cases' ||
@@ -95,7 +97,8 @@ const CasesBody = ({
         )}
         {(status === 'cases' ||
           status === 'assigned' ||
-          status === 'dashboard') && (
+          status === 'dashboard' ||
+          status === 'cancelled') && (
           <>
             <TableColumn
               classes={classes}
@@ -117,7 +120,9 @@ const CasesBody = ({
           <TableColumn classes={classes} label={item?.assignTo?.fullName} />
         )}
         <TableColumn classes={classes} label={item?.reviewer?.fullName} />
-        {(status === 'completed' || status === 'sentToBank') && (
+        {(status === 'completed' ||
+          status === 'sentToBank' ||
+          status === 'cancelled') && (
           <>
             <TableColumn
               classes={classes}
@@ -170,6 +175,16 @@ const CasesBody = ({
                 selectCase={selectCase}
                 activeItem={activeItem}
                 header={<EllipsisVerticalIcon className="h-5 w-5" />}
+              />
+            )}
+            {status === 'cancelled' && (
+              <AButton
+                variant="small"
+                label={menuOptions[0].title}
+                action={() => menuOptions[0].action(item?._id)}
+                icon={
+                  <ArrowTopRightOnSquareIcon className="h-5 w-5 stroke-main stroke-1" />
+                }
               />
             )}
           </div>

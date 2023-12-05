@@ -63,6 +63,11 @@ const coreRoutes = [
     component: Cases,
   },
   {
+    path: '/cancelled',
+    title: 'Cancelled',
+    component: Cases,
+  },
+  {
     path: '/masters',
     title: 'Masters',
     component: Masters,
