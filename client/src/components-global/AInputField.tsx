@@ -23,7 +23,7 @@ const AInputField = ({
           }`}
           htmlFor={id}
         >
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end font-medium">
             <span>{label}</span>
             {rightLabel !== '' && (
               <span className="text-main text-xs mr-2">{rightLabel}</span>

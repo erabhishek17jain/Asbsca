@@ -42,26 +42,26 @@ const Masters = () => {
       <ABreadcrumb pageName="Masters" />
       <div className="w-full mb-4" id="masters">
         <Tabs value="client">
-          <TabsHeader className='grid grid-cols-2 sm:grid-cols-4'>
-            <Tab value={'client'}>
+          <TabsHeader className="grid grid-cols-2 sm:grid-cols-4">
+            <Tab value={'client'} className="font-semibold">
               <div className="flex items-center gap-2">
                 <BuildingLibraryIcon className="h-5 w-5" />
                 <span>Clients ({allClients?.meta?.count})</span>
               </div>
             </Tab>
-            <Tab value={'product'}>
+            <Tab value={'product'} className="font-semibold">
               <div className="flex items-center gap-2">
                 <UserIcon className="h-5 w-5" />
                 <span>Products ({allProducts?.meta?.count})</span>
               </div>
             </Tab>
-            <Tab value={'branch'}>
+            <Tab value={'branch'} className="font-semibold">
               <div className="flex items-center gap-2">
                 <MapPinIcon className="h-5 w-5" />
                 <span>Branchs ({allBranchs?.meta?.count})</span>
               </div>
             </Tab>
-            <Tab value={'role'}>
+            <Tab value={'role'} className="font-semibold">
               <div className="flex items-center gap-2">
                 <MapPinIcon className="h-5 w-5" />
                 <span>Roles ({allRoles?.meta?.count})</span>

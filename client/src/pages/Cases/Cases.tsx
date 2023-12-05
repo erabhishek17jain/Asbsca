@@ -253,7 +253,7 @@ const Cases = () => {
     if (status === 'cases') {
       setFilters({});
     } else if (status === 'assigned') {
-      setFilters({ ...filters, ...{ status: 'assigned_query' } }); // assigned_query
+      setFilters({ ...filters, ...{ status: 'assignedquery' } });
     } else {
       setFilters({ ...filters, ...{ status: status } });
     }

@@ -18,7 +18,7 @@ const ASingleSelect = ({
       }`}
     >
       <label
-        className={`block text-main text-sm ${
+        className={`block text-main text-sm font-medium ${
           variant === 'horizantal' ? `min-w-[30%] ${error && 'mb-6'}` : ''
         }`}
       >
@@ -30,7 +30,7 @@ const ASingleSelect = ({
           value={value}
           disabled={disabled}
           onChange={handleChange}
-          className="def relative text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary  disabled:cursor-not-allowed disabled:bg-whiter"
+          className="def relative  font-medium text-sm z-20 w-full appearance-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary  disabled:cursor-not-allowed disabled:bg-whiter"
         >
           <option value="" key={id}>
             Select {label}
