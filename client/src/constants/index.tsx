@@ -64,7 +64,7 @@ export const pages = [
   },
   {
     label: 'Masters',
-    value: 'masters',
+    value: 'master',
     isChecked: false,
     icon: <QueueListIcon className="h-5 w-5" />,
   },
