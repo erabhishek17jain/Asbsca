@@ -16,6 +16,7 @@ export const reportSteps = [
   { index: 12, label: 'Other Observation' },
   { index: 13, label: 'Documents seen' },
   { index: 14, label: 'Business Process of' },
+  { index: 15, label: 'Photo & Screenshots' },
 ];
 
 export const yesNoOptions = [
@@ -561,6 +562,31 @@ export const particularsInvestment = [
   { label: 'Gold', value: 'Gold' },
   { label: 'ULIP', value: 'ULIP' },
   { label: 'Cryptocurrencies', value: 'Cryptocurrencies' },
+];
+
+export const assetReasons = [
+  {
+    label: 'Reason fow low asset backing was not provided.',
+    value: 'Reason fow low asset backing was not provided.',
+  },
+  {
+    label:
+      'Asset backing is as recently their business became profitable recently.',
+    value:
+      'Asset backing is as recently their business became profitable recently.',
+  },
+  {
+    label: 'Asset backing is low as savings are invested in his spouse name.',
+    value: 'Asset backing is low as savings are invested in his spouse name.',
+  },
+  {
+    label: 'Asset backing is as recently they done wedding expenses.',
+    value: 'Asset backing is as recently they done wedding expenses.',
+  },
+  {
+    label: 'Asset backing is as recently they done major medical expenses.',
+    value: 'Asset backing is as recently they done major medical expenses.',
+  },
 ];
 
 export const thirdPartyCheck = [

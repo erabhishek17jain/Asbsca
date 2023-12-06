@@ -87,12 +87,12 @@ const ATable = ({
         </table>
       </CardBody>
       {!loading && data && data?.length === 0 && (
-        <div className="w-full h-20 pb-6 flex items-center justify-center">
+        <div className="w-full h-20 pb-6 flex items-center justify-center font-medium">
           No Record found.
         </div>
       )}
       {loading && (
-        <div className="w-full h-20 pb-6 flex items-center justify-center">
+        <div className="w-full h-20 pb-6 flex items-center justify-center font-medium">
           <ALoader height={80} />
         </div>
       )}

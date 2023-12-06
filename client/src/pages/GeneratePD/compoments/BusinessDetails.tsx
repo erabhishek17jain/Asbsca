@@ -115,6 +115,19 @@ const BusinessDetails = ({
   };
 
   useEffect(() => {
+    if (formik?.values?.doYouHavefixedEmployee !== 'Yes') {
+      formik.setFieldValue('empSeen', 0);
+      formik.setFieldValue('empSpecified', 0);
+    } else {
+      formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
+      formik.setFieldValue(
+        'empSpecified',
+        payloads?.businessDetails?.empSpecified,
+      );
+    }
+  }, [formik?.values?.doYouHavefixedEmployee]);
+
+  useEffect(() => {
     let total = 0;
     formik?.values?.shareHoldings?.forEach((item: any) => {
       if (item.shareHolding !== '') {
@@ -378,6 +391,7 @@ const BusinessDetails = ({
                   value={formik?.values?.empSpecified}
                   error={formik?.errors?.empSpecified}
                   handleChange={formik?.handleChange}
+                  disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
                 />
                 <AInputField
                   type={'number'}
@@ -386,6 +400,7 @@ const BusinessDetails = ({
                   value={formik?.values?.empSeen}
                   error={formik?.errors?.empSeen}
                   handleChange={formik?.handleChange}
+                  disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
                 />
               </div>
             </AGroupFields>

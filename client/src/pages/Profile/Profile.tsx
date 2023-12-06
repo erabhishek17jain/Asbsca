@@ -105,7 +105,7 @@ const Profile = () => {
                 <h3 className="mt-4 mb-1.5 text-2xl font-semibold text-main">
                   {userDetails?.fullName}
                 </h3>
-                <p className="flex flex-col xsm:flex-row justify-center xsm:items-center gap-3 font-medium my-4">
+                <p className="flex flex-col sm:flex-row justify-center sm:items-center gap-3 font-medium my-4">
                   <span className="flex gap-2 items-center justify-center">
                     <UserIcon className="h-5 w-5" />
                     {userDetails?.username}
@@ -121,7 +121,7 @@ const Profile = () => {
                 </p>
 
                 <div className="mx-auto max-w-180">
-                  <h4 className="font-semibold text-main">About Me</h4>
+                  <h4 className="font-semibold justify-center text-main">About Me</h4>
                   <p className="mt-4.5">
                     {userDetails?.about
                       ? userDetails?.about

@@ -8,6 +8,7 @@ import {
   Squares2X2Icon,
   UserIcon,
   UsersIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid';
 
 export const baseAPI = '/api/v1';
@@ -42,6 +43,12 @@ export const pages = [
     value: 'completed',
     isChecked: false,
     icon: <DocumentTextIcon className="h-5 w-5" />,
+  },
+  {
+    label: 'Cancelled',
+    value: 'cancelled',
+    isChecked: false,
+    icon: <XMarkIcon className="h-5 w-5 stroke-dark stroke-2" />,
   },
   {
     label: 'Sent To Bank',
@@ -184,6 +191,32 @@ export const casesTypes = [
       'Reports',
     ],
   },
+  {
+    id: 'cancelled',
+    title: 'Cancelled',
+    description: 'These are the list of all cancelled cases.',
+    header: [
+      '',
+      'Bank Name',
+      'Reference ID',
+      'Received Date',
+      "Applicant's Name",
+      'Mobile',
+      'Address',
+      'City',
+      'Branch',
+      'Loan Amt (In Lakhs)',
+      'Type',
+      'Case Type',
+      'Appointment Status',
+      'Remark',
+      'Assigned to',
+      'Reviewer',
+      'Started Date',
+      'Completed date',
+      'Action',
+    ],
+  },
 ];
 
 export const BULK_UPLOAD_TABLE_HEAD = [
@@ -264,6 +297,7 @@ export const caseStatusList = [
   { label: 'Query', value: 'query' },
   { label: 'Completed', value: 'completed' },
   { label: 'Sent to Bank', value: 'sentToBank' },
+  { label: 'Cancelled', value: 'cancelled' },
 ];
 
 export const appoinmentStatusList = [

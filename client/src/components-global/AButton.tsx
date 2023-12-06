@@ -24,7 +24,7 @@ const AButton = ({
           }
           ${
             variant === 'full' &&
-            'py-2 pl-3 pr-4 border border-main w-full bg-main text-grey'
+            'py-2 pl-3 pr-4 border border-main w-full bg-main text-white'
           }
           `}
     >

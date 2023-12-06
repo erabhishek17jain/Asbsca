@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/images/logo/logo.png';
 import { ArrowSmallLeftIcon } from '@heroicons/react/24/solid';
 import { pages } from '../constants';
@@ -11,6 +11,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
   const { userDetails } = useSelector((state: any) => state.users);
@@ -23,6 +24,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
+
+  const handleLink = (link: string) => {
+    navigate(link);
+    setSidebarOpen(false);
+  };
 
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -61,7 +67,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     if (userDetails) {
       const menu = pages.filter(
-        (item) => userDetails?.role?.permissions.includes(item.value),
+        (item) => userDetails?.role?.permissions.includes(item.label),
       );
       setSideBarPages(menu);
     }
@@ -96,15 +102,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               {sideBarPages?.map((item: any) => (
                 <li key={item.value}>
-                  <NavLink
-                    to={`/${item.value}`}
+                  <div
+                    onClick={() => handleLink(`/${item.value}`)}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-dark duration-300 ease-in-out hover:bg-grey ${
                       pathname.includes(item.value) && 'bg-grey'
                     }`}
                   >
                     {item.icon}
                     {item.label}
-                  </NavLink>
+                  </div>
                 </li>
               ))}
             </ul>

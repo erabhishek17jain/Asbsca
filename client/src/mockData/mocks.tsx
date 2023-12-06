@@ -550,9 +550,7 @@ export const reportDataMock: any = {
         collectionPeriod: '1.2 Months',
         creditPeriodAllowed: 10,
         whyIrRegular: 'Because of fire in plant.',
-      },
-      totalDebtors: 25,
-      collectionPeriod: '-',
+      }
     },
   },
   stocks: {

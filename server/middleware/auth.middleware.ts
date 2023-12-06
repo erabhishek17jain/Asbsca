@@ -36,6 +36,7 @@ export default class Auth {
       const token = req.headers.authorization?.split(" ")[1];
       if (token) {
         const payload = JWT.fn.verifyToken(token);
+        console.log(payload);
         if (payload) {
           res.locals.user = payload;
           next();

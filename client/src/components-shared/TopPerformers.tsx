@@ -15,7 +15,11 @@ const TopPerformers = ({ topPerfomers }: any) => {
         >
           <div className="relative h-14 w-14 rounded-full">
             {user?.profile ? (
-              <img src={user?.profile} className="rounded-full" alt="User" />
+              <img
+                src={user?.profile}
+                className="h-14 w-14 rounded-full"
+                alt="User"
+              />
             ) : (
               <UserCircleIcon className="w-15 h-15" />
             )}
