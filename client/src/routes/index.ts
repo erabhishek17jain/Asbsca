@@ -68,7 +68,7 @@ const coreRoutes = [
     component: Cases,
   },
   {
-    path: '/masters',
+    path: '/master',
     title: 'Masters',
     component: Masters,
   },

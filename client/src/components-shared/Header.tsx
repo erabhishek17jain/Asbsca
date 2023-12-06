@@ -9,7 +9,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }: any) => {
   return (
     <header
       className={`sticky top-0 flex w-full bg-white drop-shadow-1 ${
-        pathname.includes('masters') ? 'z-2' : 'z-10'
+        pathname.includes('master') ? 'z-2' : 'z-10'
       }`}
     >
       <div className="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
