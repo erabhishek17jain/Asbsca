@@ -72,6 +72,7 @@ export const qualification = [
   { label: 'Fashion Designer', value: 'Fashion Designer' },
   { label: 'Interior Designer', value: 'Interior Designer' },
   { label: 'LLB', value: 'LLB' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const natureOfAddress = [
@@ -86,6 +87,7 @@ export const natureOfAddress = [
     label: 'Trading or Manufacturing',
     value: 'Trading or Manufacturing',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const residenceStatus = [
@@ -113,6 +115,7 @@ export const residenceStatus = [
     label: 'Owned by Under Pagadi System',
     value: 'Owned by Under Pagadi SystemN',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const residanceType = [
@@ -133,6 +136,7 @@ export const familyRealtion = [
   { label: 'Kids', value: 'Kids' },
   { label: 'Director', value: 'Director' },
   { label: 'Partner', value: 'Partner' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const earningStatus = [
@@ -164,6 +168,10 @@ export const typesOfLoan = [
   { label: 'Education Loan', value: 'Education Loan' },
   { label: 'Gold Loan', value: 'Gold Loan' },
   { label: 'Term Loan', value: 'Term Loan' },
+  { label: 'Auto Loan', value: 'Auto Loan' },
+  { label: 'Commercial Loan', value: 'Commercial Loan' },
+  { label: 'Construction Equipment', value: 'Construction Equipment' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const banksList = [
@@ -228,6 +236,7 @@ export const banksList = [
     value: 'Vasai Vikas Shahkari Bank',
   },
   { label: 'Yes Bank', value: 'Yes Bank' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const bankTypes = [
@@ -236,6 +245,7 @@ export const bankTypes = [
   { label: 'OD', value: 'OD' },
   { label: 'CC', value: 'CC' },
   { label: 'DOD', value: 'DOD' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const existingLoanRemark = [
@@ -265,6 +275,7 @@ export const existingLoanRemark = [
     value: 'Taken for Renovation work',
   },
   { label: 'Taken to buy vehicle', value: 'Taken to buy vehicle' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const typeOfFacility = [
@@ -274,15 +285,17 @@ export const typeOfFacility = [
   { label: 'Export Credit', value: 'Export Credit' },
   { label: 'Packing Credit', value: 'Packing Credit' },
   { label: 'Dropline Overdraft', value: 'Dropline Overdraft' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const particularsCommitment = [
-  { label: 'Medium', value: 'Medium' },
+  { label: 'Mediclaim', value: 'Mediclaim' },
   { label: 'Term Plan', value: 'Term Plan' },
   { label: 'LIC', value: 'LIC' },
   { label: 'SIP', value: 'SPI' },
   { label: 'Life Insurance', value: 'Life Insurance' },
   { label: 'Health Insurance', value: 'Health Insurance' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const purchaseYear = [
@@ -298,6 +311,7 @@ export const purchaseYear = [
     label: 'Property Details not provided',
     value: 'Property Details not provided',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const occupiedBy = [
@@ -306,7 +320,6 @@ export const occupiedBy = [
   { label: 'Current Owner/Seller', value: 'Current Owner/Seller' },
   { label: 'Vacant', value: 'Vacant' },
   { label: 'Under Construction', value: 'Under Construction' },
-  { label: 'NP', value: 'NP' },
   { label: 'Given to Relative', value: 'Given to Relative' },
   {
     label: 'Property not yet Finalised',
@@ -316,6 +329,7 @@ export const occupiedBy = [
     label: 'Property Details not provided',
     value: 'Property Details not provided',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const sourceOcr = [
@@ -338,6 +352,7 @@ export const sourceOcr = [
   { label: 'Arrange from Relative', value: 'Arrange from Relative' },
   { label: 'Arrange from Market', value: 'Arrange from Market' },
   { label: 'Savings of Spouse', value: 'Savings of Spouse' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const generation = [
@@ -345,6 +360,7 @@ export const generation = [
   { label: 'Second Generation', value: 'Second Generation' },
   { label: 'Third Generation', value: 'Third Generation' },
   { label: 'Fourth Generation', value: 'Fourth Generation' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const typesOfEntity = [
@@ -359,6 +375,7 @@ export const typesOfEntity = [
   { label: 'Professinal', value: 'Professinal' },
   { label: 'Individual', value: 'Individual' },
   { label: 'Salaried', value: 'Salaried' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const designations = [
@@ -368,6 +385,7 @@ export const designations = [
   { label: 'Professional', value: 'Professional' },
   { label: 'Individual', value: 'Individual' },
   { label: 'Salaried', value: 'Salaried' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const designation = [
@@ -379,6 +397,7 @@ export const designation = [
   { label: 'Professinal', value: 'Professinal' },
   { label: 'Individual', value: 'Individual' },
   { label: 'Salaried', value: 'Salaried' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const vicinity = [
@@ -406,6 +425,7 @@ export const vicinity = [
     label: 'Residental cum commercial (Easily Accessible)',
     value: 'Residental cum commercial (Easily Accessible)',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const turnoverVerified = [
@@ -433,6 +453,7 @@ export const turnoverVerified = [
     label: 'Turnover is verified with Provisional hisab book',
     value: 'Turnover is verified with Provisional hisab book',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const citiesOfRepresentation = [
@@ -447,8 +468,8 @@ export const citiesOfRepresentation = [
   },
   { label: 'Maharashtra', value: 'Maharashtra' },
   { label: 'Pan India', value: 'Pan India' },
-  { label: 'All India', value: 'All India' },
   { label: 'India & Abroad', value: 'India & Abroad' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const fixedEmployee = [
@@ -458,6 +479,7 @@ export const fixedEmployee = [
     label: 'Yes but emoloyee not seen',
     value: 'Yes but emoloyee not seen',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 // show list from personal details
@@ -474,6 +496,7 @@ export const applicantIncome = [
   { label: 'Co-Applicant 4', value: 'Co-Applicant 4' },
   { label: 'Co-Applicant 5', value: 'Co-Applicant 5' },
   { label: 'Co-Applicant 6', value: 'Co-Applicant 6' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const trendOfBusiness = [
@@ -494,6 +517,7 @@ export const trendOfBusiness = [
     value: 'Business is in downword trend',
   },
   { label: 'Business is stable', value: 'Business is stable' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const futureProjection = [
@@ -511,6 +535,7 @@ export const futureProjection = [
     value:
       'Applicant is planning to buy machineries and invest in working capital from LAP/Top-up',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const particularsAssets = [
@@ -533,6 +558,7 @@ export const particularsAssets = [
   { label: 'Shop', value: 'Shop' },
   { label: 'Tempo', value: 'Tempo' },
   { label: 'Truck', value: 'Truck' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const statusAssets = [
@@ -547,6 +573,13 @@ export const statusAssets = [
     value: 'Self-Owned by (Parental)',
   },
   { label: 'Self-constructed', value: 'Self-constructed' },
+  { label: 'NP', value: 'NP' },
+];
+
+export const assetStatus = [
+  { label: 'Rented', value: 'Rented' },
+  { label: 'Vacant', value: 'Vacant' },
+  { label: 'Self-Occupied', value: 'Self-Occupied' },
 ];
 
 export const particularsInvestment = [
@@ -562,6 +595,7 @@ export const particularsInvestment = [
   { label: 'Gold', value: 'Gold' },
   { label: 'ULIP', value: 'ULIP' },
   { label: 'Cryptocurrencies', value: 'Cryptocurrencies' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const assetReasons = [
@@ -587,6 +621,7 @@ export const assetReasons = [
     label: 'Asset backing is as recently they done major medical expenses.',
     value: 'Asset backing is as recently they done major medical expenses.',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const thirdPartyCheck = [
@@ -608,6 +643,7 @@ export const activityReason = [
     label: 'Activity is generally at site',
     value: 'Activity is generally at site',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const stockReason = [
@@ -623,6 +659,7 @@ export const stockReason = [
     label: 'We weew not allowed to see the stock',
     value: 'We weew not allowed to see the stock',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const applicantBehaviour = [
@@ -644,12 +681,13 @@ export const applicantBehaviour = [
     label: 'Extreamlt Rude in sharing information',
     value: 'Extreamlt Rude in sharing information',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const applicantDoing = [
   {
-    label: 'Applicant was on all with his client',
-    value: 'Applicant was on all with his client',
+    label: 'Applicant was on call with his client',
+    value: 'Applicant was on call with his client',
   },
   {
     label: 'Applicant was in meeting with his employees',
@@ -671,6 +709,7 @@ export const applicantDoing = [
     label: 'Applicant was doing regular business activities',
     value: 'Applicant was doing regular business activities',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const employeeDoing = [
@@ -690,6 +729,7 @@ export const employeeDoing = [
     label: 'Employees were handling customers',
     value: 'Employees were handling customers',
   },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const businessProcess = [
@@ -708,4 +748,5 @@ export const businessProcess = [
   { label: 'Hospital/Clinic', value: 'Hospital/Clinic' },
   { label: 'Manufacturing', value: 'Manufacturing' },
   { label: 'Other', value: 'Other' },
+  { label: 'NP', value: 'NP' },
 ];

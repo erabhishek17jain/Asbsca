@@ -34,11 +34,13 @@ const AInputField = ({
       <div className="relative flex-1">
         <input
           id={id}
+          min={0}
           type={type}
           value={value}
           disabled={disabled}
           onChange={handleChange}
           placeholder={`Enter ${label}`}
+          onWheel={(e: any) => e?.target?.blur()}
           className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-defnot-allowedault disabled:bg-whiter"
         />
         {icon && (

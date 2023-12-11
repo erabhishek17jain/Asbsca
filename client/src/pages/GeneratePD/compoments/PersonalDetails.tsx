@@ -201,7 +201,7 @@ const PersonalDetails = ({
                           addTag={() =>
                             tag.push({
                               ...applicantInfo,
-                              title: 'Co-Applicant',
+                              title: `Co-Applicant ${formik?.values?.applicants.length}`,
                             })
                           }
                         />
@@ -332,7 +332,6 @@ const PersonalDetails = ({
                             <AInputField
                               type={'number'}
                               id={`applicants[${index}].pastExp`}
-                              disabled={true}
                               label={'Past Experience'}
                               value={formik?.values?.applicants[index].pastExp}
                               error={
@@ -343,7 +342,6 @@ const PersonalDetails = ({
                             <AInputField
                               type={'number'}
                               id={`applicants[${index}].overallExp`}
-                              disabled={true}
                               label={'Overall Experience'}
                               value={
                                 formik?.values?.applicants[index].overallExp

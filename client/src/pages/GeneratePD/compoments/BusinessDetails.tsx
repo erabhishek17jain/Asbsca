@@ -46,6 +46,7 @@ const initialValues = {
   doYouHavefixedEmployee: '',
   empSpecified: 0,
   empSeen: 0,
+  empReason: '',
   shareHoldings: [
     {
       ownerName: '',
@@ -75,7 +76,7 @@ const BusinessDetails = ({
     ownership: Yup.string().required('This field is required'),
     pdConductWith: Yup.string().required('This field is required'),
     designation: Yup.string().required('This field is required'),
-    mobile: Yup.number().required('This field is required'),
+    mobile: Yup.string().required('This field is required'),
     familyBusiness: Yup.number().required('This field is required'),
     mainUseproducts: Yup.string().required('This field is required'),
     howTurnoverVerified: Yup.string().required('This field is required'),
@@ -85,6 +86,7 @@ const BusinessDetails = ({
     doYouHavefixedEmployee: Yup.string().required('This field is required'),
     empSpecified: Yup.number().required('This field is required'),
     empSeen: Yup.number().required('This field is required'),
+    empReason: Yup.string().required('This field is required'),
     shareHoldings: Yup.array().of(
       Yup.object().shape({
         ownerName: Yup.string().required('This field is required'),
@@ -117,9 +119,11 @@ const BusinessDetails = ({
   useEffect(() => {
     if (formik?.values?.doYouHavefixedEmployee !== 'Yes') {
       formik.setFieldValue('empSeen', 0);
+      formik.setFieldValue('empReason', '-');
       formik.setFieldValue('empSpecified', 0);
     } else {
       formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
+      formik.setFieldValue('empReason', payloads?.businessDetails?.empReason);
       formik.setFieldValue(
         'empSpecified',
         payloads?.businessDetails?.empSpecified,
@@ -202,6 +206,7 @@ const BusinessDetails = ({
         payloads?.businessDetails?.empSpecified,
       );
       formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
+      formik.setFieldValue('empReason', payloads?.businessDetails?.empReason);
       formik.setFieldValue(
         'shareHoldings',
         payloads?.businessDetails?.shareHoldings,
@@ -315,7 +320,6 @@ const BusinessDetails = ({
               />
               <AInputField
                 id={'mobile'}
-                type={'number'}
                 label={'Mobile No.'}
                 value={formik?.values?.mobile}
                 error={formik?.errors?.mobile}
@@ -403,6 +407,14 @@ const BusinessDetails = ({
                   disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
                 />
               </div>
+              <AInputField
+                id={'empReason'}
+                label={'Reason why emp seen less than specified?'}
+                value={formik?.values?.empReason}
+                error={formik?.errors?.empReason}
+                handleChange={formik?.handleChange}
+                disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
+              />
             </AGroupFields>
           </ASection>
           <ASection
@@ -466,10 +478,19 @@ const BusinessDetails = ({
                                   />
                                 </AGroupFields>
                               </div>
-                              <AddTagFooter
-                                addTag={() => tag.push(shareInfo)}
-                                removeTag={() => tag.remove(index)}
-                              />
+                              {(formik?.values?.typeOfEntity ===
+                                'Partnership' ||
+                                formik?.values?.typeOfEntity ===
+                                  'Partnership(LLP)' ||
+                                formik?.values?.typeOfEntity ===
+                                  'Private Limited Company' ||
+                                formik?.values?.typeOfEntity ===
+                                  'Public Limited Company') && (
+                                <AddTagFooter
+                                  addTag={() => tag.push(shareInfo)}
+                                  removeTag={() => tag.remove(index)}
+                                />
+                              )}
                             </div>
                           ),
                         )

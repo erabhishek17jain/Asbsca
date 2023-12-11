@@ -132,7 +132,7 @@ const DetailsOfProperty = ({
     const pmt = (-ir * (pv * pvif)) / (pvif - 1);
     formik.setFieldValue(
       'propertyLoanDetails.loanDetails.emi',
-      -pmt.toFixed(2),
+      (-pmt/100000).toFixed(2),
     );
   };
 
@@ -244,6 +244,7 @@ const DetailsOfProperty = ({
             </AGroupFields>
           </ASection>
           <ARadioButtonGroup
+            width="w-1/4"
             isReset={() => handleLoanPropertyEMI('', '')}
             value={formik?.values?.propertyLoanDetails?.isLoanProvided}
             title={'Loan to Property'}
@@ -251,7 +252,7 @@ const DetailsOfProperty = ({
             handleChange={handleLoanPropertyEMI}
           />
           {(formik?.values?.propertyLoanDetails?.isLoanProvided ===
-            'propertyValueNotProvided' ||
+            'Property Vaue Not Provided' ||
             formik?.values?.propertyLoanDetails?.isLoanProvided === '') && (
             <ASection title={'Loan Applied'}>
               <AGroupFields>
@@ -287,7 +288,7 @@ const DetailsOfProperty = ({
                   type={'number'}
                   label={'EMI'}
                   disabled={true}
-                  rightLabel={'(Rs.)'}
+                  rightLabel={'(Lakhs)'}
                   id={`propertyLoanDetails.loanDetails.emi`}
                   value={formik?.values?.propertyLoanDetails?.loanDetails?.emi}
                   error={errors?.loanDetails?.emi}
@@ -297,7 +298,7 @@ const DetailsOfProperty = ({
             </ASection>
           )}
           {(formik?.values?.propertyLoanDetails?.isLoanProvided ===
-            'loanDetailsNotProvided' ||
+            'Loan Details Not Provided' ||
             formik?.values?.propertyLoanDetails?.isLoanProvided === '') && (
             <ASection title={'Property Value'}>
               <AGroupFields>

@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import { AStepper } from '../../components-global/AStepper';
 import { reportSteps } from './constants';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { addReport, updateReport } from '../../services';
 import toast from 'react-hot-toast';
 import { fetchCaseReportDataAsync } from '../../slices/casesSlice';
@@ -28,14 +28,16 @@ const GeneratePD = () => {
     reportPromise
       .then((res: any) => {
         if (res) {
-          navigate('/finalReport', {
-            state: { activeItem: state?.activeItem },
-          }),
+          if (stepFinished) {
+            navigate('/finalReport', {
+              state: { activeItem: state?.activeItem },
+            });
             toast.success(
               <b>
                 Report {action === 'edit' ? 'updated' : 'created'} sucessfully.
               </b>,
             );
+          }
         }
       })
       .catch((e: any) => {
@@ -44,20 +46,18 @@ const GeneratePD = () => {
   };
 
   useEffect(() => {
-    if (stepFinished) generateReport();
+    if (Object.keys(payloads).length > 0) generateReport();
   }, [payloads]);
 
   useEffect(() => {
-    if (Object.keys(reportData).length > 0) {
+    if (reportData?.data && Object.keys(reportData?.data).length > 0) {
       setAction('edit');
       setPayloads({ ...reportData?.data });
     }
   }, [reportData]);
 
-  useEffect(() => {
-    if (Object.keys(reportData).length === 0) {
-      store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
-    }
+  useLayoutEffect(() => {
+    store.dispatch(fetchCaseReportDataAsync(state?.activeItem?._id));
   }, []);
 
   return (

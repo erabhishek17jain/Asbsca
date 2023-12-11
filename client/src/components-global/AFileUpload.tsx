@@ -14,7 +14,7 @@ const AFileUpload = ({
 
   const onImageChange = async (e: any) => {
     if (e.target.files && e.target.files[0]) {
-      if (e.target.files.length === 1) {
+      if (id !== 'photos') {
         const fileBase64 = await fileToBase64(e.target.files[0]);
         formik.setFieldValue(id, fileBase64);
         setImage(URL.createObjectURL(e.target.files[0]));
@@ -54,9 +54,9 @@ const AFileUpload = ({
             className="w-full text-sm cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-2.5 file:px-3 file:hover:bg-main file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
           />
         </div>
-        {image ? (
+        {id !== 'photos' && image ? (
           <img src={value} className="w-13 h-13 -mt-1 rounded-full" />
-        ) : value !== '' ? (
+        ) : id !== 'photos' &&  value !== '' ? (
           <img alt={id} src={value} className="w-13 h-13 -mt-1 rounded-full" />
         ) : (
           <div className="w-13 h-13 -mt-1 rounded-full">{icon}</div>

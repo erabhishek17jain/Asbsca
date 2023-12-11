@@ -41,7 +41,7 @@ export const AStepperPagination = ({
       <AButton
         action={handleNext}
         variant={'secondary'}
-        label={activeStep === steps?.length - 1 ? 'Generate Report' : 'Next'}
+        label={activeStep === steps?.length - 1 ? 'Generate Report' : 'Save & Next'}
         icon={
           activeStep === steps?.length - 1 ? (
             <DocumentChartBarIcon className="h-5 w-5" />

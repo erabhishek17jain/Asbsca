@@ -257,7 +257,7 @@ const OtherObservation = ({
             >
               <ASingleSelect
                 label={'Select'}
-                options={yesNoOptions}
+                options={[...yesNoOptions, { value: 'NA', label: 'NA' }]}
                 id={`screenshotOfCCTV.exist`}
                 value={formik?.values?.screenshotOfCCTV?.exist}
                 error={errors?.screenshotOfCCTV?.exist}

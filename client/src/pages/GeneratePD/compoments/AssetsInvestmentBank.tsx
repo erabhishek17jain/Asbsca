@@ -7,6 +7,7 @@ import ASingleSelect from '../../../components-global/ASingleSelect';
 import { AddTagButton, AddTagHeader } from '../../../components-global/ATags';
 import {
   assetReasons,
+  assetStatus,
   bankTypes,
   banksList,
   particularsAssets,
@@ -25,6 +26,7 @@ const assetInfo: any = {
   purchaseYear: '',
   carpetArea: '',
   status: '',
+  assetStatus: '',
   marketValue: '',
   rentPM: '',
 };
@@ -126,6 +128,7 @@ const AssetsInvestmentBank = ({
           purchaseYear: Yup.number().required('This field is required'),
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
+          assetStatus: Yup.string().required('This field is required'),
           marketValue: Yup.number().required('This field is required'),
           rentPM: Yup.number().required('This field is required'),
         }),
@@ -139,6 +142,7 @@ const AssetsInvestmentBank = ({
           purchaseYear: Yup.number().required('This field is required'),
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
+          assetStatus: Yup.string().required('This field is required'),
           marketValue: Yup.number().required('This field is required'),
           rentPM: Yup.number().required('This field is required'),
         }),
@@ -305,6 +309,7 @@ const AssetsInvestmentBank = ({
             purchaseYear: el?.purchaseYear,
             carpetArea: el?.carpetArea,
             status: el?.resiStatus,
+            assetStatus: el?.assetStatus,
             marketValue: el?.marketValue,
           });
         });
@@ -317,6 +322,7 @@ const AssetsInvestmentBank = ({
             purchaseYear: el?.purchaseYear,
             carpetArea: el?.carpetArea,
             status: el?.resiStatus,
+            assetStatus: el?.assetStatus,
             marketValue: el?.marketValue,
           });
         });
@@ -331,6 +337,7 @@ const AssetsInvestmentBank = ({
           purchaseYear: '-',
           carpetArea: '-',
           status: '-',
+          assetStatus: '-',
           marketValue:
             payloads?.detailsOfProp?.propertyLoanDetails?.propertyValue
               ?.ocrPaid,
@@ -465,6 +472,21 @@ const AssetsInvestmentBank = ({
                                       error={
                                         errorsBd?.bussinessAssets?.length > 0 &&
                                         errorsBd?.bussinessAssets[index]?.status
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
+                                    <ASingleSelect
+                                      id={`bussinessAssetDetails.bussinessAssets[${index}].assetStatus`}
+                                      label={'Asset Status'}
+                                      options={assetStatus}
+                                      value={
+                                        formik?.values?.bussinessAssetDetails
+                                          .bussinessAssets[index].assetStatus
+                                      }
+                                      error={
+                                        errorsBd?.bussinessAssets?.length > 0 &&
+                                        errorsBd?.bussinessAssets[index]
+                                          ?.assetStatus
                                       }
                                       handleChange={formik.handleChange}
                                     />
@@ -639,6 +661,21 @@ const AssetsInvestmentBank = ({
                                       }
                                       handleChange={formik.handleChange}
                                     />
+                                    <ASingleSelect
+                                      id={`personalAssetDetails.personalAssets[${index}].assetStatus`}
+                                      label={'Asset Status'}
+                                      options={assetStatus}
+                                      value={
+                                        formik?.values?.personalAssetDetails
+                                          .personalAssets[index].assetStatus
+                                      }
+                                      error={
+                                        errorsBd?.personalAssets?.length > 0 &&
+                                        errorsBd?.personalAssets[index]
+                                          ?.assetStatus
+                                      }
+                                      handleChange={formik.handleChange}
+                                    />
                                     <AInputField
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].marketValue`}
@@ -769,7 +806,7 @@ const AssetsInvestmentBank = ({
                                     <AInputField
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].marketValue`}
-                                      label={'Market Year'}
+                                      label={'Market Value'}
                                       rightLabel={'(In Lakhs)'}
                                       value={
                                         formik?.values?.investmentDetails

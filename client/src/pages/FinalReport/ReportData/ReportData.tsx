@@ -1,6 +1,7 @@
 import './ReportData.css';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import parse from 'html-react-parser';
 
 const ReportData = () => {
   const { reportData } = useSelector((state: any) => state.cases);
@@ -468,9 +469,8 @@ const ReportData = () => {
                       ?.year} years on ${amtConvertor(
                       reportData?.data?.detailsOfProp?.propertyLoanDetails
                         ?.loanDetails?.amount,
-                    )} comes to Rs. ${reportData?.data?.detailsOfProp?.propertyLoanDetails?.loanDetails?.emi?.toFixed(
-                      0,
-                    )} p.m.`}
+                    )} comes to Rs. ${reportData?.data?.detailsOfProp
+                      ?.propertyLoanDetails?.loanDetails?.emi} p.m.`}
                   </li>
                 </ul>
               </div>
@@ -503,19 +503,27 @@ const ReportData = () => {
                 ),
               )}
 
-              <div className="flex gap-2 my-2 mx-4 font-bold">
-                <img
-                  width={15}
-                  height={15}
-                  src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
-                />
-                <span>Business Process</span>
-              </div>
-              <div className="mx-4">
-                <ul className="ml-6 mb-6">
-                  <li>-</li>
-                </ul>
-              </div>
+              {reportData?.data?.businessOf?.details?.label &&
+                Object.values(reportData?.data?.businessOf?.details?.label)
+                  ?.length > 0 && (
+                  <>
+                    <div className="flex gap-2 my-2 mx-4 font-bold">
+                      <img
+                        width={15}
+                        height={15}
+                        src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAANAA4DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq/wBqv9rnxD8VPGWvfCj4eX2o+DLjRrjF3qVxus5Lxo2G9PM4a2QHaVZuJM4yMqH9h/Y+/bSHxWl1TwT4ktdUvPEvh23Uza1Bp0my9VWEbNJEgJhfccbWxuAJwpDKvTftnfsi+HP2hPBk919tk8M69C8TvqdnAH+1IrYEdwmV80LklcnKHkdwfXvg18FfDfwS8G2uhaFC8rrGi3ep3JDXd86rtEk0gwWOBgdlAAGABQB//9kA"
+                      />
+                      <span>Business Process</span>
+                    </div>
+                    <div className="mx-4">
+                      <ul className="ml-6 mb-6">
+                        {Object.values(
+                          reportData?.data?.businessOf?.details?.label,
+                        )?.map((item: any) => <li>- {parse(item)}</li>)}
+                      </ul>
+                    </div>
+                  </>
+                )}
               <div className="flex gap-2 my-2 mx-4 font-bold">
                 <img
                   width={15}
@@ -666,7 +674,7 @@ const ReportData = () => {
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    {`- Turnover pf March-{moment().year()} is ${reportData
+                    {`- Turnover of March-{moment().year()} is ${reportData
                       ?.data?.turnoverDetails?.currentLastYearComparision
                       ?.changes} compared to March-${moment()
                       .subtract(1, 'y')
@@ -2373,7 +2381,7 @@ const ReportData = () => {
       </table>
       <div className="grid grid-cols-2 gap-4 mt-5">
         {reportData?.data?.photos?.photos.map((obj: any, i: number) => (
-          <img key={i} src={obj} alt={i.toString()} className='w-full'/>
+          <img key={i} src={obj} alt={i.toString()} className="w-full" />
         ))}
       </div>
     </div>

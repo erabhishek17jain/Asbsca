@@ -26,10 +26,6 @@ const expenses = [
   { title: "Partner's Salary", value: 'partnersSalary' },
   { title: "Partner's Remuneration", value: 'partnersRemuneration' },
   { title: 'Other Expenses', value: 'otherExpenses' },
-  {
-    title: 'Bifercation of Expense not provided, Total Expenses',
-    value: 'bifercationOfExpenses',
-  },
 ];
 
 const salaryFromBusiness = [
@@ -38,7 +34,7 @@ const salaryFromBusiness = [
     title: 'Remuneration from above business',
     value: 'remunerationFromBusiness',
   },
-  { title: 'Rent', value: 'rent' },
+  { title: 'Rent Income', value: 'rent' },
 ];
 
 const FinancialType = ({
@@ -159,11 +155,6 @@ const financeInfo = {
       amountPM: '',
       months: 12,
     },
-    bifercationOfExpenses: {
-      amountPA: '',
-      amountPM: '',
-      months: 12,
-    },
     totalExpensePA: '',
     totalExpensePM: '',
     netProfitPA: '',
@@ -252,9 +243,6 @@ const Financials = ({
             amountPA: Yup.number().required('This field is required'),
           }),
           otherExpenses: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
-          }),
-          bifercationOfExpenses: Yup.object({
             amountPA: Yup.number().required('This field is required'),
           }),
         }),

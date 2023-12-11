@@ -147,7 +147,7 @@ const TurnoverGrossReceipts = ({
       );
       formik.setFieldValue(
         'currentLastYearComparision.reasonforDiff',
-        percent > 25 ? '' : '-',
+        Math.abs(percent) > 25 ? '' : '-',
       );
     }
   };
@@ -158,10 +158,15 @@ const TurnoverGrossReceipts = ({
         formik?.values?.aprilTillDate?.aprilTillDate?.turnover) *
         100) /
       formik?.values?.aprilTillDate?.aprilTillDate?.turnover;
-    formik.setFieldValue(
-      'aprilTillDate.reasonforDiff',
-      actualPer > 25 ? '' : '-',
-    );
+    if (
+      formik?.values?.aprilTillDate?.reasonforDiff === '' ||
+      formik?.values?.aprilTillDate?.reasonforDiff === '-'
+    ) {
+      formik.setFieldValue(
+        'aprilTillDate.reasonforDiff',
+        Math.abs(actualPer) > 25 ? '' : '-',
+      );
+    }
     setCurrLast();
   }, [formik?.values?.aprilTillDate]);
 
@@ -182,7 +187,10 @@ const TurnoverGrossReceipts = ({
       formik?.values?.lastYears?.reasonforDiff === '' ||
       formik?.values?.lastYears?.reasonforDiff === '-'
     ) {
-      formik.setFieldValue('lastYears.reasonforDiff', lastPer > 25 ? '' : '-');
+      formik.setFieldValue(
+        'lastYears.reasonforDiff',
+        Math.abs(lastPer) > 25 ? '' : '-',
+      );
     }
     formik.setFieldValue(
       'currentLastYearComparision.firstLastYear',
@@ -329,7 +337,7 @@ const TurnoverGrossReceipts = ({
               <AInputField
                 id={'aprilTillDate.reasonforDiff'}
                 label={'Reason if major diff'}
-                value={formik?.values?.aprilTillDate.reasonforDiff}
+                value={formik?.values?.aprilTillDate?.reasonforDiff}
                 error={errors?.aprilTillDate?.reasonforDiff}
                 handleChange={formik.handleChange}
                 disabled={formik?.values?.aprilTillDate.reasonforDiff === '-'}

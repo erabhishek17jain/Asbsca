@@ -41,7 +41,7 @@ const PhotoScreenshots = ({
         <div className="flex flex-col sm:w-[60%] py-4">
           <AFileUpload
             id={'photos'}
-            label={'Upload Photo'}
+            label={'Upload single or multiple photos'}
             value={formik?.values?.photos}
             error={formik?.errors?.photos?.length === 0}
             formik={formik}

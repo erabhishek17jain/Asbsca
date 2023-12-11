@@ -974,7 +974,7 @@ const OtherCommitments = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Sum Assured/Maturity Value'}
-                                  rightLabel={'(Rs.)'}
+                                  rightLabel={'(Lakhs)'}
                                 />
                               </AGroupFields>
                             </div>

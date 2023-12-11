@@ -73,6 +73,12 @@ const Stocks = ({
       'stockDetails.whyStocklowHigh',
       lowHigh > 0.3 && lowHigh < 4 ? '-' : '',
     );
+    const period = calculatePeriod(
+      total,
+      payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
+        ?.amountPA,
+    );
+    console.log(period)
     formik.setFieldValue(
       'stockDetails.stockHoldingPeriod',
       calculatePeriod(
@@ -147,7 +153,9 @@ const Stocks = ({
                   value={formik?.values?.stockDetails.whyStocklowHigh}
                   error={formik?.errors?.stockDetails?.whyStocklowHigh}
                   handleChange={formik.handleChange}
-                  disabled={formik?.values?.stockDetails.whyStocklowHigh === '-'}
+                  disabled={
+                    formik?.values?.stockDetails.whyStocklowHigh === '-'
+                  }
                 />
               </AGroupFields>
             </ASection>

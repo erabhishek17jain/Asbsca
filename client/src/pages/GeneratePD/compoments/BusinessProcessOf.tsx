@@ -4,9 +4,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { businessProcess } from '../constants';
 import { useEffect } from 'react';
+import ServiceWithPurchase from './ServiceWithPurchase';
 
 const initialValues = {
   bussinessProcessOf: '',
+  details: null,
 };
 
 const BusinessProcessOf = ({
@@ -19,6 +21,7 @@ const BusinessProcessOf = ({
 }: any) => {
   const validationSchema = Yup.object().shape({
     bussinessProcessOf: Yup.string().required('This field is required'),
+    details: Yup.object().required('Please fill below details.'),
   });
 
   const onSubmit = async (values: any) => {
@@ -35,8 +38,22 @@ const BusinessProcessOf = ({
     onSubmit: onSubmit,
   });
 
+  const setBussDetails = (details: any) => {
+    formik.setFieldValue('details', details);
+  };
+
+  
+  useEffect(() => {
+    if (formik?.values?.bussinessProcessOf === 'Trading (B2B)') {
+      formik.setFieldValue('details', {});
+    } else{
+      formik.setFieldValue('details', null);
+    }
+  }, [formik?.values?.bussinessProcessOf]);
+
   useEffect(() => {
     if (payloads.businessOf) {
+      formik.setFieldValue('details', payloads.businessOf?.details);
       formik.setFieldValue(
         'bussinessProcessOf',
         payloads.businessOf?.bussinessProcessOf,
@@ -57,6 +74,20 @@ const BusinessProcessOf = ({
             error={formik?.errors?.bussinessProcessOf}
             handleChange={formik.handleChange}
           />
+        </div>
+        <div className='flex flex-col gap-2'>
+          {formik?.errors?.details && (
+            <span className="text-sm text-meta1">
+              {formik?.errors?.details}
+            </span>
+          )}
+          {formik?.values?.bussinessProcessOf ===
+            'Service (With Purchases)' && (
+            <ServiceWithPurchase
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
         </div>
       </div>
       <AStepperPagination

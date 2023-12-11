@@ -215,7 +215,7 @@ const SuppliersCreditors = ({
             <ASection
               footers={[
                 {
-                  label: 'Collection Period',
+                  label: 'Payment Period',
                   value: formik?.values?.collectionPeriod,
                 },
               ]}
@@ -233,7 +233,7 @@ const SuppliersCreditors = ({
                 <AInputField
                   disabled={true}
                   id={`collectionPeriod`}
-                  label={'Collection Period'}
+                  label={'Payment Period'}
                   value={formik?.values?.collectionPeriod}
                   error={formik?.errors?.collectionPeriod}
                   handleChange={formik.handleChange}
@@ -242,7 +242,7 @@ const SuppliersCreditors = ({
                   type={'number'}
                   id={`creitPeriodAllowed`}
                   rightLabel={'(In months)'}
-                  label={'Cr. Period allowed to Clients'}
+                  label={'Cr. Period received to Clients'}
                   value={formik?.values?.creitPeriodAllowed}
                   error={formik?.errors?.creitPeriodAllowed}
                   handleChange={formik.handleChange}
