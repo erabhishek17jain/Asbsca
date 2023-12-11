@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
-import AButton from '../../../components-global/AButton';
-import ASection from '../../../components-global/ASection';
+import AButton from '../../../../../components-global/AButton';
+import ASection from '../../../../../components-global/ASection';
 import toast from 'react-hot-toast';
 
 toast.success(<b>Business details saved.</b>);
@@ -10,42 +10,48 @@ toast.success(<b>Business details saved.</b>);
 const initialValues = {
   value: {
     appStart: '',
+    location: '',
     provideSer: '',
-    detailSer: '',
-    serCharge: '',
+    consultancy: '',
+    followup: '',
+    equipment: '',
+    equipmentCost: '',
+    doctors: '',
+    staff: '',
+    rainy: '',
+    monsoon: '',
+    tieUp: '',
+    open: '',
     perOfTrans: '',
-    transCost: '',
-    monGrossRec: '',
+    purCycle: '',
     expenses: '',
     afterExp: '',
-    offAddress: '',
-    offTiming: '',
-    repArea: '',
-    listedOnline: '',
-    marketSer: '',
     covidObserv: '',
   },
 };
 
-const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
+const HospitalClinic = ({ payloads, setBussDetails }: any) => {
   const [labels, setLabels] = useState<any>([]);
 
   const validationSchema = Yup.object().shape({
     value: Yup.object({
       appStart: Yup.string().required('Required'),
+      location: Yup.string().required('Required'),
       provideSer: Yup.string().required('Required'),
-      detailSer: Yup.string().required('Required'),
-      serCharge: Yup.string().required('Required'),
+      consultancy: Yup.string().required('Required'),
+      followup: Yup.string().required('Required'),
+      equipment: Yup.string().required('Required'),
+      equipmentCost: Yup.string().required('Required'),
+      doctors: Yup.string().required('Required'),
+      staff: Yup.string().required('Required'),
+      rainy: Yup.string().required('Required'),
+      monsoon: Yup.string().required('Required'),
+      tieUp: Yup.string().required('Required'),
+      open: Yup.string().required('Required'),
       perOfTrans: Yup.string().required('Required'),
-      transCost: Yup.string().required('Required'),
-      monGrossRec: Yup.string().required('Required'),
+      purCycle: Yup.string().required('Required'),
       expenses: Yup.string().required('Required'),
       afterExp: Yup.string().required('Required'),
-      offAddress: Yup.string().required('Required'),
-      offTiming: Yup.string().required('Required'),
-      repArea: Yup.string().required('Required'),
-      listedOnline: Yup.string().required('Required'),
-      marketSer: Yup.string().required('Required'),
       covidObserv: Yup.string().required('Required'),
     }),
   });
@@ -85,7 +91,7 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
   return (
     <>
       <ASection>
-         <ol type="1" style={{ listStyle: 'auto' }} className="pl-4">
+        <ol type="1" style={{ listStyle: 'auto' }} className="pl-4">
           <li className="mb-2">
             <div className="flex gap-2 sm:w-[60%]">
               Applicant started a{' '}
@@ -103,7 +109,22 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
           </li>
           <li className="mb-2">
             <div className="flex gap-2 sm:w-[60%]">
-              They provide service of{' '}
+              They have a resturant located at , its{' '}
+              <input
+                type={'text'}
+                id={'value.location'}
+                onChange={handleChange}
+                value={formik?.values?.value?.location}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.location ? 'meta1' : 'stroke'
+                }`}
+              />
+              .
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              They provides services of{' '}
               <input
                 type={'text'}
                 id={'value.provideSer'}
@@ -118,36 +139,157 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
           </li>
           <li className="mb-2">
             <div className="flex gap-2 sm:w-[60%]">
-              Details about the services{' '}
+              Charges Range for single consultancy is{' '}
               <input
                 type={'text'}
-                id={'value.detailSer'}
+                id={'value.consultancy'}
                 onChange={handleChange}
-                value={formik?.values?.value?.detailSer}
+                value={formik?.values?.value?.consultancy}
                 className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.detailSer ? 'meta1' : 'stroke'
+                  formik?.errors?.value?.consultancy ? 'meta1' : 'stroke'
                 }`}
-              />
+              />{' '}
               .
             </div>
           </li>
           <li className="mb-2">
             <div className="flex gap-2 sm:w-[60%]">
-              At <input
+              Charges Range for follow-up is{' '}
+              <input
                 type={'text'}
-                id={'value.serCharge'}
+                id={'value.followup'}
                 onChange={handleChange}
-                value={formik?.values?.value?.serCharge}
+                value={formik?.values?.value?.followup}
                 className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.serCharge ? 'meta1' : 'stroke'
+                  formik?.errors?.value?.followup ? 'meta1' : 'stroke'
                 }`}
               />{' '}
-              % of transaction are done via banking channel.
+              .
             </div>
           </li>
           <li className="mb-2">
             <div className="flex gap-2 sm:w-[60%]">
-              Transport cost is born by
+              He has{' '}
+              <input
+                type={'text'}
+                id={'value.equipment'}
+                onChange={handleChange}
+                value={formik?.values?.value?.equipment}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.equipment ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              hospital equipments.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Total equipments worth is{' '}
+              <input
+                type={'text'}
+                id={'value.equipmentCost'}
+                onChange={handleChange}
+                value={formik?.values?.value?.equipmentCost}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.equipmentCost ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              Lakhs.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              It has staff of{' '}
+              <input
+                type={'text'}
+                id={'value.doctors'}
+                onChange={handleChange}
+                value={formik?.values?.value?.doctors}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.doctors ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              doctors.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              It has staff of{' '}
+              <input
+                type={'text'}
+                id={'value.staff'}
+                onChange={handleChange}
+                value={formik?.values?.value?.staff}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.staff ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              employees including assistants, nurses etc.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Bed are{' '}
+              <input
+                type={'text'}
+                id={'value.rainy'}
+                onChange={handleChange}
+                value={formik?.values?.value?.rainy}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.rainy ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              % occupied generally in rainy season.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Bed are{' '}
+              <input
+                type={'text'}
+                id={'value.monsoon'}
+                onChange={handleChange}
+                value={formik?.values?.value?.monsoon}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.monsoon ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              % occupied generally in monsoon season.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              It has tie-up with most of insurance company like{' '}
+              <input
+                type={'text'}
+                id={'value.tieUp'}
+                onChange={handleChange}
+                value={formik?.values?.value?.tieUp}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.tieUp ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              .
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Is hospital open for 24 hours & employee work in 3 shifts?
+              <input
+                type={'text'}
+                id={'value.open'}
+                onChange={handleChange}
+                value={formik?.values?.value?.open}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.open ? 'meta1' : 'stroke'
+                }`}
+              />{' '}
+              .
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              At{' '}
               <input
                 type={'text'}
                 id={'value.perOfTrans'}
@@ -156,38 +298,23 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
                 className={`w-32 text-sm border-b-[1.5px] text-center border-${
                   formik?.errors?.value?.perOfTrans ? 'meta1' : 'stroke'
                 }`}
-              />
-              .
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Purchase cycle details (weekly/monthly)
-              <input
-                type={'text'}
-                id={'value.transCost'}
-                onChange={handleChange}
-                value={formik?.values?.value?.transCost}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.transCost ? 'meta1' : 'stroke'
-                }`}
-              />
-              .
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Monthly gross receipts from then are between
-              <input
-                type={'text'}
-                id={'value.monGrossRec'}
-                onChange={handleChange}
-                value={formik?.values?.value?.monGrossRec}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.monGrossRec ? 'meta1' : 'stroke'
-                }`}
               />{' '}
-              Lakhs.
+              % of transaction are done via banking channel.
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Purchase cycle details (weekly/monthly){' '}
+              <input
+                type={'text'}
+                id={'value.purCycle'}
+                onChange={handleChange}
+                value={formik?.values?.value?.purCycle}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.purCycle ? 'meta1' : 'stroke'
+                }`}
+              />
+              .
             </div>
           </li>
           <li className="mb-2">
@@ -201,7 +328,8 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
                 className={`w-32 text-sm border-b-[1.5px] text-center border-${
                   formik?.errors?.value?.expenses ? 'meta1' : 'stroke'
                 }`}
-              />.
+              />
+              .
             </div>
           </li>
           <li className="mb-2">
@@ -217,80 +345,6 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
                 }`}
               />{' '}
               %.
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Office is located at, its
-              <input
-                type={'text'}
-                id={'value.offAddress'}
-                onChange={handleChange}
-                value={formik?.values?.value?.offAddress}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.offAddress ? 'meta1' : 'stroke'
-                }`}
-              />.
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Office timings between
-              <input
-                type={'text'}
-                id={'value.offTiming'}
-                onChange={handleChange}
-                value={formik?.values?.value?.offTiming}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.offTiming ? 'meta1' : 'stroke'
-                }`}
-              />
-              .
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Area of representation is
-              <input
-                type={'text'}
-                id={'value.repArea'}
-                onChange={handleChange}
-                value={formik?.values?.value?.repArea}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.repArea ? 'meta1' : 'stroke'
-                }`}
-              />
-              .
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Are they listed on any online market place website (like amazon,
-              flipkart, india mart) or has any website?
-              <input
-                type={'text'}
-                id={'value.listedOnline'}
-                onChange={handleChange}
-                value={formik?.values?.value?.listedOnline}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.listedOnline ? 'meta1' : 'stroke'
-                }`}
-              />.
-            </div>
-          </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              How do they market there services?
-              <input
-                type={'text'}
-                id={'value.marketSer'}
-                onChange={handleChange}
-                value={formik?.values?.value?.marketSer}
-                className={`w-32 text-sm border-b-[1.5px] text-center border-${
-                  formik?.errors?.value?.marketSer ? 'meta1' : 'stroke'
-                }`}
-              />
-              .
             </div>
           </li>
           <li className="mb-2">
@@ -321,4 +375,4 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
   );
 };
 
-export default ServiceWithPurchase;
+export default HospitalClinic;

@@ -20,7 +20,7 @@ import SuppliersCreditors from '../pages/GeneratePD/compoments/SuppliersCreditor
 import AssetsInvestmentBank from '../pages/GeneratePD/compoments/AssetsInvestmentBank';
 import OtherObservation from '../pages/GeneratePD/compoments/OtherObservation';
 import DocumentsSeen from '../pages/GeneratePD/compoments/DocumentsSeen';
-import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf';
+import BusinessProcessOf from '../pages/GeneratePD/compoments/BusinessProcessOf/BusinessProcessOf';
 import PhotoScreenshots from '../pages/GeneratePD/compoments/PhotoScreenshots';
 
 export const AStepperPagination = ({
@@ -61,7 +61,7 @@ export function AStepper({
   setPayloads,
   setStepFinished,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(14);
 
   const handlePrev = () => activeStep !== 0 && setActiveStep((cur) => cur - 1);
   const handleNext = () => {

@@ -1,10 +1,12 @@
-import ASingleSelect from '../../../components-global/ASingleSelect';
-import { AStepperPagination } from '../../../components-global/AStepper';
+import ASingleSelect from '../../../../components-global/ASingleSelect';
+import { AStepperPagination } from '../../../../components-global/AStepper';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { businessProcess } from '../constants';
+import { businessProcess } from '../../constants';
 import { useEffect } from 'react';
-import ServiceWithPurchase from './ServiceWithPurchase';
+import ServiceWithPurchase from './components/ServiceWithPurchase';
+import Salaried from './components/Salaried';
+import Service from './components/Service';
 
 const initialValues = {
   bussinessProcessOf: '',
@@ -75,11 +77,44 @@ const BusinessProcessOf = ({
             handleChange={formik.handleChange}
           />
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className="flex flex-col gap-2">
           {formik?.errors?.details && (
             <span className="text-sm text-meta1">
               {formik?.errors?.details}
             </span>
+          )}
+          {formik?.values?.bussinessProcessOf ===
+            'Service (With Purchases)' && (
+            <ServiceWithPurchase
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Salaried' && (
+            <Salaried
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Service' && (
+            <Service
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf ===
+            'Service (With Purchases)' && (
+            <ServiceWithPurchase
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf ===
+            'Service (With Purchases)' && (
+            <ServiceWithPurchase
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
           )}
           {formik?.values?.bussinessProcessOf ===
             'Service (With Purchases)' && (
