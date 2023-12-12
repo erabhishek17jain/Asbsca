@@ -29,6 +29,7 @@ export const putPB = [
   { value: 'P', label: 'P' },
   { value: 'B', label: 'B' },
   { value: 'P/B', label: 'P/B' },
+  { value: 'NP', label: 'NP' },
 ];
 
 export const loans = [

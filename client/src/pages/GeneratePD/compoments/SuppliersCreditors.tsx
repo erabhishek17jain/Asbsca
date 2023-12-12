@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import { AddTagButton, AddTagFooter } from '../../../components-global/ATags';
@@ -34,10 +34,17 @@ const SuppliersCreditors = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [isSuppliers, setIsSuppliers] = useState('Yes');
   const handleSuppliers = (title: string, val: string) => {
     console.log(title);
-    setIsSuppliers(val);
+    formik.setFieldValue('isSuppliersDetails', val);
+    if (val === 'Yes') {
+      formik.setFieldValue('suppliersDetails', initialValues?.suppliersDetails);
+    } else {
+      formik.setFieldValue('suppliersDetails', {
+        noOfSuppliers: 0,
+        majorSuppliers: [],
+      });
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -90,7 +97,7 @@ const SuppliersCreditors = ({
     ) {
       formik.setFieldValue(
         'whyCreditorHighThanCredit',
-        formik?.values?.creitPeriodAllowed < cpAllow ? '-' : '',
+        formik?.values?.creitPeriodAllowed <= cpAllow ? '-' : '',
       );
     }
   }, [formik?.values]);
@@ -124,13 +131,13 @@ const SuppliersCreditors = ({
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
           <ARadioButtonGroup
-            value={isSuppliers}
+            value={formik?.values?.isSuppliersDetails}
             title={'Suppliers'}
             radioValues={yesNoOptions}
             handleChange={handleSuppliers}
           />
           <ASection>
-            {isSuppliers == 'Yes' && (
+            {formik?.values?.isSuppliersDetails == 'Yes' && (
               <div className="mb-4">
                 <AGroupFields col={2}>
                   <AInputField
@@ -249,6 +256,7 @@ const SuppliersCreditors = ({
                 />
                 <AInputField
                   id={`whyCreditorHighThanCredit`}
+                  disabled={formik?.values?.whyCreditorHighThanCredit === '-'}
                   label={'Why Creditors are high than credit period allowed'}
                   value={formik?.values?.whyCreditorHighThanCredit}
                   error={formik?.errors?.whyCreditorHighThanCredit}

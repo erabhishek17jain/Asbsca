@@ -52,6 +52,18 @@ const DetailsOfProperty = ({
   const handleLoanPropertyEMI = (title: string, val: string) => {
     console.log(title);
     formik.setFieldValue('propertyLoanDetails.isLoanProvided', val);
+    formik.setFieldValue(
+      'propertyLoanDetails.propertyValue.pOrb',
+      'NP',
+    );
+    formik.setFieldValue(
+      'propertyLoanDetails.propertyValue.sourceOcr',
+      'NP',
+    );
+    formik.setFieldValue(
+      'propertyLoanDetails.loanDetails.amount',
+      0,
+    );
   };
 
   const validationSchema = Yup.object().shape({
@@ -132,7 +144,7 @@ const DetailsOfProperty = ({
     const pmt = (-ir * (pv * pvif)) / (pvif - 1);
     formik.setFieldValue(
       'propertyLoanDetails.loanDetails.emi',
-      (-pmt/100000).toFixed(2),
+      (-pmt / 100000).toFixed(2),
     );
   };
 

@@ -197,7 +197,10 @@ const PersonalDetails = ({
                       <div className="mb-3">
                         <AddTagHeader
                           title={item?.title}
-                          removeTag={() => tag.remove(index)}
+                          removeTag={() =>
+                            formik?.values?.applicants.length !== 1 &&
+                            tag.remove(index)
+                          }
                           addTag={() =>
                             tag.push({
                               ...applicantInfo,
@@ -375,7 +378,10 @@ const PersonalDetails = ({
                     <div className="mb-3">
                       <AddTagHeader
                         title={item?.title}
-                        removeTag={() => tag.remove(index)}
+                        removeTag={() =>
+                          formik?.values?.residents.length !== 1 &&
+                          tag.remove(index)
+                        }
                         addTag={() =>
                           tag.push({
                             ...resiInfo,

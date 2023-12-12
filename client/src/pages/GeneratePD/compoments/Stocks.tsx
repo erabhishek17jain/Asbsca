@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import ASection from '../../../components-global/ASection';
@@ -29,11 +29,14 @@ const Stocks = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [isStocks, setIsStocks] = useState('Yes');
-
   const handleStocks = (title: string, val: string) => {
     console.log(title);
-    setIsStocks(val);
+    formik.setFieldValue('isStockDetails', val);
+    if (val === 'Yes') {
+      formik.setFieldValue('stockDetails.whyStocklowHigh', '');
+    } else {
+      formik.setFieldValue('stockDetails.whyStocklowHigh', 'NA');
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -69,16 +72,21 @@ const Stocks = ({
       formik?.values?.stockDetails?.finishGoods;
     const lowHigh = (total * 12) / income;
     formik.setFieldValue('stockDetails.totalStocks', total);
-    formik.setFieldValue(
-      'stockDetails.whyStocklowHigh',
-      lowHigh > 0.3 && lowHigh < 4 ? '-' : '',
-    );
+    if (
+      formik?.values?.stockDetails.whyStocklowHigh === '' ||
+      formik?.values?.stockDetails.whyStocklowHigh === '-'
+    ) {
+      formik.setFieldValue(
+        'stockDetails.whyStocklowHigh',
+        lowHigh > 0.3 && lowHigh < 4 ? '-' : '',
+      );
+    }
     const period = calculatePeriod(
       total,
       payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
         ?.amountPA,
     );
-    console.log(period)
+    console.log(period);
     formik.setFieldValue(
       'stockDetails.stockHoldingPeriod',
       calculatePeriod(
@@ -101,12 +109,12 @@ const Stocks = ({
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
           <ARadioButtonGroup
-            value={isStocks}
+            value={formik?.values?.isStockDetails}
             title={'Stocks'}
             handleChange={handleStocks}
             radioValues={yesNoOptions}
           />
-          {isStocks === 'Yes' && (
+          {formik?.values?.isStockDetails === 'Yes' && (
             <ASection
               footers={[
                 {

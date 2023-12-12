@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import AInputField from '../../../components-global/AInputField';
 import { AddTagButton, AddTagFooter } from '../../../components-global/ATags';
@@ -46,17 +46,41 @@ const ClientsDebtors = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [isClients, setIsClients] = useState('Yes');
-  const [isDebtors, setIsDebtors] = useState('Yes');
-
   const handleClients = (title: string, val: string) => {
     console.log(title);
-    setIsClients(val);
+    formik.setFieldValue('clients.isClientDetails', val);
+    if (val === 'Yes') {
+      formik.setFieldValue(
+        'clients.clientDetails',
+        initialValues?.clients?.clientDetails,
+      );
+    } else {
+      formik.setFieldValue('clients.clientDetails', {
+        noOfClientDaily: 0,
+        majorClient: [],
+      });
+    }
   };
 
   const handleDebtors = (title: string, val: string) => {
     console.log(title);
-    setIsDebtors(val);
+    formik.setFieldValue('debitors.isDebitorDetails', val);
+    if (val === 'Yes') {
+      formik.setFieldValue(
+        'debitors.debitorDetails',
+        initialValues?.debitors?.debitorDetails,
+      );
+    } else {
+      formik.setFieldValue('debitors.debitorDetails', {
+        moreThan6Month: {
+          amount: 0,
+          reason: '-',
+        },
+        lessThan6Month: { amount: 0 },
+        creditPeriodAllowed: 0,
+        whyIrRegular: 'NA',
+      });
+    }
   };
 
   const validationSchema = Yup.object().shape({
@@ -146,12 +170,12 @@ const ClientsDebtors = ({
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
           <ARadioButtonGroup
-            value={isClients}
+            value={formik?.values?.clients?.isClientDetails}
             title={'Clients'}
             handleChange={handleClients}
             radioValues={yesNoOptions}
           />
-          {isClients == 'Yes' && (
+          {formik?.values?.clients?.isClientDetails == 'Yes' && (
             <ASection>
               <AGroupFields col={2}>
                 <AInputField
@@ -234,12 +258,12 @@ const ClientsDebtors = ({
             </ASection>
           )}
           <ARadioButtonGroup
-            value={isDebtors}
+            value={formik?.values?.debitors?.isDebitorDetails}
             title={'Debtors'}
             handleChange={handleDebtors}
             radioValues={yesNoOptions}
           />
-          {isDebtors == 'Yes' && (
+          {formik?.values?.debitors?.isDebitorDetails == 'Yes' && (
             <ASection
               footers={[
                 {

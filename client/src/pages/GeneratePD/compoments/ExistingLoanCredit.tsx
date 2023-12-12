@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import AInputField from '../../../components-global/AInputField';
 import { AddTagButton, AddTagHeader } from '../../../components-global/ATags';
@@ -18,11 +18,8 @@ import * as Yup from 'yup';
 import { FieldArray, FormikProvider, useFormik } from 'formik';
 
 const ExistingLoan = ({ formik }: any) => {
-  const [isExistingLoan, setIsExistingLoan] = useState('Yes');
-
   const handleExistingLoan = (title: string, val: string) => {
     console.log(title);
-    setIsExistingLoan(val);
     if (val !== 'Yes') {
       formik.setFieldValue('existanceLoan.isExistanceLoan', val);
     } else {
@@ -128,12 +125,12 @@ const ExistingLoan = ({ formik }: any) => {
   return (
     <>
       <ARadioButtonGroup
-        value={isExistingLoan}
+        value={formik?.values?.existanceLoan?.isExistanceLoan}
         title={'Existing Loan'}
         radioValues={yesNoOptions}
         handleChange={handleExistingLoan}
       />
-      {isExistingLoan === 'Yes' && (
+      {formik?.values?.existanceLoan?.isExistanceLoan === 'Yes' && (
         <>
           <ASection
             footers={[
@@ -644,11 +641,8 @@ const ExistingLoan = ({ formik }: any) => {
 };
 
 const CreditFacility = ({ formik }: any) => {
-  const [isCreditFacility, setIsCreditFacility] = useState('Yes');
-
   const handleCreditFacility = (title: string, val: string) => {
     console.log(title);
-    setIsCreditFacility(val);
     if (val !== 'Yes') {
       formik.setFieldValue('creditFacility.isCreditFacility', val);
     } else {
@@ -689,12 +683,12 @@ const CreditFacility = ({ formik }: any) => {
   return (
     <>
       <ARadioButtonGroup
-        value={isCreditFacility}
+        value={formik?.values?.creditFacility?.isCreditFacility}
         title={'Credit Facility'}
         radioValues={yesNoOptions}
         handleChange={handleCreditFacility}
       />
-      {isCreditFacility === 'Yes' && (
+      {formik?.values?.creditFacility?.isCreditFacility === 'Yes' && (
         <ASection
           footers={[
             {
@@ -847,11 +841,8 @@ const CreditFacility = ({ formik }: any) => {
 };
 
 const OtherCommitments = ({ formik }: any) => {
-  const [isOtherCommitments, setIsOtherCommitments] = useState('Yes');
-
   const handleOtherCommitments = (title: string, val: string) => {
     console.log(title);
-    setIsOtherCommitments(val);
     if (val !== 'Yes') {
       formik.setFieldValue('otherCommitments.isOtherCommitmemts', val);
     } else {
@@ -888,12 +879,12 @@ const OtherCommitments = ({ formik }: any) => {
   return (
     <>
       <ARadioButtonGroup
-        value={isOtherCommitments}
+        value={formik?.values?.otherCommitments?.isOtherCommitmemts}
         title={'Other Commitments'}
         radioValues={yesNoOptions}
         handleChange={handleOtherCommitments}
       />
-      {isOtherCommitments === 'Yes' && (
+      {formik?.values?.otherCommitments?.isOtherCommitmemts === 'Yes' && (
         <ASection
           footers={[
             {
