@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AGroupFields from '../../../components-global/AGroupFields';
 import AInputField from '../../../components-global/AInputField';
 import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
@@ -82,37 +82,33 @@ const AssetsInvestmentBank = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const [isBusinessAssets, setIsBusinessAssets] = useState('Yes');
   const handleBusinessAssets = (title: string, val: string) => {
     console.log(title);
-    setIsBusinessAssets(val);
+    formik.setFieldValue('isBussinessAssets', val);
     formik.setFieldValue(
       'bussinessAssetDetails',
       initialValues?.bussinessAssetDetails,
     );
   };
 
-  const [isPersonalAssets, setIsPersonalAssets] = useState('Yes');
   const handlePersonalAssets = (title: string, val: string) => {
     console.log(title);
-    setIsPersonalAssets(val);
+    formik.setFieldValue('isPersonalAssets', val);
     formik.setFieldValue(
       'personalAssetDetails',
       initialValues?.personalAssetDetails,
     );
   };
 
-  const [isInvestments, setIsInvestments] = useState('Yes');
   const handleInvestments = (title: string, val: string) => {
     console.log(title);
-    setIsInvestments(val);
+    formik.setFieldValue('isInvestments', val);
     formik.setFieldValue('investmentDetails', initialValues?.investmentDetails);
   };
 
-  const [isBankAccounts, setIsBankAccounts] = useState('Yes');
   const handleBankAccounts = (title: string, val: string) => {
     console.log(title);
-    setIsBankAccounts(val);
+    formik.setFieldValue('isBankAccount', val);
     formik.setFieldValue(
       'bankAccountDetails',
       initialValues?.bankAccountDetails,
@@ -366,12 +362,12 @@ const AssetsInvestmentBank = ({
       <div className="absolute top-12 bottom-19 overflow-auto w-full">
         <div className="flex flex-col w-full">
           <ARadioButtonGroup
-            value={isBusinessAssets}
+            value={formik?.values?.isBussinessAssets}
             title={'Business Assets'}
             radioValues={yesNoOptions}
             handleChange={handleBusinessAssets}
           />
-          {isBusinessAssets === 'Yes' && (
+          {formik?.values?.isBussinessAssets === 'Yes' && (
             <ASection
               title={'Business Asset Details'}
               footers={[
@@ -551,12 +547,12 @@ const AssetsInvestmentBank = ({
             </ASection>
           )}
           <ARadioButtonGroup
-            value={isPersonalAssets}
+            value={formik?.values?.isPersonalAssets}
             title={'Personal Assets'}
             radioValues={yesNoOptions}
             handleChange={handlePersonalAssets}
           />
-          {isPersonalAssets === 'Yes' && (
+          {formik?.values?.isPersonalAssets === 'Yes' && (
             <ASection
               title={'Personal Asset Details'}
               footers={[
@@ -736,12 +732,12 @@ const AssetsInvestmentBank = ({
             </ASection>
           )}
           <ARadioButtonGroup
-            value={isInvestments}
+            value={formik?.values?.isInvestments}
             title={'Investments'}
             radioValues={yesNoOptions}
             handleChange={handleInvestments}
           />
-          {isInvestments === 'Yes' && (
+          {formik?.values?.isInvestments === 'Yes' && (
             <ASection
               title={'Investment Details'}
               footers={[
@@ -847,12 +843,12 @@ const AssetsInvestmentBank = ({
             </ASection>
           )}
           <ARadioButtonGroup
-            value={isBankAccounts}
+            value={formik?.values?.isBankAccount}
             title={'Bank Account'}
             radioValues={yesNoOptions}
             handleChange={handleBankAccounts}
           />
-          {isBankAccounts === 'Yes' && (
+          {formik?.values?.isBankAccount === 'Yes' && (
             <ASection
               title={'Bank Account Details'}
               footers={[
