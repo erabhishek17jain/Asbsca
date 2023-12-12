@@ -139,15 +139,15 @@ const ExistingLoan = ({ formik }: any) => {
             footers={[
               {
                 label: 'Total Loan Amt',
-                value: formik?.values?.existanceLoan?.totalLoanBt,
+                value: `${formik?.values?.existanceLoan?.totalLoanBt} Lakhs`,
               },
               {
                 label: 'Total EMI Amt',
-                value: formik?.values?.existanceLoan?.totalLoanBtEmi,
+                value: `${formik?.values?.existanceLoan?.totalLoanBtEmi} Lakhs`,
               },
               {
                 label: 'Total Outstanding Amt',
-                value: formik?.values?.existanceLoan?.totalLoanBtOut,
+                value: `${formik?.values?.existanceLoan?.totalLoanBtOut} Lakhs`,
               },
             ]}
             title={'Balance Transfer Loans (If Any)'}
@@ -305,15 +305,15 @@ const ExistingLoan = ({ formik }: any) => {
             footers={[
               {
                 label: 'Total Loan Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEc,
+                value: `${formik?.values?.existanceLoan?.totalLoanEc} Lakhs`,
               },
               {
                 label: 'Total EMI Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEcEmi,
+                value: `${formik?.values?.existanceLoan?.totalLoanEcEmi} Lakhs`,
               },
               {
                 label: 'Total Outstanding Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEcOut,
+                value: `${formik?.values?.existanceLoan?.totalLoanEcOut} Lakhs`,
               },
             ]}
             title={
@@ -475,15 +475,15 @@ const ExistingLoan = ({ formik }: any) => {
             footers={[
               {
                 label: 'Total Loan Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEm,
+                value: `${formik?.values?.existanceLoan?.totalLoanEm} Lakhs`,
               },
               {
                 label: 'Total EMI Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEmEmi,
+                value: `${formik?.values?.existanceLoan?.totalLoanEmEmi} Lakhs`,
               },
               {
                 label: 'Total Outstanding Amt',
-                value: formik?.values?.existanceLoan?.totalLoanEmOut,
+                value: `${formik?.values?.existanceLoan?.totalLoanEmOut} Lakhs`,
               },
             ]}
             title={
@@ -699,11 +699,11 @@ const CreditFacility = ({ formik }: any) => {
           footers={[
             {
               label: 'Total Limit',
-              value: formik?.values?.creditFacility?.totalLoanCfLimit,
+              value: `${formik?.values?.creditFacility?.totalLoanCfLimit} Lakhs`,
             },
             {
               label: 'Average Utilization',
-              value: formik?.values?.creditFacility?.totalLoanCfAu,
+              value: `${formik?.values?.creditFacility?.totalLoanCfAu} Lakhs`,
             },
           ]}
           title={'Credit Facility Details'}
@@ -898,11 +898,11 @@ const OtherCommitments = ({ formik }: any) => {
           footers={[
             {
               label: 'Total Contribution',
-              value: formik?.values?.otherCommitments?.totalCon,
+              value: `${formik?.values?.otherCommitments?.totalCon} Lakhs`,
             },
             {
               label: 'Total Sum Assured/Maturity',
-              value: formik?.values?.otherCommitments?.totalSum,
+              value: `${formik?.values?.otherCommitments?.totalSum} Lakhs`,
             },
           ]}
           title={'Other Commitments Details'}
@@ -974,7 +974,7 @@ const OtherCommitments = ({ formik }: any) => {
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Sum Assured/Maturity Value'}
-                                  rightLabel={'(Lakhs)'}
+                                  rightLabel={'(In Lakhs)'}
                                 />
                               </AGroupFields>
                             </div>

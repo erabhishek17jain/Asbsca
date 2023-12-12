@@ -70,13 +70,25 @@ const BusinessDetails = ({
     typeOfEntity: Yup.string().required('This field is required'),
     yearOfIncorporation: Yup.number().required('This field is required'),
     generation: Yup.string().required('This field is required'),
+    gstNumber: Yup.string()
+      .required('This field is required')
+      .matches(
+        /^[0-9]{2}[A-Za-z]{3}[CPHFATBLJGcphfatblj]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}[0-9A-Za-z]{1}(Z|z)[0-9A-Za-z]{1}/,
+        'GST Number should be in correct format. EX: 22AAAAA0000A1Z5',
+      ),
     regOfficeAddress: Yup.string().required('This field is required'),
     visitedAddress: Yup.string().required('This field is required'),
     vicinity: Yup.string().required('This field is required'),
     ownership: Yup.string().required('This field is required'),
     pdConductWith: Yup.string().required('This field is required'),
     designation: Yup.string().required('This field is required'),
-    mobile: Yup.string().required('This field is required'),
+    mobile: Yup.string()
+      .required('This field is required')
+      .test(
+        'len',
+        'Mobile number should be of 10 digits',
+        (val: any) => val.length === 10,
+      ),
     familyBusiness: Yup.number().required('This field is required'),
     mainUseproducts: Yup.string().required('This field is required'),
     howTurnoverVerified: Yup.string().required('This field is required'),
@@ -422,7 +434,7 @@ const BusinessDetails = ({
             footers={[
               {
                 label: 'Total Holdings',
-                value: formik?.values?.totalHolding,
+                value: `${formik?.values?.totalHolding}%`,
               },
             ]}
           >

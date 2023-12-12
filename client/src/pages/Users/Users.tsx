@@ -59,7 +59,13 @@ const Users = () => {
     username: Yup.string().required('This field is required'),
     password: Yup.string().required('This field is required'),
     email: Yup.string().required('This field is required'),
-    mobile: Yup.number().required('This field is required'),
+    mobile: Yup.string()
+      .required('This field is required')
+      .test(
+        'len',
+        'Mobile number should be of 10 digits',
+        (val: any) => val.length === 10,
+      ),
     address: Yup.string().required('This field is required'),
     role: Yup.string().required('This field is required'),
     status: Yup.string().required('This field is required'),
@@ -72,6 +78,7 @@ const Users = () => {
   };
 
   const onSubmit = async (values: any) => {
+    values = { ...values, mobile: parseInt(values.mobile) };
     values = await Object.assign(values);
     let addUserPromise = activeItem?._id ? updateUser(values) : addUser(values);
     addUserPromise

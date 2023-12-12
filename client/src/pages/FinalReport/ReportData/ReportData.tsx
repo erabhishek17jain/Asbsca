@@ -1154,14 +1154,6 @@ const ReportData = () => {
                             <br />
                           </>
                         )}
-                        {item.expenses.bifercationOfExpenses.amountPM > 0 && (
-                          <>
-                            {`Bifercation of Expenses: ${amtConvertor(
-                              item.expenses.bifercationOfExpenses.amountPA,
-                            )}`}
-                            <br />
-                          </>
-                        )}
                         {item.expenses.totalExpensePA > 0 && (
                           <>
                             {`Total Expenses: ${amtConvertor(

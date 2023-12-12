@@ -28,6 +28,7 @@ export const yesNoOptions = [
 export const putPB = [
   { value: 'P', label: 'P' },
   { value: 'B', label: 'B' },
+  { value: 'P/B', label: 'P/B' },
 ];
 
 export const loans = [
@@ -562,17 +563,17 @@ export const particularsAssets = [
 ];
 
 export const statusAssets = [
-  { label: 'Owned by Applicant', value: 'Owned by Applicant' },
-  { label: 'Owned by Co-Applicant', value: 'Owned by Co-Applicant' },
+  { label: 'Owned by Applicant', value: 'Owned by ApplicantP' },
+  { label: 'Owned by Co-Applicant', value: 'Owned by Co-ApplicantP' },
   {
-    label: 'Jointly Owned by Applicant & Co-Applicant',
-    value: 'Jointly Owned by Applicant & Co-Applicant',
+    label: 'Jointly Owned by Applicant & Co-ApplicantP',
+    value: 'Jointly Owned by Applicant & Co-ApplicantP',
   },
   {
-    label: 'Self-Owned by (Parental)',
-    value: 'Self-Owned by (Parental)',
+    label: 'Self-Owned by (Parental)P',
+    value: 'Self-Owned by (Parental)P',
   },
-  { label: 'Self-constructed', value: 'Self-constructed' },
+  { label: 'Self-constructed', value: 'Self-constructedP' },
   { label: 'NP', value: 'NP' },
 ];
 
@@ -580,6 +581,7 @@ export const assetStatus = [
   { label: 'Rented', value: 'Rented' },
   { label: 'Vacant', value: 'Vacant' },
   { label: 'Self-Occupied', value: 'Self-Occupied' },
+  { label: 'NP', value: 'NP' },
 ];
 
 export const particularsInvestment = [
@@ -748,5 +750,4 @@ export const businessProcess = [
   { label: 'Hospital/Clinic', value: 'Hospital/Clinic' },
   { label: 'Manufacturing', value: 'Manufacturing' },
   { label: 'Other', value: 'Other' },
-  { label: 'NP', value: 'NP' },
 ];

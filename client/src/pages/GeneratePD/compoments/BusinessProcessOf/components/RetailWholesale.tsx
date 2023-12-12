@@ -3,9 +3,6 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import AButton from '../../../../../components-global/AButton';
 import ASection from '../../../../../components-global/ASection';
-import toast from 'react-hot-toast';
-
-toast.success(<b>Business details saved.</b>);
 
 const initialValues = {
   value: {
@@ -14,7 +11,7 @@ const initialValues = {
     detailSer: '',
     serCharge: '',
     grossMargin: '',
-   perOfTrans: '',
+    perOfTrans: '',
     transCost: '',
     purCycle: '',
     sales: '',
@@ -86,7 +83,7 @@ const RetailWholesale = ({ payloads, setBussDetails }: any) => {
   };
 
   useEffect(() => {
-    if (payloads.details) {
+    if (payloads?.details) {
       formik.setFieldValue('value', payloads?.details?.value);
       setLabels({ ...payloads?.details?.label });
     }

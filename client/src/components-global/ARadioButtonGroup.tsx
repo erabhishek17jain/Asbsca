@@ -4,15 +4,15 @@ import ARadiobox from './ARadiobox';
 const ARadioButtonGroup = ({
   title,
   value,
-  width,
   radioValues,
   handleChange,
   isReset = false,
+  width = 'w-1/4',
 }: any) => {
   return (
-    <div className="flex flex-col xsm:flex-row xsm:items-center gap-3 py-4">
-      <div className={`min-w-[25%] w-full xsm:${width}`}>{title}</div>
-      <div className="flex w-1/2">
+    <div className="flex flex-col sm:flex-row xsm:items-center gap-3 py-4">
+      <div className={`min-w-[25%] w-full sm:${width}`}>{title}</div>
+      <div className="flex w-full sm:w-1/2">
         {radioValues?.map((item: any) => (
           <ARadiobox
             id={item.value + title}

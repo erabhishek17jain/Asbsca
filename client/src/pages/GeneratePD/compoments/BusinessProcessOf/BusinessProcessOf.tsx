@@ -7,6 +7,14 @@ import { useEffect } from 'react';
 import ServiceWithPurchase from './components/ServiceWithPurchase';
 import Salaried from './components/Salaried';
 import Service from './components/Service';
+import RetailShop from './components/RetailShop';
+import Resturant from './components/Resturant';
+import ResturantBar from './components/ResturantBar';
+import Hotel from './components/Hotel';
+import RetailWholesale from './components/RetailWholesale';
+import HospitalClinic from './components/HospitalClinic';
+import Manufacture from './components/Manufacture';
+import Others from './components/Other';
 
 const initialValues = {
   bussinessProcessOf: '',
@@ -44,11 +52,10 @@ const BusinessProcessOf = ({
     formik.setFieldValue('details', details);
   };
 
-  
   useEffect(() => {
     if (formik?.values?.bussinessProcessOf === 'Trading (B2B)') {
       formik.setFieldValue('details', {});
-    } else{
+    } else {
       formik.setFieldValue('details', null);
     }
   }, [formik?.values?.bussinessProcessOf]);
@@ -102,23 +109,50 @@ const BusinessProcessOf = ({
               setBussDetails={setBussDetails}
             />
           )}
-          {formik?.values?.bussinessProcessOf ===
-            'Service (With Purchases)' && (
-            <ServiceWithPurchase
+          {formik?.values?.bussinessProcessOf === 'Retail - Shop' && (
+            <RetailShop
               payloads={payloads.businessOf}
               setBussDetails={setBussDetails}
             />
           )}
-          {formik?.values?.bussinessProcessOf ===
-            'Service (With Purchases)' && (
-            <ServiceWithPurchase
+          {formik?.values?.bussinessProcessOf === 'Resturant' && (
+            <Resturant
               payloads={payloads.businessOf}
               setBussDetails={setBussDetails}
             />
           )}
-          {formik?.values?.bussinessProcessOf ===
-            'Service (With Purchases)' && (
-            <ServiceWithPurchase
+          {formik?.values?.bussinessProcessOf === 'Resturant & Bar' && (
+            <ResturantBar
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Hotel' && (
+            <Hotel
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Retail & Wholesale' && (
+            <RetailWholesale
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Hospital/Clinic' && (
+            <HospitalClinic
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Manufacturing' && (
+            <Manufacture
+              payloads={payloads.businessOf}
+              setBussDetails={setBussDetails}
+            />
+          )}
+          {formik?.values?.bussinessProcessOf === 'Other' && (
+            <Others
               payloads={payloads.businessOf}
               setBussDetails={setBussDetails}
             />

@@ -159,8 +159,8 @@ const financeInfo = {
     totalExpensePM: '',
     netProfitPA: '',
     netProfitPM: '',
-    shareOfProfitPA: '',
-    shareOfProfitPM: '',
+    shareOfProfitPA: 0,
+    shareOfProfitPM: 0,
   },
   businessIncome: {
     salaryFromBusiness: {
@@ -178,8 +178,8 @@ const financeInfo = {
       amountPM: '',
       months: 12,
     },
-    totalIncomePA: '',
-    totalEarning: '',
+    totalIncomePA: 0,
+    totalEarning: 0,
   },
 };
 
@@ -310,10 +310,13 @@ const Financials = ({
       finance.turnoverGrossReciepts.amountPA - finance.purchases.amountPA;
     const totalPM =
       finance.purchases.amountPA / finance.turnoverGrossReciepts.amountPA;
-    formik.setFieldValue(`finances[${index}]income.grossProfit`, totalAP);
+    formik.setFieldValue(
+      `finances[${index}]income.grossProfit`,
+      totalAP.toFixed(1),
+    );
     formik.setFieldValue(
       `finances[${index}]income.grossProfitPer`,
-      (100 - totalPM * 100).toFixed(0),
+      (100 - totalPM * 100).toFixed(1),
     );
   };
 
@@ -338,40 +341,38 @@ const Financials = ({
     );
     formik.setFieldValue(
       `finances[${index}]expenses.netProfitPA`,
-      item?.income?.grossProfit - totalAP,
+      (item?.income?.grossProfit - totalAP).toFixed(1),
     );
     formik.setFieldValue(
       `finances[${index}]expenses.netProfitPM`,
       (
         ((item.income?.grossProfit - totalAP) * 100) /
         item.income?.turnoverGrossReciepts?.amountPA
-      ).toFixed(0),
+      ).toFixed(1),
     );
     formik.setFieldValue(
       `finances[${index}]expenses.shareOfProfitPA`,
-      item?.income?.grossProfit - totalAP,
+      (item?.income?.grossProfit - totalAP).toFixed(1),
     );
-    formik.setFieldValue(`finances[${index}]expenses.shareOfProfitPM`, 100);
+    formik.setFieldValue(`finances[${index}]expenses.shareOfProfitPM`, '100%');
   };
 
   const setBusinessIncome = (item: any, index: number) => {
-    let totalAP = item?.expenses?.shareOfProfitPA;
+    let totalAP = parseInt(item?.expenses?.shareOfProfitPA);
     const finance: any = item?.businessIncome;
-    for (const key in finance) {
-      if (
-        typeof finance[key] !== 'string' &&
-        typeof finance[key]?.amountPA === 'number'
-      ) {
-        totalAP = finance[key]?.amountPA + totalAP;
-      }
-    }
-    formik.setFieldValue(
-      `finances[${index}]businessIncome.totalIncomePA`,
-      totalAP,
-    );
+   formik.setFieldValue(
+     `finances[${index}]businessIncome.totalIncomePA`,
+     parseFloat(
+       totalAP +
+       finance?.salaryFromBusiness?.amountPA +
+       finance?.remunerationFromBusiness?.amountPA
+     ).toFixed(1),
+   );
     formik.setFieldValue(
       `finances[${index}]businessIncome.totalEarning`,
-      totalAP,
+      parseFloat(totalAP + finance?.rent?.amountPA +
+        finance?.salaryFromBusiness?.amountPA +
+        finance?.remunerationFromBusiness?.amountPA).toFixed(1),
     );
   };
 
@@ -442,16 +443,12 @@ const Financials = ({
                           <ASection
                             footers={[
                               {
-                                label: 'Total Amount PA',
-                                value:
-                                  formik?.values?.finances[index]?.income
-                                    ?.grossProfit,
+                                label: 'Gross Profit',
+                                value: `${formik?.values?.finances[index]?.income?.grossProfit} Lakhs`,
                               },
                               {
-                                label: 'Total Amount PM',
-                                value:
-                                  formik?.values?.finances[index]?.income
-                                    ?.grossProfitPer,
+                                label: 'Gross Profit %',
+                                value: `${formik?.values?.finances[index]?.income?.grossProfitPer} %`,
                               },
                             ]}
                           >
@@ -485,43 +482,27 @@ const Financials = ({
                               footers={[
                                 {
                                   label: 'Total Expenses P.A.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.totalExpensePA,
+                                  value: `${formik?.values?.finances[index]?.expenses?.totalExpensePA} Lakhs`,
                                 },
                                 {
-                                  label: 'Net Profit P.A.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.netProfitPA,
+                                  label: 'Net Profit',
+                                  value: `${formik?.values?.finances[index]?.expenses?.netProfitPA} Lakhs`,
                                 },
                                 {
-                                  label: 'Share of Profit P.A.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.shareOfProfitPA,
+                                  label: 'Share of Profit',
+                                  value: `${formik?.values?.finances[index]?.expenses?.shareOfProfitPA} Lakhs`,
                                 },
                               ]}
                             />
                             <SectionFooter
                               footers={[
                                 {
-                                  label: 'Total Expenses P.M.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.totalExpensePM,
+                                  label: 'Net Profit %',
+                                  value: `${formik?.values?.finances[index]?.expenses?.netProfitPM} %`,
                                 },
                                 {
-                                  label: 'Net Profit P.M.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.netProfitPM,
-                                },
-                                {
-                                  label: 'Share of Profit P.M.',
-                                  value:
-                                    formik?.values?.finances[index]?.expenses
-                                      ?.shareOfProfitPM,
+                                  label: 'Share of Profit %',
+                                  value: `${formik?.values?.finances[index]?.expenses?.shareOfProfitPM} Lakhs`,
                                 },
                               ]}
                             />
@@ -529,16 +510,12 @@ const Financials = ({
                           <ASection
                             footers={[
                               {
-                                label: 'Total P.A.',
-                                value:
-                                  formik?.values?.finances[index]
-                                    ?.businessIncome?.totalIncomePA,
+                                label: 'Total (without rent)',
+                                value: `${formik?.values?.finances[index]?.businessIncome?.totalIncomePA} Lakhs`,
                               },
                               {
                                 label: 'Total Earning',
-                                value:
-                                  formik?.values?.finances[index]
-                                    ?.businessIncome?.totalEarning,
+                                value: `${formik?.values?.finances[index]?.businessIncome?.totalEarning} Lakhs`,
                               },
                             ]}
                           >

@@ -8,7 +8,7 @@ import {
   MapPinIcon,
   PlusIcon,
   TagIcon,
-  UserIcon, 
+  UserIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
@@ -24,7 +24,12 @@ import toast from 'react-hot-toast';
 import { fetchAllClientsAsync } from '../../slices/clientsSlice';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { appoinmentStatusList, caseStatusList, caseTypeList, localOrOGLList } from '../../constants';
+import {
+  appoinmentStatusList,
+  caseStatusList,
+  caseTypeList,
+  localOrOGLList,
+} from '../../constants';
 import { fetchAllBranchsAsync } from '../../slices/branchsSlice';
 import store from '../../store/store';
 import { getOptions } from '../../utils';
@@ -54,7 +59,7 @@ const AddCase = () => {
     type: '',
     bankName: '',
     receivedDate: '',
-    status:'',
+    status: '',
     appoinmentStatus: '',
     assigneeId: '',
     reviewerId: '',
@@ -63,7 +68,13 @@ const AddCase = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
-    mobile: Yup.number().required('This field is required'),
+    mobile: Yup.string()
+      .required('This field is required')
+      .test(
+        'len',
+        'Mobile number should be of 10 digits',
+        (val: any) => val.length === 10,
+      ),
     loanAmount: Yup.number().required('This field is required'),
     referenceId: Yup.string().required('This field is required'),
     localOrOGL: Yup.string().required('This field is required'),
@@ -84,6 +95,7 @@ const AddCase = () => {
   };
 
   const onSubmit = async (values: any) => {
+    values = { ...values, mobile: parseInt(values.mobile) };
     values = await Object.assign(values);
     let addCasePromise = state?.activeItem
       ? updateCase(state?.activeItem?._id, { ...values })
@@ -148,11 +160,15 @@ const AddCase = () => {
       formik.setFieldValue('type', state?.activeItem?.type);
       formik.setFieldValue('bankName', state?.activeItem?.bankName?._id);
       const date = state?.activeItem?.receivedDate;
-      formik.setFieldValue('receivedDate', date?.slice(0, -8));
+      formik.setFieldValue('receivedDate', date?.slice(0, 10));
       formik.setFieldValue('status', state?.activeItem?.status);
-      formik.setFieldValue('appoinmentStatus', state?.activeItem?.appoinmentStatus);
+      formik.setFieldValue(
+        'appoinmentStatus',
+        state?.activeItem?.appoinmentStatus,
+      );
       formik.setFieldValue('assigneeId', state?.activeItem?.assignTo?._id);
       formik.setFieldValue('reviewerId', state?.activeItem?.reviewer?._id);
+      formik.setFieldValue('remark', state?.activeItem?.remark);
     } else {
       formik.setFieldValue('status', 'unassigned');
       formik.setFieldValue('appoinmentStatus', 'notScheduled');

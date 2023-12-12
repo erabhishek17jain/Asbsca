@@ -125,12 +125,11 @@ const AssetsInvestmentBank = ({
         Yup.object().shape({
           particulars: Yup.string().required('This field is required'),
           location: Yup.string().required('This field is required'),
-          purchaseYear: Yup.number().required('This field is required'),
+          purchaseYear: Yup.string().required('This field is required'),
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
           assetStatus: Yup.string().required('This field is required'),
           marketValue: Yup.number().required('This field is required'),
-          rentPM: Yup.number().required('This field is required'),
         }),
       ),
     }),
@@ -139,12 +138,11 @@ const AssetsInvestmentBank = ({
         Yup.object().shape({
           particulars: Yup.string().required('This field is required'),
           location: Yup.string().required('This field is required'),
-          purchaseYear: Yup.number().required('This field is required'),
+          purchaseYear: Yup.string().required('This field is required'),
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
           assetStatus: Yup.string().required('This field is required'),
           marketValue: Yup.number().required('This field is required'),
-          rentPM: Yup.number().required('This field is required'),
         }),
       ),
     }),
@@ -303,27 +301,35 @@ const AssetsInvestmentBank = ({
       );
       const bussAssets: any = [];
       if (business?.length > 0) {
-        business.forEach((el: any) => {
+        business.forEach((el: any, index: number) => {
           bussAssets.push({
             ...assetInfo,
+            title: `Business Asset ${index + 1}`,
+            particulars: 'NP',
+            location: '-',
             purchaseYear: el?.purchaseYear,
             carpetArea: el?.carpetArea,
             status: el?.resiStatus,
-            assetStatus: el?.assetStatus,
+            assetStatus: 'NP',
             marketValue: el?.marketValue,
+            rentPM: 0,
           });
         });
       }
       const perAssets: any = [];
       if (personal?.length > 0) {
-        personal.forEach((el: any) => {
+        personal.forEach((el: any, index: number) => {
           perAssets.push({
             ...assetInfo,
+            title: `Personal Asset ${index + 1}`,
+            particulars: 'NP',
+            location: '-',
             purchaseYear: el?.purchaseYear,
             carpetArea: el?.carpetArea,
             status: el?.resiStatus,
-            assetStatus: el?.assetStatus,
+            assetStatus: 'NP',
             marketValue: el?.marketValue,
+            rentPM: 0,
           });
         });
       }
@@ -332,15 +338,17 @@ const AssetsInvestmentBank = ({
       ) {
         perAssets.push({
           ...assetInfo,
-          particulars: '-',
-          localStorage: '-',
+          title: `Personal Asset ${perAssets.length}`,
+          particulars: 'NP',
+          location: '-',
           purchaseYear: '-',
           carpetArea: '-',
-          status: '-',
-          assetStatus: '-',
+          status: 'NP',
+          assetStatus: 'NP',
           marketValue:
             payloads?.detailsOfProp?.propertyLoanDetails?.propertyValue
               ?.ocrPaid,
+          rentPM: 0,
         });
       }
       formik.setFieldValue('personalAssetDetails.personalAssets', perAssets);
@@ -369,12 +377,11 @@ const AssetsInvestmentBank = ({
               footers={[
                 {
                   label: 'Total Market Value',
-                  value:
-                    formik?.values?.bussinessAssetDetails?.totalMarketValue,
+                  value: `${formik?.values?.bussinessAssetDetails?.totalMarketValue} Lakhs`,
                 },
                 {
                   label: 'Total Rent P.M',
-                  value: formik?.values?.bussinessAssetDetails?.totalRentPM,
+                  value: `${formik?.values?.bussinessAssetDetails?.totalRentPM} Lakhs`,
                 },
               ]}
             >
@@ -431,7 +438,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].purchaseYear`}
                                       label={'Purchase Year'}
                                       value={
@@ -556,11 +562,11 @@ const AssetsInvestmentBank = ({
               footers={[
                 {
                   label: 'Total Market Value',
-                  value: formik?.values?.personalAssetDetails?.totalMarketValue,
+                  value: `${formik?.values?.personalAssetDetails?.totalMarketValue} Lakhs`,
                 },
                 {
                   label: 'Total Rent P.M',
-                  value: formik?.values?.personalAssetDetails?.totalRentPM,
+                  value: `${formik?.values?.personalAssetDetails?.totalRentPM} Lakhs`,
                 },
               ]}
             >
@@ -617,7 +623,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].purchaseYear`}
                                       label={'Purchase Year'}
                                       value={
@@ -742,11 +747,11 @@ const AssetsInvestmentBank = ({
               footers={[
                 {
                   label: 'Total Contribution',
-                  value: formik?.values?.investmentDetails?.totalContribution,
+                  value: `${formik?.values?.investmentDetails?.totalContribution} Lakhs`,
                 },
                 {
                   label: 'Total Market Value',
-                  value: formik?.values?.investmentDetails?.totalMarketValue,
+                  value: `${formik?.values?.investmentDetails?.totalMarketValue} Lakhs`,
                 },
               ]}
             >
@@ -853,7 +858,7 @@ const AssetsInvestmentBank = ({
               footers={[
                 {
                   label: 'Total Balance on Day',
-                  value: formik?.values?.bankAccountDetails?.totalBalance,
+                  value: `${formik?.values?.bankAccountDetails?.totalBalance} Lakhs`,
                 },
               ]}
             >

@@ -140,7 +140,9 @@ const DetailsOfProperty = ({
     if (formik?.values.occupiedBy !== '') {
       formik.setFieldValue(
         'builderName',
-        formik?.values.occupiedBy !== 'Under Construction' ? 'NA' : '',
+        formik?.values.occupiedBy !== 'Under Construction'
+          ? 'NA'
+          : formik?.values.builderName,
       );
     }
   }, [formik?.values?.occupiedBy]);
@@ -244,7 +246,6 @@ const DetailsOfProperty = ({
             </AGroupFields>
           </ASection>
           <ARadioButtonGroup
-            width="w-1/4"
             isReset={() => handleLoanPropertyEMI('', '')}
             value={formik?.values?.propertyLoanDetails?.isLoanProvided}
             title={'Loan to Property'}
@@ -288,7 +289,7 @@ const DetailsOfProperty = ({
                   type={'number'}
                   label={'EMI'}
                   disabled={true}
-                  rightLabel={'(Lakhs)'}
+                  rightLabel={'(In Lakhs)'}
                   id={`propertyLoanDetails.loanDetails.emi`}
                   value={formik?.values?.propertyLoanDetails?.loanDetails?.emi}
                   error={errors?.loanDetails?.emi}

@@ -5,14 +5,12 @@ import AButton from '../../../../../components-global/AButton';
 import ASection from '../../../../../components-global/ASection';
 import toast from 'react-hot-toast';
 
-toast.success(<b>Business details saved.</b>);
-
 const initialValues = {
   value: {
     appStart: '',
     location: '',
-    oyo:'',
-    facilities:'',
+    oyo: '',
+    facilities: '',
     charges: '',
     menu: '',
     price: '',
@@ -65,6 +63,7 @@ const Hotel = ({ payloads, setBussDetails }: any) => {
       label[prop] = labels[prop].replace('\n', ` ${values?.value[prop]} `);
     }
     setBussDetails({ label: label, value: values?.value });
+    toast.success(<b>Business details saved.</b>);
   };
 
   const formik = useFormik({
@@ -84,7 +83,7 @@ const Hotel = ({ payloads, setBussDetails }: any) => {
   };
 
   useEffect(() => {
-    if (payloads.details) {
+    if (payloads?.details) {
       formik.setFieldValue('value', payloads?.details?.value);
       setLabels({ ...payloads?.details?.label });
     }

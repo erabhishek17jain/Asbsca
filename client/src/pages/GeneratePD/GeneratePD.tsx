@@ -28,6 +28,7 @@ const GeneratePD = () => {
     reportPromise
       .then((res: any) => {
         if (res) {
+          setAction('edit');
           if (stepFinished) {
             navigate('/finalReport', {
               state: { activeItem: state?.activeItem },
@@ -63,7 +64,7 @@ const GeneratePD = () => {
   return (
     <>
       <ABreadcrumb pageName="Generate PD" />
-      {Object.keys(reportData).length !== 0 && (
+      {Object.keys(reportData).length > 15 && (
         <div className="flex gap-2 w-full flex-col">
           <div className="flex justify-center sm:justify-end gap-3">
             <AButton
