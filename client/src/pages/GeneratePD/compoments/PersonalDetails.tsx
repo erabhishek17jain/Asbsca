@@ -26,7 +26,9 @@ const applicantInfo = {
   name: '',
   dobDoi: '',
   qualification: '',
+  otherqualification: '',
   natureOfBusiness: '',
+  othernatureOfBusiness: '',
   birthYear: '',
   age: '',
   studyFinish: '',
@@ -41,6 +43,7 @@ const resiInfo = {
   title: 'Residance Info',
   resiAddress: '',
   resiStatus: '',
+  otherresiStatus: '',
   resiType: '',
   resiSince: '',
   buildArea: '',
@@ -55,7 +58,9 @@ const resiInfo = {
 const familyInfo = {
   name: '',
   relation: '',
+  otherrelation: '',
   earningStatus: '',
+  otherearningStatus: '',
 } as any;
 
 const initialValues = {
@@ -87,6 +92,7 @@ const PersonalDetails = ({
       Yup.object().shape({
         resiAddress: Yup.string().required('This field is required'),
         resiStatus: Yup.string().required('This field is required'),
+        resiType: Yup.string().required('This field is required'),
         resiSince: Yup.number().required('This field is required'),
         buildArea: Yup.number().required('This field is required'),
         carpetArea: Yup.number().required('This field is required'),
@@ -160,7 +166,9 @@ const PersonalDetails = ({
   const handleResiStatus = (e: any) => {
     formik.setFieldValue(
       `${e.target.id.slice(0, 12)}.resiType`,
-      e.target.value.slice(-1),
+      e.target.value === 'NP' || e.target.value === 'Other'
+        ? 'NP'
+        : e.target.value.slice(-1),
     );
     formik.handleChange(e);
   };
@@ -241,6 +249,22 @@ const PersonalDetails = ({
                               }
                               handleChange={formik.handleChange}
                             />
+                            {formik?.values?.applicants[index].qualification ===
+                              'Other' && (
+                              <AInputField
+                                id={`applicants[${index}].otherqualification`}
+                                label={'Qualification'}
+                                value={
+                                  formik?.values?.applicants[index]
+                                    .otherqualification
+                                }
+                                error={
+                                  errorsAp?.length > 0 &&
+                                  errorsAp[index]?.otherqualification
+                                }
+                                handleChange={formik?.handleChange}
+                              />
+                            )}
                             <ASingleSelect
                               id={`applicants[${index}].natureOfBusiness`}
                               label={'Nature of Business'}
@@ -255,6 +279,22 @@ const PersonalDetails = ({
                               }
                               handleChange={formik.handleChange}
                             />
+                            {formik?.values?.applicants[index]
+                              .natureOfBusiness === 'Other' && (
+                              <AInputField
+                                id={`applicants[${index}].othernatureOfBusiness`}
+                                label={'Nature of Business'}
+                                value={
+                                  formik?.values?.applicants[index]
+                                    .othernatureOfBusiness
+                                }
+                                error={
+                                  errorsAp?.length > 0 &&
+                                  errorsAp[index]?.othernatureOfBusiness
+                                }
+                                handleChange={formik?.handleChange}
+                              />
+                            )}
                             <div className="flex gap-2">
                               <AInputField
                                 type={'number'}
@@ -414,8 +454,27 @@ const PersonalDetails = ({
                             }
                             handleChange={handleResiStatus}
                           />
+                          {formik?.values?.residents[index]?.resiStatus ===
+                            'Other' && (
+                            <AInputField
+                              id={`residents[${index}].otherresiStatus`}
+                              label={'Residence Status'}
+                              value={
+                                formik?.values?.residents[index]
+                                  ?.otherresiStatus
+                              }
+                              error={
+                                errorsRe?.length > 0 &&
+                                errorsRe[index]?.otherresiStatus
+                              }
+                              handleChange={formik?.handleChange}
+                            />
+                          )}
                           <ASingleSelect
-                            disabled={true}
+                            disabled={
+                              formik?.values?.residents[index]?.resiStatus !==
+                              'Other'
+                            }
                             label={'Residence Type'}
                             options={residanceType}
                             id={`residents[${index}].resiType`}
@@ -592,6 +651,22 @@ const PersonalDetails = ({
                                 }
                                 handleChange={formik.handleChange}
                               />
+                              {formik?.values?.familyDetails[index].relation ===
+                                'Other' && (
+                                <AInputField
+                                  id={`familyDetails[${index}].otherrelation`}
+                                  label={'Reation'}
+                                  value={
+                                    formik?.values?.familyDetails[index]
+                                      .otherrelation
+                                  }
+                                  error={
+                                    errorsFd?.length > 0 &&
+                                    errorsFd[index].otherrelation
+                                  }
+                                  handleChange={formik?.handleChange}
+                                />
+                              )}
                               <ASingleSelect
                                 label={'Earning Status'}
                                 options={earningStatus}
@@ -606,6 +681,22 @@ const PersonalDetails = ({
                                 }
                                 handleChange={formik.handleChange}
                               />
+                              {formik?.values?.familyDetails[index]
+                                .earningStatus === 'Other' && (
+                                <AInputField
+                                  id={`familyDetails[${index}].otherearningStatus`}
+                                  label={'Earning Status'}
+                                  value={
+                                    formik?.values?.familyDetails[index]
+                                      .otherearningStatus
+                                  }
+                                  error={
+                                    errorsFd?.length > 0 &&
+                                    errorsFd[index].otherearningStatus
+                                  }
+                                  handleChange={formik?.handleChange}
+                                />
+                              )}
                             </AGroupFields>
                           </div>
                           <AddTagFooter

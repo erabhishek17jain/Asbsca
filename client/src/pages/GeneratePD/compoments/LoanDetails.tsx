@@ -9,11 +9,15 @@ import { AStepperPagination } from '../../../components-global/AStepper';
 import { fetchAllClientsAsync } from '../../../slices/clientsSlice';
 import store from '../../../store/store';
 import moment from 'moment';
+import AInputField from '../../../components-global/AInputField';
 
 const initialValues = {
   alc: '',
+  otheralc:'',
   loan: '',
+  otherloan: '',
   loanType: '',
+  otherloanType: '',
   bankName: '',
 };
 
@@ -62,7 +66,7 @@ const LoanDetails = ({
   }, [allClients]);
 
   useEffect(() => {
-    let details = {}
+    let details = {};
     if (payloads.pdDetails) {
       details = payloads.pdDetails;
     } else {
@@ -86,8 +90,14 @@ const LoanDetails = ({
   useEffect(() => {
     if (payloads.loanDetails) {
       formik.setFieldValue('alc', payloads.loanDetails?.alc);
+      formik.setFieldValue('otheralc', payloads.loanDetails?.otheralc);
       formik.setFieldValue('loan', payloads.loanDetails?.loan);
+      formik.setFieldValue('otherloan', payloads.loanDetails?.otherloan);
       formik.setFieldValue('loanType', payloads?.loanDetails?.loanType);
+      formik.setFieldValue(
+        'otherloanType',
+        payloads?.loanDetails?.otherloanType,
+      );
       formik.setFieldValue('bankName', payloads?.loanDetails?.bankName);
     }
   }, [payloads]);
@@ -114,6 +124,16 @@ const LoanDetails = ({
             error={formik.errors.alc}
             handleChange={formik.handleChange}
           />
+          {formik?.values?.alc === 'Other' && (
+            <AInputField
+              id={'otheralc'}
+              label={'ALC'}
+              variant={'horizantal'}
+              value={formik?.values?.otheralc}
+              error={formik?.errors?.otheralc}
+              handleChange={formik?.handleChange}
+            />
+          )}
           <ASingleSelect
             id={'loan'}
             label={'Loan'}
@@ -123,6 +143,16 @@ const LoanDetails = ({
             error={formik.errors.loan}
             handleChange={formik.handleChange}
           />
+          {formik?.values?.loan === 'Other' && (
+            <AInputField
+              id={'otherloan'}
+              label={'Loan Type'}
+              variant={'horizantal'}
+              value={formik?.values?.otherloan}
+              error={formik?.errors?.otherloan}
+              handleChange={formik?.handleChange}
+            />
+          )}
           <ASingleSelect
             id={'loanType'}
             label={'Loan Type'}
@@ -132,6 +162,16 @@ const LoanDetails = ({
             error={formik.errors.loanType}
             handleChange={formik.handleChange}
           />
+          {formik?.values?.loanType === 'Other' && (
+            <AInputField
+              id={'otherloanType'}
+              label={'Loan Type'}
+              variant={'horizantal'}
+              value={formik?.values?.otherloanType}
+              error={formik?.errors?.otherloanType}
+              handleChange={formik?.handleChange}
+            />
+          )}
         </div>
       </div>
       <AStepperPagination

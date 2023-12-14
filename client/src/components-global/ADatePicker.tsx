@@ -25,7 +25,11 @@ const ADatePicker = ({
           value={value}
           onChange={handleChange}
           type={'date'}
-          className="w-full text-sm rounded-lg border-[1.5px] border-stroke bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
+          className={`w-full text-sm rounded-lg bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-defnot-allowedault disabled:bg-whiter ${
+            error !== ''
+              ? 'border-[1.5px] border-meta1 '
+              : 'border-[1.5px] border-stroke '
+          }`}
         />
         {error && <span className="ml-1 text-xs text-meta1">{error}</span>}
       </div>

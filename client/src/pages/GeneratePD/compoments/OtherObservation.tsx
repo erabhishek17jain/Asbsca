@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import ASingleSelect from '../../../components-global/ASingleSelect';
 import {
   activityReason,
+  applicantBehaviour,
   applicantDoing,
   employeeDoing,
   stockReason,
@@ -23,6 +24,7 @@ const initialValues = {
   activity: {
     exist: '',
     reasonForNo: '-',
+    otherreasonForNo: '-',
   },
   customer: {
     exist: '',
@@ -31,6 +33,7 @@ const initialValues = {
   stock: {
     exist: '',
     reasonForNo: '-',
+    otherreasonForNo: '-',
   },
   thirdPartyCheck: {
     exist: '',
@@ -41,9 +44,12 @@ const initialValues = {
     reasonForNo: '-',
   },
   behaviourOfApplicant: '',
+  otherbehaviourOfApplicant: '',
   duringVist: {
     applicantDoing: '',
+    otherapplicantDoing: '',
     employeesDoing: '',
+    otheremployeesDoing: '',
     otherObservation: '',
   },
 } as any;
@@ -124,6 +130,10 @@ const OtherObservation = ({
         'behaviourOfApplicant',
         payloads?.observations?.behaviourOfApplicant,
       );
+      formik.setFieldValue(
+        'otherbehaviourOfApplicant',
+        payloads?.observations?.otherbehaviourOfApplicant,
+      );
       formik.setFieldValue('duringVist', payloads?.observations?.duringVist);
     }
   }, [payloads]);
@@ -178,6 +188,19 @@ const OtherObservation = ({
                 error={errors?.activity?.reasonForNo}
                 handleChange={formik.handleChange}
               />
+              {formik?.values?.activity?.reasonForNo === 'Other' && (
+                <AInputField
+                  label={'Reason for No or NA'}
+                  id={`activity.otherreasonForNo`}
+                  disabled={
+                    formik?.values?.activity?.exist === '' ||
+                    formik?.values?.activity?.exist === 'Yes'
+                  }
+                  value={formik?.values?.activity?.otherreasonForNo}
+                  error={errors?.activity?.otherreasonForNo}
+                  handleChange={formik.handleChange}
+                />
+              )}
             </AGroupFields>
             <AGroupFields col={2} title={'Customer Seen'}>
               <ASingleSelect
@@ -226,6 +249,19 @@ const OtherObservation = ({
                 error={errors?.stock?.reasonForNo}
                 handleChange={formik.handleChange}
               />
+              {formik?.values?.stock?.reasonForNo === 'Other' && (
+                <AInputField
+                  label={'Reason for No or NA'}
+                  id={`stock.otherreasonForNo`}
+                  disabled={
+                    formik?.values?.stock?.exist === '' ||
+                    formik?.values?.stock?.exist === 'Yes'
+                  }
+                  value={formik?.values?.stock?.otherreasonForNo}
+                  error={errors?.stock?.otherreasonForNo}
+                  handleChange={formik.handleChange}
+                />
+              )}
             </AGroupFields>
             <AGroupFields col={2} title={'Third Party Check'}>
               <ASingleSelect
@@ -273,13 +309,23 @@ const OtherObservation = ({
               />
             </AGroupFields>
             <AGroupFields col={2}>
-              <AInputField
+              <ASingleSelect
+                options={applicantBehaviour}
                 id={'behaviourOfApplicant'}
                 label={'Behaviour of applicant'}
                 value={formik?.values?.behaviourOfApplicant}
                 error={errors?.behaviourOfApplicant}
                 handleChange={formik.handleChange}
               />
+              {formik?.values?.behaviourOfApplicant === 'Other' && (
+                <AInputField
+                  id={'otherbehaviourOfApplicant'}
+                  label={'Behaviour of applicant'}
+                  value={formik?.values?.otherbehaviourOfApplicant}
+                  error={errors?.otherbehaviourOfApplicant}
+                  handleChange={formik.handleChange}
+                />
+              )}
             </AGroupFields>
             <p className="w-full mb-3">During Visit</p>
             <AGroupFields col={3}>
@@ -291,6 +337,15 @@ const OtherObservation = ({
                 error={errors?.duringVist?.applicantDoing}
                 handleChange={formik.handleChange}
               />
+              {formik?.values?.duringVist?.applicantDoing === 'Other' && (
+                <AInputField
+                  id={'duringVist.otherapplicantDoing'}
+                  label={'What applicant were doing?'}
+                  value={formik?.values?.duringVist?.otherapplicantDoing}
+                  error={errors?.duringVist?.otherapplicantDoing}
+                  handleChange={formik.handleChange}
+                />
+              )}
               <ASingleSelect
                 options={employeeDoing}
                 id={'duringVist.employeesDoing'}
@@ -299,6 +354,15 @@ const OtherObservation = ({
                 error={errors?.duringVist?.employeesDoing}
                 handleChange={formik.handleChange}
               />
+              {formik?.values?.duringVist?.employeesDoing === 'Other' && (
+                <AInputField
+                  id={'duringVist.otheremployeesDoing'}
+                  label={'What employees were doing?'}
+                  value={formik?.values?.duringVist?.otheremployeesDoing}
+                  error={errors?.duringVist?.otheremployeesDoing}
+                  handleChange={formik.handleChange}
+                />
+              )}
               <AInputField
                 id={'duringVist.otherObservation'}
                 label={'Other observation during visit?'}

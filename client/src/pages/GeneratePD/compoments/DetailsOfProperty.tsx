@@ -21,6 +21,7 @@ const initialValues: any = {
   buildUpArea: '',
   caretArea: '',
   occupiedBy: '',
+  otheroccupiedBy: '',
   loanPropertyAddress: '',
   builderName: '',
   propertyLoanDetails: {
@@ -34,6 +35,7 @@ const initialValues: any = {
       pOrb: '',
       balanceOcr: 0,
       sourceOcr: '',
+      othersourceOcr:''
     },
     loanAsPerForm: '',
   },
@@ -52,18 +54,9 @@ const DetailsOfProperty = ({
   const handleLoanPropertyEMI = (title: string, val: string) => {
     console.log(title);
     formik.setFieldValue('propertyLoanDetails.isLoanProvided', val);
-    formik.setFieldValue(
-      'propertyLoanDetails.propertyValue.pOrb',
-      'NP',
-    );
-    formik.setFieldValue(
-      'propertyLoanDetails.propertyValue.sourceOcr',
-      'NP',
-    );
-    formik.setFieldValue(
-      'propertyLoanDetails.loanDetails.amount',
-      0,
-    );
+    formik.setFieldValue('propertyLoanDetails.propertyValue.pOrb', 'NP');
+    formik.setFieldValue('propertyLoanDetails.propertyValue.sourceOcr', 'NP');
+    formik.setFieldValue('propertyLoanDetails.loanDetails.amount', 0);
   };
 
   const validationSchema = Yup.object().shape({
@@ -177,6 +170,10 @@ const DetailsOfProperty = ({
       formik.setFieldValue('caretArea', payloads.detailsOfProp?.caretArea);
       formik.setFieldValue('occupiedBy', payloads?.detailsOfProp?.occupiedBy);
       formik.setFieldValue(
+        'otheroccupiedBy',
+        payloads?.detailsOfProp?.otheroccupiedBy,
+      );
+      formik.setFieldValue(
         'loanPropertyAddress',
         payloads.detailsOfProp?.loanPropertyAddress,
       );
@@ -236,6 +233,16 @@ const DetailsOfProperty = ({
                 handleChange={formik?.handleChange}
                 disabled={formik?.values?.purchaseYear != lastYear}
               />
+              {formik?.values?.occupiedBy === 'Other' && (
+                <AInputField
+                  id={'otheroccupiedBy'}
+                  label={'Occupied By'}
+                  value={formik?.values?.otheroccupiedBy}
+                  error={formik?.errors?.otheroccupiedBy}
+                  handleChange={formik?.handleChange}
+                  disabled={formik?.values?.purchaseYear != lastYear}
+                />
+              )}
               <AInputField
                 id={'loanPropertyAddress'}
                 label={'Loan Property Address'}
@@ -399,6 +406,19 @@ const DetailsOfProperty = ({
                   error={errors?.propertyValue?.sourceOcr}
                   handleChange={formik.handleChange}
                 />
+                {formik?.values?.propertyLoanDetails?.propertyValue
+                  ?.sourceOcr === 'Other' && (
+                  <AInputField
+                    id={'propertyLoanDetails.propertyValue.othersourceOcr'}
+                    label={'Source OCR'}
+                    value={
+                      formik?.values?.propertyLoanDetails?.propertyValue
+                        ?.othersourceOcr
+                    }
+                    error={errors?.propertyValue?.othersourceOcr}
+                    handleChange={formik.handleChange}
+                  />
+                )}
               </AGroupFields>
             </ASection>
           )}

@@ -56,7 +56,7 @@ const BusinessProcessOf = ({
     if (formik?.values?.bussinessProcessOf === 'Trading (B2B)') {
       formik.setFieldValue('details', {});
     } else {
-      formik.setFieldValue('details', null);
+      formik.setFieldValue('details', payloads.businessOf?.details);
     }
   }, [formik?.values?.bussinessProcessOf]);
 

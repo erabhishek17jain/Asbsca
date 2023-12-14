@@ -22,11 +22,14 @@ import { FieldArray, FormikProvider, useFormik } from 'formik';
 const assetInfo: any = {
   title: 'Asset',
   particulars: '',
+  otherparticulars: '',
   location: '',
   purchaseYear: '',
   carpetArea: '',
   status: '',
+  otherstatus: '',
   assetStatus: '',
+  otherassetstatus: '',
   marketValue: '',
   rentPM: '',
 };
@@ -34,6 +37,7 @@ const assetInfo: any = {
 const investmentInfo: any = {
   title: 'Investment',
   particulars: '',
+  otherparticulars: '',
   contribution: '',
   marketValue: '',
 };
@@ -41,8 +45,10 @@ const investmentInfo: any = {
 const bankAccountInfo: any = {
   title: 'Bank Account',
   bankName: '',
+  otherbankName: '',
   branch: '',
   type: '',
+  othertype: '',
   balanceOnDay: '',
 };
 
@@ -71,6 +77,7 @@ const initialValues = {
     totalBalance: 0,
   },
   assetReason: '',
+  otherassetReason: '',
   assetsBacking: '',
 };
 
@@ -419,6 +426,26 @@ const AssetsInvestmentBank = ({
                                       options={particularsAssets}
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.bussinessAssetDetails
+                                      ?.bussinessAssets[index]?.particulars ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`bussinessAssetDetails.bussinessAssets[${index}].otherparticulars`}
+                                        label={'Particulars'}
+                                        value={
+                                          formik?.values?.bussinessAssetDetails
+                                            ?.bussinessAssets[index]
+                                            ?.otherparticulars
+                                        }
+                                        error={
+                                          errorsBd?.bussinessAssets?.length >
+                                            0 &&
+                                          errorsBd?.bussinessAssets[index]
+                                            ?.otherparticulars
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].location`}
                                       label={'Location'}
@@ -477,6 +504,25 @@ const AssetsInvestmentBank = ({
                                       }
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.bussinessAssetDetails
+                                      .bussinessAssets[index].status ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`bussinessAssetDetails.bussinessAssets[${index}].otherstatus`}
+                                        label={'Status'}
+                                        value={
+                                          formik?.values?.bussinessAssetDetails
+                                            .bussinessAssets[index].otherstatus
+                                        }
+                                        error={
+                                          errorsBd?.bussinessAssets?.length >
+                                            0 &&
+                                          errorsBd?.bussinessAssets[index]
+                                            ?.otherstatus
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <ASingleSelect
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].assetStatus`}
                                       label={'Asset Status'}
@@ -491,7 +537,27 @@ const AssetsInvestmentBank = ({
                                           ?.assetStatus
                                       }
                                       handleChange={formik.handleChange}
-                                    />
+                                    />{' '}
+                                    {formik?.values?.bussinessAssetDetails
+                                      .bussinessAssets[index].assetStatus ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`bussinessAssetDetails.bussinessAssets[${index}].otherassetstatus`}
+                                        label={'Asset Status'}
+                                        value={
+                                          formik?.values?.bussinessAssetDetails
+                                            .bussinessAssets[index]
+                                            .otherassetstatus
+                                        }
+                                        error={
+                                          errorsBd?.bussinessAssets?.length >
+                                            0 &&
+                                          errorsBd?.bussinessAssets[index]
+                                            ?.otherassetstatus
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].marketValue`}
@@ -604,6 +670,26 @@ const AssetsInvestmentBank = ({
                                       options={particularsAssets}
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.personalAssetDetails
+                                      ?.personalAssets[index]?.particulars ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`personalAssetDetails.personalAssets[${index}].otherparticulars`}
+                                        label={'Particulars'}
+                                        value={
+                                          formik?.values?.personalAssetDetails
+                                            ?.personalAssets[index]
+                                            ?.otherparticulars
+                                        }
+                                        error={
+                                          errorsBd?.personalAssets?.length >
+                                            0 &&
+                                          errorsBd?.personalAssets[index]
+                                            ?.otherparticulars
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       id={`personalAssetDetails.personalAssets[${index}].location`}
                                       label={'Location'}
@@ -661,7 +747,26 @@ const AssetsInvestmentBank = ({
                                         errorsPb?.personalAssets[index]?.status
                                       }
                                       handleChange={formik.handleChange}
-                                    />
+                                    />{' '}
+                                    {formik?.values?.personalAssetDetails
+                                      .personalAssets[index].status ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`personalAssetDetails.personalAssets[${index}].otherstatus`}
+                                        label={'Status'}
+                                        value={
+                                          formik?.values?.personalAssetDetails
+                                            .personalAssets[index].otherstatus
+                                        }
+                                        error={
+                                          errorsBd?.personalAssets?.length >
+                                            0 &&
+                                          errorsBd?.personalAssets[index]
+                                            ?.otherstatus
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <ASingleSelect
                                       id={`personalAssetDetails.personalAssets[${index}].assetStatus`}
                                       label={'Asset Status'}
@@ -677,6 +782,26 @@ const AssetsInvestmentBank = ({
                                       }
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.personalAssetDetails
+                                      .personalAssets[index].assetStatus ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`personalAssetDetails.personalAssets[${index}].otherassetstatus`}
+                                        label={'Asset Status'}
+                                        value={
+                                          formik?.values?.personalAssetDetails
+                                            .personalAssets[index]
+                                            .otherassetstatus
+                                        }
+                                        error={
+                                          errorsBd?.personalAssets?.length >
+                                            0 &&
+                                          errorsBd?.personalAssets[index]
+                                            ?.otherassetstatus
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].marketValue`}
@@ -788,6 +913,25 @@ const AssetsInvestmentBank = ({
                                       options={particularsInvestment}
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.investmentDetails
+                                      ?.investments[index]?.particulars ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`investmentDetails.investments[${index}].otherparticulars`}
+                                        label={'Particulars'}
+                                        value={
+                                          formik?.values?.investmentDetails
+                                            ?.investments[index]
+                                            ?.otherparticulars
+                                        }
+                                        error={
+                                          errorsI?.investments?.length > 0 &&
+                                          errorsI?.investments[index]
+                                            ?.otherparticulars
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       type={'number'}
                                       id={`investmentDetails.investments[${index}].contribution`}
@@ -895,6 +1039,24 @@ const AssetsInvestmentBank = ({
                                       options={banksList}
                                       handleChange={formik.handleChange}
                                     />
+                                    {formik?.values?.bankAccountDetails
+                                      ?.bankAccounts[index]?.bankName ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`bankAccountDetails.bankAccounts[${index}].otherbankName`}
+                                        label={'Bank Name'}
+                                        value={
+                                          formik?.values?.bankAccountDetails
+                                            ?.bankAccounts[index]?.otherbankName
+                                        }
+                                        error={
+                                          errorsBa?.bankAccounts?.length > 0 &&
+                                          errorsBa?.bankAccounts[index]
+                                            ?.otherbankName
+                                        }
+                                        handleChange={formik.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       id={`bankAccountDetails.bankAccounts[${index}].branch`}
                                       label={'Branch'}
@@ -922,6 +1084,24 @@ const AssetsInvestmentBank = ({
                                       options={bankTypes}
                                       handleChange={formik?.handleChange}
                                     />
+                                    {formik?.values?.bankAccountDetails
+                                      ?.bankAccounts[index]?.type ===
+                                      'Other' && (
+                                      <AInputField
+                                        id={`bankAccountDetails.bankAccounts[${index}].othertype`}
+                                        label={'Bank Type'}
+                                        value={
+                                          formik?.values?.bankAccountDetails
+                                            ?.bankAccounts[index]?.othertype
+                                        }
+                                        error={
+                                          errorsBa?.bankAccounts?.length > 0 &&
+                                          errorsBa?.bankAccounts[index]
+                                            ?.othertype
+                                        }
+                                        handleChange={formik?.handleChange}
+                                      />
+                                    )}
                                     <AInputField
                                       type={'number'}
                                       id={`bankAccountDetails.bankAccounts[${index}].balanceOnDay`}
@@ -962,7 +1142,7 @@ const AssetsInvestmentBank = ({
             </ASection>
           )}
         </div>
-        <AGroupFields col={2}>
+        <AGroupFields col={3}>
           <AInputField
             type={'number'}
             disabled={true}
@@ -981,6 +1161,15 @@ const AssetsInvestmentBank = ({
             error={formik?.errors?.assetReason}
             handleChange={formik.handleChange}
           />
+          {formik?.values?.assetReason === 'Other' && (
+            <AInputField
+              id={`otherassetReason`}
+              label={'Why asset Backing is low?'}
+              value={formik?.values?.otherassetReason}
+              error={formik?.errors?.otherassetReason}
+              handleChange={formik.handleChange}
+            />
+          )}
         </AGroupFields>
       </div>
       <AStepperPagination

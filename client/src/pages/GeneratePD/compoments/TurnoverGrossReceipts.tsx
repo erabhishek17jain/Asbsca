@@ -47,7 +47,9 @@ const initialValues = {
     reasonforDiff: '',
   },
   bussinessTrendLast2Year: '',
+  otherbussinessTrendLast2Year: '',
   futureProjection: '',
+  otherfutureProjection: '',
 };
 
 const TurnoverGrossReceipts = ({
@@ -242,8 +244,16 @@ const TurnoverGrossReceipts = ({
         payloads?.turnoverDetails?.bussinessTrendLast2Year,
       );
       formik.setFieldValue(
+        'otherbussinessTrendLast2Year',
+        payloads?.turnoverDetails?.otherbussinessTrendLast2Year,
+      );
+      formik.setFieldValue(
         'futureProjection',
         payloads?.turnoverDetails?.futureProjection,
+      );
+      formik.setFieldValue(
+        'otherfutureProjection',
+        payloads?.turnoverDetails?.otherfutureProjection,
       );
     } else {
       const end = moment();
@@ -524,7 +534,7 @@ const TurnoverGrossReceipts = ({
               />
             </AGroupFields>
           </ASection>
-          <AGroupFields col={2}>
+          <AGroupFields col={4}>
             <ASingleSelect
               id={'bussinessTrendLast2Year'}
               value={formik?.values?.bussinessTrendLast2Year}
@@ -533,14 +543,32 @@ const TurnoverGrossReceipts = ({
               label={'Comment on Trend of Business of past 2 years'}
               options={trendOfBusiness}
             />
+            {formik?.values?.bussinessTrendLast2Year === 'Other' && (
+              <AInputField
+                id={'otherbussinessTrendLast2Year'}
+                value={formik?.values?.otherbussinessTrendLast2Year}
+                error={errors?.otherbussinessTrendLast2Year}
+                handleChange={formik.handleChange}
+                label={'Comment on Trend of Business of past 2 years'}
+              />
+            )}
             <ASingleSelect
               id={'futureProjection'}
               value={formik?.values?.futureProjection}
               error={errors?.futureProjection}
               handleChange={formik.handleChange}
-              label={'Future Projection:'}
+              label={'Future Projection'}
               options={futureProjection}
             />
+            {formik?.values?.futureProjection === 'Other' && (
+              <AInputField
+                id={'otherfutureProjection'}
+                value={formik?.values?.otherfutureProjection}
+                error={errors?.otherfutureProjection}
+                handleChange={formik.handleChange}
+                label={'Future Projection'}
+              />
+            )}
           </AGroupFields>
         </div>
       </div>

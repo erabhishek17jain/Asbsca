@@ -22,14 +22,29 @@ const ReportData = () => {
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
               <p className="justify-center">
-                {`${reportData?.data?.loanDetails?.bankName}_PD_REPORT_${reportData?.data?.personalDetails?.applicants[0]?.name}_${reportData?.data?.pdDetails?.location}_${reportData?.data?.loanDetails?.alc}_${reportData?.data?.pdDetails?.pdVisitDate}`}
+                {`${reportData?.data?.loanDetails
+                  ?.bankName}_PD_REPORT_${reportData?.data?.personalDetails
+                  ?.applicants[0]?.name}_${reportData?.data?.pdDetails
+                  ?.location}_${
+                  reportData?.data?.loanDetails?.alc === 'Other'
+                    ? reportData?.data?.loanDetails?.otheralc
+                    : reportData?.data?.loanDetails?.alc
+                }_${reportData?.data?.pdDetails?.pdVisitDate}`}
               </p>
             </td>
           </tr>
           <tr className="bg text-center font-bold">
             <td colSpan={8}>
               <p className="justify-center">
-                {`${reportData?.data?.loanDetails?.loan}: ${reportData?.data?.loanDetails?.loanType}`}
+                {`${
+                  reportData?.data?.loanDetails?.loan === 'Other'
+                    ? reportData?.data?.loanDetails?.otherloan
+                    : reportData?.data?.loanDetails?.loan
+                }: ${
+                  reportData?.data?.loanDetails?.loanType === 'Other'
+                    ? reportData?.data?.loanDetails?.otherloanType
+                    : reportData?.data?.loanDetails?.loanType
+                }`}
               </p>
             </td>
           </tr>
@@ -75,13 +90,19 @@ const ReportData = () => {
                           : 'Nil'}
                       </p>
                       <p className="pl-1 b-b h-6">
-                        {item.qualification !== '' ? item.qualification : 'Nil'}
+                        {item.qualification !== ''
+                          ? item.qualification === 'Other'
+                            ? item.otherqualification
+                            : item.qualification
+                          : 'Nil'}
                       </p>
                       <p className="pl-1 b-b h-6">{item.currExp} Years</p>
                       <p className="pl-1 b-b h-6">{item.overallExp} Years</p>
                       <p className="pl-1">
                         {item.natureOfBusiness !== ''
-                          ? item.natureOfBusiness
+                          ? item.natureOfBusiness === 'Other'
+                            ? item.othernatureOfBusiness
+                            : item.natureOfBusiness
                           : 'Nil'}
                       </p>
                     </div>
@@ -118,7 +139,9 @@ const ReportData = () => {
                       </p>
                       <p className="pl-1 b-b h-6">{item.resiAddress}</p>
                       <p className="pl-1 b-b h-6">
-                        {item.resiStatus.slice(0, -1)}
+                        {item.resiStatus === 'Other'
+                          ? item.otherresiStatus
+                          : item.resiStatus.slice(0, -1)}
                       </p>
                       <p className="pl-1 b-b h-6">{item.resiSince}</p>
                       <p className="pl-1 b-b h-12">
@@ -169,10 +192,18 @@ const ReportData = () => {
                 <p className="pl-1 h-6">{item.name}</p>
               </td>
               <td colSpan={2} className="text-center">
-                <p className="pl-1 h-6">{item.relation}</p>
+                <p className="pl-1 h-6">
+                  {item.relation === 'Other'
+                    ? item.otherrelation
+                    : item.relation}
+                </p>
               </td>
               <td colSpan={2} className="text-center">
-                <p className="pl-1 h-6">{item.earningStatus}</p>
+                <p className="pl-1 h-6">
+                  {item.earningStatus === 'Other'
+                    ? item.otherearningStatus
+                    : item.earningStatus}
+                </p>
               </td>
             </tr>
           ))}
@@ -285,7 +316,12 @@ const ReportData = () => {
                 <p className="my-4 font-bold">Note:</p>
                 <ul className="ml-6 mb-6">
                   <li>
-                    - {reportData?.data?.businessDetails?.howTurnoverVerified}
+                    -{' '}
+                    {reportData?.data?.businessDetails?.howTurnoverVerified ===
+                    'Other'
+                      ? reportData?.data?.businessDetails
+                          ?.otherhowTurnoverVerified
+                      : reportData?.data?.businessDetails?.howTurnoverVerified}
                   </li>
                   <li>
                     - It’s advised to cross check income with ITR & Financial
@@ -494,7 +530,11 @@ const ReportData = () => {
                     </div>
                     <div className="mx-4">
                       <ul className="ml-6 mb-6">
-                        <li>{`- Applicant has completed ${item?.qualification} in year ${item?.studyFinish}.`}</li>
+                        <li>{`- Applicant has completed ${
+                          item?.qualification
+                            ? item?.otherqualification
+                            : item?.qualification
+                        } in year ${item?.studyFinish}.`}</li>
                         <li>{`- Previously applicant has worked for ${item?.pastExp} years.`}</li>
                         <li>{`- Applicant started business in year ${item?.businessStart}.`}</li>
                       </ul>
@@ -701,7 +741,12 @@ const ReportData = () => {
                 <ul className="ml-6 mb-6">
                   <li>
                     -{' '}
-                    {reportData?.data?.turnoverDetails?.bussinessTrendLast2Year}
+                    {reportData?.data?.turnoverDetails
+                      ?.bussinessTrendLast2Year === 'Other'
+                      ? reportData?.data?.turnoverDetails
+                          ?.otherbussinessTrendLast2Year
+                      : reportData?.data?.turnoverDetails
+                          ?.bussinessTrendLast2Year}
                     .
                   </li>
                 </ul>
@@ -716,7 +761,12 @@ const ReportData = () => {
               </div>
               <div className="mx-4">
                 <ul className="ml-6 mb-6">
-                  - {reportData?.data?.turnoverDetails?.futureProjection}.
+                  -{' '}
+                  {reportData?.data?.turnoverDetails?.futureProjection ===
+                  'Other'
+                    ? reportData?.data?.turnoverDetails?.otherfutureProjection
+                    : reportData?.data?.turnoverDetails?.futureProjection}
+                  .
                 </ul>
               </div>
             </td>
@@ -734,7 +784,11 @@ const ReportData = () => {
               <p>Type of Entity</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.typeOfEntity}</p>
+              <p>
+                {reportData?.data?.businessDetails?.typeOfEntity === 'Other'
+                  ? reportData?.data?.businessDetails?.othertypeOfEntity
+                  : reportData?.data?.businessDetails?.typeOfEntity}
+              </p>
             </td>
           </tr>
           <tr>
@@ -764,7 +818,11 @@ const ReportData = () => {
               <p>Designation</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.designation}</p>
+              <p>
+                {reportData?.data?.businessDetails?.designation === 'Other'
+                  ? reportData?.data?.businessDetails?.otherdesignation
+                  : reportData?.data?.businessDetails?.designation}
+              </p>
             </td>
           </tr>
           <tr>
@@ -788,7 +846,12 @@ const ReportData = () => {
               <p>Vicinity</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.vicinity}</p>
+              \
+              <p>
+                {reportData?.data?.businessDetails?.vicinity === 'Other'
+                  ? reportData?.data?.businessDetails?.othervicinity
+                  : reportData?.data?.businessDetails?.vicinity}
+              </p>
             </td>
           </tr>
           <tr>
@@ -796,7 +859,11 @@ const ReportData = () => {
               <p>Ownership</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.ownership}</p>
+              <p>
+                {reportData?.data?.businessDetails?.ownership === 'Other'
+                  ? reportData?.data?.businessDetails?.otherownership
+                  : reportData?.data?.businessDetails?.ownership}
+              </p>
             </td>
           </tr>
           <tr>
@@ -877,7 +944,11 @@ const ReportData = () => {
               <p>Generation</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.businessDetails?.generation}</p>
+              <p>
+                {reportData?.data?.businessDetails?.generation === 'Other'
+                  ? reportData?.data?.businessDetails?.othergeneration
+                  : reportData?.data?.businessDetails?.generation}
+              </p>
             </td>
           </tr>
           <tr>
@@ -944,7 +1015,11 @@ const ReportData = () => {
             </td>
             <td colSpan={7}>
               <p>
-                {reportData?.data?.businessDetails?.citiesOfReppresentation}
+                {reportData?.data?.businessDetails?.citiesOfReppresentation ===
+                'Other'
+                  ? reportData?.data?.businessDetails
+                      ?.othercitiesOfReppresentation
+                  : reportData?.data?.businessDetails?.citiesOfReppresentation}
               </p>
             </td>
           </tr>
@@ -1204,7 +1279,11 @@ const ReportData = () => {
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
-                              <p>{item.particulars}</p>
+                              <p>
+                                {item.particulars === 'Other'
+                                  ? item.otherparticulars
+                                  : item.particulars}
+                              </p>
                             </td>
                             <td>
                               <p>{item.location}</p>
@@ -1216,7 +1295,11 @@ const ReportData = () => {
                               <p>{item.carpetArea} Sq. Ft.</p>
                             </td>
                             <td>
-                              <p>{item.status}</p>
+                              <p>
+                                {item.status === 'Other'
+                                  ? item.otherstatus
+                                  : item.status.slice(0, -1)}
+                              </p>
                             </td>
                             <td>
                               <p>{amtConvertor(item.marketValue)}</p>
@@ -1271,7 +1354,11 @@ const ReportData = () => {
                         (item: any, index: number) => (
                           <tr key={index}>
                             <td>
-                              <p>{item.particulars}</p>
+                              <p>
+                                {item.particulars === 'Other'
+                                  ? item.otherparticulars
+                                  : item.particulars}
+                              </p>
                             </td>
                             <td>
                               <p>{item.location}</p>
@@ -1283,7 +1370,11 @@ const ReportData = () => {
                               <p>{item.carpetArea} Sq. Ft.</p>
                             </td>
                             <td>
-                              <p>{item.status}</p>
+                              <p>
+                                {item.status === 'Other'
+                                  ? item.otherstatus
+                                  : item.status.slice(0, -1)}
+                              </p>
                             </td>
                             <td>
                               <p>{amtConvertor(item.marketValue)}</p>
@@ -1595,7 +1686,14 @@ const ReportData = () => {
                     <p className="mt-4 mb-2 font-bold">Note:</p>
                     <ul className="ml-6 mb-6">
                       <li>
-                        {`- ${reportData?.data?.businessDetails?.howTurnoverVerified}`}
+                        {`- ${
+                          reportData?.data?.businessDetails
+                            ?.howTurnoverVerified === 'Other'
+                            ? reportData?.data?.businessDetails
+                                ?.otherhowTurnoverVerified
+                            : reportData?.data?.businessDetails
+                                ?.howTurnoverVerified
+                        }`}
                       </li>
                     </ul>
                   </>
@@ -1640,13 +1738,17 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={2}>
-                  <p>{item.bankName}</p>
+                  <p>
+                    {item.bankName === 'Other'
+                      ? item.otherbankName
+                      : item.bankName}
+                  </p>
                 </td>
                 <td colSpan={2}>
                   <p>{item.branch}</p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.type}</p>
+                  <p>{item.type === 'Other' ? item.othertype : item.type}</p>
                 </td>
                 <td colSpan={2}>
                   <p>{amtConvertor(item.balanceOnDay)}</p>
@@ -1698,7 +1800,11 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={3}>
-                  <p>{item.particulars}</p>
+                  <p>
+                    {item.particulars === 'Other'
+                      ? item.otherparticulars
+                      : item.particulars}
+                  </p>
                 </td>
                 <td colSpan={2}>
                   <p>{amtConvertor(item.contribution)}</p>
@@ -1774,10 +1880,18 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={1}>
-                  <p>{item.typeOfLoan}</p>
+                  <p>
+                    {item.typeOfLoan === 'Other'
+                      ? item.othertypeOfLoan
+                      : item.typeOfLoan}
+                  </p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.bankName}</p>
+                  <p>
+                    {item.bankName === 'Other'
+                      ? item.otherbankName
+                      : item.bankName}
+                  </p>
                 </td>
                 <td colSpan={1}>
                   <p>{amtConvertor(item.loanAmount)}</p>
@@ -1792,7 +1906,9 @@ const ReportData = () => {
                   <p>{amtConvertor(item.outstanding)}</p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.remark}</p>
+                  <p>
+                    {item.remark === 'Other' ? item.otherremark : item.remark}
+                  </p>
                 </td>
               </tr>
             ),
@@ -1801,10 +1917,18 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={1}>
-                  <p>{item.typeOfLoan}</p>
+                  <p>
+                    {item.typeOfLoan === 'Other'
+                      ? item.othertypeOfLoan
+                      : item.typeOfLoan}
+                  </p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.bankName}</p>
+                  <p>
+                    {item.bankName === 'Other'
+                      ? item.otherbankName
+                      : item.bankName}
+                  </p>
                 </td>
                 <td colSpan={1}>
                   <p>{amtConvertor(item.loanAmount)}</p>
@@ -1819,7 +1943,9 @@ const ReportData = () => {
                   <p>{amtConvertor(item.outstanding)}</p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.remark}</p>
+                  <p>
+                    {item.remark === 'Other' ? item.otherremark : item.remark}
+                  </p>
                 </td>
               </tr>
             ),
@@ -1828,10 +1954,18 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={1}>
-                  <p>{item.typeOfLoan}</p>
+                  <p>
+                    {item.typeOfLoan === 'Other'
+                      ? item.othertypeOfLoan
+                      : item.typeOfLoan}
+                  </p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.bankName}</p>
+                  <p>
+                    {item.bankName === 'Other'
+                      ? item.otherbankName
+                      : item.bankName}
+                  </p>
                 </td>
                 <td colSpan={1}>
                   <p>{amtConvertor(item.loanAmount)}</p>
@@ -1846,7 +1980,9 @@ const ReportData = () => {
                   <p>{amtConvertor(item.outstanding)}</p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.remark}</p>
+                  <p>
+                    {item.remark === 'Other' ? item.otherremark : item.remark}
+                  </p>
                 </td>
               </tr>
             ),
@@ -1946,10 +2082,18 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={1}>
-                  <p>{item.typeOfFacility}</p>
+                  <p>
+                    {item.typeOfFacility === 'Other'
+                      ? item.othertypeOfFacility
+                      : item.typeOtypeOfFacilityfLoan}
+                  </p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.bankName}</p>
+                  <p>
+                    {item.bankName === 'Other'
+                      ? item.otherbankName
+                      : item.bankName}
+                  </p>
                 </td>
                 <td colSpan={2}>
                   <p>{amtConvertor(item.limit)}</p>
@@ -1961,7 +2105,9 @@ const ReportData = () => {
                   <p>{item.interestRate}</p>
                 </td>
                 <td colSpan={1}>
-                  <p>{item.remark}</p>
+                  <p>
+                    {item.remark === 'Other' ? item.otherremark : item.remark}
+                  </p>
                 </td>
               </tr>
             ),
@@ -2018,7 +2164,11 @@ const ReportData = () => {
             (item: any, index: number) => (
               <tr key={index}>
                 <td colSpan={3}>
-                  <p>{item.particulars}</p>
+                  <p>
+                    {item.particulars === 'Other'
+                      ? item.otherparticulars
+                      : item.particulars}
+                  </p>
                 </td>
                 <td colSpan={2}>
                   <p>{amtConvertor(item.contribution)}</p>
@@ -2188,10 +2338,12 @@ const ReportData = () => {
             </td>
             <td colSpan={4}>
               <p>
-                {
-                  reportData?.data?.detailsOfProp.propertyLoanDetails
-                    .propertyValue.sourceOcr
-                }
+                {reportData?.data?.detailsOfProp.propertyLoanDetails
+                  .propertyValue.sourceOcr === 'Other'
+                  ? reportData?.data?.detailsOfProp.propertyLoanDetails
+                      .propertyValue.othersourceOcr
+                  : reportData?.data?.detailsOfProp.propertyLoanDetails
+                      .propertyValue.sourceOcr}
               </p>
             </td>
           </tr>
@@ -2200,7 +2352,11 @@ const ReportData = () => {
               <p>Occupied By</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.detailsOfProp.occupiedBy}</p>
+              <p>
+                {reportData?.data?.detailsOfProp.occupiedBy === 'Other'
+                  ? reportData?.data?.detailsOfProp.otheroccupiedBy
+                  : reportData?.data?.detailsOfProp.occupiedBy}
+              </p>
             </td>
           </tr>
           <tr className="font-bold text-center">
@@ -2234,7 +2390,10 @@ const ReportData = () => {
               <p>
                 2.Activtity Seen:{' '}
                 {reportData?.data?.observations.activity.exist} (
-                {reportData?.data?.observations.activity.reasonForNo})
+                {reportData?.data?.observations.activity.reasonForNo === 'Other'
+                  ? reportData?.data?.observations.activity.otherreasonForNo
+                  : reportData?.data?.observations.activity.reasonForNo}
+                )
               </p>
             </td>
           </tr>
@@ -2258,7 +2417,13 @@ const ReportData = () => {
           </tr>
           <tr>
             <td colSpan={7}>
-              <p>5.Stock seen: {reportData?.data?.observations.stock.exist}</p>
+              <p>
+                5.Stock seen: {reportData?.data?.observations.stock.exist} (
+                {reportData?.data?.observations.stock.reasonForNo === 'Other'
+                  ? reportData?.data?.observations.stock.otherreasonForNo
+                  : reportData?.data?.observations.stock.reasonForNo}
+                )
+              </p>
             </td>
           </tr>
           <tr>
@@ -2266,10 +2431,20 @@ const ReportData = () => {
               <p>6. During Visit:</p>
               <ul className="ml-6 mb-1">
                 <li>
-                  - {reportData?.data?.observations.duringVist.applicantDoing}
+                  -{' '}
+                  {reportData?.data?.observations.duringVist.applicantDoing ===
+                  'Other'
+                    ? reportData?.data?.observations.duringVist
+                        .otherapplicantDoing
+                    : reportData?.data?.observations.duringVist.applicantDoing}
                 </li>
                 <li>
-                  - {reportData?.data?.observations.duringVist.employeesDoing}
+                  -{' '}
+                  {reportData?.data?.observations.duringVist.employeesDoing ===
+                  'Other'
+                    ? reportData?.data?.observations.duringVist
+                        .otheremployeesDoing
+                    : reportData?.data?.observations.duringVist.employeesDoing}
                 </li>
               </ul>
             </td>
@@ -2295,7 +2470,9 @@ const ReportData = () => {
             <td colSpan={7}>
               <p>
                 9. Behaviour of applicant:{' '}
-                {reportData?.data?.observations.behaviourOfApplicant}
+                {reportData?.data?.observations.behaviourOfApplicant === 'Other'
+                  ? reportData?.data?.observations.otherbehaviourOfApplicant
+                  : reportData?.data?.observations.behaviourOfApplicant}
               </p>
             </td>
           </tr>

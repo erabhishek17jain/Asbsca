@@ -27,20 +27,27 @@ const shareInfo = {
 const initialValues = {
   bussinessName: '',
   typeOfEntity: '',
+  othertypeOfEntity: '',
   yearOfIncorporation: '',
   generation: '',
+  othergeneration: '',
   gstNumber: '',
   regOfficeAddress: '',
   visitedAddress: '',
   vicinity: '',
+  othervicinity: '',
   ownership: '',
+  otherownership: '',
   pdConductWith: '',
   designation: '',
+  otherdesignation: '',
   mobile: '',
   familyBusiness: '',
   mainUseproducts: '',
   howTurnoverVerified: '',
+  otherhowTurnoverVerified: '',
   citiesOfReppresentation: '',
+  othercitiesOfReppresentation: '',
   competitorsOfBusiness: '',
   noOfVisit: 1,
   doYouHavefixedEmployee: '',
@@ -58,7 +65,6 @@ const initialValues = {
 
 const BusinessDetails = ({
   steps,
-
   payloads,
   activeStep,
   handlePrev,
@@ -164,10 +170,18 @@ const BusinessDetails = ({
         payloads?.businessDetails?.typeOfEntity,
       );
       formik.setFieldValue(
+        'othertypeOfEntity',
+        payloads?.businessDetails?.othertypeOfEntity,
+      );
+      formik.setFieldValue(
         'yearOfIncorporation',
         payloads.businessDetails?.yearOfIncorporation,
       );
       formik.setFieldValue('generation', payloads?.businessDetails?.generation);
+      formik.setFieldValue(
+        'othergeneration',
+        payloads?.businessDetails?.othergeneration,
+      );
       formik.setFieldValue('gstNumber', payloads.businessDetails?.gstNumber);
       formik.setFieldValue(
         'regOfficeAddress',
@@ -178,7 +192,15 @@ const BusinessDetails = ({
         payloads?.businessDetails?.visitedAddress,
       );
       formik.setFieldValue('vicinity', payloads.businessDetails?.vicinity);
+      formik.setFieldValue(
+        'othervicinity',
+        payloads?.businessDetails?.othervicinity,
+      );
       formik.setFieldValue('ownership', payloads?.businessDetails?.ownership);
+      formik.setFieldValue(
+        'otherownership',
+        payloads?.businessDetails?.otherownership,
+      );
       formik.setFieldValue(
         'pdConductWith',
         payloads.businessDetails?.pdConductWith,
@@ -186,6 +208,10 @@ const BusinessDetails = ({
       formik.setFieldValue(
         'designation',
         payloads?.businessDetails?.designation,
+      );
+      formik.setFieldValue(
+        'otherdesignation',
+        payloads?.businessDetails?.otherdesignation,
       );
       formik.setFieldValue('mobile', payloads.businessDetails?.mobile);
       formik.setFieldValue(
@@ -201,8 +227,16 @@ const BusinessDetails = ({
         payloads.businessDetails?.howTurnoverVerified,
       );
       formik.setFieldValue(
+        'otherhowTurnoverVerified',
+        payloads?.businessDetails?.otherhowTurnoverVerified,
+      );
+      formik.setFieldValue(
         'citiesOfReppresentation',
         payloads?.businessDetails?.citiesOfReppresentation,
+      );
+      formik.setFieldValue(
+        'othercitiesOfReppresentation',
+        payloads?.businessDetails?.othercitiesOfReppresentation,
       );
       formik.setFieldValue(
         'competitorsOfBusiness',
@@ -253,6 +287,15 @@ const BusinessDetails = ({
                 error={formik?.errors?.typeOfEntity}
                 handleChange={handleTypeOfEntity}
               />
+              {formik?.values?.typeOfEntity === 'Other' && (
+                <AInputField
+                  id={'othertypeOfEntity'}
+                  label={'Type of Entity'}
+                  value={formik?.values?.othertypeOfEntity}
+                  error={formik?.errors?.othertypeOfEntity}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <AInputField
                 type={'number'}
                 id={'yearOfIncorporation'}
@@ -269,7 +312,16 @@ const BusinessDetails = ({
                 error={formik?.errors?.generation}
                 handleChange={formik?.handleChange}
               />
-              <AInputField //todo validation
+              {formik?.values?.generation === 'Other' && (
+                <AInputField
+                  id={'othergeneration'}
+                  label={'Generation'}
+                  value={formik?.values?.othergeneration}
+                  error={formik?.errors?.othergeneration}
+                  handleChange={formik?.handleChange}
+                />
+              )}
+              <AInputField
                 id={'gstNumber'}
                 label={'GST Number'}
                 value={formik?.values?.gstNumber}
@@ -298,6 +350,15 @@ const BusinessDetails = ({
                 error={formik?.errors?.vicinity}
                 handleChange={formik?.handleChange}
               />
+              {formik?.values?.vicinity === 'Other' && (
+                <AInputField
+                  id={'othervicinity'}
+                  label={'Vicinity'}
+                  value={formik?.values?.othervicinity}
+                  error={formik?.errors?.othervicinity}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <ASingleSelect
                 id={'ownership'}
                 label={'Ownership of address Visited'}
@@ -306,6 +367,15 @@ const BusinessDetails = ({
                 error={formik?.errors?.ownership}
                 handleChange={formik?.handleChange}
               />
+              {formik?.values?.ownership === 'Other' && (
+                <AInputField
+                  id={'otherownership'}
+                  label={'Ownership of address Visited'}
+                  value={formik?.values?.otherownership}
+                  error={formik?.errors?.otherownership}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <ASingleSelect
                 id={'pdConductWith'}
                 label={'PD Conducted With'}
@@ -321,15 +391,25 @@ const BusinessDetails = ({
                   },
                 )}
               />
-              <ASingleSelect
-                disabled={true}
-                id={'designation'}
-                label={'Designation'}
-                options={designations}
-                value={formik?.values?.designation}
-                error={formik?.errors?.designation}
-                handleChange={formik?.handleChange}
-              />
+              {formik?.values?.typeOfEntity === 'Other' ? (
+                <AInputField
+                  id={'otherdesignation'}
+                  label={'Designation'}
+                  value={formik?.values?.otherdesignation}
+                  error={formik?.errors?.otherdesignation}
+                  handleChange={formik?.handleChange}
+                />
+              ) : (
+                <ASingleSelect
+                  disabled={true}
+                  id={'designation'}
+                  label={'Designation'}
+                  options={designations}
+                  value={formik?.values?.designation}
+                  error={formik?.errors?.designation}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <AInputField
                 id={'mobile'}
                 label={'Mobile No.'}
@@ -360,22 +440,33 @@ const BusinessDetails = ({
                 error={formik?.errors?.howTurnoverVerified}
                 handleChange={formik?.handleChange}
               />
+              {formik?.values?.howTurnoverVerified == 'Other' && (
+                <AInputField
+                  id={'otherhowTurnoverVerified'}
+                  label={'How was turnover verified?'}
+                  value={formik?.values?.otherhowTurnoverVerified}
+                  error={formik?.errors?.otherhowTurnoverVerified}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <ASingleSelect
                 id={'citiesOfReppresentation'}
                 label={'Cities of Representation'}
-                options={[
-                  [
-                    {
-                      label: payloads.pdDetails.location,
-                      value: payloads.pdDetails.location,
-                    },
-                  ],
-                  ...citiesOfRepresentation,
-                ]}
+                options={citiesOfRepresentation}
                 value={formik?.values?.citiesOfReppresentation}
                 error={formik?.errors?.citiesOfReppresentation}
                 handleChange={formik?.handleChange}
               />
+              {formik?.values?.citiesOfReppresentation === 'Other' && (
+                <AInputField
+                  id={'othercitiesOfReppresentation'}
+                  label={'Cities of Representation'}
+                  options={citiesOfRepresentation}
+                  value={formik?.values?.othercitiesOfReppresentation}
+                  error={formik?.errors?.othercitiesOfReppresentation}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <AInputField
                 id={'competitorsOfBusiness'}
                 label={'Key Competitors to Business'}

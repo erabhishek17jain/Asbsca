@@ -51,12 +51,16 @@ const AFileUpload = ({
             type="file"
             accept="image/*"
             onChange={onImageChange}
-            className="w-full text-sm cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-2.5 file:px-3 file:hover:bg-main file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
+            className={`w-full text-sm rounded-lg bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-defnot-allowedault disabled:bg-whiter ${
+              error !== ''
+                ? 'border-[1.5px] border-meta1 '
+                : 'border-[1.5px] border-stroke '
+            }`}
           />
         </div>
         {id !== 'photos' && image ? (
           <img src={value} className="w-13 h-13 -mt-1 rounded-full" />
-        ) : id !== 'photos' &&  value !== '' ? (
+        ) : id !== 'photos' && value !== '' ? (
           <img alt={id} src={value} className="w-13 h-13 -mt-1 rounded-full" />
         ) : (
           <div className="w-13 h-13 -mt-1 rounded-full">{icon}</div>
