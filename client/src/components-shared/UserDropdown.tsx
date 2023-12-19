@@ -42,7 +42,7 @@ const UserDropdown = () => {
 
   function userLogout() {
     navigate('/signin');
-    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'asbsToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   return (

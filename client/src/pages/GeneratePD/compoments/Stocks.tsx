@@ -12,10 +12,10 @@ import { calculatePeriod } from '../../../utils';
 const initialValues = {
   isStockDetails: 'Yes',
   stockDetails: {
-    rawMaterialAmount: 0,
-    wipAmount: 0,
-    finishGoods: 0,
-    totalStocks: 0,
+    rawMaterialAmount: '',
+    wipAmount: '',
+    finishGoods: '',
+    totalStocks: '',
     whyStocklowHigh: '',
     stockHoldingPeriod: '',
   },
@@ -41,9 +41,9 @@ const Stocks = ({
 
   const validationSchema = Yup.object().shape({
     stockDetails: Yup.object().shape({
-      rawMaterialAmount: Yup.number().required('This field is required'),
-      wipAmount: Yup.number().required('This field is required'),
-      finishGoods: Yup.number().required('This field is required'),
+      rawMaterialAmount: Yup.string().required('This field is required'),
+      wipAmount: Yup.string().required('This field is required'),
+      finishGoods: Yup.string().required('This field is required'),
       whyStocklowHigh: Yup.string().required('This field is required'),
     }),
   });
@@ -63,14 +63,20 @@ const Stocks = ({
   });
 
   useEffect(() => {
-    const income =
+    const income = parseFloat(
       payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-        ?.amountPA;
+        ?.amountPA,
+    );
+    const rawMaterial = parseFloat(
+      formik?.values?.stockDetails?.rawMaterialAmount,
+    );
+    const wip = parseFloat(formik?.values?.stockDetails?.wipAmount);
+    const finish = parseFloat(formik?.values?.stockDetails?.finishGoods);
     const total =
-      formik?.values?.stockDetails?.rawMaterialAmount +
-      formik?.values?.stockDetails?.wipAmount +
-      formik?.values?.stockDetails?.finishGoods;
-    const lowHigh = (total * 12) / income;
+      (Number.isNaN(rawMaterial) ? 0 : rawMaterial) +
+      (Number.isNaN(wip) ? 0 : wip) +
+      (Number.isNaN(finish) ? 0 : finish);
+    const lowHigh = (total * 12) / (Number.isNaN(income) ? 0 : income);
     formik.setFieldValue('stockDetails.totalStocks', total);
     if (
       formik?.values?.stockDetails.whyStocklowHigh === '' ||
@@ -81,19 +87,9 @@ const Stocks = ({
         lowHigh > 0.3 && lowHigh < 4 ? '-' : '',
       );
     }
-    const period = calculatePeriod(
-      total,
-      payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-        ?.amountPA,
-    );
-    console.log(period);
     formik.setFieldValue(
       'stockDetails.stockHoldingPeriod',
-      calculatePeriod(
-        total,
-        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-          ?.amountPA,
-      ),
+      calculatePeriod(total, Number.isNaN(income) ? 0 : income),
     );
   }, [formik?.values?.stockDetails]);
 
@@ -129,7 +125,6 @@ const Stocks = ({
             >
               <AGroupFields>
                 <AInputField
-                  type={'number'}
                   label={'Raw Material Amt.'}
                   rightLabel={'(In Lakhs)'}
                   id={'stockDetails.rawMaterialAmount'}
@@ -138,7 +133,6 @@ const Stocks = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   label={'WIP Amt.'}
                   rightLabel={'(In Lakhs)'}
                   id={'stockDetails.wipAmount'}
@@ -147,7 +141,6 @@ const Stocks = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   label={'Finish Goods'}
                   rightLabel={'(In Lakhs)'}
                   id={'stockDetails.finishGoods'}

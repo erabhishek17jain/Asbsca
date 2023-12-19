@@ -64,7 +64,6 @@ const FinancialType = ({
   return (
     <AGroupFields col={3} title={title}>
       <AInputField
-        type={'number'}
         id={`finances[${index}].${type}.${value}.amountPA`}
         label={'Amount PA'}
         rightLabel={'(In Lakhs)'}
@@ -73,7 +72,6 @@ const FinancialType = ({
         handleChange={handleAnnualy}
       />
       <AInputField
-        type={'number'}
         disabled={true}
         id={`${type}.${value}.amountPM`}
         label={'Amount PM'}
@@ -208,53 +206,53 @@ const Financials = ({
         applicantIncome: Yup.string().required('This field is required'),
         income: Yup.object({
           turnoverGrossReciepts: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           purchases: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
         }),
         expenses: Yup.object({
           salary: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           maintanance: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           transport: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           electricity: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           travelling: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           fuel: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           officeRent: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           partnersSalary: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           partnersRemuneration: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           otherExpenses: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
         }),
         businessIncome: Yup.object({
           salaryFromBusiness: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           remunerationFromBusiness: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
           rent: Yup.object({
-            amountPA: Yup.number().required('This field is required'),
+            amountPA: Yup.string().required('This field is required'),
           }),
         }),
       }),
@@ -300,16 +298,26 @@ const Financials = ({
 
   const handleAnnualy = (e: any) => {
     const { id, value } = e.target;
-    formik.setFieldValue(`${id.slice(0, -1)}M`, (value / 12).toFixed(2));
+    formik.setFieldValue(
+      `${id.slice(0, -1)}M`,
+      Number.isNaN(parseFloat(value)) ? 'NP' : (value / 12).toFixed(2),
+    );
     formik.handleChange(e);
   };
 
   const setTotalIncome = (item: any, index: number) => {
     const finance: any = item?.income;
-    const totalAP =
-      finance.turnoverGrossReciepts.amountPA - finance.purchases.amountPA;
-    const totalPM =
-      finance.purchases.amountPA / finance.turnoverGrossReciepts.amountPA;
+    const turnoverGrossReciepts = Number.isNaN(
+      parseFloat(finance?.turnoverGrossReciepts?.amountPA),
+    )
+      ? 0
+      : parseFloat(finance?.turnoverGrossReciepts?.amountPA);
+    const purchases = Number.isNaN(parseFloat(finance?.purchases?.amountPA))
+      ? 0
+      : parseFloat(finance?.purchases?.amountPA);
+    const totalAP = turnoverGrossReciepts - purchases;
+    const totalPM = purchases / turnoverGrossReciepts;
+
     formik.setFieldValue(
       `finances[${index}]income.grossProfit`,
       totalAP.toFixed(1),
@@ -328,7 +336,9 @@ const Financials = ({
         typeof finance[key] !== 'string' &&
         typeof finance[key]?.amountPA === 'number'
       ) {
-        totalAP = totalAP + finance[key]?.amountPA;
+        totalAP = Number.isNaN(parseFloat(finance[key]?.amountPA))
+          ? 0
+          : parseFloat(finance[key]?.amountPA) + totalAP;
       }
     }
     formik.setFieldValue(
@@ -360,19 +370,28 @@ const Financials = ({
   const setBusinessIncome = (item: any, index: number) => {
     let totalAP = parseInt(item?.expenses?.shareOfProfitPA);
     const finance: any = item?.businessIncome;
-   formik.setFieldValue(
-     `finances[${index}]businessIncome.totalIncomePA`,
-     parseFloat(
-       totalAP +
-       finance?.salaryFromBusiness?.amountPA +
-       finance?.remunerationFromBusiness?.amountPA
-     ).toFixed(1),
-   );
+    const rent = Number.isNaN(parseFloat(finance?.rent?.amountPA))
+      ? 0
+      : parseFloat(finance?.rent?.amountPA);
+    const salaryFromBusiness = Number.isNaN(
+      parseFloat(finance?.salaryFromBusiness?.amountPA),
+    )
+      ? 0
+      : parseFloat(finance?.salaryFromBusiness?.amountPA);
+    const remunerationFromBusiness = Number.isNaN(
+      parseFloat(finance?.remunerationFromBusiness?.amountPA),
+    )
+      ? 0
+      : parseFloat(finance?.remunerationFromBusiness?.amountPA);
+    formik.setFieldValue(
+      `finances[${index}]businessIncome.totalIncomePA`,
+      (totalAP + salaryFromBusiness + remunerationFromBusiness).toFixed(1),
+    );
     formik.setFieldValue(
       `finances[${index}]businessIncome.totalEarning`,
-      parseFloat(totalAP + finance?.rent?.amountPA +
-        finance?.salaryFromBusiness?.amountPA +
-        finance?.remunerationFromBusiness?.amountPA).toFixed(1),
+      (totalAP + rent + salaryFromBusiness + remunerationFromBusiness).toFixed(
+        1,
+      ),
     );
   };
 

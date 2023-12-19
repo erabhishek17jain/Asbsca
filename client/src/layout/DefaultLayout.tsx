@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import Header from '../components-shared/Header';
 import Sidebar from '../components-shared/Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { setToken } from '../services';
+import { setAsbdToken } from '../services';
 import { useSelector } from 'react-redux';
 import { onMessageListener, getFirebaseToken } from '../firebase';
 import { fetchUserAsync } from '../slices/usersSlice';
@@ -11,10 +11,10 @@ import store from '../store/store';
 const DefaultLayout = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const token: any = document.cookie?.replace('token=', '');
   const { userDetails } = useSelector((state: any) => state.users);
   const [notification, setNotification] = useState({ title: '', body: '' });
-  const [isTokenFound, setTokenFound] = useState(false);
+  const [isTokenFound, setAsbdTokenFound] = useState(false);
+  const cookie: any = document.cookie;
 
   onMessageListener()
     .then((payload: any) => {
@@ -32,21 +32,26 @@ const DefaultLayout = () => {
   useEffect(() => {
     if (userDetails && userDetails?.firebaseTokens[0] !== '') {
       if (!isTokenFound) {
-        getFirebaseToken(setTokenFound);
+        getFirebaseToken(setAsbdTokenFound);
       } else {
-        setTokenFound(true);
+        setAsbdTokenFound(true);
       }
     }
   }, [userDetails]);
 
   useLayoutEffect(() => {
-    if (token !== '') {
-      setToken(token);
-      store.dispatch(fetchUserAsync(''));
+    if (cookie.includes('asbsToken')) {
+      const asbsToken = cookie?.replace('asbsToken=', '');
+      if (asbsToken !== '') {
+        setAsbdToken(asbsToken);
+        store.dispatch(fetchUserAsync(''));
+      } else {
+        navigate('/signin');
+      }
     } else {
       navigate('/signin');
     }
-  }, [token]);
+  }, [cookie]);
 
   return (
     <div>

@@ -14,7 +14,7 @@ const ASection = ({ title, children, footers }: any) => {
   return (
     <div className="border-2 rounded-lg mb-2 border-stroke">
       {title && <p className="w-full pt-3 px-4">{title}</p>}
-      {children && <div className="flex flex-col gap-3 py-3 px-4">{children}</div>}
+      {children && <div className="flex flex-col gap-1 py-3 px-4">{children}</div>}
       {footers && <SectionFooter footers={footers} />}
     </div>
   );

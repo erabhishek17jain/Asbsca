@@ -4,7 +4,7 @@ import HomeIcon from '../../assets/images/icon/home.svg';
 import LogoDark from '../../assets/images/logo/logo.png';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
-import { authentication, setToken } from '../../services';
+import { authentication, setAsbdToken } from '../../services';
 import AInputField from '../../components-global/AInputField';
 import ACheckbox from '../../components-global/ACheckbox';
 import AButton from '../../components-global/AButton';
@@ -14,13 +14,13 @@ import {
   EyeSlashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [isRembember, setIsRembember] = useState<any>(false);
   const [showPassword, setShowPassword] = useState<any>(false);
-  const token: any = document.cookie?.replace('token=', '');
+  const cookie: any = document.cookie;
 
   const rememberMe = (isChecked: boolean, email: string, password: string) => {
     if (isChecked) {
@@ -52,25 +52,33 @@ const SignIn = () => {
       signinPromise.then((res: any) => {
         toast.success(<b>SignIn Successfully...!</b>);
         let { token } = res.data;
-        setToken(token);
+        setAsbdToken(token);
         rememberMe(isRembember, values.email, values.password);
         navigate('/dashboard');
       });
     },
   });
 
-  useLayoutEffect(() => {
-    if (token !== '') {
-      navigate('/dashboard');
+  useEffect(() => {
+    if (cookie.includes('asbsToken')) {
+      const asbsToken = cookie?.replace('asbsToken=', '');
+      if (asbsToken !== '') {
+        navigate('/dashboard');
+      } else {
+        setAsbdToken('');
+        setIsRembember(
+          JSON.parse(localStorage.getItem('isRembember') || 'false'),
+        );
+        formik.setFieldValue('email', localStorage.getItem('email') || '');
+        formik.setFieldValue(
+          'password',
+          localStorage.getItem('password') || '',
+        );
+      }
     } else {
-      setToken('');
-      setIsRembember(
-        JSON.parse(localStorage.getItem('isRembember') || 'false'),
-      );
-      formik.setFieldValue('email', localStorage.getItem('email') || '');
-      formik.setFieldValue('password', localStorage.getItem('password') || '');
+      setAsbdToken('');
     }
-  }, []);
+  }, [cookie]);
 
   return (
     <>

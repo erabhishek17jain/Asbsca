@@ -3,53 +3,58 @@ import ASingleSelect from '../../../components-global/ASingleSelect';
 import AGroupFields from '../../../components-global/AGroupFields';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { FieldArray, FormikProvider, useFormik } from 'formik';
 import { trendOfBusiness, futureProjection } from '../constants';
 import ASection from '../../../components-global/ASection';
 import moment from 'moment';
 import { useEffect } from 'react';
+import { AddTagFooter, AddTagButton } from '../../../components-global/ATags';
+
+const trendsInfo = {
+  bussinessTrendLast2Year: '',
+  otherbussinessTrendLast2Year: '',
+  futureProjection: '',
+  otherfutureProjection: '',
+} as any;
 
 const initialValues = {
   aprilTillDate: {
     idealAprilTillDate: {
-      turnover: 0,
-      netProfit: 0,
+      turnover: '',
+      netProfit: '',
     },
     aprilTillDate: {
-      turnover: 0,
-      netProfit: 0,
+      turnover: '',
+      netProfit: '',
     },
     reasonforDiff: '',
   },
   lastYears: {
-    firstLastYear: 0,
-    secondLastYear: 0,
+    firstLastYear: '',
+    secondLastYear: '',
     changes: '',
     reasonforDiff: '',
   },
   currentYearActual: {
     actuals: {
-      turnover: 0,
-      netProfit: 0,
-      profitPercentage: 0,
+      turnover: '',
+      netProfit: '',
+      profitPercentage: '',
     },
     asPerFinancials: {
-      turnover: 0,
-      netProfit: 0,
-      profitPercentage: 0,
+      turnover: '',
+      netProfit: '',
+      profitPercentage: '',
     },
     financialActualRatio: '',
   },
   currentLastYearComparision: {
-    firstLastYear: 0,
-    secondLastYear: 0,
+    firstLastYear: '',
+    secondLastYear: '',
     changes: '',
     reasonforDiff: '',
   },
-  bussinessTrendLast2Year: '',
-  otherbussinessTrendLast2Year: '',
-  futureProjection: '',
-  otherfutureProjection: '',
+  trends: [{ ...trendsInfo }],
 };
 
 const TurnoverGrossReceipts = ({
@@ -63,42 +68,48 @@ const TurnoverGrossReceipts = ({
   const validationSchema = Yup.object().shape({
     aprilTillDate: Yup.object({
       idealAprilTillDate: Yup.object({
-        turnover: Yup.number().required('This field is required'),
-        netProfit: Yup.number().required('This field is required'),
+        turnover: Yup.string().required('This field is required'),
+        netProfit: Yup.string().required('This field is required'),
       }),
       aprilTillDate: Yup.object({
-        turnover: Yup.number().required('This field is required'),
-        netProfit: Yup.number().required('This field is required'),
+        turnover: Yup.string().required('This field is required'),
+        netProfit: Yup.string().required('This field is required'),
       }),
       reasonforDiff: Yup.string().required('This field is required'),
     }),
     lastYears: Yup.object({
-      firstLastYear: Yup.number().required('This field is required'),
-      secondLastYear: Yup.number().required('This field is required'),
+      firstLastYear: Yup.string().required('This field is required'),
+      secondLastYear: Yup.string().required('This field is required'),
       changes: Yup.string().required('This field is required'),
       reasonforDiff: Yup.string().required('This field is required'),
     }),
     currentYearActual: Yup.object({
       actuals: Yup.object({
-        turnover: Yup.number().required('This field is required'),
-        netProfit: Yup.number().required('This field is required'),
-        profitPercentage: Yup.number().required('This field is required'),
+        turnover: Yup.string().required('This field is required'),
+        netProfit: Yup.string().required('This field is required'),
+        profitPercentage: Yup.string().required('This field is required'),
       }),
       asPerFinancials: Yup.object({
-        turnover: Yup.number().required('This field is required'),
-        netProfit: Yup.number().required('This field is required'),
-        profitPercentage: Yup.number().required('This field is required'),
+        turnover: Yup.string().required('This field is required'),
+        netProfit: Yup.string().required('This field is required'),
+        profitPercentage: Yup.string().required('This field is required'),
       }),
       financialActualRatio: Yup.string().required('This field is required'),
     }),
     currentLastYearComparision: Yup.object({
-      firstLastYear: Yup.number().required('This field is required'),
-      secondLastYear: Yup.number().required('This field is required'),
+      firstLastYear: Yup.string().required('This field is required'),
+      secondLastYear: Yup.string().required('This field is required'),
       changes: Yup.string().required('This field is required'),
       reasonforDiff: Yup.string().required('This field is required'),
     }),
-    bussinessTrendLast2Year: Yup.string().required('This field is required'),
-    futureProjection: Yup.string().required('This field is required'),
+    trends: Yup.array().of(
+      Yup.object().shape({
+        bussinessTrendLast2Year: Yup.string().required(
+          'This field is required',
+        ),
+        futureProjection: Yup.string().required('This field is required'),
+      }),
+    ),
   });
 
   const onSubmit = async (values: any) => {
@@ -130,22 +141,18 @@ const TurnoverGrossReceipts = ({
   };
 
   const setCurrLast = () => {
-    if (
-      formik?.values?.currentLastYearComparision.firstLastYear !== 0 &&
-      formik?.values?.currentLastYearComparision.secondLastYear !== 0
-    ) {
-      const percent =
-        ((formik?.values?.currentLastYearComparision.secondLastYear -
-          formik?.values?.currentLastYearComparision.firstLastYear) *
-          100) /
-        formik?.values?.currentLastYearComparision.firstLastYear;
+    const first = parseFloat(
+      formik?.values?.currentLastYearComparision.firstLastYear,
+    );
+    const second = parseFloat(
+      formik?.values?.currentLastYearComparision.secondLastYear,
+    );
+    if (first !== 0 && second !== 0) {
+      const percent = ((second - first) * 100) / first;
 
       formik.setFieldValue(
         'currentLastYearComparision.changes',
-        calculatePercentage(
-          formik?.values?.currentLastYearComparision.firstLastYear,
-          formik?.values?.currentLastYearComparision.secondLastYear,
-        ),
+        calculatePercentage(first, second),
       );
       formik.setFieldValue(
         'currentLastYearComparision.reasonforDiff',
@@ -155,11 +162,13 @@ const TurnoverGrossReceipts = ({
   };
 
   useEffect(() => {
-    let actualPer =
-      ((formik?.values?.aprilTillDate?.idealAprilTillDate?.turnover -
-        formik?.values?.aprilTillDate?.aprilTillDate?.turnover) *
-        100) /
-      formik?.values?.aprilTillDate?.aprilTillDate?.turnover;
+    const idealTurn = parseFloat(
+      formik?.values?.aprilTillDate?.idealAprilTillDate?.turnover,
+    );
+    const actualTurn = parseFloat(
+      formik?.values?.aprilTillDate?.aprilTillDate?.turnover,
+    );
+    let actualPer = ((idealTurn - actualTurn) * 100) / actualTurn;
     if (
       formik?.values?.aprilTillDate?.reasonforDiff === '' ||
       formik?.values?.aprilTillDate?.reasonforDiff === '-'
@@ -173,17 +182,13 @@ const TurnoverGrossReceipts = ({
   }, [formik?.values?.aprilTillDate]);
 
   useEffect(() => {
-    let lastPer =
-      ((formik?.values?.lastYears?.secondLastYear -
-        formik?.values?.lastYears?.firstLastYear) *
-        100) /
-      formik?.values?.lastYears?.firstLastYear;
+    const first = parseFloat(formik?.values?.lastYears.firstLastYear);
+    const second = parseFloat(formik?.values?.lastYears.secondLastYear);
+
+    let lastPer = ((second - first) * 100) / first;
     formik.setFieldValue(
       'lastYears.changes',
-      calculatePercentage(
-        formik?.values?.lastYears?.firstLastYear,
-        formik?.values?.lastYears?.secondLastYear,
-      ),
+      calculatePercentage(first, second),
     );
     if (
       formik?.values?.lastYears?.reasonforDiff === '' ||
@@ -202,20 +207,29 @@ const TurnoverGrossReceipts = ({
   }, [formik?.values?.lastYears]);
 
   useEffect(() => {
-    const percent =
-      (formik?.values?.currentYearActual?.asPerFinancials?.netProfit * 100) /
-      formik?.values?.currentYearActual?.asPerFinancials?.turnover;
-    const ratio =
-      (formik?.values?.currentYearActual?.asPerFinancials?.turnover * 100) /
-      formik?.values?.currentYearActual?.actuals?.turnover;
+    const actTurn = parseFloat(
+      formik?.values?.currentYearActual?.actuals?.turnover,
+    );
+    const finTurn = parseFloat(
+      formik?.values?.currentYearActual?.asPerFinancials?.turnover,
+    );
+    const finNetProf = parseFloat(
+      formik?.values?.currentYearActual?.asPerFinancials?.netProfit,
+    );
+    const percent = (finNetProf * 100) / finTurn;
+    const ratio = (finTurn * 100) / actTurn;
+
     formik.setFieldValue(
       'currentYearActual.asPerFinancials.profitPercentage',
-      percent.toFixed(2),
+      Number.isNaN(percent) ? 0 : percent.toFixed(2),
     );
-    formik.setFieldValue('currentYearActual.financialActualRatio', ratio);
+    formik.setFieldValue(
+      'currentYearActual.financialActualRatio',
+      Number.isNaN(ratio) ? 0 : Number.isFinite(ratio) ? 0 : ratio,
+    );
     formik.setFieldValue(
       'currentLastYearComparision.secondLastYear',
-      formik?.values?.currentYearActual?.asPerFinancials?.turnover,
+      Number.isNaN(finTurn) ? 0 : finTurn,
     );
     setCurrLast();
   }, [formik?.values?.currentYearActual]);
@@ -239,34 +253,28 @@ const TurnoverGrossReceipts = ({
         'currentLastYearComparision',
         payloads?.turnoverDetails?.currentLastYearComparision,
       );
-      formik.setFieldValue(
-        'bussinessTrendLast2Year',
-        payloads?.turnoverDetails?.bussinessTrendLast2Year,
-      );
-      formik.setFieldValue(
-        'otherbussinessTrendLast2Year',
-        payloads?.turnoverDetails?.otherbussinessTrendLast2Year,
-      );
-      formik.setFieldValue(
-        'futureProjection',
-        payloads?.turnoverDetails?.futureProjection,
-      );
-      formik.setFieldValue(
-        'otherfutureProjection',
-        payloads?.turnoverDetails?.otherfutureProjection,
-      );
+      formik.setFieldValue('trends', payloads?.turnoverDetails?.trends);
     } else {
       const end = moment();
       const start = moment([2023, 3, 1]);
-      const turnoverA: any = (
+      const turnA = parseFloat(
         payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-          ?.amountPA *
-        (end.diff(start, 'days') / 365)
-      ).toFixed(2);
+          ?.amountPA,
+      );
+      const turnoverA: any = Number.isNaN(turnA)
+        ? 0
+        : (turnA * (end.diff(start, 'days') / 365)).toFixed(2);
+      const netProfM = parseFloat(
+        payloads?.financials?.finances[0]?.expenses?.netProfitPM,
+      );
+      const netProfA = parseFloat(
+        payloads?.financials?.finances[0]?.expenses?.netProfitPA,
+      );
       const netProfitA: any = (
-        (turnoverA * payloads?.financials?.finances[0]?.expenses?.netProfitPM) /
+        (turnoverA * (Number.isNaN(netProfM) ? 0 : netProfM)) /
         100
       ).toFixed(2);
+
       formik.setFieldValue(
         'aprilTillDate.idealAprilTillDate.turnover',
         turnoverA,
@@ -277,21 +285,21 @@ const TurnoverGrossReceipts = ({
       );
       formik.setFieldValue(
         'currentYearActual.actuals.turnover',
-        payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-          ?.amountPA,
+        Number.isNaN(turnA) ? 0 : turnA,
       );
       formik.setFieldValue(
         'currentYearActual.actuals.netProfit',
-        payloads?.financials?.finances[0]?.expenses?.netProfitPA,
+        Number.isNaN(netProfA) ? 0 : netProfA,
       );
       formik.setFieldValue(
         'currentYearActual.actuals.profitPercentage',
-        payloads?.financials?.finances[0]?.expenses?.netProfitPM,
+        Number.isNaN(netProfM) ? 0 : netProfM,
       );
     }
   }, [payloads]);
 
   const errors: any = formik?.errors;
+  const errorsTd: any = formik?.errors?.trends;
 
   return (
     <>
@@ -301,7 +309,6 @@ const TurnoverGrossReceipts = ({
             <p className="w-full pb-3">Aprill Till Date:</p>
             <AGroupFields col={2} title={'Ideal April till date Turnover'}>
               <AInputField
-                type={'number'}
                 label={'Turnover'}
                 rightLabel={'(In Lakhs)'}
                 id={'aprilTillDate.idealAprilTillDate.turnover'}
@@ -312,7 +319,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 rightLabel={'(%)'}
                 id={'aprilTillDate.idealAprilTillDate.netProfit'}
                 label={'Net Profit'}
@@ -325,7 +331,6 @@ const TurnoverGrossReceipts = ({
             </AGroupFields>
             <AGroupFields col={2} title={'April till date Turnover'}>
               <AInputField
-                type={'number'}
                 id={'aprilTillDate.aprilTillDate.turnover'}
                 label={'Turnover'}
                 rightLabel={'(In Lakhs)'}
@@ -334,7 +339,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 id={'aprilTillDate.aprilTillDate.netProfit'}
                 label={'Net Profit'}
                 rightLabel={'(%)'}
@@ -361,7 +365,6 @@ const TurnoverGrossReceipts = ({
             </p>
             <AGroupFields>
               <AInputField
-                type={'number'}
                 label={`March-${moment()
                   .subtract(2, 'y')
                   .year()} (As per F.S.)`}
@@ -372,7 +375,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 label={`March-${moment()
                   .subtract(1, 'y')
                   .year()} (As per F.S.)`}
@@ -406,7 +408,6 @@ const TurnoverGrossReceipts = ({
             </p>
             <AGroupFields col={3} title={'Actuals'}>
               <AInputField
-                type={'number'}
                 label={'Turnover'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.actuals.turnover'}
@@ -415,7 +416,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 label={'Net Profit'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.actuals.netProfit'}
@@ -424,7 +424,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 disabled={true}
                 label={'Percentage'}
                 rightLabel={'(%)'}
@@ -438,7 +437,6 @@ const TurnoverGrossReceipts = ({
             </AGroupFields>
             <AGroupFields col={3} title={'As per Financial'}>
               <AInputField
-                type={'number'}
                 label={'Turnover'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.asPerFinancials.turnover'}
@@ -449,7 +447,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 label={'Net Profit'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentYearActual.asPerFinancials.netProfit'}
@@ -460,7 +457,6 @@ const TurnoverGrossReceipts = ({
                 handleChange={formik.handleChange}
               />
               <AInputField
-                type={'number'}
                 label={'Percentage'}
                 disabled={true}
                 rightLabel={'(%)'}
@@ -494,7 +490,6 @@ const TurnoverGrossReceipts = ({
             </p>
             <AGroupFields>
               <AInputField
-                type={'number'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentLastYearComparision.firstLastYear'}
                 value={formik?.values?.currentLastYearComparision.firstLastYear}
@@ -503,7 +498,6 @@ const TurnoverGrossReceipts = ({
                 label={`March-${moment().subtract(1, 'y').year()}`}
               />
               <AInputField
-                type={'number'}
                 rightLabel={'(In Lakhs)'}
                 id={'currentLastYearComparision.secondLastYear'}
                 value={
@@ -534,42 +528,103 @@ const TurnoverGrossReceipts = ({
               />
             </AGroupFields>
           </ASection>
-          <AGroupFields col={4}>
-            <ASingleSelect
-              id={'bussinessTrendLast2Year'}
-              value={formik?.values?.bussinessTrendLast2Year}
-              error={errors?.bussinessTrendLast2Year}
-              handleChange={formik.handleChange}
-              label={'Comment on Trend of Business of past 2 years'}
-              options={trendOfBusiness}
-            />
-            {formik?.values?.bussinessTrendLast2Year === 'Other' && (
-              <AInputField
-                id={'otherbussinessTrendLast2Year'}
-                value={formik?.values?.otherbussinessTrendLast2Year}
-                error={errors?.otherbussinessTrendLast2Year}
-                handleChange={formik.handleChange}
-                label={'Comment on Trend of Business of past 2 years'}
+          <p className="w-full mb-3">Business Trends</p>
+          <FormikProvider value={formik}>
+            <form>
+              <FieldArray
+                name="trends"
+                render={(tag) => (
+                  <div>
+                    {formik?.values?.trends?.length > 0 ? (
+                      formik?.values?.trends?.map((item: any, index: any) => (
+                        <div
+                          key={item?.bussinessTrendLast2Year}
+                          className="flex items-center w-full gap-3 mb-3"
+                        >
+                          <div className="w-full border-2 rounded-lg pt-3 px-3">
+                            <AGroupFields col={2}>
+                              <ASingleSelect
+                                id={`trends[${index}].bussinessTrendLast2Year`}
+                                value={
+                                  formik?.values?.trends[index]
+                                    .bussinessTrendLast2Year
+                                }
+                                error={
+                                  errorsTd?.length > 0 &&
+                                  errorsTd[index].bussinessTrendLast2Year
+                                }
+                                handleChange={formik.handleChange}
+                                label={
+                                  'Comment on Trend of Business of past 2 years'
+                                }
+                                options={trendOfBusiness}
+                              />
+                              {formik?.values?.trends[index]
+                                .bussinessTrendLast2Year === 'Other' && (
+                                <AInputField
+                                  id={`trends[${index}].otherbussinessTrendLast2Year`}
+                                  value={
+                                    formik?.values?.trends[index]
+                                      .otherbussinessTrendLast2Year
+                                  }
+                                  error={
+                                    errorsTd?.length > 0 &&
+                                    errorsTd[index].otherbussinessTrendLast2Year
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={
+                                    'Comment on Trend of Business of past 2 years'
+                                  }
+                                />
+                              )}
+                              <ASingleSelect
+                                id={`trends[${index}].futureProjection`}
+                                value={
+                                  formik?.values?.trends[index].futureProjection
+                                }
+                                error={
+                                  errorsTd?.length > 0 &&
+                                  errorsTd[index].futureProjection
+                                }
+                                handleChange={formik.handleChange}
+                                label={'Future Projection'}
+                                options={futureProjection}
+                              />
+                              {formik?.values?.trends[index]
+                                .futureProjection === 'Other' && (
+                                <AInputField
+                                  id={`trends[${index}].otherfutureProjection`}
+                                  value={
+                                    formik?.values?.trends[index]
+                                      .otherfutureProjection
+                                  }
+                                  error={
+                                    errorsTd?.length > 0 &&
+                                    errorsTd[index].otherfutureProjection
+                                  }
+                                  handleChange={formik.handleChange}
+                                  label={'Future Projection'}
+                                />
+                              )}
+                            </AGroupFields>
+                          </div>
+                          <AddTagFooter
+                            addTag={() => tag.push(trendsInfo)}
+                            removeTag={() => tag.remove(index)}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <AddTagButton
+                        title={'Add Business Trends'}
+                        addTag={() => tag.push(trendsInfo)}
+                      />
+                    )}
+                  </div>
+                )}
               />
-            )}
-            <ASingleSelect
-              id={'futureProjection'}
-              value={formik?.values?.futureProjection}
-              error={errors?.futureProjection}
-              handleChange={formik.handleChange}
-              label={'Future Projection'}
-              options={futureProjection}
-            />
-            {formik?.values?.futureProjection === 'Other' && (
-              <AInputField
-                id={'otherfutureProjection'}
-                value={formik?.values?.otherfutureProjection}
-                error={errors?.otherfutureProjection}
-                handleChange={formik.handleChange}
-                label={'Future Projection'}
-              />
-            )}
-          </AGroupFields>
+            </form>
+          </FormikProvider>
         </div>
       </div>
       <AStepperPagination

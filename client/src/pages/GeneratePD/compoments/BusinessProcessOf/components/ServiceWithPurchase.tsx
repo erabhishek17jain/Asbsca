@@ -25,6 +25,7 @@ const initialValues = {
     listedOnline: '',
     marketSer: '',
     covidObserv: '',
+    otherDetails: '',
   },
 };
 
@@ -324,6 +325,20 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
                 value={formik?.values?.value?.covidObserv}
                 className={`w-32 text-sm border-b-[1.5px] text-center border-${
                   formik?.errors?.value?.covidObserv ? 'meta1' : 'stroke'
+                }`}
+              />
+              .
+            </div>
+          </li>
+          <li className="mb-2">
+            <div className="flex gap-2 sm:w-[60%]">
+              Other Details?
+              <textarea
+                id={'value.otherDetails'}
+                onChange={handleChange}
+                value={formik?.values?.value?.otherDetails}
+                className={`w-48 h-20 text-sm border-[1.5px] py-2 px-3 border-${
+                  formik?.errors?.value?.otherDetails ? 'meta1' : 'stroke'
                 }`}
               />
               .

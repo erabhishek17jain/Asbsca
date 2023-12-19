@@ -7,31 +7,31 @@ import {
   ResetPassword,
 } from '../ChangePassword/ChangePassword';
 import { useLayoutEffect } from 'react';
-import { setToken } from '../../services';
+import { setAsbdToken } from '../../services';
 
 const Hero = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { search } = location;
-  const token: any = document.cookie?.replace('token=', '');
-  let resetToken = '',
+  const asbsToken: any = document.cookie?.replace('asbsToken=', '');
+  let resetAsbdToken = '',
     pageType = 'home';
 
   if (search.includes('email')) {
     pageType = 'forgotPassword';
-  } else if (search.includes('token')) {
+  } else if (search.includes('asbsToken')) {
     pageType = 'resetPassword';
-    resetToken = search.slice(7);
+    resetAsbdToken = search.slice(7);
   }
 
   useLayoutEffect(() => {
     if (pageType === 'forgotPassword') {
-      setToken('');
-    } else if (resetToken !== '' && pageType === 'resetPassword') {
-      setToken(resetToken);
+      setAsbdToken('');
+    } else if (resetAsbdToken !== '' && pageType === 'resetPassword') {
+      setAsbdToken(resetAsbdToken);
     } else {
-      if (token !== '') {
-        setToken(token);
+      if (asbsToken !== '') {
+        setAsbdToken(asbsToken);
         navigate('/dashboard');
       }
     }
@@ -42,14 +42,14 @@ const Hero = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default">
         <div className="flex flex-wrap justify-center items-center h-screen">
           <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-            <div className={`p-4 ${token ? 'text-left' : 'text-center'}`}>
+            <div className={`p-4 ${asbsToken ? 'text-left' : 'text-center'}`}>
               <Link className="mb-5.5 inline-block w-80" to="/">
                 <img className="hidden" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
               {pageType === 'forgotPassword' && <ForgotPassword />}
               {pageType === 'resetPassword' && (
-                <ResetPassword isFirstPassword={true} token={token} />
+                <ResetPassword isFirstPassword={true} asbsToken={asbsToken} />
               )}
               {pageType === 'home' && (
                 <>

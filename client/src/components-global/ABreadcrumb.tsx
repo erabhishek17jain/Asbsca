@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const ABreadcrumb = ({ pageName }: any) => {
   const navigate = useNavigate();
-  const token: any = document.cookie?.replace('token=', '');
+  const asbsToken: any = document.cookie?.replace('asbsToken=', '');
 
   useEffect(() => {
-    if (token === '') {
+    if (asbsToken === '') {
       navigate('/signin');
     }
   }, []);

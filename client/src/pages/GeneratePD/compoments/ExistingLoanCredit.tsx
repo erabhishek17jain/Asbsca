@@ -36,23 +36,29 @@ const ExistingLoan = ({ formik }: any) => {
     let totalLoanBtOut = 0;
     formik?.values?.existanceLoan?.balanceTransfer?.forEach((item: any) => {
       if (item.loanAmount !== '') {
-        totalLoanBt = totalLoanBt + item.loanAmount;
+        totalLoanBt = Number.isNaN(parseFloat(item.loanAmount))
+          ? 0
+          : parseFloat(item.loanAmount) + totalLoanBt;
       }
       if (item.emi !== '') {
-        totalLoanBtEmi = totalLoanBtEmi + item.emi;
+        totalLoanBtEmi = Number.isNaN(parseFloat(item.emi))
+          ? 0
+          : parseFloat(item.emi) + totalLoanBtEmi;
       }
       if (item.outstanding !== '') {
-        totalLoanBtOut = totalLoanBtOut + item.outstanding;
+        totalLoanBtOut = Number.isNaN(parseFloat(item.outstanding))
+          ? 0
+          : parseFloat(item.outstanding) + totalLoanBtOut;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanBt', totalLoanBt.toFixed(2));
+    formik.setFieldValue('existanceLoan.totalLoanBt', totalLoanBt.toFixed(1));
     formik.setFieldValue(
       'existanceLoan.totalLoanBtEmi',
-      totalLoanBtEmi.toFixed(2),
+      totalLoanBtEmi.toFixed(1),
     );
     formik.setFieldValue(
       'existanceLoan.totalLoanBtOut',
-      totalLoanBtOut.toFixed(2),
+      totalLoanBtOut.toFixed(1),
     );
   };
 
@@ -66,23 +72,29 @@ const ExistingLoan = ({ formik }: any) => {
     let totalLoanEcOut = 0;
     formik?.values?.existanceLoan?.existingLoanClosed?.forEach((item: any) => {
       if (item.loanAmount !== '') {
-        totalLoanEc = totalLoanEc + item.loanAmount;
+        totalLoanEc = Number.isNaN(parseFloat(item.loanAmount))
+          ? 0
+          : parseFloat(item.loanAmount) + totalLoanEc;
       }
       if (item.emi !== '') {
-        totalLoanEcEmi = totalLoanEcEmi + item.emi;
+        totalLoanEcEmi = Number.isNaN(parseFloat(item.emi))
+          ? 0
+          : parseFloat(item.emi) + totalLoanEcEmi;
       }
       if (item.outstanding !== '') {
-        totalLoanEcOut = totalLoanEcOut + item.outstanding;
+        totalLoanEcOut = Number.isNaN(parseFloat(item.outstanding))
+          ? 0
+          : parseFloat(item.outstanding) + totalLoanEcOut;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanEc', totalLoanEc.toFixed(2));
+    formik.setFieldValue('existanceLoan.totalLoanEc', totalLoanEc.toFixed(1));
     formik.setFieldValue(
       'existanceLoan.totalLoanEcEmi',
-      totalLoanEcEmi.toFixed(2),
+      totalLoanEcEmi.toFixed(1),
     );
     formik.setFieldValue(
       'existanceLoan.totalLoanEcOut',
-      totalLoanEcOut.toFixed(2),
+      totalLoanEcOut.toFixed(1),
     );
   };
 
@@ -96,23 +108,29 @@ const ExistingLoan = ({ formik }: any) => {
     let totalLoanEmOut = 0;
     formik?.values?.existanceLoan?.existingLoanEMI?.forEach((item: any) => {
       if (item.loanAmount !== '') {
-        totalLoanEm = totalLoanEm + item.loanAmount;
+        totalLoanEm = Number.isNaN(parseFloat(item.loanAmount))
+          ? 0
+          : parseFloat(item.loanAmount) + totalLoanEm;
       }
       if (item.emi !== '') {
-        totalLoanEmEmi = totalLoanEmEmi + item.emi;
+        totalLoanEmEmi = Number.isNaN(parseFloat(item.emi))
+          ? 0
+          : parseFloat(item.emi) + totalLoanEmEmi;
       }
       if (item.outstanding !== '') {
-        totalLoanEmOut = totalLoanEmOut + item.outstanding;
+        totalLoanEmOut = Number.isNaN(parseFloat(item.outstanding))
+          ? 0
+          : parseFloat(item.outstanding) + totalLoanEmOut;
       }
     });
-    formik.setFieldValue('existanceLoan.totalLoanEm', totalLoanEm.toFixed(2));
+    formik.setFieldValue('existanceLoan.totalLoanEm', totalLoanEm.toFixed(1));
     formik.setFieldValue(
       'existanceLoan.totalLoanEmEmi',
-      totalLoanEmEmi.toFixed(2),
+      totalLoanEmEmi.toFixed(1),
     );
     formik.setFieldValue(
       'existanceLoan.totalLoanEmOut',
-      totalLoanEmOut.toFixed(2),
+      totalLoanEmOut.toFixed(1),
     );
   };
 
@@ -239,7 +257,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     />
                                   )}
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -254,7 +271,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -270,7 +286,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Months)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -285,7 +300,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.balanceTransfer[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -466,7 +480,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     />
                                   )}
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanClosed[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -482,7 +495,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanClosed[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -498,7 +510,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Months)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanClosed[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -513,7 +524,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanClosed[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -693,7 +703,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     />
                                   )}
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].loanAmount`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -708,7 +717,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].tenureMonth`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -723,7 +731,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Months)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].emi`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -738,7 +745,6 @@ const ExistingLoan = ({ formik }: any) => {
                                     rightLabel={'(In Lakhs)'}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     id={`existanceLoan.existingLoanEMI[${index}].outstanding`}
                                     value={
                                       formik?.values?.existanceLoan
@@ -830,19 +836,23 @@ const CreditFacility = ({ formik }: any) => {
     let totalLoanCfLimit = 0;
     formik?.values?.creditFacility?.creditDetails?.forEach((item: any) => {
       if (item.limit !== '') {
-        totalLoanCfLimit = totalLoanCfLimit + item.limit;
+        totalLoanCfLimit = Number.isNaN(parseFloat(item.limit))
+          ? 0
+          : parseFloat(item.limit) + totalLoanCfLimit;
       }
       if (item.averageUtilization !== '') {
-        totalLoanCfAu = totalLoanCfAu + item.averageUtilization;
+        totalLoanCfAu = Number.isNaN(parseFloat(item.averageUtilization))
+          ? 0
+          : parseFloat(item.averageUtilization) + totalLoanCfAu; 
       }
     });
     formik.setFieldValue(
       'creditFacility.totalLoanCfAu',
-      totalLoanCfAu.toFixed(2),
+      totalLoanCfAu.toFixed(1),
     );
     formik.setFieldValue(
       'creditFacility.totalLoanCfLimit',
-      totalLoanCfLimit.toFixed(2),
+      totalLoanCfLimit.toFixed(1),
     );
   };
 
@@ -963,7 +973,6 @@ const CreditFacility = ({ formik }: any) => {
                                   />
                                 )}
                                 <AInputField
-                                  type={'number'}
                                   id={`creditFacility.creditDetails[${index}].limit`}
                                   value={
                                     formik?.values?.creditFacility
@@ -978,7 +987,6 @@ const CreditFacility = ({ formik }: any) => {
                                   rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
-                                  type={'number'}
                                   id={`creditFacility.creditDetails[${index}].averageUtilization`}
                                   value={
                                     formik?.values?.creditFacility
@@ -994,7 +1002,6 @@ const CreditFacility = ({ formik }: any) => {
                                   rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
-                                  type={'number'}
                                   id={`creditFacility.creditDetails[${index}].interestRate`}
                                   value={
                                     formik?.values?.creditFacility
@@ -1085,14 +1092,18 @@ const OtherCommitments = ({ formik }: any) => {
     formik?.values?.otherCommitments?.commitmentsDetails?.forEach(
       (item: any) => {
         if (item.contribution !== '') {
-          totalCon = totalCon + item.contribution;
+          totalCon = Number.isNaN(parseFloat(item.contribution))
+            ? 0
+            : parseFloat(item.contribution) + totalCon; 
         }
         if (item.sumAssured !== '') {
-          totalSum = totalSum + item.sumAssured;
+          totalSum = Number.isNaN(parseFloat(item.sumAssured))
+            ? 0
+            : parseFloat(item.sumAssured) + totalSum; 
         }
       },
     );
-    formik.setFieldValue('otherCommitments.totalCon', totalCon.toFixed(2));
+    formik.setFieldValue('otherCommitments.totalCon', totalCon.toFixed(1));
     formik.setFieldValue('otherCommitments.totalSum', totalSum);
   };
 
@@ -1182,7 +1193,6 @@ const OtherCommitments = ({ formik }: any) => {
                                   />
                                 )}
                                 <AInputField
-                                  type={'number'}
                                   id={`otherCommitments.commitmentsDetails[${index}].contribution`}
                                   value={
                                     formik?.values?.otherCommitments
@@ -1198,7 +1208,6 @@ const OtherCommitments = ({ formik }: any) => {
                                   rightLabel={'(In Lakhs)'}
                                 />
                                 <AInputField
-                                  type={'number'}
                                   id={`otherCommitments.commitmentsDetails[${index}].sumAssured`}
                                   value={
                                     formik?.values?.otherCommitments
@@ -1257,7 +1266,8 @@ const ceditFacilityInfo = {
   title: '',
   typeOfFacility: '',
   othertypeOfFacility: '',
-  bankName: '',otherbankName:'',
+  bankName: '',
+  otherbankName: '',
   limit: '',
   averageUtilization: '',
   interestRate: '',
@@ -1317,10 +1327,10 @@ const ExistingLoanCredit = ({
         Yup.object().shape({
           typeOfLoan: Yup.string().required('This field is required'),
           bankName: Yup.string().required('This field is required'),
-          loanAmount: Yup.number().required('This field is required'),
-          tenureMonth: Yup.number().required('This field is required'),
-          emi: Yup.number().required('This field is required'),
-          outstanding: Yup.number().required('This field is required'),
+          loanAmount: Yup.string().required('This field is required'),
+          tenureMonth: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          outstanding: Yup.string().required('This field is required'),
           remark: Yup.string().required('This field is required'),
         }),
       ),
@@ -1328,10 +1338,10 @@ const ExistingLoanCredit = ({
         Yup.object().shape({
           typeOfLoan: Yup.string().required('This field is required'),
           bankName: Yup.string().required('This field is required'),
-          loanAmount: Yup.number().required('This field is required'),
-          tenureMonth: Yup.number().required('This field is required'),
-          emi: Yup.number().required('This field is required'),
-          outstanding: Yup.number().required('This field is required'),
+          loanAmount: Yup.string().required('This field is required'),
+          tenureMonth: Yup.string().required('This field is required'),
+          emi: Yup.string().required('This field is required'),
+          outstanding: Yup.string().required('This field is required'),
           remark: Yup.string().required('This field is required'),
         }),
       ),

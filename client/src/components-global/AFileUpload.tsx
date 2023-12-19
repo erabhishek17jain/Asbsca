@@ -52,7 +52,7 @@ const AFileUpload = ({
             accept="image/*"
             onChange={onImageChange}
             className={`w-full text-sm rounded-lg bg-transparent py-2.5 px-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-defnot-allowedault disabled:bg-whiter ${
-              error !== ''
+              error
                 ? 'border-[1.5px] border-meta1 '
                 : 'border-[1.5px] border-stroke '
             }`}

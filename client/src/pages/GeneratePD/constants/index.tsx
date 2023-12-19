@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export const reportSteps = [
   { index: 0, label: 'Loan & PD Details' },
   { index: 1, label: 'Basic Personal Details & Experience' },
@@ -305,8 +303,8 @@ export const particularsCommitment = [
 
 export const purchaseYear = [
   {
-    label: moment().subtract(1, 'y').year(),
-    value: moment().subtract(1, 'y').year(),
+    label: 'Select Year',
+    value: 'Select Year',
   },
   {
     label: 'Property not yet Finalised',
@@ -596,6 +594,8 @@ export const assetStatus = [
   { label: 'Rented', value: 'Rented' },
   { label: 'Vacant', value: 'Vacant' },
   { label: 'Self-Occupied', value: 'Self-Occupied' },
+  { label: 'Owned by Applicant', value: 'Owned by Applicant' },
+  { label: 'Owned by Co-Applicant', value: 'Owned by Co-Applicant' },
   { label: 'NP', value: 'NP' },
   { label: 'Other', value: 'Other' },
 ];
@@ -710,8 +710,8 @@ export const applicantBehaviour = [
     value: 'Extremly Reluctant in sharing information',
   },
   {
-    label: 'Extreamlt Rude in sharing information',
-    value: 'Extreamlt Rude in sharing information',
+    label: 'Extremly Rude in sharing information',
+    value: 'Extremly Rude in sharing information',
   },
   { label: 'NP', value: 'NP' },
   { label: 'Other', value: 'Other' },

@@ -24,15 +24,15 @@ const initialValues = {
     isDebitorDetails: 'Yes',
     debitorDetails: {
       moreThan6Month: {
-        amount: 0,
+        amount: '',
         reason: '',
       },
       lessThan6Month: {
-        amount: 0,
+        amount: '',
       },
-      totalDebtors: 0,
+      totalDebtors: '',
       collectionPeriod: '',
-      creditPeriodAllowed: 0,
+      creditPeriodAllowed: '',
       whyIrRegular: '',
     },
   },
@@ -73,11 +73,11 @@ const ClientsDebtors = ({
     } else {
       formik.setFieldValue('debitors.debitorDetails', {
         moreThan6Month: {
-          amount: 0,
+          amount: '',
           reason: '-',
         },
-        lessThan6Month: { amount: 0 },
-        creditPeriodAllowed: 0,
+        lessThan6Month: { amount: '' },
+        creditPeriodAllowed: '',
         whyIrRegular: 'NA',
       });
     }
@@ -86,11 +86,17 @@ const ClientsDebtors = ({
   const validationSchema = Yup.object().shape({
     clients: Yup.object({
       clientDetails: Yup.object({
-        noOfClientDaily: Yup.number().required('This field is required'),
+        noOfClientDaily: Yup.string().required('This field is required'),
         majorClient: Yup.array().of(
           Yup.object().shape({
             clientName: Yup.string().required('This field is required'),
-            contact: Yup.string().required('This field is required'),
+            contact: Yup.string()
+              .required('This field is required')
+              .test(
+                'len',
+                'Contact number should be of 10 digits',
+                (val: any) => val.length === 10,
+              ),
           }),
         ),
       }),
@@ -98,13 +104,13 @@ const ClientsDebtors = ({
     debitors: Yup.object({
       debitorDetails: Yup.object().shape({
         moreThan6Month: Yup.object().shape({
-          amount: Yup.number().required('This field is required'),
+          amount: Yup.string().required('This field is required'),
           reason: Yup.string().required('This field is required'),
         }),
         lessThan6Month: Yup.object().shape({
-          amount: Yup.number().required('This field is required'),
+          amount: Yup.string().required('This field is required'),
         }),
-        creditPeriodAllowed: Yup.number().required('This field is required'),
+        creditPeriodAllowed: Yup.string().required('This field is required'),
         whyIrRegular: Yup.string().required('This field is required'),
       }),
     }),
@@ -125,31 +131,45 @@ const ClientsDebtors = ({
   });
 
   useEffect(() => {
-    const income =
+    const income = parseFloat(
       payloads?.financials?.finances[0]?.income?.turnoverGrossReciepts
-        ?.amountPA;
-    const moreAmt =
-      formik?.values?.debitors?.debitorDetails?.moreThan6Month?.amount;
-    const lessAmt =
-      formik?.values?.debitors?.debitorDetails?.lessThan6Month?.amount;
+        ?.amountPA,
+    );
+    const moreAmt = parseFloat(
+      formik?.values?.debitors?.debitorDetails?.moreThan6Month?.amount,
+    );
+    const lessAmt = parseFloat(
+      formik?.values?.debitors?.debitorDetails?.lessThan6Month?.amount,
+    );
     const cpAllow =
-      ((moreAmt + lessAmt) * 12) / income -
-      ((moreAmt + lessAmt) * 12 * 0.4) / income;
+      (((Number.isNaN(moreAmt) ? 0 : moreAmt) +
+        (Number.isNaN(lessAmt) ? 0 : lessAmt)) *
+        12) /
+      (Number.isNaN(income) ? 0 : income);
     formik.setFieldValue(
       'debitors.debitorDetails.totalDebtors',
-      moreAmt + lessAmt,
+      (Number.isNaN(moreAmt) ? 0 : moreAmt) +
+        (Number.isNaN(lessAmt) ? 0 : lessAmt),
     );
     formik.setFieldValue(
       'debitors.debitorDetails.collectionPeriod',
-      calculatePeriod(moreAmt + lessAmt, income),
+      calculatePeriod(
+        (Number.isNaN(moreAmt) ? 0 : moreAmt) +
+          (Number.isNaN(lessAmt) ? 0 : lessAmt),
+        Number.isNaN(income) ? 0 : income,
+      ),
     );
     if (
       formik?.values?.debitors?.debitorDetails?.whyIrRegular === '' ||
       formik?.values?.debitors?.debitorDetails?.whyIrRegular === '-'
     ) {
+      const allowed = parseFloat(
+        formik?.values?.debitors.debitorDetails.creditPeriodAllowed,
+      );
       formik.setFieldValue(
         'debitors.debitorDetails.whyIrRegular',
-        formik?.values?.debitors.debitorDetails.creditPeriodAllowed < cpAllow
+        (Number.isNaN(allowed) ? 0 : allowed) <=
+          (Number.isNaN(cpAllow) ? 0 : cpAllow)
           ? '-'
           : '',
       );
@@ -179,7 +199,6 @@ const ClientsDebtors = ({
             <ASection>
               <AGroupFields col={2}>
                 <AInputField
-                  type={'number'}
                   id={'clients.clientDetails.noOfClientDaily'}
                   label={'No of Clients/Daily Foot Fall'}
                   value={
@@ -210,7 +229,7 @@ const ClientsDebtors = ({
                                 <div className="w-full border-2 rounded-lg pt-3 px-3">
                                   <AGroupFields col={2}>
                                     <AInputField
-                                      label={'Client Name'}
+                                      label={"Client's Name"}
                                       id={`clients.clientDetails.majorClient[${index}].clientName`}
                                       value={
                                         formik?.values?.clients?.clientDetails
@@ -280,7 +299,6 @@ const ClientsDebtors = ({
               <div className="flex flex-col w-full">
                 <AGroupFields col={3}>
                   <AInputField
-                    type={'number'}
                     label={'Debtors Amount'}
                     rightLabel={'more than 6 Months (In Lakhs)'}
                     id={'debitors.debitorDetails.moreThan6Month.amount'}
@@ -309,7 +327,6 @@ const ClientsDebtors = ({
                     handleChange={formik.handleChange}
                   />
                   <AInputField
-                    type={'number'}
                     label={'Debtors Amount'}
                     rightLabel={'less than 6 Months (In Lakhs)'}
                     id={'debitors.debitorDetails.lessThan6Month.amount'}
@@ -336,7 +353,6 @@ const ClientsDebtors = ({
                     handleChange={formik.handleChange}
                   />
                   <AInputField
-                    type={'number'}
                     rightLabel={'(In months)'}
                     label={'Cr. Period allowed to Clients'}
                     id={'debitors.debitorDetails.creditPeriodAllowed'}

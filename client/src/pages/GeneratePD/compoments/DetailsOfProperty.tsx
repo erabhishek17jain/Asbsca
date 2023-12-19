@@ -14,12 +14,12 @@ import {
   putPB,
 } from '../constants';
 import { useEffect } from 'react';
-import moment from 'moment';
 
 const initialValues: any = {
   purchaseYear: '',
+  otherpurchaseYear: '',
   buildUpArea: '',
-  caretArea: '',
+  carpetArea: '',
   occupiedBy: '',
   otheroccupiedBy: '',
   loanPropertyAddress: '',
@@ -28,14 +28,14 @@ const initialValues: any = {
     isLoanProvided: '',
     loanDetails: { amount: '', emi: '', roi: '', year: '' },
     propertyValue: {
-      agreementValue: 0,
-      purchaseValue: 0,
-      marketValue: 0,
-      ocrPaid: 0,
+      agreementValue: '',
+      purchaseValue: '',
+      marketValue: '',
+      ocrPaid: '',
       pOrb: '',
-      balanceOcr: 0,
+      balanceOcr: '',
       sourceOcr: '',
-      othersourceOcr:''
+      othersourceOcr: '',
     },
     loanAsPerForm: '',
   },
@@ -49,8 +49,6 @@ const DetailsOfProperty = ({
   handleNext,
   setPayloads,
 }: any) => {
-  const lastYear = moment().subtract(1, 'y').year();
-
   const handleLoanPropertyEMI = (title: string, val: string) => {
     console.log(title);
     formik.setFieldValue('propertyLoanDetails.isLoanProvided', val);
@@ -61,29 +59,47 @@ const DetailsOfProperty = ({
 
   const validationSchema = Yup.object().shape({
     purchaseYear: Yup.string().required('This field is required'),
-    buildUpArea: Yup.number().required('This field is required'),
-    caretArea: Yup.number().required('This field is required'),
+    buildUpArea: Yup.string().required('This field is required'),
+    carpetArea: Yup.string().required('This field is required'),
     occupiedBy: Yup.string().required('This field is required'),
     loanPropertyAddress: Yup.string().required('This field is required'),
     builderName: Yup.string().required('This field is required'),
     propertyLoanDetails: Yup.object({
       propertyValue: Yup.object({
-        agreementValue: Yup.number().required('This field is required'),
-        purchaseValue: Yup.number().required('This field is required'),
-        marketValue: Yup.number().required('This field is required'),
-        ocrPaid: Yup.number().required('This field is required'),
+        agreementValue: Yup.string().required('This field is required'),
+        purchaseValue: Yup.string().required('This field is required'),
+        marketValue: Yup.string().required('This field is required'),
+        ocrPaid: Yup.string().required('This field is required'),
         pOrb: Yup.string().required('This field is required'),
         sourceOcr: Yup.string().required('This field is required'),
       }),
       loanDetails: Yup.object({
-        amount: Yup.number().required('This field is required'),
-        emi: Yup.number().required('This field is required'),
-        roi: Yup.number().required('This field is required'),
-        year: Yup.number().required('This field is required'),
+        amount: Yup.string().required('This field is required'),
+        emi: Yup.string().required('This field is required'),
+        roi: Yup.string().required('This field is required'),
+        year: Yup.string().required('This field is required'),
       }),
-      loanAsPerForm: Yup.number().required('This field is required'),
+      loanAsPerForm: Yup.string().required('This field is required'),
     }),
   });
+
+  const validation = async (values: any) => {
+    const errors: any = {};
+    if (parseInt(values?.buildUpArea) < parseInt(values?.carpetArea)) {
+      errors.buildUpArea =
+        'Build up area should be more than or equal to carpet area';
+    }
+    if (
+      parseInt(values?.propertyLoanDetails?.propertyValue?.agreementValue) >
+        parseInt(values?.propertyLoanDetails?.propertyValue?.marketValue) ||
+      parseInt(values?.propertyLoanDetails?.propertyValue?.agreementValue) >
+        parseInt(values?.propertyLoanDetails?.propertyValue?.purchaseValue)
+    ) {
+      errors.propertyLoanDetails.propertyValue.agreementValue =
+        'Agreement value should be less than or equal to purchase/market value';
+    }
+    return errors;
+  };
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -94,6 +110,7 @@ const DetailsOfProperty = ({
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
+    validate: validation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
@@ -102,14 +119,17 @@ const DetailsOfProperty = ({
   const handlePurchaseYear = (e: any) => {
     const { value } = e.target;
     const option = purchaseYear.find((item: any) => item.value === value);
-    formik.setFieldValue('buildUpArea', value != lastYear ? 0 : '');
-    formik.setFieldValue('caretArea', value != lastYear ? 0 : '');
-    formik.setFieldValue('occupiedBy', value != lastYear ? value : '');
+    formik.setFieldValue('buildUpArea', value != 'Select Year' ? 0 : '');
+    formik.setFieldValue('carpetArea', value != 'Select Year' ? 0 : '');
+    formik.setFieldValue('occupiedBy', value != 'Select Year' ? value : '');
     formik.setFieldValue(
       'loanPropertyAddress',
-      value != lastYear ? option?.label : '',
+      value != 'Select Year' ? option?.label : '',
     );
-    formik.setFieldValue('builderName', value != lastYear ? option?.label : '');
+    formik.setFieldValue(
+      'builderName',
+      value != 'Select Year' ? option?.label : '',
+    );
     formik.handleChange(e);
   };
 
@@ -166,8 +186,12 @@ const DetailsOfProperty = ({
         'purchaseYear',
         payloads.detailsOfProp?.purchaseYear,
       );
+      formik.setFieldValue(
+        'otherpurchaseYear',
+        payloads.detailsOfProp?.otherpurchaseYear,
+      );
       formik.setFieldValue('buildUpArea', payloads?.detailsOfProp?.buildUpArea);
-      formik.setFieldValue('caretArea', payloads.detailsOfProp?.caretArea);
+      formik.setFieldValue('carpetArea', payloads.detailsOfProp?.carpetArea);
       formik.setFieldValue('occupiedBy', payloads?.detailsOfProp?.occupiedBy);
       formik.setFieldValue(
         'otheroccupiedBy',
@@ -204,25 +228,32 @@ const DetailsOfProperty = ({
                 error={formik?.errors?.purchaseYear}
                 handleChange={handlePurchaseYear}
               />
+              {formik?.values?.purchaseYear === 'Select Year' && (
+                <AInputField
+                  id={'otherpurchaseYear'}
+                  label={'Purchase Year'}
+                  value={formik?.values?.otherpurchaseYear}
+                  error={formik?.errors?.otherpurchaseYear}
+                  handleChange={formik?.handleChange}
+                />
+              )}
               <AInputField
-                type={'number'}
+                id={'carpetArea'}
+                label={'Carpet Area'}
+                rightLabel={'(Sq. Ft.)'}
+                value={formik?.values?.carpetArea}
+                error={formik?.errors?.carpetArea}
+                handleChange={formik?.handleChange}
+                disabled={formik?.values?.purchaseYear != 'Select Year'}
+              />
+              <AInputField
                 id={'buildUpArea'}
                 label={'Build-up Area'}
                 rightLabel={'(Sq. Ft.)'}
                 value={formik?.values?.buildUpArea}
                 error={formik?.errors?.buildUpArea}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
-              />
-              <AInputField
-                type={'number'}
-                id={'caretArea'}
-                label={'Carpet Area'}
-                rightLabel={'(Sq. Ft.)'}
-                value={formik?.values?.caretArea}
-                error={formik?.errors?.caretArea}
-                handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
+                disabled={formik?.values?.purchaseYear != 'Select Year'}
               />
               <ASingleSelect
                 id={'occupiedBy'}
@@ -231,7 +262,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.occupiedBy}
                 error={formik?.errors?.occupiedBy}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
+                disabled={formik?.values?.purchaseYear != 'Select Year'}
               />
               {formik?.values?.occupiedBy === 'Other' && (
                 <AInputField
@@ -240,7 +271,7 @@ const DetailsOfProperty = ({
                   value={formik?.values?.otheroccupiedBy}
                   error={formik?.errors?.otheroccupiedBy}
                   handleChange={formik?.handleChange}
-                  disabled={formik?.values?.purchaseYear != lastYear}
+                  disabled={formik?.values?.purchaseYear != 'Select Year'}
                 />
               )}
               <AInputField
@@ -249,7 +280,7 @@ const DetailsOfProperty = ({
                 value={formik?.values?.loanPropertyAddress}
                 error={formik?.errors?.loanPropertyAddress}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != lastYear}
+                disabled={formik?.values?.purchaseYear != 'Select Year'}
               />
               <AInputField
                 id={'builderName'}
@@ -258,7 +289,7 @@ const DetailsOfProperty = ({
                 error={formik?.errors?.builderName}
                 handleChange={formik?.handleChange}
                 disabled={
-                  formik?.values?.purchaseYear != lastYear ||
+                  formik?.values?.purchaseYear != 'Select Year' ||
                   formik?.values.occupiedBy !== 'Under Construction'
                 }
               />
@@ -277,7 +308,6 @@ const DetailsOfProperty = ({
             <ASection title={'Loan Applied'}>
               <AGroupFields>
                 <AInputField
-                  type={'number'}
                   label={'Amount'}
                   rightLabel={'(In Lakhs)'}
                   id={`propertyLoanDetails.loanDetails.amount`}
@@ -288,7 +318,6 @@ const DetailsOfProperty = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   label={'ROI'}
                   rightLabel={'(%)'}
                   id={`propertyLoanDetails.loanDetails.roi`}
@@ -297,7 +326,6 @@ const DetailsOfProperty = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   label={'Year'}
                   id={`propertyLoanDetails.loanDetails.year`}
                   value={formik?.values?.propertyLoanDetails?.loanDetails?.year}
@@ -305,7 +333,6 @@ const DetailsOfProperty = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   label={'EMI'}
                   disabled={true}
                   rightLabel={'(In Lakhs)'}
@@ -323,19 +350,6 @@ const DetailsOfProperty = ({
             <ASection title={'Property Value'}>
               <AGroupFields>
                 <AInputField
-                  type={'number'}
-                  rightLabel={'(In Lakhs)'}
-                  id={'propertyLoanDetails.propertyValue.agreementValue'}
-                  label={'Agreement Value'}
-                  value={
-                    formik?.values?.propertyLoanDetails?.propertyValue
-                      ?.agreementValue
-                  }
-                  error={errors?.propertyValue?.agreementValue}
-                  handleChange={formik.handleChange}
-                />
-                <AInputField
-                  type={'number'}
                   rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.purchaseValue'}
                   label={'Purchase Value'}
@@ -347,7 +361,6 @@ const DetailsOfProperty = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   rightLabel={'(In Lakhs)'}
                   label={'Market Value'}
                   id={'propertyLoanDetails.propertyValue.marketValue'}
@@ -358,32 +371,38 @@ const DetailsOfProperty = ({
                   error={errors?.propertyValue?.marketValue}
                   handleChange={formik.handleChange}
                 />
-                <div className="flex gap-3">
-                  <AInputField
-                    type={'number'}
-                    rightLabel={'(In Lakhs)'}
-                    id={'propertyLoanDetails.propertyValue.ocrPaid'}
-                    label={'OCR Paid'}
-                    value={
-                      formik?.values?.propertyLoanDetails?.propertyValue
-                        ?.ocrPaid
-                    }
-                    error={errors?.propertyValue?.ocrPaid}
-                    handleChange={formik.handleChange}
-                  />
-                  <ASingleSelect
-                    id={'propertyLoanDetails.propertyValue.pOrb'}
-                    label={'P/B'}
-                    options={putPB}
-                    value={
-                      formik?.values?.propertyLoanDetails?.propertyValue?.pOrb
-                    }
-                    error={errors?.propertyValue?.pOrb}
-                    handleChange={formik.handleChange}
-                  />
-                </div>
                 <AInputField
-                  type={'number'}
+                  rightLabel={'(In Lakhs)'}
+                  id={'propertyLoanDetails.propertyValue.agreementValue'}
+                  label={'Agreement Value'}
+                  value={
+                    formik?.values?.propertyLoanDetails?.propertyValue
+                      ?.agreementValue
+                  }
+                  error={errors?.propertyValue?.agreementValue}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
+                  rightLabel={'(In Lakhs)'}
+                  id={'propertyLoanDetails.propertyValue.ocrPaid'}
+                  label={'OCR Paid'}
+                  value={
+                    formik?.values?.propertyLoanDetails?.propertyValue?.ocrPaid
+                  }
+                  error={errors?.propertyValue?.ocrPaid}
+                  handleChange={formik.handleChange}
+                />
+                <ASingleSelect
+                  id={'propertyLoanDetails.propertyValue.pOrb'}
+                  label={'P/B'}
+                  options={putPB}
+                  value={
+                    formik?.values?.propertyLoanDetails?.propertyValue?.pOrb
+                  }
+                  error={errors?.propertyValue?.pOrb}
+                  handleChange={formik.handleChange}
+                />
+                <AInputField
                   disabled={true}
                   rightLabel={'(In Lakhs)'}
                   id={'propertyLoanDetails.propertyValue.balanceOcr'}

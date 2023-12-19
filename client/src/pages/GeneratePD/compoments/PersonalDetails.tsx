@@ -49,7 +49,7 @@ const resiInfo = {
   buildArea: '',
   carpetArea: '',
   purchaseYear: '',
-  agrimentValue: '',
+  agreementValue: '',
   purchaseValue: '',
   marketValue: '',
   rentPm: '',
@@ -84,8 +84,8 @@ const PersonalDetails = ({
         dobDoi: Yup.string().required('This field is required'),
         qualification: Yup.string().required('This field is required'),
         natureOfBusiness: Yup.string().required('This field is required'),
-        studyFinish: Yup.number().required('This field is required'),
-        businessStart: Yup.number().required('This field is required'),
+        studyFinish: Yup.string().required('This field is required'),
+        businessStart: Yup.string().required('This field is required'),
       }),
     ),
     residents: Yup.array().of(
@@ -93,9 +93,9 @@ const PersonalDetails = ({
         resiAddress: Yup.string().required('This field is required'),
         resiStatus: Yup.string().required('This field is required'),
         resiType: Yup.string().required('This field is required'),
-        resiSince: Yup.number().required('This field is required'),
-        buildArea: Yup.number().required('This field is required'),
-        carpetArea: Yup.number().required('This field is required'),
+        resiSince: Yup.string().required('This field is required'),
+        buildArea: Yup.string().required('This field is required'),
+        carpetArea: Yup.string().required('This field is required'),
       }),
     ),
     familyDetails: Yup.array().of(
@@ -107,6 +107,32 @@ const PersonalDetails = ({
     ),
   });
 
+  const validation = async (values: any) => {
+    const errors: any = {};
+    values?.residents.forEach((item: any, index: number) => {
+      errors['residents'] = [];
+      if (parseInt(item?.buildArea) < parseInt(item?.carpetArea)) {
+        errors.residents[index] = {
+          buildArea:
+            'Build up area should be more than or equal to carpet area',
+        };
+      }
+      if (
+        parseInt(item?.agreementValue) > parseInt(item?.marketValue) ||
+        parseInt(item?.agreementValue) > parseInt(item?.purchaseValue)
+      ) {
+        errors.residents[index] = {
+          agreementValue:
+            'Agreement value should be less than or equal to purchase/market value',
+        };
+      }
+      if (errors.residents.length === 0) {
+        delete errors.residents;
+      }
+    });
+    return errors;
+  };
+
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
     setPayloads({ ...payloads, personalDetails: { ...values } });
@@ -116,6 +142,7 @@ const PersonalDetails = ({
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
+    validate: validation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
@@ -138,8 +165,15 @@ const PersonalDetails = ({
     const currentYear = moment().year();
     formik.setFieldValue(
       `${e.target.id.slice(0, 13)}.study`,
-      currentYear - parseInt(e.target.value.slice(0, 4)),
+      isNaN(e.target.value)
+        ? 'NP'
+        : currentYear - parseInt(e.target.value.slice(0, 4)),
     );
+    formik.setFieldValue(
+      `${e.target.id.slice(0, 13)}.overallExp`,
+      isNaN(e.target?.value) ? 'NP' : currentYear - parseInt(e.target?.value),
+    );
+
     formik.handleChange(e);
   };
 
@@ -150,15 +184,15 @@ const PersonalDetails = ({
     );
     formik.setFieldValue(
       `${e.target.id.slice(0, 13)}.currExp`,
-      currentYear - parseInt(e.target.value.slice(0, 4)),
+      isNaN(e.target.value)
+        ? 'NP'
+        : currentYear - parseInt(e.target.value.slice(0, 4)),
     );
     formik.setFieldValue(
       `${e.target.id.slice(0, 13)}.pastExp`,
-      parseInt(e.target.value.slice(0, 4)) - parseInt(studyFinish?.value),
-    );
-    formik.setFieldValue(
-      `${e.target.id.slice(0, 13)}.overallExp`,
-      currentYear - parseInt(studyFinish?.value),
+      isNaN(e.target.value)
+        ? 'NP'
+        : parseInt(e.target.value.slice(0, 4)) - parseInt(studyFinish?.value),
     );
     formik.handleChange(e);
   };
@@ -297,7 +331,6 @@ const PersonalDetails = ({
                             )}
                             <div className="flex gap-2">
                               <AInputField
-                                type={'number'}
                                 disabled={true}
                                 id={`applicants[${index}].birthYear`}
                                 label={'Birth Year'}
@@ -311,7 +344,6 @@ const PersonalDetails = ({
                                 handleChange={formik.handleChange}
                               />
                               <AInputField
-                                type={'number'}
                                 id={`applicants[${index}].age`}
                                 label={'Age'}
                                 disabled={true}
@@ -324,7 +356,6 @@ const PersonalDetails = ({
                             </div>
                             <div className="flex gap-2">
                               <AInputField
-                                type={'number'}
                                 id={`applicants[${index}].studyFinish`}
                                 label={'Study Finish'}
                                 value={
@@ -337,7 +368,6 @@ const PersonalDetails = ({
                                 handleChange={handleStudyFinish}
                               />
                               <AInputField
-                                type={'number'}
                                 id={`applicants[${index}].study`}
                                 label={'Study'}
                                 disabled={true}
@@ -349,7 +379,6 @@ const PersonalDetails = ({
                               />
                             </div>
                             <AInputField
-                              type={'number'}
                               id={`applicants[${index}].businessStart`}
                               label={'Business Start/Joined'}
                               value={
@@ -362,7 +391,6 @@ const PersonalDetails = ({
                               handleChange={handleBusinessStart}
                             />
                             <AInputField
-                              type={'number'}
                               id={`applicants[${index}].currExp`}
                               label={'Current Experiance'}
                               disabled={true}
@@ -373,7 +401,6 @@ const PersonalDetails = ({
                               handleChange={formik.handleChange}
                             />
                             <AInputField
-                              type={'number'}
                               id={`applicants[${index}].pastExp`}
                               label={'Past Experience'}
                               value={formik?.values?.applicants[index].pastExp}
@@ -383,7 +410,6 @@ const PersonalDetails = ({
                               handleChange={formik.handleChange}
                             />
                             <AInputField
-                              type={'number'}
                               id={`applicants[${index}].overallExp`}
                               label={'Overall Experience'}
                               value={
@@ -488,7 +514,6 @@ const PersonalDetails = ({
                         <p className="w-full mb-3">Ownership Details</p>
                         <AGroupFields>
                           <AInputField
-                            type={'number'}
                             id={`residents[${index}].resiSince`}
                             label={'Residing Since'}
                             value={formik?.values?.residents[index]?.resiSince}
@@ -498,18 +523,6 @@ const PersonalDetails = ({
                             handleChange={formik.handleChange}
                           />
                           <AInputField
-                            type={'number'}
-                            id={`residents[${index}].buildArea`}
-                            label={'Build-up Area'}
-                            rightLabel={'(Sq. Ft.)'}
-                            value={formik?.values?.residents[index]?.buildArea}
-                            error={
-                              errorsRe?.length > 0 && errorsRe[index]?.buildArea
-                            }
-                            handleChange={formik.handleChange}
-                          />
-                          <AInputField
-                            type={'number'}
                             id={`residents[${index}].carpetArea`}
                             label={'Carpet Area'}
                             rightLabel={'(Sq. Ft.)'}
@@ -520,11 +533,20 @@ const PersonalDetails = ({
                             }
                             handleChange={formik.handleChange}
                           />
+                          <AInputField
+                            id={`residents[${index}].buildArea`}
+                            label={'Build-up Area'}
+                            rightLabel={'(Sq. Ft.)'}
+                            value={formik?.values?.residents[index]?.buildArea}
+                            error={
+                              errorsRe?.length > 0 && errorsRe[index]?.buildArea
+                            }
+                            handleChange={formik.handleChange}
+                          />
                           {formik?.values?.residents[index]?.resiStatus !==
                           'RentalN' ? (
                             <>
                               <AInputField
-                                type={'number'}
                                 id={`residents[${index}].purchaseYear`}
                                 label={'Purchase Year'}
                                 value={
@@ -537,22 +559,6 @@ const PersonalDetails = ({
                                 handleChange={formik.handleChange}
                               />
                               <AInputField
-                                type={'number'}
-                                rightLabel={'(In Lakhs)'}
-                                id={`residents[${index}].agrimentValue`}
-                                label={'Agreement. Value'}
-                                value={
-                                  formik?.values?.residents[index]
-                                    ?.agrimentValue
-                                }
-                                error={
-                                  errorsRe?.length > 0 &&
-                                  errorsRe[index]?.agrimentValue
-                                }
-                                handleChange={formik.handleChange}
-                              />
-                              <AInputField
-                                type={'number'}
                                 rightLabel={'(In Lakhs)'}
                                 id={`residents[${index}].purchaseValue`}
                                 label={'Purchase Value'}
@@ -567,7 +573,6 @@ const PersonalDetails = ({
                                 handleChange={formik.handleChange}
                               />
                               <AInputField
-                                type={'number'}
                                 rightLabel={'(In Lakhs)'}
                                 id={`residents[${index}].marketValue`}
                                 label={'Market Value'}
@@ -580,10 +585,23 @@ const PersonalDetails = ({
                                 }
                                 handleChange={formik.handleChange}
                               />
+                              <AInputField
+                                rightLabel={'(In Lakhs)'}
+                                id={`residents[${index}].agreementValue`}
+                                label={'Agreement. Value'}
+                                value={
+                                  formik?.values?.residents[index]
+                                    ?.agreementValue
+                                }
+                                error={
+                                  errorsRe?.length > 0 &&
+                                  errorsRe[index]?.agreementValue
+                                }
+                                handleChange={formik.handleChange}
+                              />
                             </>
                           ) : (
                             <AInputField
-                              type={'number'}
                               id={`residents[${index}].rentPm`}
                               label={'Rent P.M.'}
                               rightLabel={'(In Lakhs)'}
@@ -614,12 +632,12 @@ const PersonalDetails = ({
                     formik?.values?.familyDetails?.map(
                       (item: any, index: any) => (
                         <div
-                          key={item?.name}
+                          key={item?.relation}
                           className="flex items-center w-full gap-3 mb-3"
                         >
                           <div className="w-full border-2 rounded-lg pt-3 px-3">
                             <AGroupFields col={3}>
-                              <ASingleSelect
+                              <AInputField
                                 label={'Name'}
                                 id={`familyDetails[${index}].name`}
                                 value={
@@ -628,15 +646,7 @@ const PersonalDetails = ({
                                 error={
                                   errorsFd?.length > 0 && errorsFd[index].name
                                 }
-                                options={formik?.values?.applicants.map(
-                                  (item: any) => {
-                                    return {
-                                      label: item.name,
-                                      value: item.name,
-                                    };
-                                  },
-                                )}
-                                handleChange={formik.handleChange}
+                                handleChange={formik?.handleChange}
                               />
                               <ASingleSelect
                                 label={'Reation'}

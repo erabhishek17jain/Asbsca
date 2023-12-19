@@ -73,7 +73,7 @@ const OtherObservation = ({
     }),
     customer: Yup.object({
       exist: Yup.string().required('This field is required'),
-      reasonForNo: Yup.number().required('This field is required'),
+      reasonForNo: Yup.string().required('This field is required'),
     }),
     stock: Yup.object({
       exist: Yup.string().required('This field is required'),
@@ -217,7 +217,7 @@ const OtherObservation = ({
                     ? 'Reason for No or NA'
                     : 'How many'
                 }
-                type={'number'}
+                
                 id={`customer.reasonForNo`}
                 disabled={
                   formik?.values?.customer?.exist === '' ||

@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 
 export const AuthorizeUser = ({ children }: any) => {
-  const token = localStorage.getItem('token');
+  const asbsToken = localStorage.getItem('asbsToken');
 
-  if (!token) {
+  if (!asbsToken) {
     return <Navigate to={'/'} replace={true}></Navigate>;
   }
 

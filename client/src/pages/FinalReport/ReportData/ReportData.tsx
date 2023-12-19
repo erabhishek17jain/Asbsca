@@ -2234,7 +2234,11 @@ const ReportData = () => {
               <p>Date of Purchase</p>
             </td>
             <td colSpan={7}>
-              <p>{reportData?.data?.detailsOfProp.purchaseYear}</p>
+              <p>
+                {reportData?.data?.detailsOfProp.purchaseYear === 'Select Year'
+                  ? reportData?.data?.detailsOfProp.otherpurchaseYear
+                  : reportData?.data?.detailsOfProp.purchaseYear}
+              </p>
             </td>
           </tr>
           <tr>

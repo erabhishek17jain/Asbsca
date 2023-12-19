@@ -8,7 +8,7 @@ import {
   EnvelopeIcon,
   KeyIcon,
 } from '@heroicons/react/24/solid';
-import { forgotPassword, selfRegister, setToken } from '../../services';
+import { forgotPassword, selfRegister, setAsbdToken } from '../../services';
 import ABreadcrumb from '../../components-global/ABreadcrumb';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
@@ -80,7 +80,7 @@ export const ForgotPassword = () => {
   );
 };
 
-export const ResetPassword = ({ isFirstPassword, token }: any) => {
+export const ResetPassword = ({ isFirstPassword, asbsToken }: any) => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
@@ -96,7 +96,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
 
   const formik = useFormik({
     initialValues: {
-      token: '',
+      asbsToken: '',
       newPassword: '',
       confirmPassword: '',
     },
@@ -113,7 +113,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
       resetPromise
         .then((res: any) => {
           let { token } = res.data;
-          setToken(token);
+          setAsbdToken(token);
           navigate(isFirstPassword ? '/dashboard' : '/profile');
           toast.success(<b>Password Saved Successfully...!</b>);
         })
@@ -124,7 +124,7 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
   });
 
   useEffect(() => {
-    formik.setFieldValue('token', token);
+    formik.setFieldValue('asbsToken', asbsToken);
   }, []);
 
   return (
@@ -163,13 +163,13 @@ export const ResetPassword = ({ isFirstPassword, token }: any) => {
 };
 
 const ChangePassword = () => {
-  const token: any = document.cookie?.replace('token=', '');
+  const asbsToken: any = document.cookie?.replace('asbsToken=', '');
   return (
     <>
       <ABreadcrumb pageName="Change Password" />
       <div className="overflow-hidden bg-clip-border rounded-xl bg-white shadow-lg px-5 py-5">
         <div className="w-full md:w-2/3 lg:w-2/3 xl:w-1/2 2xl:w-1/2">
-          <ResetPassword isFirstPassword={false} token={token} />
+          <ResetPassword isFirstPassword={false} asbsToken={asbsToken} />
         </div>
       </div>
     </>

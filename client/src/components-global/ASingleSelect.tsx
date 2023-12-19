@@ -31,7 +31,7 @@ const ASingleSelect = ({
           disabled={disabled}
           onChange={handleChange}
           className={`relative font-medium text-sm z-20 w-full appearance-none rounded-lg bg-transparent py-2.5 px-3 outline-none transition focus:border-primary active:border-primary disabled:cursor-not-allowed disabled:bg-whiter ${
-            error !== ''
+            error 
               ? 'border-[1.5px] border-meta1 '
               : 'border-[1.5px] border-stroke '
           }`}

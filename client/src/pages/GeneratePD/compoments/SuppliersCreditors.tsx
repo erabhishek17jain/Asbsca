@@ -19,10 +19,10 @@ const initialValues = {
     majorSuppliers: [{ clientName: '', contact: '' }] as any,
   },
   creditors: {
-    amount: 0,
+    amount: '',
   },
   collectionPeriod: '',
-  creitPeriodAllowed: 0,
+  creitPeriodAllowed: '',
   whyCreditorHighThanCredit: '',
 };
 
@@ -49,18 +49,24 @@ const SuppliersCreditors = ({
 
   const validationSchema = Yup.object().shape({
     suppliersDetails: Yup.object({
-      noOfSuppliers: Yup.number().required('This field is required'),
+      noOfSuppliers: Yup.string().required('This field is required'),
       majorSuppliers: Yup.array().of(
         Yup.object().shape({
           clientName: Yup.string().required('This field is required'),
-          contact: Yup.string().required('This field is required'),
+          contact: Yup.string()
+            .required('This field is required')
+            .test(
+              'len',
+              'Contact number should be of 10 digits',
+              (val: any) => val.length === 10,
+            ),
         }),
       ),
     }),
     creditors: Yup.object({
-      amount: Yup.number().required('This field is required'),
+      amount: Yup.string().required('This field is required'),
     }),
-    creitPeriodAllowed: Yup.number().required('This field is required'),
+    creitPeriodAllowed: Yup.string().required('This field is required'),
     whyCreditorHighThanCredit: Yup.string().required('This field is required'),
   });
 
@@ -79,25 +85,28 @@ const SuppliersCreditors = ({
   });
 
   useEffect(() => {
-    const income =
-      payloads?.financials?.finances[0]?.expenses?.otherExpenses?.amountPA;
+    const purchase = parseFloat(
+      payloads?.financials?.finances[0]?.income?.purchases?.amountPA,
+    );
+    const amount = parseFloat(formik?.values?.creditors?.amount);
     const cpAllow =
-      (formik?.values?.creditors?.amount * 12) / income -
-      (formik?.values?.creditors?.amount * 12 * 0.4) / income;
+      ((Number.isNaN(amount) ? 0 : amount) * 12) /
+      (Number.isNaN(purchase) ? 0 : purchase);
     formik.setFieldValue(
       'collectionPeriod',
       calculatePeriod(
-        formik?.values?.creditors?.amount,
-        payloads?.financials?.finances[0]?.income?.purchases?.amountPA,
+        Number.isNaN(amount) ? 0 : amount,
+        Number.isNaN(purchase) ? 0 : purchase,
       ),
     );
     if (
       formik?.values?.whyCreditorHighThanCredit === '' ||
       formik?.values?.whyCreditorHighThanCredit === '-'
     ) {
+      const allowed = parseFloat(formik?.values?.creitPeriodAllowed);
       formik.setFieldValue(
         'whyCreditorHighThanCredit',
-        formik?.values?.creitPeriodAllowed <= cpAllow ? '-' : '',
+        (Number.isNaN(allowed) ? 0 : allowed) <= cpAllow ? '-' : '',
       );
     }
   }, [formik?.values]);
@@ -141,7 +150,6 @@ const SuppliersCreditors = ({
               <div className="mb-4">
                 <AGroupFields col={2}>
                   <AInputField
-                    type={'number'}
                     label={'No of Suppliers'}
                     id={`suppliersDetails.noOfSuppliers`}
                     value={formik?.values?.suppliersDetails.noOfSuppliers}
@@ -168,7 +176,7 @@ const SuppliersCreditors = ({
                                   <div className="w-full border-2 rounded-lg pt-3 px-3">
                                     <AGroupFields col={2}>
                                       <AInputField
-                                        label={'Client Name'}
+                                        label={"Supplier's Name"}
                                         id={`suppliersDetails.majorSuppliers[${index}].clientName`}
                                         value={
                                           formik?.values?.suppliersDetails
@@ -229,7 +237,6 @@ const SuppliersCreditors = ({
             >
               <AGroupFields col={3}>
                 <AInputField
-                  type={'number'}
                   label={'Creditors Amount'}
                   rightLabel={'(In Lakhs)'}
                   id={`creditors.amount`}
@@ -246,10 +253,9 @@ const SuppliersCreditors = ({
                   handleChange={formik.handleChange}
                 />
                 <AInputField
-                  type={'number'}
                   id={`creitPeriodAllowed`}
                   rightLabel={'(In months)'}
-                  label={'Cr. Period received to Clients'}
+                  label={'Credit period given to suppliers'}
                   value={formik?.values?.creitPeriodAllowed}
                   error={formik?.errors?.creitPeriodAllowed}
                   handleChange={formik.handleChange}

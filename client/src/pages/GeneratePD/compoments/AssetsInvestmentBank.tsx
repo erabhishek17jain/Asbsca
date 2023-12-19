@@ -132,7 +132,7 @@ const AssetsInvestmentBank = ({
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
           assetStatus: Yup.string().required('This field is required'),
-          marketValue: Yup.number().required('This field is required'),
+          marketValue: Yup.string().required('This field is required'),
         }),
       ),
     }),
@@ -145,7 +145,7 @@ const AssetsInvestmentBank = ({
           carpetArea: Yup.string().required('This field is required'),
           status: Yup.string().required('This field is required'),
           assetStatus: Yup.string().required('This field is required'),
-          marketValue: Yup.number().required('This field is required'),
+          marketValue: Yup.string().required('This field is required'),
         }),
       ),
     }),
@@ -153,8 +153,8 @@ const AssetsInvestmentBank = ({
       investments: Yup.array().of(
         Yup.object().shape({
           particulars: Yup.string().required('This field is required'),
-          contribution: Yup.number().required('This field is required'),
-          marketValue: Yup.number().required('This field is required'),
+          contribution: Yup.string().required('This field is required'),
+          marketValue: Yup.string().required('This field is required'),
         }),
       ),
     }),
@@ -164,7 +164,7 @@ const AssetsInvestmentBank = ({
           bankName: Yup.string().required('This field is required'),
           branch: Yup.string().required('This field is required'),
           type: Yup.string().required('This field is required'),
-          balanceOnDay: Yup.number().required('This field is required'),
+          balanceOnDay: Yup.string().required('This field is required'),
         }),
       ),
     }),
@@ -475,7 +475,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].carpetArea`}
                                       label={'Carpet Area'}
                                       rightLabel={'(Sq. Ft.)'}
@@ -559,7 +558,6 @@ const AssetsInvestmentBank = ({
                                       />
                                     )}
                                     <AInputField
-                                      type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].marketValue`}
                                       label={'Market Value'}
                                       rightLabel={'(In Lakhs)'}
@@ -575,7 +573,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`bussinessAssetDetails.bussinessAssets[${index}].rentPM`}
                                       label={'Rent P.M.'}
                                       rightLabel={'(In Lakhs)'}
@@ -719,7 +716,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].carpetArea`}
                                       label={'Carpet Area'}
                                       rightLabel={'(Sq. Ft.)'}
@@ -803,7 +799,6 @@ const AssetsInvestmentBank = ({
                                       />
                                     )}
                                     <AInputField
-                                      type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].marketValue`}
                                       label={'Market Value'}
                                       rightLabel={'(In Lakhs)'}
@@ -819,7 +814,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`personalAssetDetails.personalAssets[${index}].rentPM`}
                                       label={'Rent P.M.'}
                                       rightLabel={'(In Lakhs)'}
@@ -933,7 +927,6 @@ const AssetsInvestmentBank = ({
                                       />
                                     )}
                                     <AInputField
-                                      type={'number'}
                                       id={`investmentDetails.investments[${index}].contribution`}
                                       label={'Contribution'}
                                       rightLabel={'(In Lakhs)'}
@@ -949,7 +942,6 @@ const AssetsInvestmentBank = ({
                                       handleChange={formik.handleChange}
                                     />
                                     <AInputField
-                                      type={'number'}
                                       id={`investmentDetails.investments[${index}].marketValue`}
                                       label={'Market Value'}
                                       rightLabel={'(In Lakhs)'}
@@ -1072,7 +1064,7 @@ const AssetsInvestmentBank = ({
                                     />
                                     <ASingleSelect
                                       id={`bankAccountDetails.bankAccounts[${index}].type`}
-                                      label={'Bank Type'}
+                                      label={'Account Type'}
                                       value={
                                         formik?.values?.bankAccountDetails
                                           ?.bankAccounts[index]?.type
@@ -1089,7 +1081,7 @@ const AssetsInvestmentBank = ({
                                       'Other' && (
                                       <AInputField
                                         id={`bankAccountDetails.bankAccounts[${index}].othertype`}
-                                        label={'Bank Type'}
+                                        label={'Account Type'}
                                         value={
                                           formik?.values?.bankAccountDetails
                                             ?.bankAccounts[index]?.othertype
@@ -1103,7 +1095,6 @@ const AssetsInvestmentBank = ({
                                       />
                                     )}
                                     <AInputField
-                                      type={'number'}
                                       id={`bankAccountDetails.bankAccounts[${index}].balanceOnDay`}
                                       label={'Balance on Day'}
                                       rightLabel={'(In Lakhs)'}
@@ -1144,7 +1135,6 @@ const AssetsInvestmentBank = ({
         </div>
         <AGroupFields col={3}>
           <AInputField
-            type={'number'}
             disabled={true}
             id={`assetsBacking`}
             label={'Assets Backing'}

@@ -43,31 +43,31 @@ const ComitmentsSummaryFOIR = ({
 }: any) => {
   const validationSchema = Yup.object().shape({
     proposedEMI: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     existingEMI: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     btEMI: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     closureEMI: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     licMedSipTpOther: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     houseRent: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     totalCommitments: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     totalPresentEMI: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
     existingCommitments: Yup.object({
-      amountPM: Yup.number().required('This field is required'),
+      amountPM: Yup.string().required('This field is required'),
     }),
   });
 
@@ -211,7 +211,7 @@ const ComitmentsSummaryFOIR = ({
               <AGroupFields col={3} title={item?.title}>
                 <AInputField
                   disabled={true}
-                  type={'number'}
+                  
                   id={`${item?.value}.amountPM`}
                   label={'Amount PM'}
                   rightLabel={'(In Lakhs)'}
@@ -221,7 +221,7 @@ const ComitmentsSummaryFOIR = ({
                 />
                 <AInputField
                   disabled={true}
-                  type={'number'}
+                  
                   id={`${item?.value}?.amountPA`}
                   label={'Amount PA'}
                   rightLabel={'(In Lakhs)'}

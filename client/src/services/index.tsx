@@ -24,13 +24,13 @@ function setFilters(payload: any) {
 }
 
 /** services */
-export function setToken(token: string) {
-  document.cookie = 'token=' + token + '; Path=/;';
+export function setAsbdToken(asbsToken: string) {
+  document.cookie = 'asbsToken=' + asbsToken + '; Path=/;';
   axios.defaults.baseURL = process.env.SERVER_DOMAIN;
   axios.defaults.headers.common = {
     accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${asbsToken}`,
   };
 }
 
@@ -43,7 +43,7 @@ export function showError(error: any) {
   ) {
     toast.error(<b>Login Expired!</b>);
     window.location.href = window.location.origin + '/signin';
-    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'asbsToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 }
 
@@ -101,7 +101,7 @@ export async function selfDetails(_: any, { rejectWithValue }: any) {
     const response = await axios.get(`${baseAPI}/users/self-detail`);
     return response.data;
   } catch (error: any) {
-    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'asbsToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     return rejectWithValue(error?.response?.data);
   }
 }

@@ -74,7 +74,7 @@ const BusinessDetails = ({
   const validationSchema = Yup.object().shape({
     bussinessName: Yup.string().required('This field is required'),
     typeOfEntity: Yup.string().required('This field is required'),
-    yearOfIncorporation: Yup.number().required('This field is required'),
+    yearOfIncorporation: Yup.string().required('This field is required'),
     generation: Yup.string().required('This field is required'),
     gstNumber: Yup.string()
       .required('This field is required')
@@ -95,15 +95,15 @@ const BusinessDetails = ({
         'Mobile number should be of 10 digits',
         (val: any) => val.length === 10,
       ),
-    familyBusiness: Yup.number().required('This field is required'),
+    familyBusiness: Yup.string().required('This field is required'),
     mainUseproducts: Yup.string().required('This field is required'),
     howTurnoverVerified: Yup.string().required('This field is required'),
     citiesOfReppresentation: Yup.string().required('This field is required'),
     competitorsOfBusiness: Yup.string().required('This field is required'),
-    noOfVisit: Yup.number().required('This field is required'),
+    noOfVisit: Yup.string().required('This field is required'),
     doYouHavefixedEmployee: Yup.string().required('This field is required'),
-    empSpecified: Yup.number().required('This field is required'),
-    empSeen: Yup.number().required('This field is required'),
+    empSpecified: Yup.string().required('This field is required'),
+    empSeen: Yup.string().required('This field is required'),
     empReason: Yup.string().required('This field is required'),
     shareHoldings: Yup.array().of(
       Yup.object().shape({
@@ -112,6 +112,14 @@ const BusinessDetails = ({
       }),
     ),
   });
+
+  const validation = async (values: any) => {
+    const errors: any = {};
+    if (values?.totalHolding > 100) {
+      errors.totalHolding = '% of share holding should be maximum upto 100%';
+    }
+    return errors;
+  };
 
   const onSubmit = async (values: any) => {
     values = await Object.assign(values);
@@ -122,6 +130,7 @@ const BusinessDetails = ({
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
+    validate: validation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: onSubmit,
@@ -153,7 +162,9 @@ const BusinessDetails = ({
     let total = 0;
     formik?.values?.shareHoldings?.forEach((item: any) => {
       if (item.shareHolding !== '') {
-        total = total + item.shareHolding;
+        total = Number.isNaN(parseFloat(item.shareHolding))
+          ? 0
+          : parseFloat(item.shareHolding) + total;
       }
     });
     formik.setFieldValue('totalHolding', total);
@@ -297,7 +308,6 @@ const BusinessDetails = ({
                 />
               )}
               <AInputField
-                type={'number'}
                 id={'yearOfIncorporation'}
                 label={'Year of Incorporation'}
                 value={formik?.values?.yearOfIncorporation}
@@ -376,20 +386,12 @@ const BusinessDetails = ({
                   handleChange={formik?.handleChange}
                 />
               )}
-              <ASingleSelect
+              <AInputField
                 id={'pdConductWith'}
                 label={'PD Conducted With'}
                 value={formik?.values?.pdConductWith}
                 error={formik?.errors?.pdConductWith}
                 handleChange={formik?.handleChange}
-                options={payloads?.personalDetails?.applicants?.map(
-                  (item: any) => {
-                    return {
-                      label: item?.name,
-                      value: item?.name,
-                    };
-                  },
-                )}
               />
               {formik?.values?.typeOfEntity === 'Other' ? (
                 <AInputField
@@ -418,7 +420,6 @@ const BusinessDetails = ({
                 handleChange={formik?.handleChange}
               />
               <AInputField
-                type={'number'}
                 id={'familyBusiness'}
                 label={'Family Members in Business'}
                 value={formik?.values?.familyBusiness}
@@ -475,7 +476,6 @@ const BusinessDetails = ({
                 handleChange={formik?.handleChange}
               />
               <AInputField
-                type={'number'}
                 id={'noOfVisit'}
                 label={'No. of Visit'}
                 value={formik?.values?.noOfVisit}
@@ -492,7 +492,6 @@ const BusinessDetails = ({
               />
               <div className="flex gap-3">
                 <AInputField
-                  type={'number'}
                   id={'empSpecified'}
                   label={'Emp. Specified'}
                   value={formik?.values?.empSpecified}
@@ -501,7 +500,6 @@ const BusinessDetails = ({
                   disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
                 />
                 <AInputField
-                  type={'number'}
                   id={'empSeen'}
                   label={'Emp. Seen'}
                   value={formik?.values?.empSeen}
@@ -566,7 +564,6 @@ const BusinessDetails = ({
                                     )}
                                   />
                                   <AInputField
-                                    type={'number'}
                                     label={'% of Holding'}
                                     id={`shareHoldings[${index}].shareHolding`}
                                     value={
@@ -608,6 +605,9 @@ const BusinessDetails = ({
                 />
               </form>
             </FormikProvider>
+            <span className="flex justify-end ml-1 text-xs text-meta1">
+              {formik?.errors?.totalHolding}
+            </span>
           </ASection>
         </div>
       </div>
