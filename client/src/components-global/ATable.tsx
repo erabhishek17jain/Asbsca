@@ -38,7 +38,11 @@ export const TableColumn = ({
         </div>
       ) : (
         <div className="flex items-center gap-2">
-          {icon !== '' && <img src={icon} className="h-8 w-8 rounded-full" />}
+          {typeof icon === 'string' && icon !== '' ? (
+            <img src={icon} className="h-8 w-8 rounded-full" />
+          ) : (
+            icon
+          )}
           {label !== '' && (
             <div className="block antialiased font-sans text-sm leading-normal text-main font-normal">
               {label}

@@ -22,7 +22,19 @@ const UsersBody = ({
         <TableColumn
           classes={classes}
           label={item?.fullName}
-          icon={item?.profile}
+          icon={
+            item?.profile !== '' ? (
+              item?.profile
+            ) : (
+              <div className="flex items-center justify-center w-10 h-10 bg-gray-300 rounded-full">
+                <span className="text-gray-500 uppercase text-cm font-medium">
+                  {item?.fullName?.split(' ')[0][0]}
+                  {item?.fullName?.split(' ').length > 1 &&
+                    item?.fullName?.split(' ')[1][0]}
+                </span>
+              </div>
+            )
+          }
         />
         <TableColumn classes={classes} label={item?.username} />
         <TableColumn classes={classes} label={item?.email} />
