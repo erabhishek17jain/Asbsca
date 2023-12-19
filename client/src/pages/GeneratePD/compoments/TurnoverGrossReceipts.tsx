@@ -149,15 +149,19 @@ const TurnoverGrossReceipts = ({
     );
     if (first !== 0 && second !== 0) {
       const percent = ((second - first) * 100) / first;
-
       formik.setFieldValue(
         'currentLastYearComparision.changes',
         calculatePercentage(first, second),
       );
-      formik.setFieldValue(
-        'currentLastYearComparision.reasonforDiff',
-        Math.abs(percent) > 25 ? '' : '-',
-      );
+      if (
+        formik?.values?.currentLastYearComparision?.reasonforDiff === '' ||
+        formik?.values?.currentLastYearComparision?.reasonforDiff === '-'
+      ) {
+        formik.setFieldValue(
+          'currentLastYearComparision.reasonforDiff',
+          Math.abs(percent) > 25 ? '' : '-',
+        );
+      }
     }
   };
 
