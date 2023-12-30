@@ -12,7 +12,7 @@ const ReportData = () => {
     else return `${amt} Lakhs`;
   };
 
-  const docsList = reportData?.data?.documentsSeen.filter(
+  const docsList = reportData?.data?.documentsSeen?.documents.filter(
     (item: any) => item?.isDoc === 'Yes',
   );
   return (
@@ -998,8 +998,7 @@ const ReportData = () => {
               <ul id="l2">
                 {docsList?.length === 0 ? (
                   <li>
-                    - No documents provided &amp; applicant said Documents are
-                    already given to bank.
+                    - { reportData?.data?.documentsSeen?.note}
                   </li>
                 ) : (
                   docsList?.map((item: any) => (
