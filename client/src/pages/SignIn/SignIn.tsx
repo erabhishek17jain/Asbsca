@@ -14,7 +14,7 @@ import {
   EyeSlashIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ const SignIn = () => {
     },
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (cookie.includes('asbsToken')) {
       const asbsToken = cookie?.replace('asbsToken=', '');
       if (asbsToken !== '') {

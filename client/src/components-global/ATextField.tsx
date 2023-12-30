@@ -1,8 +1,8 @@
 const ATextField = ({
   id,
   icon,
-  label,
   value,
+  label = '',
   error = '',
   handleChange,
   variant = 'vertical',

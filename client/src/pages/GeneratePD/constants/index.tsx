@@ -357,6 +357,8 @@ export const sourceOcr = [
   { label: 'Arrange from Market', value: 'Arrange from Market' },
   { label: 'Savings of Spouse', value: 'Savings of Spouse' },
   { label: 'NP', value: 'NP' },
+  { label: 'NA', value: 'NA' },
+  { label: 'Nil', value: 'Nil' },
   { label: 'Other', value: 'Other' },
 ];
 
@@ -683,12 +685,12 @@ export const stockReason = [
     value: 'Stock is kept at Godown',
   },
   {
-    label: 'Stock is ardered as & when required',
-    value: 'Stock is ardered as & when required',
+    label: 'Stock is ordered as & when required',
+    value: 'Stock is ordered as & when required',
   },
   {
-    label: 'We weew not allowed to see the stock',
-    value: 'We weew not allowed to see the stock',
+    label: 'We were not allowed to see the stock',
+    value: 'We were not allowed to see the stock',
   },
   { label: 'NP', value: 'NP' },
   { label: 'Other', value: 'Other' },

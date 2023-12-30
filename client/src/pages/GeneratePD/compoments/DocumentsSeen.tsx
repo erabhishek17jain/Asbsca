@@ -7,6 +7,7 @@ import ARadioButtonGroup from '../../../components-global/ARadioButtonGroup';
 import { useFormik } from 'formik';
 import { AStepperPagination } from '../../../components-global/AStepper';
 import moment from 'moment';
+import ATextField from '../../../components-global/ATextField';
 
 const radioValues = [
   { value: 'Yes', label: 'Yes' },
@@ -71,7 +72,6 @@ const documents = [
 
 const DocumentsSeen = ({
   steps,
-  
   payloads,
   activeStep,
   handlePrev,
@@ -80,6 +80,7 @@ const DocumentsSeen = ({
 }: any) => {
   const [showModal, setShowModal] = useState(false);
   const [documentList, setDocumentList] = useState<any>([...documents]);
+  const [note, setNote] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -104,13 +105,17 @@ const DocumentsSeen = ({
   };
 
   const submitDocuments = () => {
-    setPayloads({ ...payloads, documentsSeen: documents });
+    setPayloads({
+      ...payloads,
+      documentsSeen: { note: note, documents: documents },
+    });
     handleNext();
   };
 
   useEffect(() => {
     if (payloads.documentsSeen) {
-      setDocumentList([...payloads.documentsSeen]);
+      setNote(payloads.documentsSeen?.note);
+      setDocumentList([...payloads.documentsSeen?.documents]);
     }
   }, [payloads]);
 
@@ -135,6 +140,15 @@ const DocumentsSeen = ({
               icon={<PlusIcon className="h-5 w-5 stroke-main stroke-1" />}
             />
           </div>
+          <div className={`min-w-[25%] w-full sm:w-1/2`}>Note:</div>
+          <div className={`min-w-[25%] w-1/2 sm:w-1/2`}>
+            <ATextField
+              id={'note'}
+              value={note}
+              handleChange={(e: any) => setNote(e.target.value)}
+            />
+          </div>
+
           {showModal && (
             <AModal
               saveText={'Add'}

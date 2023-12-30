@@ -88,21 +88,14 @@ export const ResetPassword = ({ isFirstPassword, asbsToken }: any) => {
     confirmPassword: Yup.string().required('This field is required'),
   });
 
-  const validateFunction = async (values: any) => {
-    console.log(values);
-    const errors = {};
-    return errors;
-  };
-
   const formik = useFormik({
     initialValues: {
-      asbsToken: '',
+      token: '',
       newPassword: '',
       confirmPassword: '',
     },
     validateOnBlur: false,
     validateOnChange: false,
-    validate: validateFunction,
     validationSchema: validationSchema,
 
     onSubmit: async (values: any) => {
@@ -124,7 +117,7 @@ export const ResetPassword = ({ isFirstPassword, asbsToken }: any) => {
   });
 
   useEffect(() => {
-    formik.setFieldValue('asbsToken', asbsToken);
+    formik.setFieldValue('token', asbsToken);
   }, []);
 
   return (

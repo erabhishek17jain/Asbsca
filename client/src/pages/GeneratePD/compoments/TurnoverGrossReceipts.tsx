@@ -555,7 +555,7 @@ const TurnoverGrossReceipts = ({
                                 }
                                 error={
                                   errorsTd?.length > 0 &&
-                                  errorsTd[index].bussinessTrendLast2Year
+                                  errorsTd[index]?.bussinessTrendLast2Year
                                 }
                                 handleChange={formik.handleChange}
                                 label={
@@ -573,7 +573,7 @@ const TurnoverGrossReceipts = ({
                                   }
                                   error={
                                     errorsTd?.length > 0 &&
-                                    errorsTd[index].otherbussinessTrendLast2Year
+                                    errorsTd[index]?.otherbussinessTrendLast2Year
                                   }
                                   handleChange={formik.handleChange}
                                   label={
@@ -588,7 +588,7 @@ const TurnoverGrossReceipts = ({
                                 }
                                 error={
                                   errorsTd?.length > 0 &&
-                                  errorsTd[index].futureProjection
+                                  errorsTd[index]?.futureProjection
                                 }
                                 handleChange={formik.handleChange}
                                 label={'Future Projection'}
@@ -604,7 +604,7 @@ const TurnoverGrossReceipts = ({
                                   }
                                   error={
                                     errorsTd?.length > 0 &&
-                                    errorsTd[index].otherfutureProjection
+                                    errorsTd[index]?.otherfutureProjection
                                   }
                                   handleChange={formik.handleChange}
                                   label={'Future Projection'}

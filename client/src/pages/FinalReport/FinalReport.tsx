@@ -26,7 +26,7 @@ import { generatePdf } from '../../utils';
 import { useReactToPrint } from 'react-to-print';
 
 const modalTitle: any = {
-  assigned: 'Assign Reporter or Reviewer ',
+  assigned: 'Assign Executor or Reviewer ',
   query: 'Revert to Assignee',
   review: 'Sent to Reviewer',
   completed: 'Approve Case',

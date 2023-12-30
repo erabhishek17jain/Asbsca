@@ -39,9 +39,12 @@ export const AStepperPagination = ({
         icon={<ArrowLeftIcon className="h-5 w-5 stroke-main stroke-1" />}
       />
       <AButton
+        type="submit"
         action={handleNext}
         variant={'secondary'}
-        label={activeStep === steps?.length - 1 ? 'Generate Report' : 'Save & Next'}
+        label={
+          activeStep === steps?.length - 1 ? 'Generate Report' : 'Save & Next'
+        }
         icon={
           activeStep === steps?.length - 1 ? (
             <DocumentChartBarIcon className="h-5 w-5" />
@@ -61,7 +64,7 @@ export function AStepper({
   setPayloads,
   setStepFinished,
 }: any) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(8);
 
   const handlePrev = () => activeStep !== 0 && setActiveStep((cur) => cur - 1);
   const handleNext = () => {

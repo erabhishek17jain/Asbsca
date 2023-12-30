@@ -332,10 +332,7 @@ const Financials = ({
     let totalAP = 0;
     const finance: any = item?.expenses;
     for (const key in finance) {
-      if (
-        typeof finance[key] !== 'string' &&
-        typeof finance[key]?.amountPA === 'number'
-      ) {
+      if (typeof finance[key] !== 'string') {
         totalAP = Number.isNaN(parseFloat(finance[key]?.amountPA))
           ? 0
           : parseFloat(finance[key]?.amountPA) + totalAP;

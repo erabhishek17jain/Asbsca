@@ -3,10 +3,13 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import AButton from '../../../../../components-global/AButton';
 import ASection from '../../../../../components-global/ASection';
+import toast from 'react-hot-toast';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const initialValues = {
   value: {
     appCurrent: '',
+    named: '',
     engaged: '',
     joined: '',
     workThere: '',
@@ -14,6 +17,7 @@ const initialValues = {
     department: '',
     expenses: '',
     offAddress: '',
+    offAddressAt: '',
     offTiming: '',
     otherDetails: '',
   },
@@ -25,6 +29,7 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
   const validationSchema = Yup.object().shape({
     value: Yup.object({
       appCurrent: Yup.string().required('Required'),
+      named: Yup.string().required('Required'),
       engaged: Yup.string().required('Required'),
       joined: Yup.string().required('Required'),
       workThere: Yup.string().required('Required'),
@@ -32,6 +37,7 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
       department: Yup.string().required('Required'),
       expenses: Yup.string().required('Required'),
       offAddress: Yup.string().required('Required'),
+      offAddressAt: Yup.string().required('Required'),
       offTiming: Yup.string().required('Required'),
     }),
   });
@@ -43,6 +49,7 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
       label[prop] = labels[prop].replace('\n', ` ${values?.value[prop]} `);
     }
     setBussDetails({ label: label, value: values?.value });
+    toast.success(<b>Business Details saved sucessfully.</b>);
   };
 
   const formik = useFormik({
@@ -61,6 +68,16 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
     formik.handleChange(e);
   };
 
+  const removeItem = (key: string) => {
+    if (key.includes('-')) {
+      const keys = key.split('-');
+      formik.setFieldValue(`value.${[keys[0]]}`, '-');
+      formik.setFieldValue(`value.${[keys[1]]}`, '-');
+    } else {
+      formik.setFieldValue(`value.${[key]}`, '-');
+    }
+  };
+
   useEffect(() => {
     if (payloads?.details) {
       formik.setFieldValue('value', payloads?.details?.value);
@@ -72,8 +89,13 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
     <>
       <ASection>
         <ol type="1" style={{ listStyle: 'auto' }} className="pl-4">
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.appCurrent === '-' ? 'hidden' : ''
+            }`}
+            id={'appCurrent-named'}
+          >
+            <div className="flex gap-2 w-full">
               Applicant is currently employed at a{' '}
               <input
                 type={'text'}
@@ -84,12 +106,36 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.appCurrent ? 'meta1' : 'stroke'
                 }`}
               />
-              named.
+              named{' '}
+              <input
+                type={'text'}
+                id={'value.named'}
+                onChange={handleChange}
+                value={formik?.values?.value?.named}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.named ? 'meta1' : 'stroke'
+                }`}
+              />
+              in year.{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('appCurrent-named');
+                  document
+                    .getElementById('appCurrent-named')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              He/She is engaged in business of{' '}
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.engaged === '-' ? 'hidden' : ''
+            }`}
+            id={'engaged'}
+          >
+            <div className="flex gap-2 w-full">
+              They are engaged in business of manufacturing{' '}
               <input
                 type={'text'}
                 id={'value.engaged'}
@@ -99,11 +145,25 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.engaged ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('engaged');
+                  document
+                    .getElementById('engaged')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.joined === '-' ? 'hidden' : ''
+            }`}
+            id={'joined'}
+          >
+            <div className="flex gap-2 w-full">
               He/She joined in year{' '}
               <input
                 type={'text'}
@@ -114,11 +174,23 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.joined ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('joined');
+                  document.getElementById('joined')?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.workThere === '-' ? 'hidden' : ''
+            }`}
+            id={'workThere'}
+          >
+            <div className="flex gap-2 w-full">
               His/her work there is to{' '}
               <input
                 type={'text'}
@@ -129,11 +201,25 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.workThere ? 'meta1' : 'stroke'
                 }`}
               />{' '}
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('workThere');
+                  document
+                    .getElementById('workThere')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.designation === '-' ? 'hidden' : ''
+            }`}
+            id={'designation'}
+          >
+            <div className="flex gap-2 w-full">
               His/Her Designation is{' '}
               <input
                 type={'text'}
@@ -144,11 +230,25 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.designation ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('designation');
+                  document
+                    .getElementById('designation')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.department === '-' ? 'hidden' : ''
+            }`}
+            id={'department'}
+          >
+            <div className="flex gap-2 w-full">
               He/she is working in{' '}
               <input
                 type={'text'}
@@ -159,12 +259,26 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.department ? 'meta1' : 'stroke'
                 }`}
               />
-              department.
+              department.{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('department');
+                  document
+                    .getElementById('department')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Expenses are{' '}
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.expenses === '-' ? 'hidden' : ''
+            }`}
+            id={'expenses'}
+          >
+            <div className="flex gap-2 w-full">
+              Expenses in the business are{' '}
               <input
                 type={'text'}
                 id={'value.expenses'}
@@ -174,12 +288,36 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.expenses ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('expenses');
+                  document
+                    .getElementById('expenses')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
-              Office is located at, its
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.offAddress === '-' ? 'hidden' : ''
+            }`}
+            id={'offAddress-offAddressAt'}
+          >
+            <div className="flex gap-2 w-full">
+              Office is located at,{' '}
+              <input
+                type={'text'}
+                id={'value.offAddressAt'}
+                onChange={handleChange}
+                value={formik?.values?.value?.offAddressAt}
+                className={`w-32 text-sm border-b-[1.5px] text-center border-${
+                  formik?.errors?.value?.offAddressAt ? 'meta1' : 'stroke'
+                }`}
+              />
+              its{' '}
               <input
                 type={'text'}
                 id={'value.offAddress'}
@@ -189,11 +327,25 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.offAddress ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('offAddress-offAddressAt');
+                  document
+                    .getElementById('offAddress-offAddressAt')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.offTiming === '-' ? 'hidden' : ''
+            }`}
+            id={'offTiming'}
+          >
+            <div className="flex gap-2 w-full">
               Office timings between
               <input
                 type={'text'}
@@ -204,11 +356,25 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.offTiming ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('offTiming');
+                  document
+                    .getElementById('offTiming')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
-          <li className="mb-2">
-            <div className="flex gap-2 sm:w-[60%]">
+          <li
+            className={`mb-2 ${
+              formik?.values?.value?.otherDetails === '-' ? 'hidden' : ''
+            }`}
+            id={'otherDetails'}
+          >
+            <div className="flex gap-2 w-full">
               Other Details?
               <textarea
                 id={'value.otherDetails'}
@@ -218,7 +384,16 @@ const Salaried = ({ payloads, setBussDetails }: any) => {
                   formik?.errors?.value?.otherDetails ? 'meta1' : 'stroke'
                 }`}
               />
-              .
+              .{' '}
+              <XMarkIcon
+                className="h-6 w-4 stroke-main stroke-1"
+                onClick={() => {
+                  removeItem('otherDetails');
+                  document
+                    .getElementById('otherDetails')
+                    ?.classList.toggle('hidden');
+                }}
+              />
             </div>
           </li>
         </ol>

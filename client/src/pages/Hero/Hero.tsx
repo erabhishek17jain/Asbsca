@@ -19,7 +19,7 @@ const Hero = () => {
 
   if (search.includes('email')) {
     pageType = 'forgotPassword';
-  } else if (search.includes('asbsToken')) {
+  } else if (search.includes('token')) {
     pageType = 'resetPassword';
     resetAsbdToken = search.slice(7);
   }

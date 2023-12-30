@@ -95,7 +95,7 @@ const ClientsDebtors = ({
               .test(
                 'len',
                 'Contact number should be of 10 digits',
-                (val: any) => val.length === 10,
+                (val: any) => (val !== 'NP' ? val.length === 10 : true),
               ),
           }),
         ),
@@ -166,12 +166,14 @@ const ClientsDebtors = ({
       const allowed = parseFloat(
         formik?.values?.debitors.debitorDetails.creditPeriodAllowed,
       );
+      const value =
+        (Number.isNaN(allowed) ? 0 : allowed) <=
+        (Number.isNaN(cpAllow) ? 0 : cpAllow)
+          ? '-'
+          : '';
       formik.setFieldValue(
         'debitors.debitorDetails.whyIrRegular',
-        (Number.isNaN(allowed) ? 0 : allowed) <=
-          (Number.isNaN(cpAllow) ? 0 : cpAllow)
-          ? '-'
-          : '',
+        Number.isNaN(allowed) ? '' : value,
       );
     }
   }, [formik?.values?.debitors?.debitorDetails]);

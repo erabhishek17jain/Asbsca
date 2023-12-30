@@ -108,28 +108,30 @@ const PersonalDetails = ({
   });
 
   const validation = async (values: any) => {
-    const errors: any = {};
+    const errors: any = { residents: [] };
     values?.residents.forEach((item: any, index: number) => {
-      errors['residents'] = [];
       if (parseInt(item?.buildArea) < parseInt(item?.carpetArea)) {
-        errors.residents[index] = {
-          buildArea:
-            'Build up area should be more than or equal to carpet area',
-        };
+        if (errors.residents[index] === undefined) {
+          errors.residents[index] = {};
+        }
+        errors.residents[index]['buildArea'] =
+          'Build up area should be more than or equal to carpet area';
+      } else if (errors?.residents?.length > 0) {
+        delete errors?.residents[index]?.buildArea;
       }
       if (
         parseInt(item?.agreementValue) > parseInt(item?.marketValue) ||
         parseInt(item?.agreementValue) > parseInt(item?.purchaseValue)
       ) {
-        errors.residents[index] = {
-          agreementValue:
-            'Agreement value should be less than or equal to purchase/market value',
-        };
-      }
-      if (errors.residents.length === 0) {
-        delete errors.residents;
+        errors.residents[index]['agreementValue'] =
+          'Agreement value should be less than or equal to purchase/market value';
+      } else if (errors?.residents?.length > 0) {
+        delete errors?.residents[index]?.agreementValue;
       }
     });
+    if (errors.residents.length === 0) {
+      delete errors.residents;
+    }
     return errors;
   };
 
@@ -451,7 +453,7 @@ const PersonalDetails = ({
                         addTag={() =>
                           tag.push({
                             ...resiInfo,
-                            title: 'Residance Address',
+                            title: 'Residance Info',
                           })
                         }
                       />

@@ -317,7 +317,7 @@ const AddCase = () => {
               />
               <ASingleSelect
                 id="assigneeId"
-                label={'Assign Reporter'}
+                label={'Assign Executor'}
                 value={formik.values.assigneeId}
                 error={formik.errors.assigneeId}
                 handleChange={formik.handleChange}

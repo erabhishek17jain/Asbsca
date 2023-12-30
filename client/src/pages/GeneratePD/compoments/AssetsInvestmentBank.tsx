@@ -56,25 +56,25 @@ const initialValues = {
   isBussinessAssets: 'Yes',
   bussinessAssetDetails: {
     bussinessAssets: [] as any,
-    totalMarketValue: 0,
-    totalRentPM: 0,
+    totalMarketValue: '',
+    totalRentPM: '',
   },
   isPersonalAssets: 'Yes',
   personalAssetDetails: {
     personalAssets: [] as any,
-    totalMarketValue: 0,
-    totalRentPM: 0,
+    totalMarketValue: '',
+    totalRentPM: '',
   },
   isInvestments: 'Yes',
   investmentDetails: {
     investments: [] as any,
-    totalContribution: 0,
-    totalMarketValue: 0,
+    totalContribution: '',
+    totalMarketValue: '',
   },
   isBankAccount: 'Yes',
   bankAccountDetails: {
     bankAccounts: [] as any,
-    totalBalance: 0,
+    totalBalance: '',
   },
   assetReason: '',
   otherassetReason: '',
@@ -190,10 +190,16 @@ const AssetsInvestmentBank = ({
     formik?.values?.bussinessAssetDetails?.bussinessAssets?.forEach(
       (item: any) => {
         if (item.marketValue !== '') {
-          total = total + item.marketValue;
+          const marketValue = Number.isNaN(parseFloat(item.marketValue))
+            ? 0
+            : parseFloat(item.marketValue);
+          total = total + marketValue;
         }
         if (item.rentPM !== '') {
-          totalRent = totalRent + item.rentPM;
+          const rentPM = Number.isNaN(parseFloat(item.rentPM))
+            ? 0
+            : parseFloat(item.rentPM);
+          totalRent = totalRent + rentPM;
         }
       },
     );
@@ -211,10 +217,16 @@ const AssetsInvestmentBank = ({
     formik?.values?.personalAssetDetails?.personalAssets?.forEach(
       (item: any) => {
         if (item.marketValue !== '') {
-          total = total + item.marketValue;
+          const marketValue = Number.isNaN(parseFloat(item.marketValue))
+            ? 0
+            : parseFloat(item.marketValue);
+          total = total + marketValue;
         }
         if (item.rentPM !== '') {
-          totalRent = totalRent + item.rentPM;
+          const rentPM = Number.isNaN(parseFloat(item.rentPM))
+            ? 0
+            : parseFloat(item.rentPM);
+          totalRent = totalRent + rentPM;
         }
       },
     );
@@ -231,10 +243,16 @@ const AssetsInvestmentBank = ({
     let totalRent = 0;
     formik?.values?.investmentDetails?.investments?.forEach((item: any) => {
       if (item.marketValue !== '') {
-        total = total + item.marketValue;
+        const marketValue = Number.isNaN(parseFloat(item.marketValue))
+          ? 0
+          : parseFloat(item.marketValue);
+        total = total + marketValue;
       }
       if (item.contribution !== '') {
-        totalRent = totalRent + item.contribution;
+        const contribution = Number.isNaN(parseFloat(item.contribution))
+          ? 0
+          : parseFloat(item.contribution);
+        totalRent = totalRent + contribution;
       }
     });
     formik.setFieldValue('investmentDetails.totalMarketValue', total);
@@ -249,7 +267,10 @@ const AssetsInvestmentBank = ({
     let total = 0;
     formik?.values?.bankAccountDetails?.bankAccounts?.forEach((item: any) => {
       if (item.balanceOnDay !== '') {
-        total = total + item.balanceOnDay;
+        const balanceOnDay = Number.isNaN(parseFloat(item.balanceOnDay))
+          ? 0
+          : parseFloat(item.balanceOnDay);
+        total = total + balanceOnDay;
       }
     });
     formik.setFieldValue('bankAccountDetails.totalBalance', total);
@@ -260,10 +281,22 @@ const AssetsInvestmentBank = ({
   }, [formik?.values?.bankAccountDetails?.bankAccounts]);
 
   useEffect(() => {
-    let assetsBacking =
-      formik?.values?.bussinessAssetDetails?.totalMarketValue +
-      formik?.values?.personalAssetDetails?.totalMarketValue +
-      formik?.values?.investmentDetails?.totalMarketValue;
+    const bTotal = Number.isNaN(
+      parseFloat(formik?.values?.bussinessAssetDetails?.totalMarketValue),
+    )
+      ? 0
+      : parseFloat(formik?.values?.bussinessAssetDetails?.totalMarketValue);
+    const pTotal = Number.isNaN(
+      parseFloat(formik?.values?.personalAssetDetails?.totalMarketValue),
+    )
+      ? 0
+      : parseFloat(formik?.values?.personalAssetDetails?.totalMarketValue);
+    const iTotal = Number.isNaN(
+      parseFloat(formik?.values?.investmentDetails?.totalMarketValue),
+    )
+      ? 0
+      : parseFloat(formik?.values?.investmentDetails?.totalMarketValue);
+    let assetsBacking = bTotal + pTotal + iTotal;
     formik.setFieldValue('assetsBacking', assetsBacking);
   }, [formik?.values]);
 
@@ -315,7 +348,7 @@ const AssetsInvestmentBank = ({
             status: el?.resiStatus,
             assetStatus: 'NP',
             marketValue: el?.marketValue,
-            rentPM: 0,
+            rentPM: '',
           });
         });
       }
@@ -332,7 +365,7 @@ const AssetsInvestmentBank = ({
             status: el?.resiStatus,
             assetStatus: 'NP',
             marketValue: el?.marketValue,
-            rentPM: 0,
+            rentPM: '',
           });
         });
       }
@@ -351,7 +384,7 @@ const AssetsInvestmentBank = ({
           marketValue:
             payloads?.detailsOfProp?.propertyLoanDetails?.propertyValue
               ?.ocrPaid,
-          rentPM: 0,
+          rentPM: '',
         });
       }
       formik.setFieldValue('personalAssetDetails.personalAssets', perAssets);

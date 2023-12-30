@@ -148,7 +148,7 @@ const OtherObservation = ({
             <AGroupFields col={2} title={'Business Plate name seen'}>
               <ASingleSelect
                 label={'Select'}
-                options={yesNoOptions}
+                options={[...yesNoOptions, ...[{ label: 'NP', value: 'NP' }]]}
                 id={`businessPlateName.exist`}
                 value={formik?.values?.businessPlateName?.exist}
                 error={errors?.businessPlateName?.exist}
@@ -156,7 +156,6 @@ const OtherObservation = ({
               />
               <AInputField
                 label={'Reason for No or NA'}
-                options={yesNoOptions}
                 disabled={
                   formik?.values?.businessPlateName?.exist === '' ||
                   formik?.values?.businessPlateName?.exist === 'Yes'
@@ -170,7 +169,7 @@ const OtherObservation = ({
             <AGroupFields col={2} title={'Activtity Seen'}>
               <ASingleSelect
                 label={'Select'}
-                options={yesNoOptions}
+                options={[...yesNoOptions, ...[{ label: 'NP', value: 'NP' }]]}
                 id={`activity.exist`}
                 value={formik?.values?.activity?.exist}
                 error={errors?.activity?.exist}
@@ -205,7 +204,7 @@ const OtherObservation = ({
             <AGroupFields col={2} title={'Customer Seen'}>
               <ASingleSelect
                 label={'Select'}
-                options={yesNoOptions}
+                options={[...yesNoOptions, ...[{ label: 'NP', value: 'NP' }]]}
                 id={`customer.exist`}
                 value={formik?.values?.customer?.exist}
                 error={errors?.customer?.exist}
@@ -217,12 +216,7 @@ const OtherObservation = ({
                     ? 'Reason for No or NA'
                     : 'How many'
                 }
-                
                 id={`customer.reasonForNo`}
-                disabled={
-                  formik?.values?.customer?.exist === '' ||
-                  formik?.values?.customer?.exist !== 'Yes'
-                }
                 value={formik?.values?.customer?.reasonForNo}
                 error={errors?.customer?.reasonForNo}
                 handleChange={formik.handleChange}
@@ -231,7 +225,7 @@ const OtherObservation = ({
             <AGroupFields col={2} title={'Stock Seen'}>
               <ASingleSelect
                 label={'Select'}
-                options={yesNoOptions}
+                options={[...yesNoOptions, ...[{ label: 'NP', value: 'NP' }]]}
                 id={`stock.exist`}
                 value={formik?.values?.stock?.exist}
                 error={errors?.stock?.exist}
@@ -274,9 +268,9 @@ const OtherObservation = ({
               />
               <AInputField
                 label={
-                  formik?.values?.thirdPartyCheck?.exist === 'positive'
+                  formik?.values?.thirdPartyCheck?.exist === 'Positive'
                     ? 'Done With'
-                    : formik?.values?.thirdPartyCheck?.exist === 'negative'
+                    : formik?.values?.thirdPartyCheck?.exist === 'Negative'
                     ? 'Why Negative?'
                     : 'Why not Done?'
                 }

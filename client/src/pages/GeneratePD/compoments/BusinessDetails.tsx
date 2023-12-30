@@ -76,12 +76,7 @@ const BusinessDetails = ({
     typeOfEntity: Yup.string().required('This field is required'),
     yearOfIncorporation: Yup.string().required('This field is required'),
     generation: Yup.string().required('This field is required'),
-    gstNumber: Yup.string()
-      .required('This field is required')
-      .matches(
-        /^[0-9]{2}[A-Za-z]{3}[CPHFATBLJGcphfatblj]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}[0-9A-Za-z]{1}(Z|z)[0-9A-Za-z]{1}/,
-        'GST Number should be in correct format. EX: 22AAAAA0000A1Z5',
-      ),
+    gstNumber: Yup.string().required('This field is required'),
     regOfficeAddress: Yup.string().required('This field is required'),
     visitedAddress: Yup.string().required('This field is required'),
     vicinity: Yup.string().required('This field is required'),
@@ -90,10 +85,8 @@ const BusinessDetails = ({
     designation: Yup.string().required('This field is required'),
     mobile: Yup.string()
       .required('This field is required')
-      .test(
-        'len',
-        'Mobile number should be of 10 digits',
-        (val: any) => val.length === 10,
+      .test('len', 'Contact number should be of 10 digits', (val: any) =>
+        val !== 'NP' ? val.length === 10 : true,
       ),
     familyBusiness: Yup.string().required('This field is required'),
     mainUseproducts: Yup.string().required('This field is required'),
@@ -117,6 +110,24 @@ const BusinessDetails = ({
     const errors: any = {};
     if (values?.totalHolding > 100) {
       errors.totalHolding = '% of share holding should be maximum upto 100%';
+    }
+    if (parseInt(values?.empSpecified) < parseInt(values?.empSeen)) {
+      errors.empSeen =
+        'Employee seen should be less than or equal to employee specified';
+    }
+    if (
+      !(
+        values?.gstNumber === '' ||
+        values?.gstNumber === 'NA' ||
+        values?.gstNumber === 'NP'
+      )
+    ) {
+      const pattern =
+        /^[0-9]{2}[A-Za-z]{3}[CPHFATBLJGcphfatblj]{1}[A-Za-z]{1}[0-9]{4}[A-Za-z]{1}[0-9A-Za-z]{1}(Z|z)[0-9A-Za-z]{1}/;
+      if (!pattern.test(values?.gstNumber)) {
+        errors.gstNumber =
+          'GST Number should be in correct format. EX: 22AAAAA0000A1Z5';
+      }
     }
     return errors;
   };
@@ -144,19 +155,30 @@ const BusinessDetails = ({
   };
 
   useEffect(() => {
-    if (formik?.values?.doYouHavefixedEmployee !== 'Yes') {
+    if (
+      !(
+        formik?.values?.doYouHavefixedEmployee === 'No' ||
+        formik?.values?.doYouHavefixedEmployee === ''
+      )
+    ) {
       formik.setFieldValue('empSeen', 0);
-      formik.setFieldValue('empReason', '-');
       formik.setFieldValue('empSpecified', 0);
     } else {
       formik.setFieldValue('empSeen', payloads?.businessDetails?.empSeen);
-      formik.setFieldValue('empReason', payloads?.businessDetails?.empReason);
       formik.setFieldValue(
         'empSpecified',
         payloads?.businessDetails?.empSpecified,
       );
     }
   }, [formik?.values?.doYouHavefixedEmployee]);
+
+  useEffect(() => {
+    if (formik?.values?.empSpecified > formik?.values?.empSeen) {
+      formik.setFieldValue('empReason', payloads?.businessDetails?.empReason);
+    } else {
+      formik.setFieldValue('empReason', '-');
+    }
+  }, [formik?.values?.empSeen]);
 
   useEffect(() => {
     let total = 0;
@@ -294,6 +316,7 @@ const BusinessDetails = ({
                 id={'typeOfEntity'}
                 label={'Type of Entity'}
                 options={typesOfEntity}
+                isSelectOption={false}
                 value={formik?.values?.typeOfEntity}
                 error={formik?.errors?.typeOfEntity}
                 handleChange={handleTypeOfEntity}
@@ -490,32 +513,36 @@ const BusinessDetails = ({
                 error={formik?.errors?.doYouHavefixedEmployee}
                 handleChange={formik?.handleChange}
               />
-              <div className="flex gap-3">
+              {!(
+                formik?.values?.doYouHavefixedEmployee === 'No' ||
+                formik?.values?.doYouHavefixedEmployee === ''
+              ) && (
+                <>
+                  <AInputField
+                    id={'empSpecified'}
+                    label={'Emp. Specified'}
+                    value={formik?.values?.empSpecified}
+                    error={formik?.errors?.empSpecified}
+                    handleChange={formik?.handleChange}
+                  />
+                  <AInputField
+                    id={'empSeen'}
+                    label={'Emp. Seen'}
+                    value={formik?.values?.empSeen}
+                    error={formik?.errors?.empSeen}
+                    handleChange={formik?.handleChange}
+                  />
+                </>
+              )}
+              {formik?.values?.empSeen < formik?.values?.empSpecified && (
                 <AInputField
-                  id={'empSpecified'}
-                  label={'Emp. Specified'}
-                  value={formik?.values?.empSpecified}
-                  error={formik?.errors?.empSpecified}
+                  id={'empReason'}
+                  label={'Reason why emp seen less than specified?'}
+                  value={formik?.values?.empReason}
+                  error={formik?.errors?.empReason}
                   handleChange={formik?.handleChange}
-                  disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
                 />
-                <AInputField
-                  id={'empSeen'}
-                  label={'Emp. Seen'}
-                  value={formik?.values?.empSeen}
-                  error={formik?.errors?.empSeen}
-                  handleChange={formik?.handleChange}
-                  disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
-                />
-              </div>
-              <AInputField
-                id={'empReason'}
-                label={'Reason why emp seen less than specified?'}
-                value={formik?.values?.empReason}
-                error={formik?.errors?.empReason}
-                handleChange={formik?.handleChange}
-                disabled={formik?.values?.doYouHavefixedEmployee !== 'Yes'}
-              />
+              )}
             </AGroupFields>
           </ASection>
           <ASection

@@ -55,10 +55,8 @@ const SuppliersCreditors = ({
           clientName: Yup.string().required('This field is required'),
           contact: Yup.string()
             .required('This field is required')
-            .test(
-              'len',
-              'Contact number should be of 10 digits',
-              (val: any) => val.length === 10,
+            .test('len', 'Contact number should be of 10 digits', (val: any) =>
+              val !== 'NP' ? val.length === 10 : true,
             ),
         }),
       ),

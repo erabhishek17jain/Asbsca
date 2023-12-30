@@ -119,28 +119,52 @@ const DetailsOfProperty = ({
   const handlePurchaseYear = (e: any) => {
     const { value } = e.target;
     const option = purchaseYear.find((item: any) => item.value === value);
-    formik.setFieldValue('buildUpArea', value != 'Select Year' ? 0 : '');
-    formik.setFieldValue('carpetArea', value != 'Select Year' ? 0 : '');
-    formik.setFieldValue('occupiedBy', value != 'Select Year' ? value : '');
+    formik.setFieldValue(
+      'buildUpArea',
+      !(value === 'Select Year' || value === 'NP') ? 0 : '',
+    );
+    formik.setFieldValue(
+      'carpetArea',
+      !(value === 'Select Year' || value === 'NP') ? 0 : '',
+    );
+    formik.setFieldValue(
+      'occupiedBy',
+      !(value === 'Select Year' || value === 'NP') ? value : '',
+    );
     formik.setFieldValue(
       'loanPropertyAddress',
-      value != 'Select Year' ? option?.label : '',
+      !(value === 'Select Year' || value === 'NP') ? option?.label : '',
     );
     formik.setFieldValue(
       'builderName',
-      value != 'Select Year' ? option?.label : '',
+      !(value === 'Select Year' || value === 'NP') ? option?.label : '',
     );
     formik.handleChange(e);
   };
 
   const setBalance = () => {
-    const balance =
-      Math.max(
-        formik.values.propertyLoanDetails.propertyValue.agreementValue,
-        formik.values.propertyLoanDetails.propertyValue.purchaseValue,
-      ) -
-      formik.values.propertyLoanDetails.loanDetails.amount -
-      formik.values.propertyLoanDetails.propertyValue.ocrPaid;
+    const agreementValue =
+      formik.values.propertyLoanDetails.propertyValue.agreementValue === '' ||
+      formik.values.propertyLoanDetails.propertyValue.agreementValue === 'NP'
+        ? 0
+        : formik.values.propertyLoanDetails.propertyValue.agreementValue;
+    const purchaseValue =
+      formik.values.propertyLoanDetails.propertyValue.purchaseValue === '' ||
+      formik.values.propertyLoanDetails.propertyValue.purchaseValue === 'NP'
+        ? 0
+        : formik.values.propertyLoanDetails.propertyValue.purchaseValue;
+    const amount =
+      formik.values.propertyLoanDetails.loanDetails.amount === '' ||
+      formik.values.propertyLoanDetails.loanDetails.amount === 'NP'
+        ? 0
+        : formik.values.propertyLoanDetails.loanDetails.amount;
+    const ocrPaid =
+      formik.values.propertyLoanDetails.propertyValue.ocrPaid === '' ||
+      formik.values.propertyLoanDetails.propertyValue.ocrPaid === 'NP'
+        ? 0
+        : formik.values.propertyLoanDetails.propertyValue.ocrPaid;
+
+    const balance = Math.max(agreementValue, purchaseValue) - amount - ocrPaid;
 
     formik.setFieldValue(
       'propertyLoanDetails.propertyValue.balanceOcr',
@@ -224,11 +248,13 @@ const DetailsOfProperty = ({
                 id={'purchaseYear'}
                 label={'Purchase Year'}
                 options={purchaseYear}
+                isSelectOption={false}
                 value={formik?.values?.purchaseYear}
                 error={formik?.errors?.purchaseYear}
                 handleChange={handlePurchaseYear}
               />
-              {formik?.values?.purchaseYear === 'Select Year' && (
+              {(formik?.values?.purchaseYear === 'NP' ||
+                formik?.values?.purchaseYear === 'Select Year') && (
                 <AInputField
                   id={'otherpurchaseYear'}
                   label={'Purchase Year'}
@@ -244,7 +270,12 @@ const DetailsOfProperty = ({
                 value={formik?.values?.carpetArea}
                 error={formik?.errors?.carpetArea}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != 'Select Year'}
+                disabled={
+                  !(
+                    formik?.values?.purchaseYear === 'Select Year' ||
+                    formik?.values?.purchaseYear === 'NP'
+                  )
+                }
               />
               <AInputField
                 id={'buildUpArea'}
@@ -253,7 +284,12 @@ const DetailsOfProperty = ({
                 value={formik?.values?.buildUpArea}
                 error={formik?.errors?.buildUpArea}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != 'Select Year'}
+                disabled={
+                  !(
+                    formik?.values?.purchaseYear === 'Select Year' ||
+                    formik?.values?.purchaseYear === 'NP'
+                  )
+                }
               />
               <ASingleSelect
                 id={'occupiedBy'}
@@ -262,7 +298,12 @@ const DetailsOfProperty = ({
                 value={formik?.values?.occupiedBy}
                 error={formik?.errors?.occupiedBy}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != 'Select Year'}
+                disabled={
+                  !(
+                    formik?.values?.purchaseYear === 'Select Year' ||
+                    formik?.values?.purchaseYear === 'NP'
+                  )
+                }
               />
               {formik?.values?.occupiedBy === 'Other' && (
                 <AInputField
@@ -271,7 +312,12 @@ const DetailsOfProperty = ({
                   value={formik?.values?.otheroccupiedBy}
                   error={formik?.errors?.otheroccupiedBy}
                   handleChange={formik?.handleChange}
-                  disabled={formik?.values?.purchaseYear != 'Select Year'}
+                  disabled={
+                    !(
+                      formik?.values?.purchaseYear === 'Select Year' ||
+                      formik?.values?.purchaseYear === 'NP'
+                    )
+                  }
                 />
               )}
               <AInputField
@@ -280,7 +326,12 @@ const DetailsOfProperty = ({
                 value={formik?.values?.loanPropertyAddress}
                 error={formik?.errors?.loanPropertyAddress}
                 handleChange={formik?.handleChange}
-                disabled={formik?.values?.purchaseYear != 'Select Year'}
+                disabled={
+                  !(
+                    formik?.values?.purchaseYear === 'Select Year' ||
+                    formik?.values?.purchaseYear === 'NP'
+                  )
+                }
               />
               <AInputField
                 id={'builderName'}
@@ -289,8 +340,10 @@ const DetailsOfProperty = ({
                 error={formik?.errors?.builderName}
                 handleChange={formik?.handleChange}
                 disabled={
-                  formik?.values?.purchaseYear != 'Select Year' ||
-                  formik?.values.occupiedBy !== 'Under Construction'
+                  !(
+                    formik?.values?.purchaseYear === 'Select Year' ||
+                    formik?.values?.purchaseYear === 'NP'
+                  ) || formik?.values.occupiedBy !== 'Under Construction'
                 }
               />
             </AGroupFields>
@@ -418,6 +471,7 @@ const DetailsOfProperty = ({
                   id={'propertyLoanDetails.propertyValue.sourceOcr'}
                   label={'Source OCR'}
                   options={sourceOcr}
+                  isSelectOption={false}
                   value={
                     formik?.values?.propertyLoanDetails?.propertyValue
                       ?.sourceOcr

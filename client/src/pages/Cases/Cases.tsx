@@ -30,7 +30,7 @@ import { fetchAllUsersAsync } from '../../slices/usersSlice';
 import ATextField from '../../components-global/ATextField';
 
 const modalTitle: any = {
-  assigned: 'Assign Reporter or Reviewer ',
+  assigned: 'Assign Executor or Reviewer ',
   query: 'Revert to Assignee',
   review: 'Sent to Reviewer',
   completed: 'Approve Case',
@@ -386,7 +386,7 @@ const Cases = () => {
               <>
                 <ASingleSelect
                   id="assigneeId"
-                  label={'Assign Reporter'}
+                  label={'Assign Executor'}
                   value={formikAssigned.values.assigneeId}
                   error={formikAssigned.errors.assigneeId}
                   handleChange={formikAssigned.handleChange}
