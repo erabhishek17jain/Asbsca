@@ -123,6 +123,9 @@ const PersonalDetails = ({
         parseInt(item?.agreementValue) > parseInt(item?.marketValue) ||
         parseInt(item?.agreementValue) > parseInt(item?.purchaseValue)
       ) {
+        if (errors.residents[index] === undefined) {
+          errors.residents[index] = {};
+        }
         errors.residents[index]['agreementValue'] =
           'Agreement value should be less than or equal to purchase/market value';
       } else if (errors?.residents?.length > 0) {

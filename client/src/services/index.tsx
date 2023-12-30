@@ -225,13 +225,16 @@ export async function getBranchs(payload: any, { rejectWithValue }: any) {
 }
 
 /** get report */
-export async function getReportData(id: any) {
+export async function getReportData(id: any, { rejectWithValue }: any) {
   try {
     const response = await axios.get(`${baseAPI}/cases/reports/${id}`);
     return response.data;
   } catch (error: any) {
-    showError(error);
-    // return rejectWithValue(error?.response?.data);
+    if (error?.response?.data?.message === 'Unauthorized') {
+      showError(error);
+    } else {
+      return rejectWithValue(error?.response?.data);
+    }
   }
 }
 
