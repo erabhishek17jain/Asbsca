@@ -37,6 +37,10 @@ export function setAsbdToken(asbsToken: string) {
 export function showError(error: any) {
   if (typeof error?.response?.data === 'object') {
     toast.error(<b>{error?.response?.data?.message}</b>);
+    if (error?.response?.data?.message === 'Unauthorized') {
+      window.location.href = window.location.origin + '/signin';
+      document.cookie = 'asbsToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
   } else if (
     error?.response?.data?.includes('TokenExpiredError') ||
     error?.response?.data?.includes('JsonWebTokenError')
@@ -221,13 +225,13 @@ export async function getBranchs(payload: any, { rejectWithValue }: any) {
 }
 
 /** get report */
-export async function getReportData(id: any, { rejectWithValue }: any) {
+export async function getReportData(id: any) {
   try {
     const response = await axios.get(`${baseAPI}/cases/reports/${id}`);
     return response.data;
   } catch (error: any) {
-    // showError(error);
-    return rejectWithValue(error?.response?.data);
+    showError(error);
+    // return rejectWithValue(error?.response?.data);
   }
 }
 

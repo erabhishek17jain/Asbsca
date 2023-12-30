@@ -26,7 +26,7 @@ export default class JWT implements IJWT {
   protected secretKey: string = process.env.SECRET_KEY || "secretKey";
 
   public getToken(payload: Payload): JWTResponse {
-    const accessToken = jwt.sign(payload, this.secretKey, { expiresIn: '1h' });
+    const accessToken = jwt.sign(payload, this.secretKey, { expiresIn: '4h' });
     return { accessToken };
   }
 
