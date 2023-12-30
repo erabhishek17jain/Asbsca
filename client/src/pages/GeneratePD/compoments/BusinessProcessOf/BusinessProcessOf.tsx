@@ -93,19 +93,32 @@ const BusinessProcessOf = ({
           {formik?.values?.bussinessProcessOf ===
             'Service (With Purchases)' && (
             <ServiceWithPurchase
-              payloads={payloads.businessOf}
+              payloads={
+                payloads.businessOf?.bussinessProcessOf ===
+                'Service (With Purchases)'
+                  ? payloads.businessOf
+                  : undefined
+              }
               setBussDetails={setBussDetails}
             />
           )}
           {formik?.values?.bussinessProcessOf === 'Salaried' && (
             <Salaried
-              payloads={payloads.businessOf}
+              payloads={
+                payloads.businessOf?.bussinessProcessOf === 'Salaried'
+                  ? payloads.businessOf
+                  : undefined
+              }
               setBussDetails={setBussDetails}
             />
           )}
           {formik?.values?.bussinessProcessOf === 'Service' && (
             <Service
-              payloads={payloads.businessOf}
+              payloads={
+                payloads.businessOf?.bussinessProcessOf === 'Service'
+                  ? payloads.businessOf
+                  : undefined
+              }
               setBussDetails={setBussDetails}
             />
           )}

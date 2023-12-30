@@ -96,7 +96,6 @@ const ServiceWithPurchase = ({ payloads, setBussDetails }: any) => {
   };
 
   useEffect(() => {
-    formik.setFieldValue('value', { ...initialValues.value });
     if (payloads?.details) {
       formik.setFieldValue('value', payloads?.details?.value);
       setLabels({ ...payloads?.details?.label });
