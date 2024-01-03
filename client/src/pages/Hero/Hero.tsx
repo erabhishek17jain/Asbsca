@@ -49,7 +49,10 @@ const Hero = () => {
               </Link>
               {pageType === 'forgotPassword' && <ForgotPassword />}
               {pageType === 'resetPassword' && (
-                <ResetPassword isFirstPassword={true} asbsToken={asbsToken} />
+                <ResetPassword
+                  isFirstPassword={true}
+                  asbsToken={resetAsbdToken}
+                />
               )}
               {pageType === 'home' && (
                 <>
